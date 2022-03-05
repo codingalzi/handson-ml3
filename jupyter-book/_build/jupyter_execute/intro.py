@@ -17,7 +17,7 @@
 
 # 아래 그림은 인공지능, 머신러닝, 딥러닝, 데이터 과학 네 분야의 관계를 설명한다.
 
-# <div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ai-ml-relation.png?raw=true" style="width:500px;"></div>
+# <div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/intro/ai-ml-relation.png?raw=true" style="width:500px;"></div>
 # 
 # 그림 출처: [교보문고: 에이지 오브 머신러닝](http://www.kyobobook.co.kr/readIT/readITColumnView.laf?thmId=00198&sntnId=14142)
 
@@ -30,7 +30,7 @@
 
 # 역사적 관점에서 바라본 인공지능, 머신러닝, 딥러닝의 관계는 다음과 같다.
 # 
-# <div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ai-ml-relation2.png?raw=true" style="width:600px;"></div>
+# <div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/intro/ai-ml-relation2.png?raw=true" style="width:600px;"></div>
 # 
 # 
 # 그림 출처: [NVIDIA 블로그](https://blogs.nvidia.com/blog/2016/07/29/whats-difference-artificial-intelligence-machine-learning-deep-learning-ai/)

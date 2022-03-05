@@ -9,23 +9,23 @@
 
 # ## 머신러닝이란?
 
-# - 아서 새뮤얼<font size="2">Artuhr Samuel</font> (1959)
+# **아서 새뮤얼<font size="2">Artuhr Samuel</font> (1959)**
 # 
 # > 명시적인 프로그래밍 없이 컴퓨터 스스로 학습하는 능력 에 대한 연구 분야
 # 
 
-# - 톰 미첼<font size="2">Tom Michell</font> (1977)
+# **톰 미첼<font size="2">Tom Michell</font> (1977)**
 # 
 # > 경험 E를 통해 과제 T에 대한 프로그램의 수행 성능 P가 향상되면
 # > 해당 프로그램은 경험 E를 통해 학습한다 라고 말한다.
 
-# :::{prf:example} 스팸 필어
+# :::{prf:example} 스팸 필터
 # :label: spam_filter
 # 
 # 스팸<font size="2">spam</font> 메일과 아닌 메일<font size="2">ham</font>의 구분법을 머신러닝으로 학습시킬 수 있다.
 # :::
 
-# ### 기본 용어
+# **머신러닝 주요 용어**
 
 # * __훈련 셋__<font size="2">training set</font>: 
 #     머신러닝 프로그램이 훈련(학습)하는 데 사용하는 데이터 집합
@@ -39,55 +39,56 @@
 #     - 경험 E = 훈련 데이터
 #     - 성능 P = 스팸 여부 판단의 정확도
 
-# ## 1.2 왜 머신러닝을 사용하는가?
+# ## 머신러닝 사용 이유
 
 # ### 전통적인 프로그래밍
 
-# <div align="center"><img src="images/ch01/homl01-01.png" width="500"/></div>
+# 전통적인 프로그래밍 접근 방법은 다음과 같다.
+# 
+# 1. 문제 연구: 문제 해결 알고리즘 연구
+# 1. 규칙 작성: 알고리즘 규현
+# 1. 평가: 구현된 프로그램 테스트
+#     * 테스트 통과: 프로그램 론칭
+#     * 테스트 실패: 오차 분석 후 1단계로 이동
 
-# * 전통적인 프로그래밍 접근 방법은 다음과 같다.
-#     * **문제 연구**: 누군가가 문제를 해결하기 위해 해결책을 찾음 
-#     * **규칙 작성**: 결정된 규칙을 개발자가 프로그램을 작성
-#     * **평가**: 만들어진 프로그램을 테스트
-#     * 문제가 없다면 **론칭**, 문제가 있다면 **오차를 분석**한 후 처음 과정부터 다시 실시
+# <div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-01.png?raw=true" style="width:400px;"></div>
 
-# #### 예제: 스팸 메일 분류
+# :::{prf:example} 스팸 메일 분류
+# :label: spam_classification
+# 
+# * 특정 단어가 들어가면 스팸 메일로 처리.
+# * 프로그램이 론칭된 후 새로운 스팸단어가 사용될 때 스팸 메일 분류 실패.
+# * 개발자가 새로운 규칙을 매번 업데이트 시켜줘야 함.
+# * 유지 보수 어려움.
+# :::
 
-# * **특정 단어**가 들어가면 스팸 메일로 처리
+# ### 머신러닝 프로그램
 
-# * 프로그램이 론칭된 후 새로운 스팸단어가 생겼을 때 소프트웨어는 이 단어를 자동으로 분류할 수 없음
+# 스팸으로 지정된 메일에 "4U", "For U", "Buy Drugs" 등의 표현이 
+# 자주 등장하는 경우 새로운 메일에 그런 표현이 사용되면 
+# 자동으로 스팸으로 분류하도록 프로그램을 학습시킨다.
 
-# * 개발자가 새로운 규칙을 업데이트 시켜줘야 함
+# <div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-02.png?raw=true" style="width:420px;"></div>
 
-# * **새로운 규칙이 생겼을 때 사용자가 매번 업데이트를** 시켜줘야하기 때문에 유지 보수가 어려움
+# **머신러닝 학습 자동화**
+# 
+# 머신러닝 작업 흐름을 관장하는 __머신러닝 파이프라인__ 
+# 또는 __MLOps(Machine Learning Operations, 머신러닝 운영)__ 의
+# 자동화가 가능하다.
 
-# ### 머신러닝
+# <div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-03.png?raw=true" style="width:440px;"></div>
 
-# <div align="center"><img src="images/ch01/homl01-02.png" width="500"/></div>
+# **머신러닝의 장점**
 
-# #### 예제: 스팸 메일 분류
+# 1. 스팸 메일 분류기 처럼 알고리즘에 대한 너무 많은 세부 튜닝과
+#     매우 긴 규칙을 요구하는 문제를 해결할 수 있다.
+# 1. 음성 인식 등 전통적인 방식으로 해결하기에 너무 복잡한 문제를 해결할 수 있다.
+# 1. 새로운 데이터에 바로 적용이 가능한 시스템을 쉽게 재훈련할 수 있다.
+# 1. 머신러닝 프로그램으로 생성된 솔루션 분석을 통해 
+#     데이터에 대한 통찰을 얻을 수 있다. 
+#     즉, **데이터 마이닝**<font size="2">data mining</font>이 가능하다.
 
-# * 사용자가 스팸으로 지정한 메일에 '4U', 'For U', 'Buy Drugs" 등의 표현이 자주 등장하는 경우 
-#     그런 표현을 자동으로 인식하고 메일을 스팸으로 분류하도록 프로그램 스스로 학습
-
-# ### 머신러닝 학습 자동화
-
-# <div align="center"><img src="images/ch01/homl01-03.png" width="500"/></div>
-
-# * 머신러닝 작업 흐름의 전체를 __머신러닝 파이프라인__ 
-#     또는 __MLOps(Machine Learning Operations, 머신러닝 운영)__라 부르며 자동화가 가능함.
-#     
-# * 참조: [MLOps: 머신러닝의 지속적 배포 및 자동화 파이프라인](https://cloud.google.com/solutions/machine-learning/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning)
-
-# ### 머신러닝의 장점
-
-# <div align="center"><img src="images/ch01/homl01-04.png" width="500"/></div>
-
-# * 전통적인 방식으로는 해결 방법이 없는 너무 복잡한 문제 해결
-
-# * 새로운 데이터에 쉽게 적응 가능한 시스템
-
-# * 데이터 마이닝(data mining): 복잡한 문제와 대량의 데이터에서 통찰 얻기
+# <div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-04.png?raw=true" style="width:440px;"></div>
 
 # ## 1.3 적용 사례
 
@@ -158,8 +159,8 @@
 
 # #### 분류
 
-# <div align="center"><img src="images/ch01/homl01-05.png" width="500"/></div>
-# 
+# <div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-05.png?raw=true" style="width:450px;"></div>
+
 # * 특성을 사용한 데이터 분류
 
 # * 예제: 스팸 필터
@@ -168,8 +169,8 @@
 
 # #### 회귀
 
-# <div align="center"><img src="images/ch01/homl01-06.png" width="400"/></div>
-# 
+# <div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-06.png?raw=true" style="width:400px;"></div>
+
 # * 특성을 사용하여 타깃(target) 수치 예측
 
 # * 예제: 중고차 가격 예측
@@ -194,7 +195,7 @@
 
 # * __레이블 없는 훈련 데이터__를 이용하여 시스템 스스로 학습
 
-# <div align="center"><img src="images/ch01/homl01-07.png" width="410"/></div>
+# <div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-07.png?raw=true" style="width:410px;"></div>
 
 # * 대표적 비지도 학습
 #     * 군집
@@ -204,8 +205,8 @@
 
 # #### 군집
 
-# <div align="center"><img src="images/ch01/homl01-08.png" width="400"/></div>
-# 
+# <div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-08.png?raw=true" style="width:400px;"></div>
+
 # * 데이터를 비슷한 특징을 가진 몇 개의 그룹으로 나누는 것
 
 # * 예제: 블로그 방문자들을 그룹으로 묶기: 남성, 여성, 주말, 주중, 만화책, SF 등등
@@ -223,7 +224,7 @@
 # 
 # * 데이터가 구성 패턴에 대한 정보 획득 가능
 
-# <div align="center"><img src="images/ch01/homl01-09.png" width="650"/></div>
+# <div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-09.png?raw=true" style="width:650px;"></div>
 
 # #### 차원 축소
 
@@ -248,7 +249,7 @@
 
 # * 정상 샘플을 이용하여 훈련 후 입력 샘플의 정상여부 판단 후 이상치(outliers) 자동 제거
 
-# <div align="center"><img src="images/ch01/homl01-10.png" width="500"/></div>
+# <div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-10.png?raw=true" style="width:500px;"></div>
 
 # * 예제: 부정거래 사용 감지, 제조 결함 잡아내기 등등
 
@@ -283,7 +284,7 @@
 
 # * 아래 그림 참조: 새로운 사례 `X`를 세모에 더 가깝다고 판단함.
 
-# <div align="center"><img src="images/ch01/homl01-11.png" width="400"/></div>
+# <div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-11.png?raw=true" style="width:400px;"></div>
 
 # * 구글 포토 호스팅: 가족 사진 몇 장에만 레이블 적용. 이후 모든 사진에서 가족사진 확인 가능.
 
@@ -291,11 +292,11 @@
 
 # * 에이전트(학습 시스템)가 취한 행동에 대해 보상 또는 벌점을 주어 가장 큰 보상을 받는 방향으로 유도하기
 
-# <div align="center"><img src="images/ch01/homl01-12.png" width="400"/></div>
+# <div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-12.png?raw=true" style="width:400px;"></div>
 
 # * 예제: 딥마인드(DeepMind)의 알파고(AlphaGo)
 
-# <div align="center"><img src="images/ch01/alphago01.png" width="500"/></div>
+# <div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/alphago01.png?raw=true" style="width:500px;"></div>
 
 # ### 실시간 훈련 여부 구분
 
@@ -314,7 +315,7 @@
 
 # * 하나씩 또는 적은 양의 데이터 묶음(미니배치, mini-batch)를 사용해 점진적으로 훈련
 
-# <div align="center"><img src="images/ch01/homl01-13.png" width="500"/></div>
+# <div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-13.png?raw=true" style="width:500px;"></div>
 
 # * 단점
 #     * 나쁜 데이터가 주입되는 경우 시스템 성능이 점진적으로 떨어질 수 있음.
@@ -325,7 +326,7 @@
 #     * 스마트폰 등 제한된 자원의 시스템
 #     * 외부 메모리 학습: 매우 큰 데이터셋 활용하는 시스템
 
-# <div align="center"><img src="images/ch01/homl01-14.png" width="500"/></div>
+# <div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-14.png?raw=true" style="width:500px;"></div>
 
 # ### 예측 모델 사용 여부 구분
 
@@ -342,7 +343,7 @@
 
 # * k-NN 활용 예제: 새로운 샘플 `X`가 기존에 세모인 샘플과의 유사도가 높기 때문에 세모로 분류.
 
-# <div align="center"><img src="images/ch01/homl01-15.png" width="500"/></div>
+# <div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-15.png?raw=true" style="width:450px;"></div>
 
 # ### 모델 기반 학습
 
@@ -354,7 +355,7 @@
 
 # * 예제: 학습된 모델을 이용하여 새로운 데이터 `X`를 세모 클래스로 분류
 
-# <div align="center"><img src="images/ch01/homl01-16.png" width="500"/></div>
+# <div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-16.png?raw=true" style="width:450px;"></div>
 
 # #### 선형 모델 학습 예제
 
@@ -362,7 +363,7 @@
 
 # * 1인당 GDP가 증가할 수록 삶의 만족도가 선형으로 증가하는 것처럼 보임.
 
-# <div align="center"><img src="images/ch01/homl01-17.png" width="500"/></div>
+# <div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-17.png?raw=true" style="width:450px;"></div>
 
 # * 데이터를 대표하는 하나의 직선(선형 모델)을 찾기
 # 
@@ -372,15 +373,15 @@
 
 # * 데이터를 대표할 수 있는 선형 방정식을 찾아야 함
 
-# <div align="center"><img src="images/ch01/homl01-18.png" width="500"/></div>
+# <div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-18.png?raw=true" style="width:450px;"></div>
 
 # * 학습되는 모델의 성능 평가 기준을 측정하여 가장 적합한 모델 학습
 #     * 효용 함수: 모델이 얼마나 좋은지 측정
 #     * 비용 함수: 모델이 얼마나 나쁜지 측정
 
 # * 아래 선형 모델이 최적!
-# 
-# <div align="center"><img src="images/ch01/homl01-19.png" width="500"/></div>
+
+# <div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-19.png?raw=true" style="width:450px;"></div>
 
 # ## 1.5 머신러닝의 주요 도전 과제
 
@@ -394,7 +395,7 @@
 
 # * 일반적으로 데이터가 많을 수록 모델의 성능 높아짐.
 
-# <div align="center"><img src="images/ch01/homl01-20.png" width="400"/></div>
+# <div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-20.png?raw=true" style="width:450px;"></div>
 
 # ### 대표성 없는 훈련 데이터
 
@@ -406,7 +407,7 @@
 #     - 잡음: 빨강 네모 데이터가 추가 될 경우 선형 모델 달라짐.
 #     - 편향: OECD 국가중에서 이름에 영어 알파벳 W가 포함된 국가들은 삶의 만족도가 매우 높음. 하지만 일반화는 불가능.
 
-# <div align="center"><img src="images/ch01/homl01-21.png" width="500"/></div>
+# ###### <div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-21.png?raw=true" style="width:600px;"></div>
 
 # ### 낮은 품질의 데이터 처리
 
@@ -430,7 +431,7 @@
 
 # * 훈련 세트에 특화되어 일반화 성능이 떨어지는 현상
 
-# <div align="center"><img src="images/ch01/homl01-22.png" width="500"/></div>
+# ###### <div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-22.png?raw=true" style="width:550px;"></div>
 
 # * 규제를 적용해 과대적합을 감소시킬 수 있음 
 
@@ -440,11 +441,13 @@
 
 # <div align="center"><img src="images/ch01/homl01-23.png" width="500"/></div>
 
+# ###### <div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-23.png?raw=true" style="width:550px;"></div>
+
 # ### 과소적합
 
 # * 모델이 너무 단순해서 훈련 세트를 잘 학습하지 못함
 
-# <div align="center"><img src="images/ch04/homl04-06.png" width="400"/></div>
+# ###### <div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch04/homl04-06.png?raw=true" style="width:400px;"></div>
 
 # * 해결 방법
 #     * 보다 많은 모델 파라미터를 사용하는 모델 적용
