@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>1. 1장 한눈에 보는 머신러닝 &#8212; 핸즈온 머신러닝(3판)</title>
+    <title>1. 한눈에 보는 머신러닝 &#8212; 핸즈온 머신러닝(3판)</title>
     
   <link href="_static/css/theme.css" rel="stylesheet">
   <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -89,7 +89,7 @@
         <ul class="current nav bd-sidenav">
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   1. 1장 한눈에 보는 머신러닝
+   1. 한눈에 보는 머신러닝
   </a>
  </li>
 </ul>
@@ -198,225 +198,259 @@
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id2">
-   1.1. 감사의 글
+   1.1. 머신러닝이란?
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id3">
-   1.2. 1.1 머신러닝이란?
+   1.2. 머신러닝 사용 이유
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id4">
-     1.2.1. 머신러닝 프로그램 예제
+     1.2.1. 전통적인 프로그래밍
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id5">
-     1.2.2. 기본 용어
+     1.2.2. 머신러닝 프로그램
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id6">
-   1.3. 1.2 왜 머신러닝을 사용하는가?
+   1.3. 1.3 적용 사례
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id7">
-     1.3.1. 전통적인 프로그래밍
+     1.3.1. 대표적인 머신러닝 적용 사례
     </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id8">
-       1.3.1.1. 예제: 스팸 메일 분류
-      </a>
-     </li>
-    </ul>
    </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id8">
+   1.4. 1.4 머신러닝 시스템 종류
+  </a>
+  <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id9">
-     1.3.2. 머신러닝
+     1.4.1. 머신러닝 시스템 분류 기준
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#id10">
-       1.3.2.1. 예제: 스팸 메일 분류
+       1.4.1.1. 분류 기준의 비배타성
       </a>
      </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id11">
-     1.3.3. 머신러닝 학습 자동화
+     1.4.2. 훈련 지도 여부 구분
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id12">
-     1.3.4. 머신러닝의 장점
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id13">
-   1.4. 1.3 적용 사례
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id14">
-     1.4.1. 대표적인 머신러닝 적용 사례
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id15">
-   1.5. 1.4 머신러닝 시스템 종류
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id16">
-     1.5.1. 머신러닝 시스템 분류 기준
+     1.4.3. 지도 학습
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id17">
-       1.5.1.1. 분류 기준의 비배타성
+      <a class="reference internal nav-link" href="#id13">
+       1.4.3.1. 분류
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id14">
+       1.4.3.2. 회귀
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id15">
+       1.4.3.3. 중요한 지도학습 알고리즘들
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id16">
+       1.4.3.4. 주의사항
       </a>
      </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id18">
-     1.5.2. 훈련 지도 여부 구분
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id19">
-     1.5.3. 지도 학습
+    <a class="reference internal nav-link" href="#id17">
+     1.4.4. 비지도 학습
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id18">
+       1.4.4.1. 군집
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id19">
+       1.4.4.2. 시각화
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#id20">
-       1.5.3.1. 분류
+       1.4.4.3. 차원 축소
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#id21">
-       1.5.3.2. 회귀
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id22">
-       1.5.3.3. 중요한 지도학습 알고리즘들
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id23">
-       1.5.3.4. 주의사항
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id24">
-     1.5.4. 비지도 학습
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id25">
-       1.5.4.1. 군집
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id26">
-       1.5.4.2. 시각화
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id27">
-       1.5.4.3. 차원 축소
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id28">
-       1.5.4.4. 시각화와 차원축소 알고리즘
+       1.4.4.4. 시각화와 차원축소 알고리즘
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#outlier-detection">
-       1.5.4.5. 이상치 탐지(Outlier detection)
+       1.4.4.5. 이상치 탐지(Outlier detection)
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#novelty-detection">
-       1.5.4.6. 특이치 탐지(Novelty detection)
+       1.4.4.6. 특이치 탐지(Novelty detection)
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#vs">
-       1.5.4.7. 이상치 탐지 vs. 특이치 탐지
+       1.4.4.7. 이상치 탐지 vs. 특이치 탐지
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id29">
-       1.5.4.8. 연관 규칙 학습
+      <a class="reference internal nav-link" href="#id22">
+       1.4.4.8. 연관 규칙 학습
       </a>
      </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id30">
-     1.5.5. 준지도 학습
+    <a class="reference internal nav-link" href="#id23">
+     1.4.5. 준지도 학습
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id31">
-       1.5.5.1. 준지도 학습 예제
+      <a class="reference internal nav-link" href="#id24">
+       1.4.5.1. 준지도 학습 예제
       </a>
      </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id32">
-     1.5.6. 강화 학습
+    <a class="reference internal nav-link" href="#id25">
+     1.4.6. 강화 학습
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id33">
-     1.5.7. 실시간 훈련 여부 구분
+    <a class="reference internal nav-link" href="#id26">
+     1.4.7. 실시간 훈련 여부 구분
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#batch-learning">
-     1.5.8. 배치 학습(batch learning)
+     1.4.8. 배치 학습(batch learning)
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#online-learing">
-     1.5.9. 온라인 학습(online learing)
+     1.4.9. 온라인 학습(online learing)
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id27">
+     1.4.10. 예측 모델 사용 여부 구분
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id28">
+     1.4.11. 사례 기반 학습
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id29">
+     1.4.12. 모델 기반 학습
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id30">
+       1.4.12.1. 선형 모델 학습 예제
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id31">
+   1.5. 1.5 머신러닝의 주요 도전 과제
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id32">
+     1.5.1. 충분하지 않은 양의 훈련 데이터
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id33">
+     1.5.2. 대표성 없는 훈련 데이터
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#div-align-center-img-src-https-github-com-codingalzi-handson-ml3-blob-master-jupyter-book-imgs-ch01-homl01-21-png-raw-true-style-width-600px-div">
+       1.5.2.1.
+       <div align="center">
+        <img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-21.png?raw=true" style="width:600px;"/>
+       </div>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id34">
-     1.5.10. 예측 모델 사용 여부 구분
+     1.5.3. 낮은 품질의 데이터 처리
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id35">
-     1.5.11. 사례 기반 학습
+     1.5.4. 관련이 없는 특성
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id36">
-     1.5.12. 모델 기반 학습
+     1.5.5. 과대적합
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id37">
-       1.5.12.1. 선형 모델 학습 예제
+      <a class="reference internal nav-link" href="#div-align-center-img-src-https-github-com-codingalzi-handson-ml3-blob-master-jupyter-book-imgs-ch01-homl01-22-png-raw-true-style-width-550px-div">
+       1.5.5.1.
+       <div align="center">
+        <img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-22.png?raw=true" style="width:550px;"/>
+       </div>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#div-align-center-img-src-https-github-com-codingalzi-handson-ml3-blob-master-jupyter-book-imgs-ch01-homl01-23-png-raw-true-style-width-550px-div">
+       1.5.5.2.
+       <div align="center">
+        <img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-23.png?raw=true" style="width:550px;"/>
+       </div>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id37">
+     1.5.6. 과소적합
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#div-align-center-img-src-https-github-com-codingalzi-handson-ml3-blob-master-jupyter-book-imgs-ch04-homl04-06-png-raw-true-style-width-400px-div">
+       1.5.6.1.
+       <div align="center">
+        <img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch04/homl04-06.png?raw=true" style="width:400px;"/>
+       </div>
       </a>
      </li>
     </ul>
@@ -425,64 +459,27 @@
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id38">
-   1.6. 1.5 머신러닝의 주요 도전 과제
+   1.6. 1.6 테스트와 검증
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id39">
-     1.6.1. 충분하지 않은 양의 훈련 데이터
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id40">
-     1.6.2. 대표성 없는 훈련 데이터
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id41">
-     1.6.3. 낮은 품질의 데이터 처리
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id42">
-     1.6.4. 관련이 없는 특성
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id43">
-     1.6.5. 과대적합
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id44">
-     1.6.6. 과소적합
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id45">
-   1.7. 1.6 테스트와 검증
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id46">
-     1.7.1. 검증
+     1.6.1. 검증
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#hyper-parameter">
-     1.7.2. 하이퍼파라미터(hyper-parameter)
+     1.6.2. 하이퍼파라미터(hyper-parameter)
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id47">
-     1.7.3. 교차 검증
+    <a class="reference internal nav-link" href="#id40">
+     1.6.3. 교차 검증
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id48">
-     1.7.4. 검증 예제: 데이터 불일치
+    <a class="reference internal nav-link" href="#id41">
+     1.6.4. 검증 예제: 데이터 불일치
     </a>
    </li>
   </ul>
@@ -497,7 +494,7 @@
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>1장 한눈에 보는 머신러닝</h1>
+                <h1>한눈에 보는 머신러닝</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -509,225 +506,259 @@
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id2">
-   1.1. 감사의 글
+   1.1. 머신러닝이란?
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id3">
-   1.2. 1.1 머신러닝이란?
+   1.2. 머신러닝 사용 이유
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id4">
-     1.2.1. 머신러닝 프로그램 예제
+     1.2.1. 전통적인 프로그래밍
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id5">
-     1.2.2. 기본 용어
+     1.2.2. 머신러닝 프로그램
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id6">
-   1.3. 1.2 왜 머신러닝을 사용하는가?
+   1.3. 1.3 적용 사례
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id7">
-     1.3.1. 전통적인 프로그래밍
+     1.3.1. 대표적인 머신러닝 적용 사례
     </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id8">
-       1.3.1.1. 예제: 스팸 메일 분류
-      </a>
-     </li>
-    </ul>
    </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id8">
+   1.4. 1.4 머신러닝 시스템 종류
+  </a>
+  <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id9">
-     1.3.2. 머신러닝
+     1.4.1. 머신러닝 시스템 분류 기준
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#id10">
-       1.3.2.1. 예제: 스팸 메일 분류
+       1.4.1.1. 분류 기준의 비배타성
       </a>
      </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id11">
-     1.3.3. 머신러닝 학습 자동화
+     1.4.2. 훈련 지도 여부 구분
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id12">
-     1.3.4. 머신러닝의 장점
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id13">
-   1.4. 1.3 적용 사례
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id14">
-     1.4.1. 대표적인 머신러닝 적용 사례
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id15">
-   1.5. 1.4 머신러닝 시스템 종류
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id16">
-     1.5.1. 머신러닝 시스템 분류 기준
+     1.4.3. 지도 학습
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id17">
-       1.5.1.1. 분류 기준의 비배타성
+      <a class="reference internal nav-link" href="#id13">
+       1.4.3.1. 분류
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id14">
+       1.4.3.2. 회귀
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id15">
+       1.4.3.3. 중요한 지도학습 알고리즘들
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id16">
+       1.4.3.4. 주의사항
       </a>
      </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id18">
-     1.5.2. 훈련 지도 여부 구분
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id19">
-     1.5.3. 지도 학습
+    <a class="reference internal nav-link" href="#id17">
+     1.4.4. 비지도 학습
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id18">
+       1.4.4.1. 군집
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id19">
+       1.4.4.2. 시각화
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#id20">
-       1.5.3.1. 분류
+       1.4.4.3. 차원 축소
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#id21">
-       1.5.3.2. 회귀
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id22">
-       1.5.3.3. 중요한 지도학습 알고리즘들
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id23">
-       1.5.3.4. 주의사항
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id24">
-     1.5.4. 비지도 학습
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id25">
-       1.5.4.1. 군집
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id26">
-       1.5.4.2. 시각화
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id27">
-       1.5.4.3. 차원 축소
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id28">
-       1.5.4.4. 시각화와 차원축소 알고리즘
+       1.4.4.4. 시각화와 차원축소 알고리즘
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#outlier-detection">
-       1.5.4.5. 이상치 탐지(Outlier detection)
+       1.4.4.5. 이상치 탐지(Outlier detection)
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#novelty-detection">
-       1.5.4.6. 특이치 탐지(Novelty detection)
+       1.4.4.6. 특이치 탐지(Novelty detection)
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#vs">
-       1.5.4.7. 이상치 탐지 vs. 특이치 탐지
+       1.4.4.7. 이상치 탐지 vs. 특이치 탐지
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id29">
-       1.5.4.8. 연관 규칙 학습
+      <a class="reference internal nav-link" href="#id22">
+       1.4.4.8. 연관 규칙 학습
       </a>
      </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id30">
-     1.5.5. 준지도 학습
+    <a class="reference internal nav-link" href="#id23">
+     1.4.5. 준지도 학습
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id31">
-       1.5.5.1. 준지도 학습 예제
+      <a class="reference internal nav-link" href="#id24">
+       1.4.5.1. 준지도 학습 예제
       </a>
      </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id32">
-     1.5.6. 강화 학습
+    <a class="reference internal nav-link" href="#id25">
+     1.4.6. 강화 학습
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id33">
-     1.5.7. 실시간 훈련 여부 구분
+    <a class="reference internal nav-link" href="#id26">
+     1.4.7. 실시간 훈련 여부 구분
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#batch-learning">
-     1.5.8. 배치 학습(batch learning)
+     1.4.8. 배치 학습(batch learning)
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#online-learing">
-     1.5.9. 온라인 학습(online learing)
+     1.4.9. 온라인 학습(online learing)
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id27">
+     1.4.10. 예측 모델 사용 여부 구분
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id28">
+     1.4.11. 사례 기반 학습
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id29">
+     1.4.12. 모델 기반 학습
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id30">
+       1.4.12.1. 선형 모델 학습 예제
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id31">
+   1.5. 1.5 머신러닝의 주요 도전 과제
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id32">
+     1.5.1. 충분하지 않은 양의 훈련 데이터
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id33">
+     1.5.2. 대표성 없는 훈련 데이터
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#div-align-center-img-src-https-github-com-codingalzi-handson-ml3-blob-master-jupyter-book-imgs-ch01-homl01-21-png-raw-true-style-width-600px-div">
+       1.5.2.1.
+       <div align="center">
+        <img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-21.png?raw=true" style="width:600px;"/>
+       </div>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id34">
-     1.5.10. 예측 모델 사용 여부 구분
+     1.5.3. 낮은 품질의 데이터 처리
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id35">
-     1.5.11. 사례 기반 학습
+     1.5.4. 관련이 없는 특성
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id36">
-     1.5.12. 모델 기반 학습
+     1.5.5. 과대적합
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id37">
-       1.5.12.1. 선형 모델 학습 예제
+      <a class="reference internal nav-link" href="#div-align-center-img-src-https-github-com-codingalzi-handson-ml3-blob-master-jupyter-book-imgs-ch01-homl01-22-png-raw-true-style-width-550px-div">
+       1.5.5.1.
+       <div align="center">
+        <img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-22.png?raw=true" style="width:550px;"/>
+       </div>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#div-align-center-img-src-https-github-com-codingalzi-handson-ml3-blob-master-jupyter-book-imgs-ch01-homl01-23-png-raw-true-style-width-550px-div">
+       1.5.5.2.
+       <div align="center">
+        <img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-23.png?raw=true" style="width:550px;"/>
+       </div>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id37">
+     1.5.6. 과소적합
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#div-align-center-img-src-https-github-com-codingalzi-handson-ml3-blob-master-jupyter-book-imgs-ch04-homl04-06-png-raw-true-style-width-400px-div">
+       1.5.6.1.
+       <div align="center">
+        <img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch04/homl04-06.png?raw=true" style="width:400px;"/>
+       </div>
       </a>
      </li>
     </ul>
@@ -736,64 +767,27 @@
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id38">
-   1.6. 1.5 머신러닝의 주요 도전 과제
+   1.6. 1.6 테스트와 검증
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id39">
-     1.6.1. 충분하지 않은 양의 훈련 데이터
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id40">
-     1.6.2. 대표성 없는 훈련 데이터
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id41">
-     1.6.3. 낮은 품질의 데이터 처리
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id42">
-     1.6.4. 관련이 없는 특성
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id43">
-     1.6.5. 과대적합
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id44">
-     1.6.6. 과소적합
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id45">
-   1.7. 1.6 테스트와 검증
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id46">
-     1.7.1. 검증
+     1.6.1. 검증
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#hyper-parameter">
-     1.7.2. 하이퍼파라미터(hyper-parameter)
+     1.6.2. 하이퍼파라미터(hyper-parameter)
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id47">
-     1.7.3. 교차 검증
+    <a class="reference internal nav-link" href="#id40">
+     1.6.3. 교차 검증
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id48">
-     1.7.4. 검증 예제: 데이터 불일치
+    <a class="reference internal nav-link" href="#id41">
+     1.6.4. 검증 예제: 데이터 불일치
     </a>
    </li>
   </ul>
@@ -808,118 +802,92 @@
               <div>
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="id1">
-<h1><span class="section-number">1. </span>1장 한눈에 보는 머신러닝<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="id2">
-<h2><span class="section-number">1.1. </span>감사의 글<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h1><span class="section-number">1. </span>한눈에 보는 머신러닝<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<p><strong>감사의 글</strong></p>
 <p>자료를 공개한 저자 오렐리앙 제롱과 강의자료를 지원한 한빛아카데미에게 진심어린 감사를 전합니다.</p>
+<div class="section" id="id2">
+<h2><span class="section-number">1.1. </span>머신러닝이란?<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p><strong>아서 새뮤얼<font size="2">Artuhr Samuel</font> (1959)</strong></p>
+<blockquote>
+<div><p>명시적인 프로그래밍 없이 컴퓨터 스스로 학습하는 능력 에 대한 연구 분야</p>
+</div></blockquote>
+<p><strong>톰 미첼<font size="2">Tom Michell</font> (1977)</strong></p>
+<blockquote>
+<div><p>경험 E를 통해 과제 T에 대한 프로그램의 수행 성능 P가 향상되면
+해당 프로그램은 경험 E를 통해 학습한다 라고 말한다.</p>
+</div></blockquote>
+<div class="proof example admonition" id="spam_filter">
+<p class="admonition-title"><span class="caption-number">Example 1.1 </span> (스팸 필터)</p>
+<div class="example-content section" id="proof-content">
+<p>스팸<font size="2">spam</font> 메일과 아닌 메일<font size="2">ham</font>의 구분법을 머신러닝으로 학습시킬 수 있다.</p>
+</div>
+</div><p><strong>머신러닝 주요 용어</strong></p>
+<ul class="simple">
+<li><p><strong>훈련 셋</strong><font size="2">training set</font>:
+머신러닝 프로그램이 훈련(학습)하는 데 사용하는 데이터 집합</p></li>
+<li><p><strong>훈련 사례</strong><font size="2">training instance</font>
+혹은 <strong>샘플</strong><font size="2">sample</font>:
+각각의 훈련 데이터</p></li>
+<li><p>톰 미첼의 정의와 관련해서 다음 성립:</p>
+<ul>
+<li><p>작업 T = 새로운 메일의 스팸 여부 판단</p></li>
+<li><p>경험 E = 훈련 데이터</p></li>
+<li><p>성능 P = 스팸 여부 판단의 정확도</p></li>
+</ul>
+</li>
+</ul>
 </div>
 <div class="section" id="id3">
-<h2><span class="section-number">1.2. </span>1.1 머신러닝이란?<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p>아서 새뮤얼(Artuhr Samuel), 1959</p></li>
-</ul>
-<blockquote>
-<div><p>머신러닝은 <strong>명시적인 프로그래밍</strong> 없이 컴퓨터가 학습하는 능력을 갖추게 하는 연구 분야</p>
-</div></blockquote>
-<ul class="simple">
-<li><p>톰 미첼(Tom Michell), 1977</p></li>
-</ul>
-<blockquote>
-<div><p>어떤 작업 T에 대한 컴퓨터 프로그램의 성능을 P로 측정했을 때
-경험 E로 인해 성능이 향상되었다면,
-이 컴퓨터 프로그램은 __작업 T와 성능 측정 P에 대해 경험 E로부터 학습한다__고 말한다.</p>
-</div></blockquote>
+<h2><span class="section-number">1.2. </span>머신러닝 사용 이유<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id4">
-<h3><span class="section-number">1.2.1. </span>머신러닝 프로그램 예제<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">1.2.1. </span>전통적인 프로그래밍<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>전통적인 프로그래밍 접근 방법은 다음과 같다.</p>
+<ol class="simple">
+<li><p>문제 연구: 문제 해결 알고리즘 연구</p></li>
+<li><p>규칙 작성: 알고리즘 규현</p></li>
+<li><p>평가: 구현된 프로그램 테스트</p>
 <ul class="simple">
-<li><p>스팸 필터: 스팸(spam)과 스팸이 아닌 메일(ham)의 샘플을 이용하여 스팸 메일 구분법 학습</p></li>
-</ul>
-</div>
-<div class="section" id="id5">
-<h3><span class="section-number">1.2.2. </span>기본 용어<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p><strong>훈련 세트</strong>(training set): 머신러닝 프로그램이 훈련(학습)하는 데 사용하는 데이터 집합</p></li>
-</ul>
-<ul class="simple">
-<li><p><strong>훈련 사례</strong> 혹은 <strong>샘플</strong>: 각각의 훈련 데이터</p></li>
-</ul>
-<ul class="simple">
-<li><p>톰 미첼의 정의와의 연계</p>
-<ul>
-<li><p>작업 T: 새로운 메일이 스팸 여부 판단</p></li>
-<li><p>경험 E: 훈련 데이터셋</p></li>
-<li><p>성능 P: 예를 들어, 정확히 분류된 메일의 비율
-(다른 성능 측정 기준도 가능. 3장 참조)</p></li>
+<li><p>테스트 통과: 프로그램 론칭</p></li>
+<li><p>테스트 실패: 오차 분석 후 1단계로 이동</p></li>
 </ul>
 </li>
+</ol>
+<div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-01.png?raw=true" style="width:400px;"></div><div class="proof example admonition" id="spam_classification">
+<p class="admonition-title"><span class="caption-number">Example 1.2 </span> (스팸 메일 분류)</p>
+<div class="example-content section" id="proof-content">
+<ul class="simple">
+<li><p>특정 단어가 들어가면 스팸 메일로 처리.</p></li>
+<li><p>프로그램이 론칭된 후 새로운 스팸단어가 사용될 때 스팸 메일 분류 실패.</p></li>
+<li><p>개발자가 새로운 규칙을 매번 업데이트 시켜줘야 함.</p></li>
+<li><p>유지 보수 어려움.</p></li>
 </ul>
 </div>
+</div></div>
+<div class="section" id="id5">
+<h3><span class="section-number">1.2.2. </span>머신러닝 프로그램<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>스팸으로 지정된 메일에 “4U”, “For U”, “Buy Drugs” 등의 표현이
+자주 등장하는 경우 새로운 메일에 그런 표현이 사용되면
+자동으로 스팸으로 분류하도록 프로그램을 학습시킨다.</p>
+<div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-02.png?raw=true" style="width:420px;"></div><p><strong>머신러닝 학습 자동화</strong></p>
+<p>머신러닝 작업 흐름을 관장하는 <strong>머신러닝 파이프라인</strong>
+또는 <strong>MLOps(Machine Learning Operations, 머신러닝 운영)</strong> 의
+자동화가 가능하다.</p>
+<div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-03.png?raw=true" style="width:440px;"></div><p><strong>머신러닝의 장점</strong></p>
+<ol class="simple">
+<li><p>스팸 메일 분류기 처럼 알고리즘에 대한 너무 많은 세부 튜닝과
+매우 긴 규칙을 요구하는 문제를 해결할 수 있다.</p></li>
+<li><p>음성 인식 등 전통적인 방식으로 해결하기에 너무 복잡한 문제를 해결할 수 있다.</p></li>
+<li><p>새로운 데이터에 바로 적용이 가능한 시스템을 쉽게 재훈련할 수 있다.</p></li>
+<li><p>머신러닝 프로그램으로 생성된 솔루션 분석을 통해
+데이터에 대한 통찰을 얻을 수 있다.
+즉, <strong>데이터 마이닝</strong><font size="2">data mining</font>이 가능하다.</p></li>
+</ol>
+<div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-04.png?raw=true" style="width:440px;"></div></div>
 </div>
 <div class="section" id="id6">
-<h2><span class="section-number">1.3. </span>1.2 왜 머신러닝을 사용하는가?<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">1.3. </span>1.3 적용 사례<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id7">
-<h3><span class="section-number">1.3.1. </span>전통적인 프로그래밍<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
-<div align="center"><img src="images/ch01/homl01-01.png" width="500"/></div><ul class="simple">
-<li><p>전통적인 프로그래밍 접근 방법은 다음과 같다.</p>
-<ul>
-<li><p><strong>문제 연구</strong>: 누군가가 문제를 해결하기 위해 해결책을 찾음</p></li>
-<li><p><strong>규칙 작성</strong>: 결정된 규칙을 개발자가 프로그램을 작성</p></li>
-<li><p><strong>평가</strong>: 만들어진 프로그램을 테스트</p></li>
-<li><p>문제가 없다면 <strong>론칭</strong>, 문제가 있다면 <strong>오차를 분석</strong>한 후 처음 과정부터 다시 실시</p></li>
-</ul>
-</li>
-</ul>
-<div class="section" id="id8">
-<h4><span class="section-number">1.3.1.1. </span>예제: 스팸 메일 분류<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li><p><strong>특정 단어</strong>가 들어가면 스팸 메일로 처리</p></li>
-</ul>
-<ul class="simple">
-<li><p>프로그램이 론칭된 후 새로운 스팸단어가 생겼을 때 소프트웨어는 이 단어를 자동으로 분류할 수 없음</p></li>
-</ul>
-<ul class="simple">
-<li><p>개발자가 새로운 규칙을 업데이트 시켜줘야 함</p></li>
-</ul>
-<ul class="simple">
-<li><p><strong>새로운 규칙이 생겼을 때 사용자가 매번 업데이트를</strong> 시켜줘야하기 때문에 유지 보수가 어려움</p></li>
-</ul>
-</div>
-</div>
-<div class="section" id="id9">
-<h3><span class="section-number">1.3.2. </span>머신러닝<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
-<div align="center"><img src="images/ch01/homl01-02.png" width="500"/></div><div class="section" id="id10">
-<h4><span class="section-number">1.3.2.1. </span>예제: 스팸 메일 분류<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li><p>사용자가 스팸으로 지정한 메일에 ‘4U’, ‘For U’, ‘Buy Drugs” 등의 표현이 자주 등장하는 경우
-그런 표현을 자동으로 인식하고 메일을 스팸으로 분류하도록 프로그램 스스로 학습</p></li>
-</ul>
-</div>
-</div>
-<div class="section" id="id11">
-<h3><span class="section-number">1.3.3. </span>머신러닝 학습 자동화<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
-<div align="center"><img src="images/ch01/homl01-03.png" width="500"/></div><ul class="simple">
-<li><p>머신러닝 작업 흐름의 전체를 <strong>머신러닝 파이프라인</strong>
-또는 __MLOps(Machine Learning Operations, 머신러닝 운영)__라 부르며 자동화가 가능함.</p></li>
-<li><p>참조: <a class="reference external" href="https://cloud.google.com/solutions/machine-learning/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning">MLOps: 머신러닝의 지속적 배포 및 자동화 파이프라인</a></p></li>
-</ul>
-</div>
-<div class="section" id="id12">
-<h3><span class="section-number">1.3.4. </span>머신러닝의 장점<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
-<div align="center"><img src="images/ch01/homl01-04.png" width="500"/></div><ul class="simple">
-<li><p>전통적인 방식으로는 해결 방법이 없는 너무 복잡한 문제 해결</p></li>
-</ul>
-<ul class="simple">
-<li><p>새로운 데이터에 쉽게 적응 가능한 시스템</p></li>
-</ul>
-<ul class="simple">
-<li><p>데이터 마이닝(data mining): 복잡한 문제와 대량의 데이터에서 통찰 얻기</p></li>
-</ul>
-</div>
-</div>
-<div class="section" id="id13">
-<h2><span class="section-number">1.4. </span>1.3 적용 사례<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id14">
-<h3><span class="section-number">1.4.1. </span>대표적인 머신러닝 적용 사례<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">1.3.1. </span>대표적인 머신러닝 적용 사례<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>이미지 분류 작업: 생산 라인에서 제품 이미지를 분석해 자동으로 분류</p></li>
 </ul>
@@ -961,10 +929,10 @@
 </ul>
 </div>
 </div>
-<div class="section" id="id15">
-<h2><span class="section-number">1.5. </span>1.4 머신러닝 시스템 종류<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id16">
-<h3><span class="section-number">1.5.1. </span>머신러닝 시스템 분류 기준<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id8">
+<h2><span class="section-number">1.4. </span>1.4 머신러닝 시스템 종류<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id9">
+<h3><span class="section-number">1.4.1. </span>머신러닝 시스템 분류 기준<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>기준 1: 훈련 지도 여부</p>
 <ul>
@@ -991,8 +959,8 @@
 </ul>
 </li>
 </ul>
-<div class="section" id="id17">
-<h4><span class="section-number">1.5.1.1. </span>분류 기준의 비배타성<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id10">
+<h4><span class="section-number">1.4.1.1. </span>분류 기준의 비배타성<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>분류 기준이 상호 배타적이지는 않음.</p></li>
 </ul>
@@ -1006,11 +974,11 @@
 </ul>
 </div>
 </div>
-<div class="section" id="id18">
-<h3><span class="section-number">1.5.2. </span>훈련 지도 여부 구분<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id11">
+<h3><span class="section-number">1.4.2. </span>훈련 지도 여부 구분<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
 </div>
-<div class="section" id="id19">
-<h3><span class="section-number">1.5.3. </span>지도 학습<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id12">
+<h3><span class="section-number">1.4.3. </span>지도 학습<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>훈련 데이터에 __레이블(label)__이라는 답 포함</p>
 <ul>
@@ -1026,10 +994,9 @@
 </ul>
 </li>
 </ul>
-<div class="section" id="id20">
-<h4><span class="section-number">1.5.3.1. </span>분류<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h4>
-<div align="center"><img src="images/ch01/homl01-05.png" width="500"/></div>
-<ul class="simple">
+<div class="section" id="id13">
+<h4><span class="section-number">1.4.3.1. </span>분류<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h4>
+<div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-05.png?raw=true" style="width:450px;"></div><ul class="simple">
 <li><p>특성을 사용한 데이터 분류</p></li>
 </ul>
 <ul class="simple">
@@ -1041,10 +1008,9 @@
 </li>
 </ul>
 </div>
-<div class="section" id="id21">
-<h4><span class="section-number">1.5.3.2. </span>회귀<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h4>
-<div align="center"><img src="images/ch01/homl01-06.png" width="400"/></div>
-<ul class="simple">
+<div class="section" id="id14">
+<h4><span class="section-number">1.4.3.2. </span>회귀<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h4>
+<div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-06.png?raw=true" style="width:400px;"></div><ul class="simple">
 <li><p>특성을 사용하여 타깃(target) 수치 예측</p></li>
 </ul>
 <ul class="simple">
@@ -1056,8 +1022,8 @@
 </li>
 </ul>
 </div>
-<div class="section" id="id22">
-<h4><span class="section-number">1.5.3.3. </span>중요한 지도학습 알고리즘들<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id15">
+<h4><span class="section-number">1.4.3.3. </span>중요한 지도학습 알고리즘들<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>k-최근접 이웃(k-NNs)</p></li>
 <li><p>선형 회귀(linear regression)</p></li>
@@ -1067,20 +1033,20 @@
 <li><p>신경망(neural networks)</p></li>
 </ul>
 </div>
-<div class="section" id="id23">
-<h4><span class="section-number">1.5.3.4. </span>주의사항<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id16">
+<h4><span class="section-number">1.4.3.4. </span>주의사항<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>일부 회귀/분류 알고리즘을 분류/회귀에 사용 가능</p></li>
 <li><p>예제: 로지스틱 회귀, SVM 등등</p></li>
 </ul>
 </div>
 </div>
-<div class="section" id="id24">
-<h3><span class="section-number">1.5.4. </span>비지도 학습<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id17">
+<h3><span class="section-number">1.4.4. </span>비지도 학습<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>__레이블 없는 훈련 데이터__를 이용하여 시스템 스스로 학습</p></li>
 </ul>
-<div align="center"><img src="images/ch01/homl01-07.png" width="410"/></div><ul class="simple">
+<div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-07.png?raw=true" style="width:410px;"></div><ul class="simple">
 <li><p>대표적 비지도 학습</p>
 <ul>
 <li><p>군집</p></li>
@@ -1090,10 +1056,9 @@
 </ul>
 </li>
 </ul>
-<div class="section" id="id25">
-<h4><span class="section-number">1.5.4.1. </span>군집<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h4>
-<div align="center"><img src="images/ch01/homl01-08.png" width="400"/></div>
-<ul class="simple">
+<div class="section" id="id18">
+<h4><span class="section-number">1.4.4.1. </span>군집<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h4>
+<div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-08.png?raw=true" style="width:400px;"></div><ul class="simple">
 <li><p>데이터를 비슷한 특징을 가진 몇 개의 그룹으로 나누는 것</p></li>
 </ul>
 <ul class="simple">
@@ -1109,16 +1074,16 @@
 </li>
 </ul>
 </div>
-<div class="section" id="id26">
-<h4><span class="section-number">1.5.4.2. </span>시각화<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id19">
+<h4><span class="section-number">1.4.4.2. </span>시각화<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>다차원 특성을 가진 데이터셋을 2D 또는 3D로 표현하기</p></li>
 <li><p>시각화를 하기 위해서는 데이터의 특성을 2가지로 줄여야함</p></li>
 <li><p>데이터가 구성 패턴에 대한 정보 획득 가능</p></li>
 </ul>
-<div align="center"><img src="images/ch01/homl01-09.png" width="650"/></div></div>
-<div class="section" id="id27">
-<h4><span class="section-number">1.5.4.3. </span>차원 축소<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h4>
+<div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-09.png?raw=true" style="width:650px;"></div></div>
+<div class="section" id="id20">
+<h4><span class="section-number">1.4.4.3. </span>차원 축소<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>데이터의 특성 수 줄이기</p></li>
 </ul>
@@ -1139,8 +1104,8 @@
 </li>
 </ul>
 </div>
-<div class="section" id="id28">
-<h4><span class="section-number">1.5.4.4. </span>시각화와 차원축소 알고리즘<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id21">
+<h4><span class="section-number">1.4.4.4. </span>시각화와 차원축소 알고리즘<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>주성분 분석(PCA)</p></li>
 <li><p>커널 PCA</p></li>
@@ -1149,22 +1114,22 @@
 </ul>
 </div>
 <div class="section" id="outlier-detection">
-<h4><span class="section-number">1.5.4.5. </span>이상치 탐지(Outlier detection)<a class="headerlink" href="#outlier-detection" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">1.4.4.5. </span>이상치 탐지(Outlier detection)<a class="headerlink" href="#outlier-detection" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>정상 샘플을 이용하여 훈련 후 입력 샘플의 정상여부 판단 후 이상치(outliers) 자동 제거</p></li>
 </ul>
-<div align="center"><img src="images/ch01/homl01-10.png" width="500"/></div><ul class="simple">
+<div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-10.png?raw=true" style="width:500px;"></div><ul class="simple">
 <li><p>예제: 부정거래 사용 감지, 제조 결함 잡아내기 등등</p></li>
 </ul>
 </div>
 <div class="section" id="novelty-detection">
-<h4><span class="section-number">1.5.4.6. </span>특이치 탐지(Novelty detection)<a class="headerlink" href="#novelty-detection" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">1.4.4.6. </span>특이치 탐지(Novelty detection)<a class="headerlink" href="#novelty-detection" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>전혀 ‘오염되지 않은’(clean) 훈련 세트 활용 후 훈련 세트에 포함된 데이터와 달라 보이는 테이터 감지하기</p></li>
 </ul>
 </div>
 <div class="section" id="vs">
-<h4><span class="section-number">1.5.4.7. </span>이상치 탐지 vs. 특이치 탐지<a class="headerlink" href="#vs" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">1.4.4.7. </span>이상치 탐지 vs. 특이치 탐지<a class="headerlink" href="#vs" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>예제: 수 천장의 강아지 사진에 치와와 사진이 1%정도 포함되어 있는 경우</p></li>
 </ul>
@@ -1175,8 +1140,8 @@
 <li><p>반면에 비정상 탐지 알고리즘은 새로운 치와와 사진을 다른 강아지들과 다른 종으로 간주할 수 있음.</p></li>
 </ul>
 </div>
-<div class="section" id="id29">
-<h4><span class="section-number">1.5.4.8. </span>연관 규칙 학습<a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id22">
+<h4><span class="section-number">1.4.4.8. </span>연관 규칙 학습<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>데이터 특성 간의 흥미로운 관계 찾기</p></li>
 </ul>
@@ -1189,8 +1154,8 @@
 </ul>
 </div>
 </div>
-<div class="section" id="id30">
-<h3><span class="section-number">1.5.5. </span>준지도 학습<a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id23">
+<h3><span class="section-number">1.4.5. </span>준지도 학습<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>레이블이 적용된 적은 수의 샘플이 주어졌을 때 유횽함.</p></li>
 </ul>
@@ -1200,30 +1165,30 @@
 <ul class="simple">
 <li><p>대부분 지도 학습과 비지도 학습 혼합 사용</p></li>
 </ul>
-<div class="section" id="id31">
-<h4><span class="section-number">1.5.5.1. </span>준지도 학습 예제<a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id24">
+<h4><span class="section-number">1.4.5.1. </span>준지도 학습 예제<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>아래 그림 참조: 새로운 사례 <code class="docutils literal notranslate"><span class="pre">X</span></code>를 세모에 더 가깝다고 판단함.</p></li>
 </ul>
-<div align="center"><img src="images/ch01/homl01-11.png" width="400"/></div><ul class="simple">
+<div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-11.png?raw=true" style="width:400px;"></div><ul class="simple">
 <li><p>구글 포토 호스팅: 가족 사진 몇 장에만 레이블 적용. 이후 모든 사진에서 가족사진 확인 가능.</p></li>
 </ul>
 </div>
 </div>
-<div class="section" id="id32">
-<h3><span class="section-number">1.5.6. </span>강화 학습<a class="headerlink" href="#id32" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id25">
+<h3><span class="section-number">1.4.6. </span>강화 학습<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>에이전트(학습 시스템)가 취한 행동에 대해 보상 또는 벌점을 주어 가장 큰 보상을 받는 방향으로 유도하기</p></li>
 </ul>
-<div align="center"><img src="images/ch01/homl01-12.png" width="400"/></div><ul class="simple">
+<div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-12.png?raw=true" style="width:400px;"></div><ul class="simple">
 <li><p>예제: 딥마인드(DeepMind)의 알파고(AlphaGo)</p></li>
 </ul>
-<div align="center"><img src="images/ch01/alphago01.png" width="500"/></div></div>
-<div class="section" id="id33">
-<h3><span class="section-number">1.5.7. </span>실시간 훈련 여부 구분<a class="headerlink" href="#id33" title="Permalink to this headline">¶</a></h3>
+<div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/alphago01.png?raw=true" style="width:500px;"></div></div>
+<div class="section" id="id26">
+<h3><span class="section-number">1.4.7. </span>실시간 훈련 여부 구분<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h3>
 </div>
 <div class="section" id="batch-learning">
-<h3><span class="section-number">1.5.8. </span>배치 학습(batch learning)<a class="headerlink" href="#batch-learning" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">1.4.8. </span>배치 학습(batch learning)<a class="headerlink" href="#batch-learning" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>주어진 훈련 세트 전체를 사용해 오프라인에서 훈련</p></li>
 </ul>
@@ -1244,11 +1209,11 @@
 </ul>
 </div>
 <div class="section" id="online-learing">
-<h3><span class="section-number">1.5.9. </span>온라인 학습(online learing)<a class="headerlink" href="#online-learing" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">1.4.9. </span>온라인 학습(online learing)<a class="headerlink" href="#online-learing" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>하나씩 또는 적은 양의 데이터 묶음(미니배치, mini-batch)를 사용해 점진적으로 훈련</p></li>
 </ul>
-<div align="center"><img src="images/ch01/homl01-13.png" width="500"/></div><ul class="simple">
+<div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-13.png?raw=true" style="width:500px;"></div><ul class="simple">
 <li><p>단점</p>
 <ul>
 <li><p>나쁜 데이터가 주입되는 경우 시스템 성능이 점진적으로 떨어질 수 있음.</p></li>
@@ -1265,16 +1230,16 @@
 </ul>
 </li>
 </ul>
-<div align="center"><img src="images/ch01/homl01-14.png" width="500"/></div></div>
-<div class="section" id="id34">
-<h3><span class="section-number">1.5.10. </span>예측 모델 사용 여부 구분<a class="headerlink" href="#id34" title="Permalink to this headline">¶</a></h3>
+<div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-14.png?raw=true" style="width:500px;"></div></div>
+<div class="section" id="id27">
+<h3><span class="section-number">1.4.10. </span>예측 모델 사용 여부 구분<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>훈련 모델의 <strong>일반화(generalization)</strong> 방식에 따른 분류</p></li>
 <li><p>일반화 = ‘새로운 데이터에 대한 예측’</p></li>
 </ul>
 </div>
-<div class="section" id="id35">
-<h3><span class="section-number">1.5.11. </span>사례 기반 학습<a class="headerlink" href="#id35" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id28">
+<h3><span class="section-number">1.4.11. </span>사례 기반 학습<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p><strong>샘플을 기억</strong>하는 것이 훈련의 전부</p></li>
 </ul>
@@ -1287,9 +1252,9 @@
 <ul class="simple">
 <li><p>k-NN 활용 예제: 새로운 샘플 <code class="docutils literal notranslate"><span class="pre">X</span></code>가 기존에 세모인 샘플과의 유사도가 높기 때문에 세모로 분류.</p></li>
 </ul>
-<div align="center"><img src="images/ch01/homl01-15.png" width="500"/></div></div>
-<div class="section" id="id36">
-<h3><span class="section-number">1.5.12. </span>모델 기반 학습<a class="headerlink" href="#id36" title="Permalink to this headline">¶</a></h3>
+<div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-15.png?raw=true" style="width:450px;"></div></div>
+<div class="section" id="id29">
+<h3><span class="section-number">1.4.12. </span>모델 기반 학습<a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>모델을 미리 지정한 후 훈련 세트를 사용해서 모델을 훈련시킴</p></li>
 </ul>
@@ -1302,15 +1267,15 @@
 <ul class="simple">
 <li><p>예제: 학습된 모델을 이용하여 새로운 데이터 <code class="docutils literal notranslate"><span class="pre">X</span></code>를 세모 클래스로 분류</p></li>
 </ul>
-<div align="center"><img src="images/ch01/homl01-16.png" width="500"/></div><div class="section" id="id37">
-<h4><span class="section-number">1.5.12.1. </span>선형 모델 학습 예제<a class="headerlink" href="#id37" title="Permalink to this headline">¶</a></h4>
+<div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-16.png?raw=true" style="width:450px;"></div><div class="section" id="id30">
+<h4><span class="section-number">1.4.12.1. </span>선형 모델 학습 예제<a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>목표: OECD 국가의 1인당 GDP(1인당 국가총생산)와 삶의 만족도 사이의 관계 파악</p></li>
 </ul>
 <ul class="simple">
 <li><p>1인당 GDP가 증가할 수록 삶의 만족도가 선형으로 증가하는 것처럼 보임.</p></li>
 </ul>
-<div align="center"><img src="images/ch01/homl01-17.png" width="500"/></div><ul>
+<div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-17.png?raw=true" style="width:450px;"></div><ul>
 <li><p>데이터를 대표하는 하나의 직선(선형 모델)을 찾기</p>
 <div class="math notranslate nohighlight">
 \[
@@ -1321,7 +1286,7 @@
 <ul class="simple">
 <li><p>데이터를 대표할 수 있는 선형 방정식을 찾아야 함</p></li>
 </ul>
-<div align="center"><img src="images/ch01/homl01-18.png" width="500"/></div><ul class="simple">
+<div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-18.png?raw=true" style="width:450px;"></div><ul class="simple">
 <li><p>학습되는 모델의 성능 평가 기준을 측정하여 가장 적합한 모델 학습</p>
 <ul>
 <li><p>효용 함수: 모델이 얼마나 좋은지 측정</p></li>
@@ -1332,13 +1297,13 @@
 <ul class="simple">
 <li><p>아래 선형 모델이 최적!</p></li>
 </ul>
-<div align="center"><img src="images/ch01/homl01-19.png" width="500"/></div></div>
+<div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-19.png?raw=true" style="width:450px;"></div></div>
 </div>
 </div>
-<div class="section" id="id38">
-<h2><span class="section-number">1.6. </span>1.5 머신러닝의 주요 도전 과제<a class="headerlink" href="#id38" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id39">
-<h3><span class="section-number">1.6.1. </span>충분하지 않은 양의 훈련 데이터<a class="headerlink" href="#id39" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id31">
+<h2><span class="section-number">1.5. </span>1.5 머신러닝의 주요 도전 과제<a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id32">
+<h3><span class="section-number">1.5.1. </span>충분하지 않은 양의 훈련 데이터<a class="headerlink" href="#id32" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>간단한 문제라도 수천 개 이상의 데이터가 필요</p></li>
 </ul>
@@ -1351,9 +1316,9 @@
 <ul class="simple">
 <li><p>일반적으로 데이터가 많을 수록 모델의 성능 높아짐.</p></li>
 </ul>
-<div align="center"><img src="images/ch01/homl01-20.png" width="400"/></div></div>
-<div class="section" id="id40">
-<h3><span class="section-number">1.6.2. </span>대표성 없는 훈련 데이터<a class="headerlink" href="#id40" title="Permalink to this headline">¶</a></h3>
+<div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-20.png?raw=true" style="width:450px;"></div></div>
+<div class="section" id="id33">
+<h3><span class="section-number">1.5.2. </span>대표성 없는 훈련 데이터<a class="headerlink" href="#id33" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>샘플링 잡음: 우연에 의해 추가된 대표성이 없는 데이터</p></li>
 </ul>
@@ -1368,9 +1333,12 @@
 </ul>
 </li>
 </ul>
-<div align="center"><img src="images/ch01/homl01-21.png" width="500"/></div></div>
-<div class="section" id="id41">
-<h3><span class="section-number">1.6.3. </span>낮은 품질의 데이터 처리<a class="headerlink" href="#id41" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="div-align-center-img-src-https-github-com-codingalzi-handson-ml3-blob-master-jupyter-book-imgs-ch01-homl01-21-png-raw-true-style-width-600px-div">
+<h4><span class="section-number">1.5.2.1. </span><div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-21.png?raw=true" style="width:600px;"></div><a class="headerlink" href="#div-align-center-img-src-https-github-com-codingalzi-handson-ml3-blob-master-jupyter-book-imgs-ch01-homl01-21-png-raw-true-style-width-600px-div" title="Permalink to this headline">¶</a></h4>
+</div>
+</div>
+<div class="section" id="id34">
+<h3><span class="section-number">1.5.3. </span>낮은 품질의 데이터 처리<a class="headerlink" href="#id34" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>이상치 샘플이라면 고치거나 무시</p></li>
 </ul>
@@ -1385,8 +1353,8 @@
 </li>
 </ul>
 </div>
-<div class="section" id="id42">
-<h3><span class="section-number">1.6.4. </span>관련이 없는 특성<a class="headerlink" href="#id42" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id35">
+<h3><span class="section-number">1.5.4. </span>관련이 없는 특성<a class="headerlink" href="#id35" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>풀려는 문제에 관련이 높은 특성을 찾아야 함</p></li>
 </ul>
@@ -1397,12 +1365,14 @@
 <li><p>특성 추출: 특성을 조합하여 새로운 특성을 만듦</p></li>
 </ul>
 </div>
-<div class="section" id="id43">
-<h3><span class="section-number">1.6.5. </span>과대적합<a class="headerlink" href="#id43" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id36">
+<h3><span class="section-number">1.5.5. </span>과대적합<a class="headerlink" href="#id36" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>훈련 세트에 특화되어 일반화 성능이 떨어지는 현상</p></li>
 </ul>
-<div align="center"><img src="images/ch01/homl01-22.png" width="500"/></div><ul class="simple">
+<div class="section" id="div-align-center-img-src-https-github-com-codingalzi-handson-ml3-blob-master-jupyter-book-imgs-ch01-homl01-22-png-raw-true-style-width-550px-div">
+<h4><span class="section-number">1.5.5.1. </span><div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-22.png?raw=true" style="width:550px;"></div><a class="headerlink" href="#div-align-center-img-src-https-github-com-codingalzi-handson-ml3-blob-master-jupyter-book-imgs-ch01-homl01-22-png-raw-true-style-width-550px-div" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
 <li><p>규제를 적용해 과대적합을 감소시킬 수 있음</p></li>
 </ul>
 <ul class="simple">
@@ -1412,12 +1382,18 @@
 <li><p>파랑 점선이 규제를 적용해 훈련된 선형 모델임.</p></li>
 </ul>
 <div align="center"><img src="images/ch01/homl01-23.png" width="500"/></div></div>
-<div class="section" id="id44">
-<h3><span class="section-number">1.6.6. </span>과소적합<a class="headerlink" href="#id44" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="div-align-center-img-src-https-github-com-codingalzi-handson-ml3-blob-master-jupyter-book-imgs-ch01-homl01-23-png-raw-true-style-width-550px-div">
+<h4><span class="section-number">1.5.5.2. </span><div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-23.png?raw=true" style="width:550px;"></div><a class="headerlink" href="#div-align-center-img-src-https-github-com-codingalzi-handson-ml3-blob-master-jupyter-book-imgs-ch01-homl01-23-png-raw-true-style-width-550px-div" title="Permalink to this headline">¶</a></h4>
+</div>
+</div>
+<div class="section" id="id37">
+<h3><span class="section-number">1.5.6. </span>과소적합<a class="headerlink" href="#id37" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>모델이 너무 단순해서 훈련 세트를 잘 학습하지 못함</p></li>
 </ul>
-<div align="center"><img src="images/ch04/homl04-06.png" width="400"/></div><ul class="simple">
+<div class="section" id="div-align-center-img-src-https-github-com-codingalzi-handson-ml3-blob-master-jupyter-book-imgs-ch04-homl04-06-png-raw-true-style-width-400px-div">
+<h4><span class="section-number">1.5.6.1. </span><div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch04/homl04-06.png?raw=true" style="width:400px;"></div><a class="headerlink" href="#div-align-center-img-src-https-github-com-codingalzi-handson-ml3-blob-master-jupyter-book-imgs-ch04-homl04-06-png-raw-true-style-width-400px-div" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
 <li><p>해결 방법</p>
 <ul>
 <li><p>보다 많은 모델 파라미터를 사용하는 모델 적용</p></li>
@@ -1428,10 +1404,11 @@
 </ul>
 </div>
 </div>
-<div class="section" id="id45">
-<h2><span class="section-number">1.7. </span>1.6 테스트와 검증<a class="headerlink" href="#id45" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id46">
-<h3><span class="section-number">1.7.1. </span>검증<a class="headerlink" href="#id46" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="id38">
+<h2><span class="section-number">1.6. </span>1.6 테스트와 검증<a class="headerlink" href="#id38" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id39">
+<h3><span class="section-number">1.6.1. </span>검증<a class="headerlink" href="#id39" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>훈련된 모델의 성능 평가: 테스트 세트 활용</p></li>
 </ul>
@@ -1457,7 +1434,7 @@
 </ul>
 </div>
 <div class="section" id="hyper-parameter">
-<h3><span class="section-number">1.7.2. </span>하이퍼파라미터(hyper-parameter)<a class="headerlink" href="#hyper-parameter" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">1.6.2. </span>하이퍼파라미터(hyper-parameter)<a class="headerlink" href="#hyper-parameter" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>알고리즘 학습 모델을 지정에 사용되는 파라미터</p></li>
 </ul>
@@ -1468,8 +1445,8 @@
 <li><p>하이퍼파라미터를 조절하면서 가장 좋은 성능의 모델 선정</p></li>
 </ul>
 </div>
-<div class="section" id="id47">
-<h3><span class="section-number">1.7.3. </span>교차 검증<a class="headerlink" href="#id47" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id40">
+<h3><span class="section-number">1.6.3. </span>교차 검증<a class="headerlink" href="#id40" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>예비표본(홀드아웃, holdout) 검증</p>
 <ul>
@@ -1488,8 +1465,8 @@
 </li>
 </ul>
 </div>
-<div class="section" id="id48">
-<h3><span class="section-number">1.7.4. </span>검증 예제: 데이터 불일치<a class="headerlink" href="#id48" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id41">
+<h3><span class="section-number">1.6.4. </span>검증 예제: 데이터 불일치<a class="headerlink" href="#id41" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>모델 훈련에 사용된 데이터가 실전에 사용되는 데이터를 완벽하게 대변하지 못하는 경우</p></li>
 </ul>
