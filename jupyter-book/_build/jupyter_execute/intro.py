@@ -19,7 +19,9 @@
 
 # <div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/intro/ai-ml-relation.png?raw=true" style="width:500px;"></div>
 # 
-# 그림 출처: [교보문고: 에이지 오브 머신러닝](http://www.kyobobook.co.kr/readIT/readITColumnView.laf?thmId=00198&sntnId=14142)
+# <p style="text-align: center;">
+#     그림 출처: <a href="http://www.kyobobook.co.kr/readIT/readITColumnView.laf?thmId=00198&sntnId=14142">교보문고: 에이지 오브 머신러닝</a>
+# </p>
 
 # * 데이터 과학: 주어진 데이터로부터 수학과 통계 지식을 활용하여 필요한 정보를 추출하는 학문 분야
 # * 인공지능: 사고(thinking), 학습(learning) 등 인간의 지적능력을 컴퓨터를 통해 구현하는 
@@ -33,16 +35,18 @@
 # <div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/intro/ai-ml-relation2.png?raw=true" style="width:600px;"></div>
 # 
 # 
-# 그림 출처: [NVIDIA 블로그](https://blogs.nvidia.com/blog/2016/07/29/whats-difference-artificial-intelligence-machine-learning-deep-learning-ai/)
+# <p style="text-align: center;">
+#     그림 출처: <a href="https://blogs.nvidia.com/blog/2016/07/29/whats-difference-artificial-intelligence-machine-learning-deep-learning-ai/">NVIDIA 블로그</a>
+# </p>
 
-# **주요 학습내용**
+# **목차**
 
-# * 한눈에 보는 머신러닝
-# * 머신러닝 프로젝트 처음부터 끝까지
-# * 분류
-# * 모델 훈련
-# * 서포트 벡터 머신
-# * 결정 트리
-# * 앙상블 학습과 랜덤 포레스트
-# * 차원 축소
-# * 비지도 학습
+# 1. 한눈에 보는 머신러닝
+# 1. 머신러닝 프로젝트 처음부터 끝까지
+# 1. 분류
+# 1. 모델 훈련
+# 1. 서포트 벡터 머신
+# 1. 결정 트리
+# 1. 앙상블 학습과 랜덤 포레스트
+# 1. 차원 축소
+# 1. 비지도 학습

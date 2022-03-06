@@ -322,65 +322,123 @@
 
 # #### 준지도 학습
 
-# * 레이블이 적용된 적은 수의 샘플이 주어졌을 때 유횽함.
+# 레이블이 적용된 훈련 데이터의 수가 적고,
+# 레이블이 없는 훈련 데이터가 훨씬 많이 있을 때
+# **준지도 학습**<font size="2">semi-supervised learning</font>을 활용하여
+# 훈련 데이터셋 전체에 레이블을 부여할 수 있다.
 # 
-# * 비지도 학습을 통해 군집을 분류한 후 샘플들을 활용해 지도 학습 실행
-# 
-# * 대부분 지도 학습과 비지도 학습 혼합 사용
+# 예를 들어 구글 포토<font size="2">Google Photos</font>는 
+# 가족 사진 몇 장에 사람 이름을 레이블로 지정하면
+# 다른 모든 사진에서 지정된 이름의 사람이 포함된 사진을 찾아준다.
+# 아래 그림은 새로운 샘플 &#x2716;를 세모에 기존에 레이블을 갖는 
+# 훈련 데이터에 근거하여 세모에 더 가깝다고 판단하는 것을 보여준다.
 
-# **준지도 학습 예제**
-# 
-# * 아래 그림 참조: 새로운 사례 `X`를 세모에 더 가깝다고 판단함.
-# 
 # <div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-11.png?raw=true" style="width:400px;"></div>
-# 
-# * 구글 포토 호스팅: 가족 사진 몇 장에만 레이블 적용. 이후 모든 사진에서 가족사진 확인 가능.
+
+# 준지도 학습은 또한 레이블이 적용된 훈련 데이터의 정보를
+# 전체 훈련 데이터셋으로 전파하는 데에 활용될 수 있다.
+# 이처럼 실전에 사용되는 많은 머신러닝 알고리즘이 준지도 학습과 지도 학습을 함께 사용한다.
 
 # #### 자기지도 학습
 
-# ...
+# 레이블이 전혀 없는 데이터셋을 모든 샘플이 레이블을 갖는 데이터셋으로 만드는 기법이
+# **자기지도 학습**<font size="2">self-supervised learning</font>이다.
+# 
+# 예를 들어 레이블이 전혀 없는 사진으로 구성된 데이터셋의 각 이미지를 대상으로
+# 잘라내기<font size="2">crop</font> 또는 크기 변경<font size="2">resize</font>를 
+# 수행하여 얻어진 훈련 데이터셋을 생성한다.
+# 이제 얻어진 훈련 데이터셋으로부터 본래의 이미지를 재생하는 머신러닝 프로그램을 
+# 학습시킨다. 이때 본래의 이미지 데이터를 생성된 이미지의 레이블로 사용한다.
+
+# <div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/self-supervised01.jpg?raw=true" style="width:300px;"></div>
+# 
+# <p style="text-align: center;">
+#     그림 출처: <a href="https://paperswithcode.com/task/self-supervised-image-classification">Self-Supervised Image Classification</a>
+# </p>
+
+# **이미지 복구**
+# 
+# 자기지도 학습 프로그램을 이용하여 손상된 이미지를 복구할 수 있다.
+
+# **반려동물 분류**
+# 
+# 손상된 이미지를 복구할 수 있는 능력을 갖는 프로그램을 조금 응용하면
+# 고양이, 강아지 등 반려동물의 품종을 구분하는 프로그램으로 활용할 수 있다.
 
 # #### 강화 학습
 
-# * 에이전트(학습 시스템)가 취한 행동에 대해 보상 또는 벌점을 주어 가장 큰 보상을 받는 방향으로 유도하기
+# **에이전트**<font size="2">agent</font>라고 불리는 
+# 학습 시스템이 주어진 상황에서 취한 행동에 따라 보상과 벌점을 받는다. 
+# 이를 통해 주어진 상황에서 가장 많은 보상을 받는 **정책**<font size="2">policy</font>, 
+# 즉 최선의 전략<font size="2">strategy</font>을
+# 스스로 학습한다. 
+# 정책은 특정 상황에서 에이전트가 취해야 하는 최선의 행동을 지정한다. 
 
 # <div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-12.png?raw=true" style="width:400px;"></div>
 
-# * 예제: 딥마인드(DeepMind)의 알파고(AlphaGo)
+# :::{prf:example} 알파고와 이세돌의 바둑 시합
+# :label: alphago
+# 
+# 2016년 3월 당시 세계 최고의 이세돌과 
+# 구글의 딥마인드<font size="2">DeepMind</font>가 개발한
+# 바둑 프로그램 알파고<font size="2">AlphaGo</font>의 대결에서
+# 알파고가 4대1로 승리했다.
+# 알파고는 유명한 바둑 기보를 학습하고 스스로와의 대결을 통해 승리 정책을
+# 학습했다.
+# 
+# <div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/alphago01.png?raw=true" style="width:450px;"></div>
+# :::
 
-# <div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/alphago01.png?raw=true" style="width:500px;"></div>
+# ### 실시간 훈련 여부
 
-# ### 실시간 훈련 여부 구분
+# 고정된 하나의 훈련 데이터셋을 대상으로 학습하느냐,
+# 아니면 조금씩 추가되는 데이터셋을 대상으로 실시간 학습이 가능하느냐에 따라
+# 머신러닝 시스템을 구분할 수 있다.
 
-# #### 배치 학습(batch learning)
+# #### 배치 학습
 
-# * 주어진 훈련 세트 전체를 사용해 오프라인에서 훈련
+# 주어진 훈련 세트 전체를 사용해 오프라인에서 훈련하는 것을 
+# **배치 학습**<font size="2">batch learning</font>라 한다.
+# 한 번 훈련된 시스템은 더 이상의 학습 없이 제품 시스템에 적용된다.
+# 하지만 새로운 데이터가 들어오면 처음부터 새롭게 학습해야 한다.
+# 
+# 배치 학습은 컴퓨팅 자원(cpu, gpu, 메모리, 저장장치 등)이 충분한 경우에만 사용할 수 있다.
+# 예를 들어 스마트폰, 화성 탐사선 등에서는 사용이 매우 제한적이 된다.
 
-# * 먼저 시스템을 훈련시킨 후 더 이상의 학습 없이 제품 시스템에 적용
+# #### 온라인 학습
 
-# * 단점
-#     * 컴퓨팅 자원(cpu, gpu, 메모리, 저장장치 등)이 충분한 경우에만 사용 가능
-#     * 새로운 데이터가 들어오면 처음부터 새롭게 학습해야 함. 
-#         * 하지만 MLOps 등을 이용한 자동화 가능
-
-# #### 온라인 학습(online learing)
-
-# * 하나씩 또는 적은 양의 데이터 묶음(미니배치, mini-batch)를 사용해 점진적으로 훈련
+# **온라인 학습**<font size="2">online learning</font>은 
+# 하나씩 또는 **미니 배치**<font size="2">mini-batch</font>라 불리는
+# 적은 양의 데이터 묶음을 사용해 점진적으로 학습하는 훈련 기법을 가리킨다.
 
 # <div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-13.png?raw=true" style="width:500px;"></div>
 
-# * 단점
-#     * 나쁜 데이터가 주입되는 경우 시스템 성능이 점진적으로 떨어질 수 있음.
-#     * 지속적인 시스템 모니터링 필요
+# 온라인 학습은 주식가격 시스템 등 실시간 반영이 중요한 시스템 구현에 매우 유용하게 활용된다. 
+# 또한 스마트폰 등 제한된 컴퓨팅 자원을 갖는 시스템에서도 활용될 수 있다.
 
-# * 예제
-#     * 주식가격 시스템 등 실시간 반영이 중요한 시스템
-#     * 스마트폰 등 제한된 자원의 시스템
-#     * 외부 메모리 학습: 매우 큰 데이터셋 활용하는 시스템
-
+# **외부 메모리 학습**
+# 
+# 매우 큰 훈련 데이터셋은 메모리에 한꺼번에 저장될 수 없기에
+# 훈련 데이터셋을 미니 배치를 사용하여 점진적 학습에 활용할 수 있다.
+# 이를 **외부 메모리 학습**<font size="2">out-of-core learning</font>라 한다.
+# 
 # <div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-14.png?raw=true" style="width:500px;"></div>
 
-# ### 예측 모델 사용 여부 구분
+# **학습률**
+# 
+# 머신러닝 시스템이 변화하는 데이터에 얼마나 빠르게 적응해야하는가는 
+# **학습률**<font size="2">learning rate</font>이 결정한다.
+# 높은 학습률은 새 데이터에 빠르게 적응하게 하지만 이전 데이터를 빠르게 무시한다.
+# 반면에 낮은 학습률은 새 데이터에 보다 천천히 적응한다. 
+
+# **온라인 학습의 단점**
+# 
+# 검색 순위 조작 등 시스템을 악용하려고 하거나
+# 시스템에 나쁜 영향을 주는 데이터가 주입되는 경우 
+# 시스템 성능이 떨어질 수 있다.
+# 따라서 지속적인 시스템 모니터링이 요구된다.
+
+# ### 예측 모델 사용 여부
 
 # * 훈련 모델의 __일반화(generalization)__ 방식에 따른 분류
 # * 일반화 = '새로운 데이터에 대한 예측'
