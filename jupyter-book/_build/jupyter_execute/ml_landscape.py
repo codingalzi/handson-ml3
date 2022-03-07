@@ -13,8 +13,7 @@
 # 
 # > 명시적인 프로그래밍 없이 컴퓨터 스스로 학습하는 능력 에 대한 연구 분야
 # 
-# 
-# **톰 미첼<font size="2">Tom Michell</font> (1977)**
+# **톰 미첼<font size="2">Tom Mitchell</font> (1977)**
 # 
 # > 경험 E를 통해 과제 T에 대한 프로그램의 수행 성능 P가 향상되면
 # > 해당 프로그램은 경험 E를 통해 학습한다 라고 말한다.
@@ -330,7 +329,7 @@
 # 예를 들어 구글 포토<font size="2">Google Photos</font>는 
 # 가족 사진 몇 장에 사람 이름을 레이블로 지정하면
 # 다른 모든 사진에서 지정된 이름의 사람이 포함된 사진을 찾아준다.
-# 아래 그림은 새로운 샘플 &#x2716;를 세모에 기존에 레이블을 갖는 
+# 아래 그림은 새로운 샘플 &#x274C;를 세모에 기존에 레이블을 갖는 
 # 훈련 데이터에 근거하여 세모에 더 가깝다고 판단하는 것을 보여준다.
 
 # <div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-11.png?raw=true" style="width:400px;"></div>
