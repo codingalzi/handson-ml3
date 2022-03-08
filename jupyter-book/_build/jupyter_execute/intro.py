@@ -39,9 +39,14 @@
 #     그림 출처: <a href="https://blogs.nvidia.com/blog/2016/07/29/whats-difference-artificial-intelligence-machine-learning-deep-learning-ai/">NVIDIA 블로그</a>
 # </p>
 
-# **목차**
+# **주요 내용**
+# 
+# 머신러닝의 주요 개념과 알고리즘을 소개한다.
+# 여기서 소개하는 내용은 오렐리앙 제롱의 핸즈온 머신러닝(2판과 3판)의 1부 내용을 기본으로 참고한다.
 
-# 1. 한눈에 보는 머신러닝
+# **목차**
+# 
+# 1. {ref}`ml_landscape`
 # 1. 머신러닝 프로젝트 처음부터 끝까지
 # 1. 분류
 # 1. 모델 훈련
@@ -50,3 +55,7 @@
 # 1. 앙상블 학습과 랜덤 포레스트
 # 1. 차원 축소
 # 1. 비지도 학습
+
+# **참고**
+# 
+# 딥러닝에 대한 강의는 [Deep Learning with Python](https://codingalzi.github.io/dlp/)를 참고할 수 있다.
