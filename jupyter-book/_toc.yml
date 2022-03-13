@@ -8,3 +8,4 @@ options:
 #  only_build_toc_files: true
 chapters:
 - file: ml_landscape
+- file: end2end_ml_project

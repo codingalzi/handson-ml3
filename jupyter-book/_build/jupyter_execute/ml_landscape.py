@@ -494,8 +494,6 @@
 # | 호주 | 50,9672 | 7.3 |
 # | 미국 | 55,805 | 7.2 |
 
-# 1단계: 데이터 시각화
-# 
 # 아래 그래프는
 # 36개 국가 전체를 대상으로 1인당 GDP와 삶의 만족도를 이용한
 # 산점도<font size="2">scatter plot</font>이다. 
@@ -504,8 +502,6 @@
 # 
 # <div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-17.png?raw=true" style="width:450px;"></div>
 
-# 2단계: 모델 선택
-# 
 # 위 가정을 바탕으로 1인당 GDP가 알려진 국가의 삶의 만족도를 예측하는 머신러닝 모델을 구현해보자.
 # 즉, 1인당 GDP와 삶의 만족도 사이의 관계를 설명하는 모델로 
 # **선형 모델**<font size="2">linear model</font>을 선택한다.
@@ -516,8 +512,6 @@
 # \text{'삶의만족도'} = \theta_0 + \theta_1 \times \text{'1인당GDP'}
 # $$
 
-# 3단계: 모델 훈련
-# 
 # 지정된 선형 모델은 훈련 과정에서 
 # **최선**의 $\theta_0$와 $\theta_1$를 학습해야 한다. 
 # 예를 들어, 아래 이미지는 적절하지 않은 후보들을 보여준다.
@@ -528,44 +522,10 @@
 # 
 # <div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-19.png?raw=true" style="width:450px;"></div>
 
-# 4단계: 학습 평가
-# 
 # 선형 모델은 주어진 데이터셋 활용하여 $\theta_0$와 $\theta_1$을 학습해 나간다.
 # 학습 도중에 찾아진 $\theta_0$와 $\theta_1$의 적합도를
 # 기준으로 학습되는 선형 모델의 성능을 반복적으로 평가하여
 # 성능을 향상시키는 방향으로 학습을 유도한다. 
-# 
-# 학습되는 모델의 성능은 **효용 함수**<font size="2">utility function</font>
-# 또는 **비용 함수**<font size="2">cost function</font>를 이용하여 결정한다.
-# 
-# * 효용 함수: 모델이 얼마나 좋은지 측정. 높은 값을 갖도록 유도.
-# * 비용 함수: 모델이 얼마나 나쁜지 측정. 낮은 값을 갖도록 유도.
-
-# 5단계: 모델 활용
-# 
-# 지중해 동부에 위치한 키프로스<font size="2">Cyprus</font> 공화국의 삶의 만족도를 알고자 한다. 
-# 하지만 키프로스 공확국은 OECD에 속하지 않기에 삶의 만족도 조사에서 제외되었다. 
-# 대신에 1인당 GDP가 2015년 기준 22,587달러로 알려졌다.
-# 
-# 따라서 앞서 훈련되 선형 모델을 적용할 수 있다. 
-# 즉, $\theta_0 = 4.85$와 $\theta_1 = 4.91 \times 10^{-5}$를 이용하여 키프로스 공화국의
-# 2015년 기준 삶의 만족도를 다음과 같이 예측할 수 있다.
-
-# 
-
-# In[1]:
-
-
-theta0 = 4.85
-theta1 = 4.91e-5
-
-
-# In[2]:
-
-
-cyprus = theta0 + theta1 * 22587
-print(f"키프로스 공화국의 2015년도 삶의 만족도는 {cyprus:.3}이다.")
-
 
 # ## 머신러닝의 주요 도전 과제
 
@@ -596,7 +556,7 @@ print(f"키프로스 공화국의 2015년도 삶의 만족도는 {cyprus:.3}이�
 # 예를 들어, 아래 이미지는 OECD 데이터셋에서 의도적으로 제거된 7개 국가를 추가해서 선형 모델을
 # 새롭게 훈련시킨 경우(검정 실선)와 이전의 모델(파랑 점선)을 함께 보여준다.
 # 즉, 선형 모델의 훈련 데이터에 민감하게 반응함을 잘 보여준다.
-# 사실 삶의 만족도를 선형 모델을 이용하여 예측하는 것은 적절하지 않다.
+# 실제로 삶의 만족도를 선형 모델을 이용하여 예측하는 것은 적절하지 않다.
 # 
 # <div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-21.png?raw=true" style="width:600px;"></div>
 
@@ -614,7 +574,7 @@ print(f"키프로스 공화국의 2015년도 삶의 만족도는 {cyprus:.3}이�
 #     - 누락된 특성값을 평균값 등으로 채우기
 #     - 해당 특성을 넣은 경우와 뺀 경우 각각에 대해 모델 훈련 진행
 
-# #### 관련 없는 특성
+# #### 특성 공학
 
 # 해결하려는 문제에 관련이 높은 특성을 찾아야 하며,
 # 이를 **특성 공학**<font size="2">feature engineering</font>이라 하며,
