@@ -8,6 +8,12 @@
 # 
 # 자료를 공개한 저자 오렐리앙 제롱과 강의자료를 지원한 한빛아카데미에게 진심어린 감사를 전합니다.
 
+# **소스코드**
+# 
+# 본문 내용의 일부를 파이썬으로 구현한 내용은 
+# [(구글코랩) 한눈에 보는 머신러닝](https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/notebooks/code_ml_landscape.ipynb)에서 
+# 확인할 수 있다.
+
 # ## 머신러닝이란?
 
 # **아서 새뮤얼<font size="2">Artuhr Samuel</font> (1959)**
