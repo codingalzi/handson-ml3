@@ -46,7 +46,8 @@
 
 # **목차**
 # 
-# 1. {ref}`ml_landscape`
+# 1. {ref}`ch:ml_landscape`
+# 1. {ref}`ch:end2end`
 # 1. 머신러닝 프로젝트 처음부터 끝까지
 # 1. 분류
 # 1. 모델 훈련
