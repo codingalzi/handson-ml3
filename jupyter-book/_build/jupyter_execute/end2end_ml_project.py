@@ -4,133 +4,170 @@
 # (ch:end2end)=
 # # 머신러닝 프로젝트 처음부터 끝까지
 
-# #### 감사의 글
+# **감사의 글**
 # 
 # 자료를 공개한 저자 오렐리앙 제롱과 강의자료를 지원한 한빛아카데미에게 진심어린 감사를 전합니다.
 
-# ## 주요 내용
+# **소스코드**
 # 
-# * 주택 가격을 예측하는 회귀 작업을 살펴보면서 선형 회귀, 결정 트리, 랜덤 포레스트 등 여러 알고리즘의 기본 사용법 소개
+# 본문 내용의 일부를 파이썬으로 구현한 내용은 
+# [(구글코랩) 머신러닝 프로젝트 처음부터 끝까지](https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/notebooks/code_end2end_ml_project.ipynb)에서 
+# 확인할 수 있다.
+
+# **주요 내용**
 # 
-# * 머신러닝 시스템 전체 훈련 과정 살펴보기
+# 주택 가격을 예측하는 다양한 **회귀 모델**<font size="2">regression model</font>의
+# 훈련 과정을 이용하여 머신러닝 시스템의 전체 훈련 과정을 상세히 살펴본다.
+
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-01d.png" width="600"></div>
+
+# ## 실전 데이터 활용
+
+# 다양하고 수많은 실전 데이터를 모아놓은 데이터 저장소를
+# 머신러닝 공부에 잘 활용할 수 있어야 한다. 
+# 여기서 사용하는 데이터는 1990년 미국 캘리포니아 주에서 수집한 인구조사 자료이며,
+# 데이터의 원본은 다양한 공개 저장소에서 다운로드할 수 있다.
 # 
-# <div align="center"><img src="imgs/ch02/homl02-01d.png" width="600"></div>
-
-# ## 실제 데이터로 작업하기
-
-# * 유명한 공개 데이터 저장소
-#     * [OpenML](https://www.openml.org/)
-#     * [캐글(Kaggle) 데이터셋](http://www.kaggle.com/datasets)
-#     * [페이퍼스 위드 코드](https://paperswithcode.com/)
-#     * [UC 얼바인(UC Irvine) 대학교 머신러닝 저장소](http://archive.ics.uci.edu/ml)
-#     * [아마존 AWS 데이터셋](https://registry.opendata.aws)
-#     * [텐서플로우 데이터셋](https://www.tensorflow.org/datasets)
-
-# * 메타 포털(공개 데이터 저장소가 나열)
-#     * [데이터 포털(Data Portals)](http://dataportals.org)
-#     * [오픈 데이터 모니터(Open Data Monitor)](http://opendatamonitor.eu)
-
-# * 인기 있는 공개 데이터 저장소가 나열되어 있는 다른 페이지
-#     * [위키백과 머신러닝 데이터셋 목록](https://goo.gl/SJHN2k)
-#     * [Quora.com](https://homl.info/10)
-#     * [데이터셋 서브레딧(subreddit)](http://www.reddit.com/r/datasets)
-
-# ## 큰 그림 보기
-
-# ### 주어진 데이터
+# 가장 유명한 데이터 저장소는 다음과 같다.
 # 
-# * 1990년도 미국 캘리포니아 주의 20,640개 구역별 인구조사 데이터
-# 
-# * 특성 10개: 경도, 위도, 중간 주택 연도, 방의 총 개수, 침실 총 개수, 인구, 가구 수, 중간 소득, 중간 주택 가격, 해안 근접도
-# 
-# * 목표: 구역별 중간 주택 가격 예측 시스템(모델) 구현하기
-# 
-# * 미국 캘리포니아 지도
+# * [OpenML](https://www.openml.org/)
+# * [캐글(Kaggle) 데이터셋](http://www.kaggle.com/datasets)
+# * [페이퍼스 위드 코드](https://paperswithcode.com/)
+# * [UC 얼바인(UC Irvine) 대학교 머신러닝 저장소](http://archive.ics.uci.edu/ml)
+# * [아마존 AWS 데이터셋](https://registry.opendata.aws)
+# * [텐서플로우 데이터셋](https://www.tensorflow.org/datasets)
 
-# <div align="center"><img src="imgs/ch02/LA-USA01.png" width="600"></div>
+# ## 큰 그림 그리기
 
-# ### 문제 정의
+# 머신러닝으로 해결하고자 하는 문제를 파악하기 위해
+# 주어진 데이터에 대한 기초적인 정보,
+# 문제 정의, 
+# 문제 해결법 등을 구상해야 한다. 
 
-# * 지도 학습(supervised learning)
-#     - 레이블: 구역별 중간 주택 가격
+# ### 데이터 정보 확인
+
+# 1990년도에 시행된 미국 캘리포니아 주의 20,640개 구역별 인구조사 데이터는
+# 경도, 위도, 중간 주택 연도, 방의 총 개수, 침실 총 개수, 인구, 가구 수, 중간 소득, 중간 주택 가격, 해안 근접도
+# 등을 포함한다. 
+
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/LA-USA01.png" width="600"></div>
+
+# ### 학습 모델 확인
+
+# 구역별 중간 주택 가격을 예측하는 시스템에 활용될
+# 회귀 모델을 훈련시킨다.
+# 훈련시킬 모델의 특성은 다음과 같다.
 # 
-# * 회귀(regression): 중간 주택 가격 예측
-#   * 다중 회귀(multiple regression): 여러 특성을 활용한 예측
-#   * 단변량 회귀(univariate regression): 구역마다 한 종류의 값만 예측
-#       - 참고: 다변량 회귀(multivariate regression). ...
+# * 지도 학습: 구역별 '중간 주택 가격'을 레이블(타깃)로 지정한다.
 # 
-# * 배치 학습(batch learning): 빠르게 변하는 데이터에 적응할 필요가 없으며, 데이터셋의 크기도 충분히 작음.
+# * 회귀: 가격을 예측한다. 보다 세분화하면 다중 회귀이지 단변량 회귀 모델이다.
+#   * 다중 회귀<font size="2">multiple regression</font>: 구역별로 여러 특성을 주택 가격 예측에 사용한다.
+#   * 단변량 회귀<font size="2">univariate regression</font>: 구역별로 한 종류의 값만 예측한다.
+# 
+# * 배치 학습: 빠르게 변하는 데이터에 적응할 필요가 없으며, 데이터셋의 크기도 충분히 작다.
 
-# ### 성능 측정 지표 선택
+# :::{admonition} 다변량 회귀
+# :class: info
+# 
+# 다변량 회귀<font size="2">multivariate regression</font>는 여러 종류의 값을 동시에 예측한다.
+# :::
 
-# 사용하는 모델에 따라 모델 성능 측정 기준(norm)을 다르게 선택한다. 
-# 선형 회귀 모델의 경우 일반적으로 아래 두 기준 중 하나를 사용한다.
+# ### 회귀 모델 성능 측정 지표 선택
+
+# 훈련중인 회귀 모델의 성능을 평가하는 지표로 
+# 예측값과 타깃 사이의 오차를 활용하는 아래 두 방식 중 하나를 사용한다.
 # 
 # * 평균 제곱근 오차(RMSE)
-# 
 # * 평균 절대 오차(MAE)
 
-# #### 평균 제곱근 오차(root mean square error, RMSE)
+# **평균 제곱근 오차(RMSE)**
 # 
-# - 유클리디안 노름(Euclidean norm) 또는 $\ell_2$ 노름(norm)으로도 불림
-# - 참고: 노름(norm)은 거리 측정 기준을 나타냄.
+# 평균 제곱근 오차<font size="2">Root Mean Square Error</font>는
+# 예측값과 타깃 사이의 오차의 제곱의 평균값이다. 
+# 수학에서는 **유클리디안 노름** 또는 **$\ell_2$ 노름**으로 불린다.
 
 # $$\text{RMSE}(\mathbf X, h) = \sqrt{\frac 1 m \sum_{i=1}^{m} (h(\mathbf x^{(i)}) - y^{(i)})^2}$$
 
-# * 기호 설명
-#     * $\mathbf X$: 모델 성능 평가에 사용되는 데이터셋 전체 샘플들의 특성값들로 구성된 행렬, 레이블(타겟) 제외.
-#     * $m$: $\mathbf X$의 행의 수. 즉, 훈련 데이터셋 크기.
-#     * $\mathbf x^{(i)}$: $i$ 번째 샘플의 전체 특성값 벡터. 레이블(타겟) 제외.
-#     * $y^{(i)}$: $i$ 번째 샘플의 레이블
-#     * $h$: 예측 함수
-#     * $\hat y^{(i)} = h(\mathbf x^{(i)})$: $i$번째 샘플에 대한 예측 값
-
-# #### 평균 절대 오차(mean absolute error, MAE)
+# 위 수식에 사용된 기호의 의미는 다음과 같다.
 # 
-# - MAE는 맨해튼 노름 또는 $\ell_1$ 노름으로도 불림
+# * $\mathbf X$: 모델 성능 평가에 사용되는 데이터셋 전체 샘플들의 특성값들로 구성된 행렬, 레이블(타겟) 제외.
+# * $m$: $\mathbf X$의 행의 수. 즉, 훈련 데이터셋 크기.
+# * $\mathbf x^{(i)}$: $i$ 번째 샘플의 전체 특성값 벡터. 레이블(타겟) 제외.
+# * $y^{(i)}$: $i$ 번째 샘플의 레이블(타깃)
+# * $h$: 예측 함수
+# * $h(\mathbf x^{(i)})$: $i$번째 샘플에 대한 예측 값. $\hat y^{(i)}$로 표기되기도 함.
+
+# :::{prf:example} 훈련셋과 2D 어레이
+# :label: 2d-array
+# 
+# 모델 훈련에 사용되는 훈련셋에
+# $m$ 개의 샘플이 포함되어 있고 각각의 샘플이 $n$ 개의 특성을 갖는다면
+# 훈련셋은 $(m, n)$ 모양의 numpy의 2D 어레이로 지정된다.
+# 
+# 예를 들어, $m = 5$, $n = 4$ 이면 훈련셋 $\mathbf X$는 다음과 같이
+# 표현된다.
+# 
+# ```python
+# array([[-118.29, 33.91, 1416, 38372],
+#        [-114.30, 34.92, 2316, 41442],
+#        [-120.38, 35.21, 3444, 29303],
+#        [-122.33, 32.95, 2433, 24639],
+#        [-139.31, 33.33, 1873, 50736]])
+# ```
+# 
+# 각각의 $\mathbf{x}^{(i)}$는 $i$ 번째 행에 해당한다. 
+# 예를 들어 $\mathbf{x}^{(1)}$은 첫째 행의 1D 어레이를 가리킨다. 
+# 
+# ```python
+# array([-118.29, 33.91, 1416, 38372])
+# ```
+# 
+# 단변량 회귀에서 $y^{(i)}$ 는 보통 부동소수점을 가리키며, 
+# 다변량 회귀에서는 $\mathbf{x}^{(i)}$ 처럼 
+# 여러 개의 타깃 값으로 구성된 1D 어레이로 표현된다.
+# :::
+
+# **평균 절대 오차(MAE)**
+# 
+# 평균 절대 오차<font size="2">Mean Absolute Error</font>는
+# 맨해튼 노름 또는 $\ell_1$ 노름으로도 불리며
+# 예측값과 타깃 사이의 오차의 평균값이다.
 # 
 # $$\text{MAE}(\mathbf X, h) = \frac 1 m \sum_{i=1}^{m} \mid h(\mathbf x^{(i)}) - y^{(i)} \mid$$
 # 
-# - 이상치가 많은 경우 활용
+# 훈련 데이터셋에 이상치가 많이 포함된 경우 주로 사용되지만,
+# 그렇지 않다면 일반적으로 RMSE가 선호된다.
+
+# ## 데이터 다운로드 및 적재
+
+# 캐리포니아 주택가격 데이터셋은 매우 유명하여 많은 공개 저장소에서 다운로드할 수 있다.
+# 여기서는 저자가 자신의 깃허브에 압축파일로 저장한 파일을 다운로드해서 사용한다. 
+
+# ### 데이터셋 기본 정보 확인
+
+# pandas의 데이터프레임으로 데이터셋을 적재하여 기본적인 데이터 구조를 훑어볼 수 있다.
+
+# **`head()` 메서드 활용**
 # 
-# * $\ell_1$ 노름과 $\ell_2$ 노름을 일반해서 $\ell_n$ 노름을 정의할 수도 있음
+# 데이터프레임 객체의 처음 5개 샘플을 보여준다.
+
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-05.png" width="600"></div>
+
+# **`info()` 메서드 활용**
 # 
-# * RMSE가 MAE보다 이상치에 더 민감하지만, 이상치가 많지 않을 경우 일반적으로 RMSE 사용
-
-# ## 데이터 가져오기
-
-# ### 데이터 다운로드
+# 데이터셋의 정보를 요약해서 보여준다.
 # 
-# * 저자의 깃허브 저장소에 있는 압축파일 다운로드
-# 
-# * 압축파일을 풀어 csv 파일로 저장
-
-# ### 데이터 구조 훑어보기
-
-# #### 데이터셋 기본 정보 확인
-# 
-# * pandas의 데이터프레임 활용
-#     * `head()`, `info()`, `describe()`, `hist()` 등을 사용하여 데이터 구조 훑어보기
-
-# #### `head()` 메서드 활용 결과
-# 
-# <div align="center"><img src="imgs/ch02/homl02-05.png" width="600"></div>
-
-# #### `info()` 메서드 활용 결과
-
-# <div align="center"><img src="imgs/ch02/homl02-05a.png" width="450"></div>
-
-# * 구역 수: 20,640개
-# 
+# * 구역 수: 20,640개. 한 구역의 인구는 600에서 3,000명 사이.
 # * 구역별로 경도, 위도, 중간 주택 연도, 해안 근접도 등 총 10개의 조사 항목
 #     * '해안 근접도'는 범주형 특성이고 나머지는 수치형 특성.
-# 
-# * '방의 총 개수'의 경우 누락된 데이터인 207개의 null 값 존재
+# * '방의 총 개수'의 경우 207개의 null 값, 즉 결측치 존재.
 
-# #### 범주형 특성 탐색
-# 
-# * '해안 근접도'는 5개의 범주로 구분
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-05a.png" width="450"></div>
 
+# **범주형 특성 탐색**
+# 
+# '해안 근접도'는 5개의 범주로 구분된다.
+# 
 # | 특성값 | 설명 |
 # | --- | --- |
 # | <1H OCEAN | 해안에서 1시간 이내 |
@@ -139,152 +176,153 @@
 # | NEAR BAY | 샌프란시스코의 Bay Area 구역 |
 # | ISLAND | 섬  |
 
-# #### 수치형 특성 탐색
-
-# <div align="center"><img src="imgs/ch02/housing-describe.png"></div>
-
-# #### 수치형 특성별 히스토그램
-
-# <div align="center"><img src="imgs/ch02/feature-histogram.png" width="600px"></div>
-
-# ### 2.3.4 테스트셋 만들기
-
-# * 모델 학습 시작 이전에 준비된 데이터셋을 훈련셋과 테스트셋으로 구분
-#     * 테스트셋 크기: 전체 데이터셋의 20%
-
-# * 테스트셋에 포함된 데이터는 미리 분석하지 말 것.
-#   * 미리 분석 시 **데이터 스누핑 편향**을 범할 가능성이 높아짐
-#   * 미리 보면서 알아낸 직관이 학습 모델 설정에 영향을 미칠 수 있음 
-
-# * 훈련셋과 데이터셋을 구분하는 방식에 따라 결과가 조금씩 달라짐 
-#     * 무작위 샘플링 vs. 계층적 샘플링
-
-# * 여기서는 계층적 샘플링 활용
-
-# #### 계층적 샘플링
+# **수치형 특성 탐색**
 # 
-# * 계층: 동질 그룹
-#     * 예제: 소득별 계층
+# `describe()` 메서드는 수치형 특성들의 정보를 요약해서 보여준다.
 
-# * 테스트셋: 전체 계층을 대표하도록 각 계층별로 적절한 샘플 추출
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/housing-describe.png"></div>
 
-# * 예제: 소득 범주
-#     * 계층별로 충분한 크기의 샘플이 포함되도록 지정해야 학습 과정에서 편향이 발생하지 않음
-#     * 특정 소득 구간에 포함된 샘플이 과하게 적거나 많으면 해당 계층의 중요도가 과대 혹은 과소 평가됨
-
-# * 전체 데이터셋의 중간 소득 히스토그램 활용
+# `hist()` 메서드는 수치형 특성별 히스토그램을 그린다.
+# 히스토그램을 통해 각 특성별 데이터셋의 다양한 정보를 확인할 수 있다.
 # 
-# <div align="center"><img src="imgs/ch02/homl02-08.png" width="500"></div>
+# - 각 특성마다 사용되는 단위와 스케일(척도)가 다르다.
+# - 일부 특성은 한쪽으로 치우쳐저 있다.
+# - 일부 특성은 값을 제한한 것으로 보인다.
 
-# * 대부분 구역의 중간 소득이 **1.5~6.0**(15,000~60,000&#x24;) 사이
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/feature-histogram.png" width="600px"></div>
 
-# * 소득 구간을 아래 숫자를 기준으로 5개로 구분
+# ### 테스트셋 만들기
+
+# 모델 학습 시작 이전에 준비된 데이터셋을 훈련셋과 테스트셋으로 구분해야 한다.
+# 테스트셋은 훈련 과정중에 전혀 사용되지 않으며 보통 전체 데이터셋의 20% 정도 이하로 
+# 전체 데이터셋의 크기에 따라 적절히 조절한다.
 # 
-#     ```python
-#     [0, 1.5, 3.0, 4.6, 6.0, np,inf]
-#     ```
-
-# #### 계층 샘플링과 무작위 샘플링 비교
-
-# <div align="center"><img src="imgs/ch02/homl02-07.png" width="700"></div>
-
-# ## 2.4 데이터 이해를 위한 탐색과 시각화
-
-# ### 주의 사항
+# 테스트셋에 대한 정보는 절대로 모델 훈련에 이용하지 않아야 한다.
+# 그렇지 않으면 미래에 실전에서 사용되는 데이터를 미리 안다고 가정하고 모델을 훈련시키는
+# 것과 동일하게 되며, 이런 방식은 매우 잘못된 모델을 훈련시킬 위험을 키운다.
 # 
-# * 테스트셋을 제외한 훈련셋에 대해서만 시각화를 이용하여 탐색
+# 데이터셋을 훈련셋과 데이터셋으로 구분할 때 보통 계층적 샘플링을 사용한다.
 
-# * 데이터 스누핑 편향 방지 용도
-
-# ### 2.4.1 지리적 데이터 시각화
+# **계층적 샘플링**
 # 
-# * 구역이 집결된 구역과 그렇지 않은 구역 구분 가능
-
-# * 샌프란시스코의 베이 에어리어, LA, 샌디에고 등 밀집된 구역 확인 가능
-
-# <div align="center"><img src="imgs/ch02/homl02-09.png" width="500"></div>
-
-# * 주택 가격이 해안 근접도 또는 인구 밀도와 관련이 큼
-
-# * 해안 근접도: 위치에 따라 다르게 작용
-#   * 대도시 근처: 해안 근처 주택 가격이 상대적 높음
-#   * 북부 캘리포니아 구역: 높지 않음
-
-# <div align="center"><img src="imgs/ch02/homl02-11.png" width="500"></div>
-
-# ### 2.4.2 상관관계 조사
+# 각 계층별로 적절한 샘플을 추측하는 기법이다. 
+# 이유는 계층별로 충분한 크기의 샘플이 포함되도록 지정해야 학습 과정에서 편향이 발생하지 않는다.
+# 예를 들어, 특정 소득 구간에 포함된 샘플이 과하게 적거나 많으면 해당 계층의 중요도가 과대 혹은 과소 평가될 수 있다.
 # 
-# * 중간 주택 가격 특성과 다른 특성 사이의 상관관계: 상관계수 활용
+# 캘리포니아 데이터셋의 중간 소득을 대상으로하는 히스토그램을 보면
+# 대부분 구역의 중간 소득이 1.5~6.0, 즉 15,000 달러에서 60,000 달러 사이인 것을 알 수 있다.
 
-# <div align="center"><img src="imgs/ch02/homl02-12.png" width="600"></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-08.png" width="400"></div>
 
-# #### 상관계수의 특징
-
-# <div align="center"><img src="imgs/ch02/homl02-14.png" width="400"></div>
+# 소득 구간을 아래 숫자들을 기준으로 5개로 구분한 다음에 계층적 샘플링을 이용하여
+# 훈련셋과 테스트셋을 구분하면 무작위 샘플링 방식과는 분명히 다르게
+# 계층별 샘플의 비율을 거의 동일하게 유지한다.
 # 
-# <그림 출처: [위키백과](https://en.wikipedia.org/wiki/Pearson_correlation_coefficient)>
+# | 구간 | 범위 |
+# | :---: | :--- |
+# | 1 | 0 ~ 1.5 |
+# | 2 | 1.5 ~ 3.0 |
+# | 3 | 3.0 ~ 4.5 |
+# | 4 | 4.5 ~ 6.0 |
+# | 5 | 6.0 ~  |
 
-# * 상관계수: $[-1, 1]$ 구간의 값
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-07.png" width="500"></div>
+
+# ## 데이터 탐색과 시각화
+
+# 테스트셋을 제외한 훈련셋에 대해서 시각화를 이용하여 데이터셋을 탐색한다.
+
+# ### 지리적 데이터 시각화
+
+# 경도와 위도 정보를 이용하여 구역을 산포도로 나타내면 인구의 밀집 정도를 확인할 수 있다. 
+# 예를 들어, 샌프란시스코의 베이 에어리어, LA, 샌디에고 등 유명 대도시의 인구 밀도가 높다.
+
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-09.png" width="500"></div>
+
+# 유명 대도시의 인구 밀도가 높은 특정 구역의 주택 가격이 높다는 일반적인 사실 또한 산포도록 확인할 수 있다.
+# 산포도를 그릴 때 해당 구역의 중간 주택 가격을 색상으로, 
+# 인구밀도는 원의 크기로 활용한 결과는 다음과 같다.
+
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-11.png" width="500"></div>
+
+# ### 상관관계 조사
+
+# 중간 주택 가격 특성과 다른 특성 사이의 선형 상관관계를 나타내는 상관계수는 다음과 같다.
+
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-12.png" width="600"></div>
+
+# **상관계수의 특징**
+# 
+# 상관계수는 -1에서 1 사이의 값으로 표현된다.
 # 
 # * 1에 가까울 수록: 강한 양의 선형 상관관계
-# 
 # * -1에 가까울 수록: 강한 음의 선형 상관관계
-# 
 # * 0에 가까울 수록: 매우 약한 선형 상관관계
 
-# #### 주의사항
+# :::{admonition} 상관계수와 상관관계
+# :class: warning
 # 
-# * 상관계수가 0에 가까울 때: 선형 관계가 거의 없다는 의미이지, 아무런 관계가 없다는 의미는 아님
-
-# * 상관계수는 기울기와 아무 연관 없음
-
-# #### 상관계수를 통해 확인할 수 있는 정보
+# 상관계수가 0이라는 것은 선형 관계가 없다는 의미이지 서로 아무런 상관관계가 없다는 의미는 아니다.
+# 또한 선형계수가 1이라 하더라도 산점도에서 데이터의 선형관계를 보여주는 직선의 기울기는 아무런 상관이 없다.
+# 아래 그림은 상관계수의 이런 특성을 잘 보여준다.
 # 
-# * 중간 주택 가격과 중간 소득의 상관계수가 0.68로 가장 높음
-#     * 중간 소득이 올라가면 중간 주택 가격도 상승하는 경향이 있음
-#     * 점들이 너무 넓게 퍼져 있음. 완벽한 선형관계와 거리 멂.
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-14.png" width="400"></div>
 # 
-# <div align="center"><img src="imgs/ch02/homl02-13.png" width="400"></div>
+# <그림 출처: [위키백과](https://en.wikipedia.org/wiki/Pearson_correlation_coefficient)>
+# :::
 
-# * 50만 달러 수평선: 가격 제한 결과로 보임
-#     * 45만, 35만, 28만, 그 아래 정도에서도 수평선 존재. 이유는 알려지지 않음.
-#     * 이상한 형태를 학습하지 않도록 해당 구역을 제거하는 것이 좋음. (여기서는 그대로 두고 사용)
+# 상관계수를 통해 중간 주택 가격과 중간 소득의 상관계수가 0.68로 가장 높다는 사실을 확인한다.
+# 즉, 중간 소득이 올라가면 중간 주택 가격도 상승하는 경향이 있다.
+# 하지만 점들이 너무 넓게 퍼져 있어서 완벽한 선형관계와는 거리 멀다.
 
-# ### 2.4.3 특성 조합으로 실험
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-13.png" width="400"></div>
+
+# 위 산점도는 다음 사항들에 주의할 것을 잘 보여준다.
 # 
-# * 구역별 방의 총 개수와 침실의 총 개수 대신 아래 특성이 보다 유용함
-#     * 가구당 방 개수(rooms for household)
-#     * 방 하나당 침실 개수(bedrooms for room)
-#     * 가구당 인원(population per household)
+# * 50만 달러에서 보이는 수평선은 가격을 제한한 결과로 보여진다.
+# * 45만, 35만, 28만, 그 아래 정도에서도 수평선이 존재하는데 이유는 알려지지 않았다.
+# * 이러한 이상한 모델이 형태를 학습하지 못하도록 해당 구역을 제거하는 것이 
+#     일반적으로 좋다. 하지만 여기서는 그대로 두고 사용한다.
 
-# <div align="center"><img src="imgs/ch02/homl02-12a.png" width="600"></div>
+# ### 특성 조합하기
 
-# * 중간 주택 가격과 방 하나당 침실 개수의 연관성 다소 있음
-
-# * 가구당 방 개수의 역할은 여전히 미미함
-
-# # 2장 머신러닝 프로젝트 처음부터 끝까지 (2부)
-
-# #### 감사의 글
+# 구역별 방의 총 개수와 침실의 총 개수 대신 아래 특성이 보다 유용할 수 있다.
 # 
-# 자료를 공개한 저자 오렐리앙 제롱과 강의자료를 지원한 한빛아카데미에게 진심어린 감사를 전합니다.
+# * 가구당 방 개수(`rooms_for_house`)
+# * 방 하나당 침실 개수(`bedrooms_ratio`)
+# * 가구당 인원(`people_perhouse`)
+# 
+# 세 특성을 새로 추가한 다음에 상관계수를 확인하면 
+# 중간 주택 가격과 방 하나당 침실 개수의 선형 연관성이 다른 특성들에 비해 높게 나타난다.
 
-# ## 2.5 머신러닝 알고리즘을 위한 데이터 준비
+# ## 머신러닝 알고리즘 훈련용 데이터 준비
 
-# ### 데이터 준비 자동화
+# 머신러닝 모델 훈련에 사용되는 알고리즘을 이용하려면
+# 적재된 데이터셋을 적절하게 준비해야 한다.
+# 즉, 데이터 정제와 전처리 과정을 수행해서
+# 바로 모델 훈련에 사용될 수 있도록 해야 한다. 
+# 정제와 전처리 모든 과정은 __파이프라인__<font size="2">pipeline</font>으로
+# 자동화해서 언제든지 재활용할 수 있도록 해야 한다.
 
-# * 모든 전처리 과정의 자동화. 언제든지 재활용 가능.
-
-# * 자동화는 __파이프라인__(pipeline)으로 구현
-
-# * 훈련셋 준비: 훈련에 사용되는 특성과 타깃 특성(레이블) 구분하여 복사본 생성
-
+# 먼저 앞서 계층별로 구분된 훈련셋을 
+# 입력 데이터셋 과 
+# 타깃 데이터셋으로 또다시 구분한다. 
+# 
 # ```python
 # housing = strat_train_set.drop("median_house_value", axis=1)
 # housing_labels = strat_train_set["median_house_value"].copy()
 # ```
+# 
+# 데이터 정제와 전처리는 입력 데이터셋에 대해서만 진행하며,
+# 타깃 데이터셋은 전처리를 일반적으로 하지 않는다.
 
-# * 테스트셋은 훈련이 완성된 후에 성능 측정 용도로만 사용.
+# :::{admonition} 테스트셋 전처리
+# :class: info
+# 
+# 테스트셋에 대한 전처리와 구분은 모든 훈련이 완성된 후에 
+# 훈련됨 모델의 성능을 측정할 때 
+# 기존에 완성된 파이트라인을 이용하면 된다.
+# :::
 
 # ### 데이터 전처리
 
@@ -347,17 +385,17 @@
 
 # * 일부 예측기는 추정치의 신뢰도를 평가하는 기능도 제공
 
-# <div align="center"><img src="imgs/ch02/scikit-learn-flow01.png" width="800"></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/scikit-learn-flow01.png" width="800"></div>
 # 
 # <그림 출처: [Scikit-Learn: A silver bullet for basic machine learning](https://medium.com/analytics-vidhya/scikit-learn-a-silver-bullet-for-basic-machine-learning-13c7d8b248ee)>
 
-# ### 2.5.1 데이터 정제: 수치형 특성 전치러 과정 1
+# ### 데이터 정제: 수치형 특성 전치러 과정 1
 
 # * 누락된 특성값이 존재 경우, 해당 값 또는 특성을 먼저 처리해야 함.
 
 # * `total_bedrooms` 특성에 207개 구역에 대한 값이 null로 채워져 있음, 즉, 일부 구역에 대한 정보가 누락됨.
 
-# <div align="center"><img src="imgs/ch02/null-value01.png" width="800"></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/null-value01.png" width="800"></div>
 
 # #### null 값 처리 옵션
 
@@ -377,7 +415,7 @@
 
 # <옵션 3 활용>
 # 
-# <div align="center"><img src="imgs/ch02/null-value02.png" width="800"></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/null-value02.png" width="800"></div>
 
 # #### SimpleImputer 변환기
 
@@ -392,7 +430,7 @@
 # imputer.fit(housing_num)
 # ```
 
-# ### 2.5.2 텍스트와 범주형 특성 다루기: 원-핫 인코딩
+# ### 텍스트와 범주형 특성 다루기: 원-핫 인코딩
 
 # * 범주형 특성인 해안 근접도(ocean_proximity)에 사용된 5개의 범주를 수치형 특성으로 변환해야 함.
 
@@ -433,9 +471,9 @@
 #     - 1의 위치만 기억하는 희소 행렬로 처리. 대용량 행렬 처리에 효과적임.
 #     - `False`로 지정할 경우 일반 행렬로 처리.
 
-# <div align="center"><img src="imgs/ch02/homl02-16.png" width="600"></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-16.png" width="600"></div>
 
-# ### 2.5.3 나만의 변환기: 수치형 특성 전처리 과정 2 (조합 특성 추가)
+# ### 나만의 변환기: 수치형 특성 전처리 과정 2 (조합 특성 추가)
 
 # * 아래 특성 추가 용도 변환기 클래스 직접 선언하기
 #   * 가구당 방 개수(rooms for household)
@@ -471,11 +509,11 @@
 
 # * `TransformerMixin` 상속: `fit_transform()` 자동 생성
 
-# <div align="center"><img src="imgs/ch02/custom-transformer.png" width="350"></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/custom-transformer.png" width="350"></div>
 # 
 # <그림 아이디어 출처: [Get the Most out of scikit-learn with Object-Oriented Programming](https://towardsdatascience.com/get-the-most-out-of-scikit-learn-with-object-oriented-programming-d01fef48b448)>
 
-# ### 2.5.4 특성 스케일링: 수치형 특성 전처리 과정 3
+# ### 특성 스케일링: 수치형 특성 전처리 과정 3
 
 # * 머신러닝 알고리즘은 입력 데이터셋의 특성값들의 스케일(범위)이 다르면 제대로 작동하지 않음
 
@@ -517,7 +555,7 @@
 # * `transform()` 메서드: 테스트셋 포함 모든 데이터에 적용 
 #   * 훈련셋을 이용하여 필요한 파라미터를 확인한 후 그 값들을 이용하여 전체 데이터셋을 변환
 
-# ### 2.5.5 변환 파이프라인
+# ### 변환 파이프라인
 
 # * 모든 전처리 단계가 정확한 순서대로 진행되어야 함
 
@@ -572,13 +610,7 @@
 # housing_prepared = full_pipeline.fit_transform(housing)
 # ```
 
-# # 2장 머신러닝 프로젝트 처음부터 끝까지 (3부)
-
-# #### 감사의 글
-# 
-# 자료를 공개한 저자 오렐리앙 제롱과 강의자료를 지원한 한빛아카데미에게 진심어린 감사를 전합니다.
-
-# ## 2.6 모델 선택과 훈련
+# ## 모델 선택과 훈련
 
 # * 목표 달성에 필요한 두 요소를 결정해야함
 #   * 학습 모델
@@ -590,7 +622,7 @@
 
 # * 회귀 모델 성능 측정 지표: 평균 제곱근 오차(RMSE)를 기본으로 사용
 
-# ### 2.6.1 훈련셋에서 훈련하고 평가하기
+# ### 훈련셋에서 훈련하고 평가하기
 
 # * 지금까지 한 일
 #     * 훈련셋 / 테스트셋 구분
@@ -655,7 +687,7 @@
 #     - 실전 상황에서 RMSE가 0이 되는 것은 불가능.
 #     - 훈련셋이 아닌 테스트셋에 적용할 경우 RMSE가 크게 나올 것임.
 
-# ### 2.6.2 교차 검증을 사용한 평가
+# ### 교차 검증을 사용한 평가
 
 # * 테스트셋을 사용하지 않으면서 훈련 과정을 평가할 수 있음.
 
@@ -673,7 +705,7 @@
 
 # * k = 5인 경우
 # 
-# <div align="center"><img src="imgs/ch02/cross-val10.png" width="400"></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/cross-val10.png" width="400"></div>
 
 # #### 예제: 결정 트리 모델 교차 검증 (k = 10인 경우)
 
@@ -737,7 +769,7 @@
 #     - 지금까지 사용해본 모델 중 최고
 #     - 하지만 여전히 과대적합되어 있음. 
 
-# ## 2.7 모델 세부 튜닝
+# ## 모델 세부 튜닝
 
 # * 살펴 본 모델 중에서 **랜덤 포레스트** 모델의 성능이 가장 좋았음
 
@@ -748,7 +780,7 @@
 #   * **랜덤 탐색**
 #   * **앙상블 방법**
 
-# ### 2.7.1 그리드 탐색
+# ### 그리드 탐색
 
 # * 지정한 하이퍼파라미터의 모든 조합을 교차검증하여 최선의 하이퍼파라미터 조합 찾기
 
@@ -785,7 +817,7 @@
 # * 최고 성능의 랜덤 포레스트에 대한 교차검증 RMSE: 49682
 #     - 하나의 랜덤 포레스트보다 좀 더 좋아졌음.
 
-# ### 2.7.2 랜덤 탐색
+# ### 랜덤 탐색
 
 # * 그리드 탐색은 적은 수의 조합을 실험해볼 때 유용
 
@@ -824,7 +856,7 @@
 
 # * 최고 성능의 랜덤 포레스트에 대한 교차검증 RMSE: 49150
 
-# ### 2.7.3 앙상블 방법
+# ### 앙상블 방법
 
 # * 결정 트리 모델 하나보다 랜덤 포레스트처럼 여러 모델로 이루어진 모델이 보다 좋은 성능을 낼 수 있음.
 
@@ -832,7 +864,7 @@
 
 # * 7장에서 자세히 다룸
 
-# ### 2.7.4 최상의 모델과 오차 분석
+# ### 최상의 모델과 오차 분석
 
 # * 그리드 탐색과 랜덤 탐색 등을 통해 얻어진 최상의 모델을 분석해서 문제에 대한 좋은 통창을 얻을 수 있음
 
@@ -841,9 +873,9 @@
 #     * 해안 근접도의 다른 네 가지 특성은 별로 중요하지 않음
 #     * 중요도가 낮은 특성은 삭제할 수 있음.
 
-# <div align="center"><img src="imgs/ch02/feature-importance.png" width="400"></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/feature-importance.png" width="400"></div>
 
-# ### 2.7.5 테스트 셋으로 시스템 평가하기
+# ### 테스트 셋으로 시스템 평가하기
 
 # 1. 최고 성능 모델 확인: 예를 들어, 그리드 탐색으로 찾은 최적 모델 사용
 # 
@@ -865,7 +897,7 @@
 
 # #### 최상의 모델 성능 배포
 
-# <div align="center"><img src="imgs/ch02/model-launching01.png" width="600"></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/model-launching01.png" width="600"></div>
 
 # #### 데이터셋 및 모델 백업
 
