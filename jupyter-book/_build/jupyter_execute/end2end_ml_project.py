@@ -17,9 +17,12 @@
 # **주요 내용**
 # 
 # 주택 가격을 예측하는 다양한 **회귀 모델**<font size="2">regression model</font>의
-# 훈련 과정을 이용하여 머신러닝 시스템의 전체 훈련 과정을 상세히 살펴본다.
+# 훈련 과정을 이용하여 머신러닝 시스템의 전체 훈련 과정을 살펴본다.
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-01d.png" width="600"></div>
+
+# 특히 데이터 정제 및 전처리 과정으로 구성된 데이터 준비 과정과 
+# 최선의 모델을 찾는 과정을 상세히 소개한다. 
 
 # ## 실전 데이터 활용
 
