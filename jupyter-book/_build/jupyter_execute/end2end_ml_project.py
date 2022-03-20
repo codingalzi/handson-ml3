@@ -304,17 +304,24 @@
 # 정제와 전처리 모든 과정은 __파이프라인__<font size="2">pipeline</font>으로
 # 자동화해서 언제든지 재활용할 수 있도록 해야 한다.
 
-# 먼저 앞서 계층별로 구분된 훈련셋을 
+# 먼저 앞서 계층별로 구분된 훈련셋 `strat_train_set` 을 
 # 입력 데이터셋 과 
 # 타깃 데이터셋으로 또다시 구분한다. 
 # 
-# ```python
-# housing = strat_train_set.drop("median_house_value", axis=1)
-# housing_labels = strat_train_set["median_house_value"].copy()
-# ```
+# * 입력 데이터셋: 중간 주택 가격 특성이 제거된 훈련셋 
 # 
-# 데이터 정제와 전처리는 입력 데이터셋에 대해서만 진행하며,
-# 타깃 데이터셋은 전처리를 일반적으로 하지 않는다.
+#     ```python
+#     housing = strat_train_set.drop("median_house_value", axis=1)
+#     ```
+# * 타깃 데이터셋: 중간 주택 가격 특성으로만 구성된 훈련셋 
+# 
+#     ```python
+#     housing_labels = strat_train_set["median_house_value"].copy()
+#     ```
+
+# 데이터 준비는 기본적으로 입력 데이터셋만을 대상으로 정제<font size="2">cleaning</font>와 
+# 전처리<font size="2">preprocessing</font> 단계로 실행된다. 
+# 타깃 데이터셋은 결측치가 없는 경우라면 일반적으로 정제와 전처리 대상이 아니다.
 
 # :::{admonition} 테스트셋 전처리
 # :class: info
@@ -324,111 +331,81 @@
 # 기존에 완성된 파이트라인을 이용하면 된다.
 # :::
 
-# ### 데이터 전처리
+# ### 데이터 정제와 전처리
 
-# * 데이터 전처리(data preprocessing): 효율적인 모델 훈련을 위한 데이터 변환
+# 데이터 정제는 결측치 처리, 이상치 및 노이즈 데이터 제거 등을 의미한다.
+# 캘리포니아 주택 가격 데이터셋은 구역별 전체 방 개수(`total_rooms`) 특성에서 결측치가 일부 포함되어 있지만 
+# 이상치 또는 노이즈 데이터는 없다고 가정한다. 
 
-# * 수치형 특성과 범주형 특성에 대해 다른 변환과정을 사용
-
-# * 수치형 특성 전처리 과정
-#   * 데이터 정제
-#   * 조합 특성 추가
-#   * 특성 스케일링
-
-# * 범주형 특성 전처리 과정
-#   * 원-핫-인코딩(one-hot-encoding)
-
-# ### 변환 파이프라인
-
-# * __파이프라인__(pipeline)
-#     - 여러 과정을 한 번에 수행하는 기능을 지원하는 도구
-#     - 여러 사이킷런 API를 묶어 순차적으로 처리하는 사이킷런 API
-
-# * 파이프라인 적용 과정
-#     * 수치형 특성 전처리 과정에 사용된 세 가지 변환 과정의 자동화 파이프라인 구현
-#     * 수치형 특성 파이프라인과 범주형 특성 전처리 과정을 결합한 파이프라인 구현
-
-# ### 사이킷런 API 활용
-
-# * '조합 특성 추가' 과정을 제외한 나머지 변환은 사이킷런에서 제공하는 관련 API 직접 활용 가능
-
-# * '조합 특성 추가' 과정도 다른 사이킷런 API와 호환이 되는 방식으로 사용자가 직접 구현 가능
-
-# * 사이킷런에서 제공하는 API는 일관되고 단순한 인터페이스를 제공
-
-# ### 사이킷런 API의 세 가지 유형
-
-# #### 추정기(estimator)
-#     
-
-# * 주어진 데이터셋과 관련된 특정 파라미터 값들을 추정하는 객체
-
-# * `fit()` 메서드 활용: 특정 파라미터 값을 저장한 속성이 업데이트된 객체 자신 반환
-
-# #### 변환기(transformer):
-
-# * fit() 메서드에 의해 학습된 파라미터를 이용하여 주어진 데이터셋 변환
-
-# * `transform()` 메서드 활용
-
-# * `fit()` 메서드와 `transform()` 메서드를 연속해서 호출하는 `fit_transform()` 메서드 활용 가능
-
-# #### 예측기(predictor)
-
-# * 주어진 데이터셋과 관련된 값을 예측하는 기능을 제공하는 추정기
-
-# * `predict()` 메서드 활용
-
-# * `fit()`과 `predict()` 메서드가 포함되어 있어야 함
-
-# * `predict()` 메서드가 추정한 값의 성능을 측정하는 `score()` 메서드도 포함
-
-# * 일부 예측기는 추정치의 신뢰도를 평가하는 기능도 제공
-
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/scikit-learn-flow01.png" width="800"></div>
+# 전처리는 수치형 특성과 범주형 특성을 나누어 수행한다. 
 # 
-# <그림 출처: [Scikit-Learn: A silver bullet for basic machine learning](https://medium.com/analytics-vidhya/scikit-learn-a-silver-bullet-for-basic-machine-learning-13c7d8b248ee)>
+# * 수치형 특성에 대한 전처리
+#     * 조합 특성 추가
+#     * 특성 스케일링
+# 
+# * 범주형 특성 전처리 과정
+#     * 원-핫-인코딩<font size="2">one-hot-encoding</font>
 
-# ### 데이터 정제: 수치형 특성 전치러 과정 1
+# 데이터 정제와 전처리의 모든 과정은 데이터셋에 포함된 샘플을 
+# 한꺼번에 지정된 방식으로 변환한다.
+# 따라서 모든 변환 과정을 자동화는
+# __파이프라인__<font size="2">pipeline</font> 기법을 활용해야 한다.
 
-# * 누락된 특성값이 존재 경우, 해당 값 또는 특성을 먼저 처리해야 함.
+# **사이킷런 API 활용**
 
-# * `total_bedrooms` 특성에 207개 구역에 대한 값이 null로 채워져 있음, 즉, 일부 구역에 대한 정보가 누락됨.
+# 사이킷런<font size="2">Scikit-Learn</font>에서 제공하는
+# 머신러닝 관련 API를 활용하여 데이터 준비 과정을 자동화하는 파이프라인을 쉽게 구현할 수 있다.
+# 파이프라인 구성이 간단한 이유는 사이킷런의 API를 합성하는 기능일 기본으로 지원하기 때문이다.
+# 이를 이해하려면 먼저 사이킷런이 제공하는 API의 유형을 구분할 줄 알아야 한다.
+# 
+# 사이킷런의 API는 크게 세 종류의 클래스로 나뉜다.
+
+# * 추정기<font size="2">estimator</font>
+#     * 인자로 주어진 데이터셋 객체 관련된 특정 값 계산
+#     * `fit()` 메서드: 계산된 특정 값으로 업데이트된 데이터 객체 자신 반환
+
+# * 변환기<font size="2">transformer</font>
+#     * `fit()` 메서드 이외에 `fit()` 가 계산한 값을 이용하여 데이터셋을 변환하는 `transform()` 메서드 지원.
+#     * `fit()` 메서드와 `transform()` 메서드를 연속해서 호출하는 `fit_transform()` 메서드도 지원.
+
+# * 예측기<font size="2">predictor</font>
+#     * `fit()` 메서드 이외에 `fit()` 가 계산한 값을 이용하여 
+#         타깃을 예측하는 `predict()` 메서드 지원.
+#     * `predict()` 메서드가 예측한 값의 성능을 측정하는 `score()` 메서드 지원.
+#     * 일부 예측기는 추정치의 신뢰도를 평가하는 기능도 제공
+
+# 사이킷런의 API는 또한 적절한 
+# **하이퍼파라미터**<font size="2">hyperparameter</font>로 초기화되어 있으며
+# 추정 및 변화 관정에 필요한 모든 파라미터를 저장하며 효율적으로 관리한다.
+
+# :::{admonition} 하이퍼파라미터 대 파라미터
+# :class: info
+# 
+# 사이킷런 API의 하이퍼파라미터는 해당 객체를 생성할 때 사용되는 값을 가리킨다.
+# 즉, API 객체를 생성하기 위해 해당 API 클래스의 생성자인 
+# `__init__()` 메서드를 호출할 때 사용하는 인자를 가리킨다.
+# 
+# 반면에 파라미터는 지정된 API 객체의 `fit()` 메서드가 실행되는 과정에 
+# 주어진 입력 데이터셋 관련해서 계산하는 값을 가리킨다.
+# 추정기, 변환기, 예측기는 각각의 역할에 맞는 파라미터를 계산한다.
+# :::
+
+# ### 데이터 정제
+
+# 입력 데이터셋의 `total_bedrooms` 특성에 207개 구역에 대한 값이 null 값으로 채워져 있다.
+# 즉, 일부 구역에 대한 전체 방의 개수 정보가 누락되었다.
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/null-value01.png" width="800"></div>
 
-# #### null 값 처리 옵션
-
+# 머신러닝 모델은 결측치가 있는 데이터셋을 잘 활용하지 못한다.
+# 따라서 아래 옵션 중 하나를 선택해서 데이터를 정제해야 한다.
+# 
 # * 옵션 1: 해당 구역 제거
+# * 옵션 2: 해당 특성 삭제
+# * 옵션 3: 평균값, 중앙값, 0, 주변에 위치한 값 등 특정 값으로 채우기. 여기서는 중앙값으로 채움.
+#     - 사이킷런의 `SimpleImputer` 변환기 활용
 
-# * 옵션 2: 전체 특성 삭제
-
-# * 옵션 3: 평균값, 중앙값, 0, 주변에 위치한 값 등 특정 값으로 채우기. 책에서는 중앙값으로 채움.
-
-# | 옵션 | 코드 |
-# |--- | :--- |
-# | 옵션 1 | `housing.dropna(subset=["total_bedrooms"])` |
-# | 옵션 2 | `housing.drop("total_bedrooms", axis=1)` |
-# | 옵션 3 | `median = housing["total_bedrooms"].median()` |
-# |       | `housing["total_bedrooms"].fillna(median, inplace=True)` |
-# 
-
-# <옵션 3 활용>
-# 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/null-value02.png" width="800"></div>
-
-# #### SimpleImputer 변환기
-
-# * 옵션 3를 지원하는 사이킷런 변환기
-
-# * 중앙값 등 통계 요소를 활용하여 누락 데이터를 특정 값으로 채움
-
-# ```python
-# from sklearn.impute import SimpleImputer
-# imputer = SimpleImputer(strategy="median")
-# housing_num = housing.drop("ocean_proximity", axis=1)
-# imputer.fit(housing_num)
-# ```
 
 # ### 텍스트와 범주형 특성 다루기: 원-핫 인코딩
 
