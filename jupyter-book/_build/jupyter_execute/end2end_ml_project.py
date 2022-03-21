@@ -628,37 +628,53 @@
 # :::{admonition} `KMeans` 모델
 # :class: info
 # 
-# `KMeans` 모델은 나중에 비지도 학습에서 다룰 군집 알고리즘 모델이다.
+# `KMeans` 모델은 나중에 9장 비지도 학습에서 다룰 군집 알고리즘 모델이다.
 # :::
+
+# `ClusterSimilarity` 변환기를 이용하여 새로운 군집 특성을 추가하면 
+# 아래 그림과 같은 결과를 얻게 된다.
+# 
+# - 구역을 10개의 군집으로 나눈다.
+# -  &#9587; 는 각 군집의 중심 구역을 나타낸다.
+# - 변환기는 구역과 구역이 속하는 군집 중심과의 근접도(0에서 1 사이)를 계산한다.
+
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-cluster.jpg" width="550"></div>
 
 # ### 변환 파이프라인
 
-# * 모든 전처리 단계가 정확한 순서대로 진행되어야 함
-
-# * 사이킷런의 `Pipeline` 클래스를 이용하여 파이프라인 변환기 객체 생성 가능
-
-# #### 수치형 특성 변환 파이프라인
-
+# 모든 전처리 단계가 정확한 순서대로 진행되어야 한다.
+# 이를 위해 사이킷런의 `Pipeline` 클래스를 이용하여 여러 변환기를 순서대로 
+# 실행하는 파이프라인 변환기를 활용한다.
+# 
+# 예를 들어, 수치형 특성을 대상으로 결측치를 중앙값으로 채우는 정제과정과 
+# 표준화 스케일링을 연속적으로 실행하는 파이프라인은 다음과 같이 정의한다.
+# 
 # ```python
 # num_pipeline = Pipeline([
-#         ('imputer', SimpleImputer(strategy="median")),
-#         ('attribs_adder', CombinedAttributesAdder()),
-#         ('std_scaler', StandardScaler()),
-#     ])
+#     ("impute", SimpleImputer(strategy="median")),
+#     ("standardize", StandardScaler()),
+# ])
 # ```
+# 
+# * `Pipeline` 객체를 생성할 때 사용되는 인자는 이름과 추정기로 이루어진 쌍들의 리스트이다.
+# * 마지막 추정기를 제외한 나머지 추정기는 모두 변환기이어야 한다.
+#     즉, `fit_transform()` 메서드가 지원되어야 한다.
+#     마지막 추정기는 `fit()` 메서드만 지원해도 된다.
+# * 파이프라인으로 정의된 추정기의 유형은 마지막 추정기의 유형과 동일하다.
+#     따라서 `num_pipeline`는 변환기가 된다.
+# * `num_pipeline.fit()` 를 호출하면 
+#     마지막 변환기 까지는 `fit_transform()` 메소드가 연속적으로 호출되고
+#     마지막 변환기의 `fit()` 메서드 최종 호출된다.
 
-# * 인자: 이름과 추정기로 이루어진 쌍들의 리스트
-
-# * 마지막 추정기 제외 나머지 추정기는 모두 변환기이어야 함.
-#     * `fit_transform()` 메서드 지원
-
-# * 파이프라인으로 정의된 추정기의 유형은 마지막 추정기의 유형과 동일
-#     - `num_pipeline`는 변환기. 이유는 `std_scaler`가 변환기이기 때문임.
-
-# * `num_pipeline.fit()` 호출: 
-#     * 마지막 단계 이전 추정기: `fit_transform()` 메소드 연속 호출.
-#         즉, 변환기가 실행될 때마다 변환도 동시에 진행.
-#     * 마지막 추정기: `fit()` 메서드 호출
+# 파이프라인에 포함되는 변환기의 이름이 중요하지 않다면 `make_pipeline()` 함수를 이용하여
+# `Pipeline` 객체를 생성할 수 있다. 이름은 자동으로 지정된다.
+# 
+# 위 `num_pipeline` 과 동일한 파이프라인 객체를 다음과 같이 생성할 수 있다.
+# 
+# ```python
+# num_pipeline = make_pipeline(SimpleImputer(strategy="median"), 
+#                              StandardScaler())
+# ```
 
 # #### 수치형 / 범주형 특성 전처리 과정 통합 파이프라인
 
