@@ -527,12 +527,14 @@
 
 # 데이터 준비 과정에서 경우에 따라 사용자가 직접 변환기를 구현해야할 필요가 있다.
 
-# **`FunctionTransformer` 변환기**
-# 
+# #### `FunctionTransformer` 변환기
+
 # 데이터셋을 이용한 학습을 하지 않은 채 바로 데이터셋을 변환하고자 할 때 변환 함수만을 
 # 이용하여 변환기 객체를 생성할 수 있다.
+
+# **로그 함수 적용 변환기**
 # 
-# 예를 들어 두터운 꼬리 분포를 갖는 데이터셋에 로그 함수를 적용하고자 하면 아래 변환기를 사용하면 된다.
+# 두터운 꼬리 분포를 갖는 데이터셋에 로그 함수를 적용하고자 하면 아래 변환기를 사용하면 된다.
 # 
 # ```python
 # log_transformer = FunctionTransformer(np.log, inverse_func=np.exp)
@@ -545,7 +547,7 @@
 # log_pop = log_transformer.transform(housing[["population"]])
 # ```
 
-# **가우시안 RBF**
+# **가우시안 RBF 적용 변환기**
 # 
 # 특정 지점과의 유사도를 새로운 특성으로 사용하고자 할 때 `rbf_kernel` 함수를 이용한다.
 # 아래 코드는 샌프란시스코 도시와의 근접도를 새로운 특성으로 생성하는 과정을 보여준다. 
@@ -567,45 +569,67 @@
 # $$
 # \phi(\mathbf{x}, \ell) = \exp \left( -\gamma \|\mathbf{x} -\ell \|^2 \right)
 # $$
+# 
+# $\ell$ 에서 조금만 멀어져도 함숫값이 급격히 작아진다. 
+# 예를 들어 아래 이미지는 중간 주택 년수가 35년에서 멀어질 수록 
+# 함숫값이 급격히 0에 가까워지는 것을 보여준다.
+# 감마($\gamma$, gamma)는 얼마나 빠르게 감소하도록 하는가를 결정한다.
+# 즉, 감마 값이 클 수록 보다 좁은 종 모양의 그래프가 그려진다.
+# 
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-rbf_kernel.jpg" width="400"></div>
 # :::
 
+# **비율 계산 변환기**
 # 
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# * 아래 특성 추가 용도 변환기 클래스 직접 선언하기
-#   * 가구당 방 개수(rooms for household)
-#   * 방 하나당 침실 개수(bedrooms for room)
-#   * 가구당 인원(population per household)
-
-# * 변환기 클래스: `fit()`, `transform()` 메서드를 구현하면 됨.
-#     * 주의: fit() 메서드의 리턴값은 self
-
-# #### 상속하면 좋은 클래스
-
-# * `BaseEstimator` 상속: 하이퍼파라미터 튜닝 자동화에 필요한 `get_params()`, `set_params()` 메서드 제공 
+# 두 개의 특성 사이의 비율을 계산하는 변환기 또한 `FunctionTransformer`를 활용할 수 있다.
 # 
-# * `TransformerMixin` 상속: `fit_transform()` 자동 생성
+# ```python
+# ratio_transformer = FunctionTransformer(lambda X: X[:, [0]] / X[:, [1]])
+# ```
+
+# 비율 계산 변환기를 이용하여 아래 특성을 새롭게 생성할 수 있다.
 # 
-# <div align="center"><img src="https://miro.medium.com/max/1076/1*hMGRmj9Wz-xGVJhlc08szQ.png" width="350"></div>
+# - 가구당 방 개수(rooms for household)
+# - 방 하나당 침실 개수(bedrooms for room)
+# - 가구당 인원(population per household)
+
+# #### 사용자 정의 변환 클래스
+
+# `fit()` 메서드를 통해 먼저 데이터를 학습한 다음에야 `transform()` 메서드를 적용할 수 있는
+# 변환기를 정의하려면 사이킷런의 다른 변환기와 호환이 되는 클래스를 직접 선언해야 한다. 
+# 즉, `fit()` 과 `transform()` 두 메서드를 포함해서 기본으로 변환기가 제공하는 많은 메서드를 직접 
+# 구현해야 한다. 
 # 
-# <그림 출처: [Get the Most out of scikit-learn with Object-Oriented Programming](https://towardsdatascience.com/get-the-most-out-of-scikit-learn-with-object-oriented-programming-d01fef48b448)>
+# 예를 들어, 캘리포니아 주 2만 여개의 구역을 서로 가깝게 위치한 구역들의 군집으로 구분하는 변환기는
+# 다음과 같이 구현할 수 있다. 
+# 단, 아래 코드를 지금 이해할 필요는 없다.
+
+# ```python
+# from sklearn.cluster import KMeans
+# 
+# class ClusterSimilarity(BaseEstimator, TransformerMixin):
+#     def __init__(self, n_clusters=10, gamma=1.0, random_state=None):
+#         self.n_clusters = n_clusters
+#         self.gamma = gamma
+#         self.random_state = random_state
+# 
+#     def fit(self, X, y=None, sample_weight=None):
+#         self.kmeans_ = KMeans(self.n_clusters, random_state=self.random_state)
+#         self.kmeans_.fit(X, sample_weight=sample_weight)
+#         return self  # always return self!
+# 
+#     def transform(self, X):
+#         return rbf_kernel(X, self.kmeans_.cluster_centers_, gamma=self.gamma)
+#     
+#     def get_feature_names_out(self, names=None):
+#         return [f"Cluster {i} similarity" for i in range(self.n_clusters)]
+# ```
+
+# :::{admonition} `KMeans` 모델
+# :class: info
+# 
+# `KMeans` 모델은 나중에 비지도 학습에서 다룰 군집 알고리즘 모델이다.
+# :::
 
 # ### 변환 파이프라인
 
