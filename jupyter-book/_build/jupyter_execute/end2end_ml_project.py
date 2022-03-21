@@ -143,7 +143,12 @@
 # ## 데이터 다운로드 및 적재
 
 # 캐리포니아 주택가격 데이터셋은 매우 유명하여 많은 공개 저장소에서 다운로드할 수 있다.
-# 여기서는 저자가 자신의 깃허브에 압축파일로 저장한 파일을 다운로드해서 사용한다. 
+# 여기서는 깃허브 리포지토리에 압축파일로 저장한 파일을 다운로드해서 사용하며
+# `housing` 변수가 가리키도록 적재되었다고 가정한다.
+# 
+# ```python
+# housing = load_housing_data()
+# ```
 
 # ### 데이터셋 기본 정보 확인
 
@@ -193,9 +198,9 @@
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/feature-histogram.png" width="600px"></div>
 
-# ### 테스트셋 만들기
+# ### 훈련셋과 테스트셋
 
-# 모델 학습 시작 이전에 준비된 데이터셋을 훈련셋과 테스트셋으로 구분해야 한다.
+# 모델 학습 시작 이전에 준비된 데이터셋을 **훈련셋**과 **테스트셋**으로 구분해야 한다.
 # 테스트셋은 훈련 과정중에 전혀 사용되지 않으며 보통 전체 데이터셋의 20% 정도 이하로
 # 선택하며, 전체 데이터셋의 크기에 따라 테스트셋의 크기가 너무 크지 않게 
 # 비율을 적절히 조절한다.
@@ -327,17 +332,6 @@
 #     ```python
 #     housing_labels = strat_train_set["median_house_value"].copy()
 #     ```
-
-# :::{admonition} 타깃 데이터셋 전처리
-# :class: info
-# 
-# 데이터 준비는 기본적으로 입력 데이터셋만을 대상으로 **정제**<font size="2">cleaning</font>와 
-# **전처리**<font size="2">preprocessing</font> 단계로 실행된다. 
-# 타깃 데이터셋은 결측치가 없는 경우라면 일반적으로 정제와 전처리 대상이 아니지만
-# 경우에 따라 변환이 요구될 수 있다.
-# 예를 들어, 타깃 데이터셋의 히스토그램이 지나치게 한쪽으로 치우치는 모양을 띠는 경우
-# 로그 함수를 적용하여 데이터의 분포가 보다 균형잡히도록 하는 것이 권장된다.
-# :::
 
 # ### 데이터 정제와 전처리
 
@@ -508,7 +502,92 @@
 # 훈련 이외의 경우에 `transform()` 메서드를 이용하여 데이터를 변환한다.
 # :::
 
+# 데이터셋이 두터운 꼬리 분포를 따르는 경우, 
+# 즉 히스토그램이 지나치게 왼편으로 편향된 경우
+# 스케일링을 적용하기 전에 먼저
+# 로그 함수를 적용하여 어느 정도 좌우 균형이 잡힌 분포로 변환하는 게 좋다. 
+# 아래 그림은 인구에 로그함수를 적용할 때 분포가 보다 균형잡히는 것을 잘 보여준다.
+
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-log_app.jpg" width="600"></div>
+
+# :::{admonition} 타깃 데이터셋 전처리
+# :class: info
+# 
+# 데이터 준비는 기본적으로 입력 데이터셋만을 대상으로 **정제**<font size="2">cleaning</font>와 
+# **전처리**<font size="2">preprocessing</font> 단계로 실행된다. 
+# 타깃 데이터셋은 결측치가 없는 경우라면 일반적으로 정제와 전처리 대상이 아니지만
+# 경우에 따라 변환이 요구될 수 있다.
+# 예를 들어, 타깃 데이터셋의 두터운 꼬리 분포를 따르는 경우
+# 로그 함수를 적용하여 데이터의 분포가 보다 균형잡히도록 하는 것이 권장된다.
+# 하지만 이런 경우 예측값을 계산할 때 원래의 척도로 되돌려야 하며
+# 이를 위해 대부분의 사이킷런 변환기가 지원하는 `inverse_transorm()` 메서드를 활용할 수 있다.
+# :::
+
 # ### 사용자 정의 변환기
+
+# 데이터 준비 과정에서 경우에 따라 사용자가 직접 변환기를 구현해야할 필요가 있다.
+
+# **`FunctionTransformer` 변환기**
+# 
+# 데이터셋을 이용한 학습을 하지 않은 채 바로 데이터셋을 변환하고자 할 때 변환 함수만을 
+# 이용하여 변환기 객체를 생성할 수 있다.
+# 
+# 예를 들어 두터운 꼬리 분포를 갖는 데이터셋에 로그 함수를 적용하고자 하면 아래 변환기를 사용하면 된다.
+# 
+# ```python
+# log_transformer = FunctionTransformer(np.log, inverse_func=np.exp)
+# ```
+# 
+# `log_transformer` 변환기를 이용하여 구역별 인구 특성에 로그함수를 적용하려면
+# 아래 코드처럼 한다.
+# 
+# ```python
+# log_pop = log_transformer.transform(housing[["population"]])
+# ```
+
+# **가우시안 RBF**
+# 
+# 특정 지점과의 유사도를 새로운 특성으로 사용하고자 할 때 `rbf_kernel` 함수를 이용한다.
+# 아래 코드는 샌프란시스코 도시와의 근접도를 새로운 특성으로 생성하는 과정을 보여준다. 
+# 
+# ```python
+# sf_coords = 37.7749, -122.41  # 샌프란시스코 위도, 경도 좌표
+# sf_transformer = FunctionTransformer(rbf_kernel,
+#                                      kw_args=dict(Y=[sf_coords], gamma=0.1))
+# 
+# sf_simil = sf_transformer.transform(housing[["latitude", "longitude"]])
+# ```
+
+# :::{admonition} `rbf_kernel` 함수
+# :class: info
+# 
+# `rbf_kernel` 함수는 다음 가우시안 RBF 함수를 활용한다.
+# 단, $\ell$ 은 특정 지점을 가리킨다.
+# 
+# $$
+# \phi(\mathbf{x}, \ell) = \exp \left( -\gamma \|\mathbf{x} -\ell \|^2 \right)
+# $$
+# :::
+
+# 
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
 
 # * 아래 특성 추가 용도 변환기 클래스 직접 선언하기
 #   * 가구당 방 개수(rooms for household)
@@ -518,35 +597,15 @@
 # * 변환기 클래스: `fit()`, `transform()` 메서드를 구현하면 됨.
 #     * 주의: fit() 메서드의 리턴값은 self
 
-# #### 예제: CombinedAttributesAdder 변환기 클래스 선언
-# 
-# * `__init__()` 메서드: 생성되는 모델의 __하이퍼파라미터__ 지정 용도 
-#     - 모델에 대한 적절한 하이퍼파라미터를 튜닝할 때 유용하게 활용됨.
-#     - 예제: 방 하나당 침실 개수 속성 추가 여부
-# * `fit()` 메서드: 계산해야 하는 파라미터가 없음. 바로 `self` 리턴
-# * `transform()` 메서드: 넘파이 어레이를 입력받아 속성을 추가한 어레이를 반환
-
-# ```python
-# class CombinedAttributesAdder(BaseEstimator, TransformerMixin):
-#     def __init__(self, add_bedrooms_per_room = True):
-#         ...
-# 
-#     def fit(self, X, y=None):
-#         return self
-# 
-#     def transform(self, X):
-#         ...
-# ```
-
 # #### 상속하면 좋은 클래스
 
 # * `BaseEstimator` 상속: 하이퍼파라미터 튜닝 자동화에 필요한 `get_params()`, `set_params()` 메서드 제공 
-
-# * `TransformerMixin` 상속: `fit_transform()` 자동 생성
-
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/custom-transformer.png" width="350"></div>
 # 
-# <그림 아이디어 출처: [Get the Most out of scikit-learn with Object-Oriented Programming](https://towardsdatascience.com/get-the-most-out-of-scikit-learn-with-object-oriented-programming-d01fef48b448)>
+# * `TransformerMixin` 상속: `fit_transform()` 자동 생성
+# 
+# <div align="center"><img src="https://miro.medium.com/max/1076/1*hMGRmj9Wz-xGVJhlc08szQ.png" width="350"></div>
+# 
+# <그림 출처: [Get the Most out of scikit-learn with Object-Oriented Programming](https://towardsdatascience.com/get-the-most-out-of-scikit-learn-with-object-oriented-programming-d01fef48b448)>
 
 # ### 변환 파이프라인
 
