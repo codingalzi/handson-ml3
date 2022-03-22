@@ -895,7 +895,7 @@
 </li>
 <li><p>‘방의 총 개수’의 경우 207개의 null 값, 즉 결측치 존재.</p></li>
 </ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-05a.png" width="450"></div><p><strong>범주형 특성 탐색</strong></p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-05a.png" width="350"></div><p><strong>범주형 특성 탐색</strong></p>
 <p>‘해안 근접도’는 5개의 범주로 구분된다.</p>
 <table class="colwidths-auto table">
 <thead>
@@ -974,8 +974,57 @@
 </tr>
 </tbody>
 </table>
-<p>무작위 샘플링 방식과는 달리 계층별 샘플의 비율을 거의 동일하게 유지함을 확인할 수 있다.</p>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-07.png" width="500"></div></div>
+<p>5 개의 구간으로 구분한 결과는 다음과 같다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-08a.png" width="400"></div><p>무작위 샘플링 방식과는 달리 계층별 샘플의 비율을 거의 동일하게 유지함을 확인할 수 있다.</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="text-align:left head"><p></p></th>
+<th class="text-align:left head"><p>전체</p></th>
+<th class="text-align:left head"><p>계층샘플링</p></th>
+<th class="text-align:left head"><p>무작위 샘플링</p></th>
+<th class="text-align:left head"><p>계층 샘플링 오류율</p></th>
+<th class="text-align:left head"><p>무작위 샘플링 오류율</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:left"><p>1</p></td>
+<td class="text-align:left"><p>3.98</p></td>
+<td class="text-align:left"><p>4.00</p></td>
+<td class="text-align:left"><p>4.24</p></td>
+<td class="text-align:left"><p>0.36</p></td>
+<td class="text-align:left"><p>6.45</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>2</p></td>
+<td class="text-align:left"><p>31.88</p></td>
+<td class="text-align:left"><p>31.88</p></td>
+<td class="text-align:left"><p>30.74</p></td>
+<td class="text-align:left"><p>-0.02</p></td>
+<td class="text-align:left"><p>-3.59</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>3</p></td>
+<td class="text-align:left"><p>35.06</p></td>
+<td class="text-align:left"><p>35.05</p></td>
+<td class="text-align:left"><p>34.52</p></td>
+<td class="text-align:left"><p>-0.01</p></td>
+<td class="text-align:left"><p>-1.53</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>4</p></td>
+<td class="text-align:left"><p>17.63</p></td>
+<td class="text-align:left"><p>17.64</p></td>
+<td class="text-align:left"><p>18.41</p></td>
+<td class="text-align:left"><p>0.03</p></td>
+<td class="text-align:left"><p>4.42</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>5</p></td>
+<td class="text-align:left"><p>11.44</p></td>
+<td class="text-align:left"><p>11.43</p></td>
+<td class="text-align:left"><p>12.09</p></td>
+<td class="text-align:left"><p>-0.08</p></td>
+<td class="text-align:left"><p>5.63</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <div class="section" id="id10">
 <h2><span class="section-number">2.4. </span>데이터 탐색과 시각화<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
@@ -992,7 +1041,21 @@
 <div class="section" id="id12">
 <h3><span class="section-number">2.4.2. </span>상관관계 조사<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
 <p>중간 주택 가격 특성과 다른 특성 사이의 선형 상관관계를 나타내는 상관계수는 다음과 같다.</p>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-12.png" width="600"></div><p><strong>상관계수의 특징</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">median_house_value</span>    <span class="mf">1.000000</span>
+<span class="n">median_income</span>         <span class="mf">0.688380</span>
+<span class="n">rooms_per_house</span>       <span class="mf">0.143663</span>
+<span class="n">total_rooms</span>           <span class="mf">0.137455</span>
+<span class="n">housing_median_age</span>    <span class="mf">0.102175</span>
+<span class="n">households</span>            <span class="mf">0.071426</span>
+<span class="n">total_bedrooms</span>        <span class="mf">0.054635</span>
+<span class="n">population</span>           <span class="o">-</span><span class="mf">0.020153</span>
+<span class="n">people_per_house</span>     <span class="o">-</span><span class="mf">0.038224</span>
+<span class="n">longitude</span>            <span class="o">-</span><span class="mf">0.050859</span>
+<span class="n">latitude</span>             <span class="o">-</span><span class="mf">0.139584</span>
+<span class="n">bedrooms_ratio</span>       <span class="o">-</span><span class="mf">0.256397</span>
+</pre></div>
+</div>
+<p><strong>상관계수의 특징</strong></p>
 <p>상관계수는 -1에서 1 사이의 값으로 표현된다.</p>
 <ul class="simple">
 <li><p>1에 가까울 수록: 강한 양의 선형 상관관계</p></li>
@@ -1176,9 +1239,21 @@
 <li><p>나머지 카테고리의 특성값: 0</p></li>
 </ul>
 <p>예를 들어, <code class="docutils literal notranslate"><span class="pre">INLAND</span></code>를 해안 근접도 특성값으로 갖던 샘플은 다음 모양의 특성값을 갖게 된다.</p>
-<p><code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">1,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0]</span></code></p>
-<p>사이킷런의 <code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code> 변환기가 원-핫-인코딩을 지원한다.</p>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-16.png" width="600"></div></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>사이킷런의 <code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code> 변환기가 원-핫-인코딩을 지원하며
+해안 근접도를 변환한 결과는 아래 모양을 갖는다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span>
+       <span class="o">...</span><span class="p">,</span>
+       <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="id17">
 <h3><span class="section-number">2.5.4. </span>특성 스케일링<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
 <p>머신러닝 알고리즘은 입력 데이터셋의 특성값들의
@@ -1249,22 +1324,15 @@
 이용하여 변환기 객체를 생성할 수 있다.</p>
 <p><strong>로그 함수 적용 변환기</strong></p>
 <p>두터운 꼬리 분포를 갖는 데이터셋에 로그 함수를 적용하고자 하면 아래 변환기를 사용하면 된다.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">log_transformer</span> <span class="o">=</span> <span class="n">FunctionTransformer</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">,</span> <span class="n">inverse_func</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">log_transformer</span></code> 변환기를 이용하여 구역별 인구 특성에 로그함수를 적용하려면
-아래 코드처럼 한다.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">log_pop</span> <span class="o">=</span> <span class="n">log_transformer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">housing</span><span class="p">[[</span><span class="s2">&quot;population&quot;</span><span class="p">]])</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">FunctionTransformer</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">,</span> <span class="n">inverse_func</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><strong>가우시안 RBF 적용 변환기</strong></p>
 <p>특정 지점과의 유사도를 새로운 특성으로 사용하고자 할 때 <code class="docutils literal notranslate"><span class="pre">rbf_kernel</span></code> 함수를 이용한다.
-아래 코드는 샌프란시스코 도시와의 근접도를 새로운 특성으로 생성하는 과정을 보여준다.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sf_coords</span> <span class="o">=</span> <span class="mf">37.7749</span><span class="p">,</span> <span class="o">-</span><span class="mf">122.41</span>  <span class="c1"># 샌프란시스코 위도, 경도 좌표</span>
-<span class="n">sf_transformer</span> <span class="o">=</span> <span class="n">FunctionTransformer</span><span class="p">(</span><span class="n">rbf_kernel</span><span class="p">,</span>
-                                     <span class="n">kw_args</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">Y</span><span class="o">=</span><span class="p">[</span><span class="n">sf_coords</span><span class="p">],</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.1</span><span class="p">))</span>
-
-<span class="n">sf_simil</span> <span class="o">=</span> <span class="n">sf_transformer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">housing</span><span class="p">[[</span><span class="s2">&quot;latitude&quot;</span><span class="p">,</span> <span class="s2">&quot;longitude&quot;</span><span class="p">]])</span>
+아래 코드는 샌프란시스코 도시와의 근접도를 새로운 특성으로 생성하는 과정을 보여준다.
+단, 샌프란시스코의 위도와 경도는 (37.7749, -122.41)이다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">FunctionTransformer</span><span class="p">(</span><span class="n">rbf_kernel</span><span class="p">,</span>
+                    <span class="n">kw_args</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">Y</span><span class="o">=</span><span class="p">[</span><span class="mf">37.7749</span><span class="p">,</span> <span class="o">-</span><span class="mf">122.41</span><span class="p">],</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.1</span><span class="p">))</span>
 </pre></div>
 </div>
 <div class="info admonition">
@@ -1284,7 +1352,7 @@
 </div>
 <p><strong>비율 계산 변환기</strong></p>
 <p>두 개의 특성 사이의 비율을 계산하는 변환기 또한 <code class="docutils literal notranslate"><span class="pre">FunctionTransformer</span></code>를 활용할 수 있다.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ratio_transformer</span> <span class="o">=</span> <span class="n">FunctionTransformer</span><span class="p">(</span><span class="k">lambda</span> <span class="n">X</span><span class="p">:</span> <span class="n">X</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">/</span> <span class="n">X</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">FunctionTransformer</span><span class="p">(</span><span class="k">lambda</span> <span class="n">X</span><span class="p">:</span> <span class="n">X</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">/</span> <span class="n">X</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
 </pre></div>
 </div>
 <p>비율 계산 변환기를 이용하여 아래 특성을 새롭게 생성할 수 있다.</p>
@@ -1303,9 +1371,7 @@
 <p>예를 들어, 캘리포니아 주 2만 여개의 구역을 서로 가깝게 위치한 구역들의 군집으로 구분하는 변환기는
 다음과 같이 구현할 수 있다.
 단, 아래 코드를 지금 이해할 필요는 없다.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
-
-<span class="k">class</span> <span class="nc">ClusterSimilarity</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">,</span> <span class="n">TransformerMixin</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ClusterSimilarity</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">,</span> <span class="n">TransformerMixin</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_clusters</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span> <span class="o">=</span> <span class="n">n_clusters</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">gamma</span> <span class="o">=</span> <span class="n">gamma</span>
@@ -1343,10 +1409,8 @@
 실행하는 파이프라인 변환기를 활용한다.</p>
 <p>예를 들어, 수치형 특성을 대상으로 결측치를 중앙값으로 채우는 정제과정과
 표준화 스케일링을 연속적으로 실행하는 파이프라인은 다음과 같이 정의한다.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">num_pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
-    <span class="p">(</span><span class="s2">&quot;impute&quot;</span><span class="p">,</span> <span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;median&quot;</span><span class="p">)),</span>
-    <span class="p">(</span><span class="s2">&quot;standardize&quot;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">()),</span>
-<span class="p">])</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Pipeline</span><span class="p">([(</span><span class="s2">&quot;impute&quot;</span><span class="p">,</span> <span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;median&quot;</span><span class="p">)),</span>
+          <span class="p">(</span><span class="s2">&quot;standardize&quot;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">())])</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -1362,9 +1426,9 @@
 </ul>
 <p>파이프라인에 포함되는 변환기의 이름이 중요하지 않다면 <code class="docutils literal notranslate"><span class="pre">make_pipeline()</span></code> 함수를 이용하여
 <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> 객체를 생성할 수 있다. 이름은 자동으로 지정된다.</p>
-<p>위 <code class="docutils literal notranslate"><span class="pre">num_pipeline</span></code> 과 동일한 파이프라인 객체를 다음과 같이 생성할 수 있다.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">num_pipeline</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;median&quot;</span><span class="p">),</span> 
-                             <span class="n">StandardScaler</span><span class="p">())</span>
+<p>위 파이프라인과 동일한 파이프라인 객체를 다음과 같이 생성할 수 있다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">make_pipeline</span><span class="p">(</span><span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;median&quot;</span><span class="p">),</span> 
+              <span class="n">StandardScaler</span><span class="p">())</span>
 </pre></div>
 </div>
 <div class="section" id="id21">
