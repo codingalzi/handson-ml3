@@ -9,3 +9,10 @@ options:
 chapters:
 - file: ml_landscape
 - file: end2end_ml_project
+- file: classification
+- file: training_models
+- file: svm
+- file: decision_trees
+- file: ensemble_learning_random_forests
+- file: dimensionality_reduction
+- file: unsupervised_learning
