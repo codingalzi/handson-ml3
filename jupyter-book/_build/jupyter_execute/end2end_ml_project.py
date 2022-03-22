@@ -143,7 +143,12 @@
 # ## 데이터 다운로드 및 적재
 
 # 캐리포니아 주택가격 데이터셋은 매우 유명하여 많은 공개 저장소에서 다운로드할 수 있다.
-# 여기서는 저자가 자신의 깃허브에 압축파일로 저장한 파일을 다운로드해서 사용한다. 
+# 여기서는 깃허브 리포지토리에 압축파일로 저장한 파일을 다운로드해서 사용하며
+# `housing` 변수가 가리키도록 적재되었다고 가정한다.
+# 
+# ```python
+# housing = load_housing_data()
+# ```
 
 # ### 데이터셋 기본 정보 확인
 
@@ -164,7 +169,7 @@
 #     * '해안 근접도'는 범주형 특성이고 나머지는 수치형 특성.
 # * '방의 총 개수'의 경우 207개의 null 값, 즉 결측치 존재.
 
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-05a.png" width="450"></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-05a.png" width="350"></div>
 
 # **범주형 특성 탐색**
 # 
@@ -193,9 +198,9 @@
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/feature-histogram.png" width="600px"></div>
 
-# ### 테스트셋 만들기
+# ### 훈련셋과 테스트셋
 
-# 모델 학습 시작 이전에 준비된 데이터셋을 훈련셋과 테스트셋으로 구분해야 한다.
+# 모델 학습 시작 이전에 준비된 데이터셋을 **훈련셋**과 **테스트셋**으로 구분해야 한다.
 # 테스트셋은 훈련 과정중에 전혀 사용되지 않으며 보통 전체 데이터셋의 20% 정도 이하로
 # 선택하며, 전체 데이터셋의 크기에 따라 테스트셋의 크기가 너무 크지 않게 
 # 비율을 적절히 조절한다.
@@ -229,9 +234,19 @@
 # | 4 | 4.5 ~ 6.0 |
 # | 5 | 6.0 ~  |
 
+# 5 개의 구간으로 구분한 결과는 다음과 같다.
+
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-08a.png" width="400"></div>
+
 # 무작위 샘플링 방식과는 달리 계층별 샘플의 비율을 거의 동일하게 유지함을 확인할 수 있다.
 
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-07.png" width="500"></div>
+# |  | 전체 | 계층샘플링 | 무작위 샘플링 | 계층 샘플링 오류율 | 무작위 샘플링 오류율 |
+# | :--- | :--- | :--- | :--- | :--- | :--- |
+# | 1 | 3.98 | 4.00 | 4.24 | 0.36 | 6.45 |
+# | 2 | 31.88 | 31.88 | 30.74 | -0.02 | -3.59 |
+# | 3 | 35.06 | 35.05 | 34.52 | -0.01 | -1.53 |
+# | 4 | 17.63 | 17.64 | 18.41 | 0.03 | 4.42 |
+# | 5	| 11.44 | 11.43 | 12.09 | -0.08 | 5.63 |
 
 # ## 데이터 탐색과 시각화
 
@@ -255,7 +270,20 @@
 
 # 중간 주택 가격 특성과 다른 특성 사이의 선형 상관관계를 나타내는 상관계수는 다음과 같다.
 
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-12.png" width="600"></div>
+# ```python
+# median_house_value    1.000000
+# median_income         0.688380
+# rooms_per_house       0.143663
+# total_rooms           0.137455
+# housing_median_age    0.102175
+# households            0.071426
+# total_bedrooms        0.054635
+# population           -0.020153
+# people_per_house     -0.038224
+# longitude            -0.050859
+# latitude             -0.139584
+# bedrooms_ratio       -0.256397
+# ```
 
 # **상관계수의 특징**
 # 
@@ -327,17 +355,6 @@
 #     ```python
 #     housing_labels = strat_train_set["median_house_value"].copy()
 #     ```
-
-# :::{admonition} 타깃 데이터셋 전처리
-# :class: info
-# 
-# 데이터 준비는 기본적으로 입력 데이터셋만을 대상으로 **정제**<font size="2">cleaning</font>와 
-# **전처리**<font size="2">preprocessing</font> 단계로 실행된다. 
-# 타깃 데이터셋은 결측치가 없는 경우라면 일반적으로 정제와 전처리 대상이 아니지만
-# 경우에 따라 변환이 요구될 수 있다.
-# 예를 들어, 타깃 데이터셋의 히스토그램이 지나치게 한쪽으로 치우치는 모양을 띠는 경우
-# 로그 함수를 적용하여 데이터의 분포가 보다 균형잡히도록 하는 것이 권장된다.
-# :::
 
 # ### 데이터 정제와 전처리
 
@@ -447,11 +464,22 @@
 # 
 # 예를 들어, `INLAND`를 해안 근접도 특성값으로 갖던 샘플은 다음 모양의 특성값을 갖게 된다.
 # 
-# `[0, 1, 0, 0, 0]`
+# ```python
+# [0, 1, 0, 0, 0]
+# ```
 
-# 사이킷런의 `OneHotEncoder` 변환기가 원-핫-인코딩을 지원한다. 
+# 사이킷런의 `OneHotEncoder` 변환기가 원-핫-인코딩을 지원하며
+# 해안 근접도를 변환한 결과는 아래 모양을 갖는다.
 
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-16.png" width="600"></div>
+# ```python
+# array([[0., 0., 0., 1., 0.],
+#        [1., 0., 0., 0., 0.],
+#        [0., 1., 0., 0., 0.],
+#        ...,
+#        [0., 0., 0., 0., 1.],
+#        [1., 0., 0., 0., 0.],
+#        [0., 0., 0., 0., 1.]])
+# ```
 
 # ### 특성 스케일링
 
@@ -508,74 +536,166 @@
 # 훈련 이외의 경우에 `transform()` 메서드를 이용하여 데이터를 변환한다.
 # :::
 
+# 데이터셋이 두터운 꼬리 분포를 따르는 경우, 
+# 즉 히스토그램이 지나치게 왼편으로 편향된 경우
+# 스케일링을 적용하기 전에 먼저
+# 로그 함수를 적용하여 어느 정도 좌우 균형이 잡힌 분포로 변환하는 게 좋다. 
+# 아래 그림은 인구에 로그함수를 적용할 때 분포가 보다 균형잡히는 것을 잘 보여준다.
+
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-log_app.jpg" width="600"></div>
+
+# :::{admonition} 타깃 데이터셋 전처리
+# :class: info
+# 
+# 데이터 준비는 기본적으로 입력 데이터셋만을 대상으로 **정제**<font size="2">cleaning</font>와 
+# **전처리**<font size="2">preprocessing</font> 단계로 실행된다. 
+# 타깃 데이터셋은 결측치가 없는 경우라면 일반적으로 정제와 전처리 대상이 아니지만
+# 경우에 따라 변환이 요구될 수 있다.
+# 예를 들어, 타깃 데이터셋의 두터운 꼬리 분포를 따르는 경우
+# 로그 함수를 적용하여 데이터의 분포가 보다 균형잡히도록 하는 것이 권장된다.
+# 하지만 이런 경우 예측값을 계산할 때 원래의 척도로 되돌려야 하며
+# 이를 위해 대부분의 사이킷런 변환기가 지원하는 `inverse_transorm()` 메서드를 활용할 수 있다.
+# :::
+
 # ### 사용자 정의 변환기
 
-# * 아래 특성 추가 용도 변환기 클래스 직접 선언하기
-#   * 가구당 방 개수(rooms for household)
-#   * 방 하나당 침실 개수(bedrooms for room)
-#   * 가구당 인원(population per household)
+# 데이터 준비 과정에서 경우에 따라 사용자가 직접 변환기를 구현해야할 필요가 있다.
 
-# * 변환기 클래스: `fit()`, `transform()` 메서드를 구현하면 됨.
-#     * 주의: fit() 메서드의 리턴값은 self
+# #### `FunctionTransformer` 변환기
 
-# #### 예제: CombinedAttributesAdder 변환기 클래스 선언
+# 데이터셋을 이용한 학습을 하지 않은 채 바로 데이터셋을 변환하고자 할 때 변환 함수만을 
+# 이용하여 변환기 객체를 생성할 수 있다.
+
+# **로그 함수 적용 변환기**
 # 
-# * `__init__()` 메서드: 생성되는 모델의 __하이퍼파라미터__ 지정 용도 
-#     - 모델에 대한 적절한 하이퍼파라미터를 튜닝할 때 유용하게 활용됨.
-#     - 예제: 방 하나당 침실 개수 속성 추가 여부
-# * `fit()` 메서드: 계산해야 하는 파라미터가 없음. 바로 `self` 리턴
-# * `transform()` 메서드: 넘파이 어레이를 입력받아 속성을 추가한 어레이를 반환
-
+# 두터운 꼬리 분포를 갖는 데이터셋에 로그 함수를 적용하고자 하면 아래 변환기를 사용하면 된다.
+# 
 # ```python
-# class CombinedAttributesAdder(BaseEstimator, TransformerMixin):
-#     def __init__(self, add_bedrooms_per_room = True):
-#         ...
-# 
-#     def fit(self, X, y=None):
-#         return self
-# 
-#     def transform(self, X):
-#         ...
+# FunctionTransformer(np.log, inverse_func=np.exp)
 # ```
 
-# #### 상속하면 좋은 클래스
-
-# * `BaseEstimator` 상속: 하이퍼파라미터 튜닝 자동화에 필요한 `get_params()`, `set_params()` 메서드 제공 
-
-# * `TransformerMixin` 상속: `fit_transform()` 자동 생성
-
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/custom-transformer.png" width="350"></div>
+# **가우시안 RBF 적용 변환기**
 # 
-# <그림 아이디어 출처: [Get the Most out of scikit-learn with Object-Oriented Programming](https://towardsdatascience.com/get-the-most-out-of-scikit-learn-with-object-oriented-programming-d01fef48b448)>
+# 특정 지점과의 유사도를 새로운 특성으로 사용하고자 할 때 `rbf_kernel` 함수를 이용한다.
+# 아래 코드는 샌프란시스코 도시와의 근접도를 새로운 특성으로 생성하는 과정을 보여준다. 
+# 단, 샌프란시스코의 위도와 경도는 (37.7749, -122.41)이다. 
+# 
+# ```python
+# FunctionTransformer(rbf_kernel,
+#                     kw_args=dict(Y=[37.7749, -122.41], gamma=0.1))
+# ```
+
+# :::{admonition} `rbf_kernel` 함수
+# :class: info
+# 
+# `rbf_kernel` 함수는 다음 가우시안 RBF 함수를 활용한다.
+# 단, $\ell$ 은 특정 지점을 가리킨다.
+# 
+# $$
+# \phi(\mathbf{x}, \ell) = \exp \left( -\gamma \|\mathbf{x} -\ell \|^2 \right)
+# $$
+# 
+# $\ell$ 에서 조금만 멀어져도 함숫값이 급격히 작아진다. 
+# 예를 들어 아래 이미지는 중간 주택 년수가 35년에서 멀어질 수록 
+# 함숫값이 급격히 0에 가까워지는 것을 보여준다.
+# 감마($\gamma$, gamma)는 얼마나 빠르게 감소하도록 하는가를 결정한다.
+# 즉, 감마 값이 클 수록 보다 좁은 종 모양의 그래프가 그려진다.
+# 
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-rbf_kernel.jpg" width="400"></div>
+# :::
+
+# **비율 계산 변환기**
+# 
+# 두 개의 특성 사이의 비율을 계산하는 변환기 또한 `FunctionTransformer`를 활용할 수 있다.
+# 
+# ```python
+# FunctionTransformer(lambda X: X[:, [0]] / X[:, [1]])
+# ```
+
+# 비율 계산 변환기를 이용하여 아래 특성을 새롭게 생성할 수 있다.
+# 
+# - 가구당 방 개수(rooms for household)
+# - 방 하나당 침실 개수(bedrooms for room)
+# - 가구당 인원(population per household)
+
+# #### 사용자 정의 변환 클래스
+
+# `fit()` 메서드를 통해 먼저 데이터를 학습한 다음에야 `transform()` 메서드를 적용할 수 있는
+# 변환기를 정의하려면 사이킷런의 다른 변환기와 호환이 되는 클래스를 직접 선언해야 한다. 
+# 즉, `fit()` 과 `transform()` 두 메서드를 포함해서 기본으로 변환기가 제공하는 많은 메서드를 직접 
+# 구현해야 한다. 
+# 
+# 예를 들어, 캘리포니아 주 2만 여개의 구역을 서로 가깝게 위치한 구역들의 군집으로 구분하는 변환기는
+# 다음과 같이 구현할 수 있다. 
+# 단, 아래 코드를 지금 이해할 필요는 없다.
+
+# ```python
+# class ClusterSimilarity(BaseEstimator, TransformerMixin):
+#     def __init__(self, n_clusters=10, gamma=1.0, random_state=None):
+#         self.n_clusters = n_clusters
+#         self.gamma = gamma
+#         self.random_state = random_state
+# 
+#     def fit(self, X, y=None, sample_weight=None):
+#         self.kmeans_ = KMeans(self.n_clusters, random_state=self.random_state)
+#         self.kmeans_.fit(X, sample_weight=sample_weight)
+#         return self  # always return self!
+# 
+#     def transform(self, X):
+#         return rbf_kernel(X, self.kmeans_.cluster_centers_, gamma=self.gamma)
+#     
+#     def get_feature_names_out(self, names=None):
+#         return [f"Cluster {i} similarity" for i in range(self.n_clusters)]
+# ```
+
+# :::{admonition} `KMeans` 모델
+# :class: info
+# 
+# `KMeans` 모델은 나중에 9장 비지도 학습에서 다룰 군집 알고리즘 모델이다.
+# :::
+
+# `ClusterSimilarity` 변환기를 이용하여 새로운 군집 특성을 추가하면 
+# 아래 그림과 같은 결과를 얻게 된다.
+# 
+# - 구역을 10개의 군집으로 나눈다.
+# -  &#9587; 는 각 군집의 중심 구역을 나타낸다.
+# - 변환기는 구역과 구역이 속하는 군집 중심과의 근접도(0에서 1 사이)를 계산한다.
+
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-cluster.jpg" width="550"></div>
 
 # ### 변환 파이프라인
 
-# * 모든 전처리 단계가 정확한 순서대로 진행되어야 함
-
-# * 사이킷런의 `Pipeline` 클래스를 이용하여 파이프라인 변환기 객체 생성 가능
-
-# #### 수치형 특성 변환 파이프라인
-
+# 모든 전처리 단계가 정확한 순서대로 진행되어야 한다.
+# 이를 위해 사이킷런의 `Pipeline` 클래스를 이용하여 여러 변환기를 순서대로 
+# 실행하는 파이프라인 변환기를 활용한다.
+# 
+# 예를 들어, 수치형 특성을 대상으로 결측치를 중앙값으로 채우는 정제과정과 
+# 표준화 스케일링을 연속적으로 실행하는 파이프라인은 다음과 같이 정의한다.
+# 
 # ```python
-# num_pipeline = Pipeline([
-#         ('imputer', SimpleImputer(strategy="median")),
-#         ('attribs_adder', CombinedAttributesAdder()),
-#         ('std_scaler', StandardScaler()),
-#     ])
+# Pipeline([("impute", SimpleImputer(strategy="median")),
+#           ("standardize", StandardScaler())])
 # ```
+# 
+# * `Pipeline` 객체를 생성할 때 사용되는 인자는 이름과 추정기로 이루어진 쌍들의 리스트이다.
+# * 마지막 추정기를 제외한 나머지 추정기는 모두 변환기이어야 한다.
+#     즉, `fit_transform()` 메서드가 지원되어야 한다.
+#     마지막 추정기는 `fit()` 메서드만 지원해도 된다.
+# * 파이프라인으로 정의된 추정기의 유형은 마지막 추정기의 유형과 동일하다.
+#     따라서 `num_pipeline`는 변환기가 된다.
+# * `num_pipeline.fit()` 를 호출하면 
+#     마지막 변환기 까지는 `fit_transform()` 메소드가 연속적으로 호출되고
+#     마지막 변환기의 `fit()` 메서드 최종 호출된다.
 
-# * 인자: 이름과 추정기로 이루어진 쌍들의 리스트
-
-# * 마지막 추정기 제외 나머지 추정기는 모두 변환기이어야 함.
-#     * `fit_transform()` 메서드 지원
-
-# * 파이프라인으로 정의된 추정기의 유형은 마지막 추정기의 유형과 동일
-#     - `num_pipeline`는 변환기. 이유는 `std_scaler`가 변환기이기 때문임.
-
-# * `num_pipeline.fit()` 호출: 
-#     * 마지막 단계 이전 추정기: `fit_transform()` 메소드 연속 호출.
-#         즉, 변환기가 실행될 때마다 변환도 동시에 진행.
-#     * 마지막 추정기: `fit()` 메서드 호출
+# 파이프라인에 포함되는 변환기의 이름이 중요하지 않다면 `make_pipeline()` 함수를 이용하여
+# `Pipeline` 객체를 생성할 수 있다. 이름은 자동으로 지정된다.
+# 
+# 위 파이프라인과 동일한 파이프라인 객체를 다음과 같이 생성할 수 있다.
+# 
+# ```python
+# make_pipeline(SimpleImputer(strategy="median"), 
+#               StandardScaler())
+# ```
 
 # #### 수치형 / 범주형 특성 전처리 과정 통합 파이프라인
 
