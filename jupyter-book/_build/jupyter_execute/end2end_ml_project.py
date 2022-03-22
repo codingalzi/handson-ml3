@@ -169,7 +169,7 @@
 #     * '해안 근접도'는 범주형 특성이고 나머지는 수치형 특성.
 # * '방의 총 개수'의 경우 207개의 null 값, 즉 결측치 존재.
 
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-05a.png" width="450"></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-05a.png" width="350"></div>
 
 # **범주형 특성 탐색**
 # 
@@ -234,9 +234,19 @@
 # | 4 | 4.5 ~ 6.0 |
 # | 5 | 6.0 ~  |
 
+# 5 개의 구간으로 구분한 결과는 다음과 같다.
+
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-08a.png" width="400"></div>
+
 # 무작위 샘플링 방식과는 달리 계층별 샘플의 비율을 거의 동일하게 유지함을 확인할 수 있다.
 
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-07.png" width="500"></div>
+# |  | 전체 | 계층샘플링 | 무작위 샘플링 | 계층 샘플링 오류율 | 무작위 샘플링 오류율 |
+# | :--- | :--- | :--- | :--- | :--- | :--- |
+# | 1 | 3.98 | 4.00 | 4.24 | 0.36 | 6.45 |
+# | 2 | 31.88 | 31.88 | 30.74 | -0.02 | -3.59 |
+# | 3 | 35.06 | 35.05 | 34.52 | -0.01 | -1.53 |
+# | 4 | 17.63 | 17.64 | 18.41 | 0.03 | 4.42 |
+# | 5	| 11.44 | 11.43 | 12.09 | -0.08 | 5.63 |
 
 # ## 데이터 탐색과 시각화
 
@@ -260,7 +270,20 @@
 
 # 중간 주택 가격 특성과 다른 특성 사이의 선형 상관관계를 나타내는 상관계수는 다음과 같다.
 
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-12.png" width="600"></div>
+# ```python
+# median_house_value    1.000000
+# median_income         0.688380
+# rooms_per_house       0.143663
+# total_rooms           0.137455
+# housing_median_age    0.102175
+# households            0.071426
+# total_bedrooms        0.054635
+# population           -0.020153
+# people_per_house     -0.038224
+# longitude            -0.050859
+# latitude             -0.139584
+# bedrooms_ratio       -0.256397
+# ```
 
 # **상관계수의 특징**
 # 
@@ -441,11 +464,22 @@
 # 
 # 예를 들어, `INLAND`를 해안 근접도 특성값으로 갖던 샘플은 다음 모양의 특성값을 갖게 된다.
 # 
-# `[0, 1, 0, 0, 0]`
+# ```python
+# [0, 1, 0, 0, 0]
+# ```
 
-# 사이킷런의 `OneHotEncoder` 변환기가 원-핫-인코딩을 지원한다. 
+# 사이킷런의 `OneHotEncoder` 변환기가 원-핫-인코딩을 지원하며
+# 해안 근접도를 변환한 결과는 아래 모양을 갖는다.
 
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-16.png" width="600"></div>
+# ```python
+# array([[0., 0., 0., 1., 0.],
+#        [1., 0., 0., 0., 0.],
+#        [0., 1., 0., 0., 0.],
+#        ...,
+#        [0., 0., 0., 0., 1.],
+#        [1., 0., 0., 0., 0.],
+#        [0., 0., 0., 0., 1.]])
+# ```
 
 # ### 특성 스케일링
 
@@ -537,27 +571,18 @@
 # 두터운 꼬리 분포를 갖는 데이터셋에 로그 함수를 적용하고자 하면 아래 변환기를 사용하면 된다.
 # 
 # ```python
-# log_transformer = FunctionTransformer(np.log, inverse_func=np.exp)
-# ```
-# 
-# `log_transformer` 변환기를 이용하여 구역별 인구 특성에 로그함수를 적용하려면
-# 아래 코드처럼 한다.
-# 
-# ```python
-# log_pop = log_transformer.transform(housing[["population"]])
+# FunctionTransformer(np.log, inverse_func=np.exp)
 # ```
 
 # **가우시안 RBF 적용 변환기**
 # 
 # 특정 지점과의 유사도를 새로운 특성으로 사용하고자 할 때 `rbf_kernel` 함수를 이용한다.
 # 아래 코드는 샌프란시스코 도시와의 근접도를 새로운 특성으로 생성하는 과정을 보여준다. 
+# 단, 샌프란시스코의 위도와 경도는 (37.7749, -122.41)이다. 
 # 
 # ```python
-# sf_coords = 37.7749, -122.41  # 샌프란시스코 위도, 경도 좌표
-# sf_transformer = FunctionTransformer(rbf_kernel,
-#                                      kw_args=dict(Y=[sf_coords], gamma=0.1))
-# 
-# sf_simil = sf_transformer.transform(housing[["latitude", "longitude"]])
+# FunctionTransformer(rbf_kernel,
+#                     kw_args=dict(Y=[37.7749, -122.41], gamma=0.1))
 # ```
 
 # :::{admonition} `rbf_kernel` 함수
@@ -584,7 +609,7 @@
 # 두 개의 특성 사이의 비율을 계산하는 변환기 또한 `FunctionTransformer`를 활용할 수 있다.
 # 
 # ```python
-# ratio_transformer = FunctionTransformer(lambda X: X[:, [0]] / X[:, [1]])
+# FunctionTransformer(lambda X: X[:, [0]] / X[:, [1]])
 # ```
 
 # 비율 계산 변환기를 이용하여 아래 특성을 새롭게 생성할 수 있다.
@@ -605,8 +630,6 @@
 # 단, 아래 코드를 지금 이해할 필요는 없다.
 
 # ```python
-# from sklearn.cluster import KMeans
-# 
 # class ClusterSimilarity(BaseEstimator, TransformerMixin):
 #     def __init__(self, n_clusters=10, gamma=1.0, random_state=None):
 #         self.n_clusters = n_clusters
@@ -650,10 +673,8 @@
 # 표준화 스케일링을 연속적으로 실행하는 파이프라인은 다음과 같이 정의한다.
 # 
 # ```python
-# num_pipeline = Pipeline([
-#     ("impute", SimpleImputer(strategy="median")),
-#     ("standardize", StandardScaler()),
-# ])
+# Pipeline([("impute", SimpleImputer(strategy="median")),
+#           ("standardize", StandardScaler())])
 # ```
 # 
 # * `Pipeline` 객체를 생성할 때 사용되는 인자는 이름과 추정기로 이루어진 쌍들의 리스트이다.
@@ -669,11 +690,11 @@
 # 파이프라인에 포함되는 변환기의 이름이 중요하지 않다면 `make_pipeline()` 함수를 이용하여
 # `Pipeline` 객체를 생성할 수 있다. 이름은 자동으로 지정된다.
 # 
-# 위 `num_pipeline` 과 동일한 파이프라인 객체를 다음과 같이 생성할 수 있다.
+# 위 파이프라인과 동일한 파이프라인 객체를 다음과 같이 생성할 수 있다.
 # 
 # ```python
-# num_pipeline = make_pipeline(SimpleImputer(strategy="median"), 
-#                              StandardScaler())
+# make_pipeline(SimpleImputer(strategy="median"), 
+#               StandardScaler())
 # ```
 
 # #### 수치형 / 범주형 특성 전처리 과정 통합 파이프라인
