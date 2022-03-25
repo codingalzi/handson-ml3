@@ -38,12 +38,9 @@
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script>let toggleHintShow = 'Click to show';</script>
-    <script>let toggleHintHide = 'Click to hide';</script>
-    <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -354,42 +351,47 @@
      2.5.6. 변환 파이프라인
     </a>
    </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id21">
+     2.5.7. 캘리포니아 데이터셋 변환 파이프라인
+    </a>
+   </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id21">
+  <a class="reference internal nav-link" href="#id22">
    2.6. 모델 선택과 훈련
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id22">
+    <a class="reference internal nav-link" href="#id23">
      2.6.1. 훈련셋에서 훈련하고 평가하기
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id23">
+      <a class="reference internal nav-link" href="#id24">
        2.6.1.1. 선형 회귀 모델(4장)
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id24">
+      <a class="reference internal nav-link" href="#id25">
        2.6.1.2. 선형 회귀 모델의 훈련셋 대상 예측 성능
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id25">
+      <a class="reference internal nav-link" href="#id26">
        2.6.1.3. 결정트리 회귀 모델(6장)
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id26">
+      <a class="reference internal nav-link" href="#id27">
        2.6.1.4. 결정트리 회귀 모델의 훈련셋 대상 예측 성능
       </a>
      </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id27">
+    <a class="reference internal nav-link" href="#id28">
      2.6.2. 교차 검증을 사용한 평가
     </a>
     <ul class="nav section-nav flex-column">
@@ -404,17 +406,17 @@
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id28">
+      <a class="reference internal nav-link" href="#id29">
        2.6.2.3. 예제: 선형 회귀 모델 교차 검증 (k = 10 인 경우)
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id29">
+      <a class="reference internal nav-link" href="#id30">
        2.6.2.4. 앙상블 학습 (7장)
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id30">
+      <a class="reference internal nav-link" href="#id31">
        2.6.2.5. 랜덤 포레스트 회귀 모델 (7장)
       </a>
      </li>
@@ -423,71 +425,71 @@
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id31">
+  <a class="reference internal nav-link" href="#id32">
    2.7. 모델 세부 튜닝
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id32">
+    <a class="reference internal nav-link" href="#id33">
      2.7.1. 그리드 탐색
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id33">
+      <a class="reference internal nav-link" href="#id34">
        2.7.1.1. 예제: 그리드 탐색으로 랜덤 포레스트 모델에 대한 최적 조합 찾기
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id34">
+      <a class="reference internal nav-link" href="#id35">
        2.7.1.2. 그리드 탐색 결과
       </a>
      </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id35">
+    <a class="reference internal nav-link" href="#id36">
      2.7.2. 랜덤 탐색
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id36">
+      <a class="reference internal nav-link" href="#id37">
        2.7.2.1. 예제: 랜덤 탐색으로 랜덤 포레스트 모델에 대한 최적 조합 찾기
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id37">
+      <a class="reference internal nav-link" href="#id38">
        2.7.2.2. 랜덤 탐색 결과
       </a>
      </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id38">
+    <a class="reference internal nav-link" href="#id39">
      2.7.3. 앙상블 방법
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id39">
+    <a class="reference internal nav-link" href="#id40">
      2.7.4. 최상의 모델과 오차 분석
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id40">
+    <a class="reference internal nav-link" href="#id41">
      2.7.5. 테스트 셋으로 시스템 평가하기
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id41">
+      <a class="reference internal nav-link" href="#id42">
        2.7.5.1. 최상의 모델 성능 평가
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id42">
+      <a class="reference internal nav-link" href="#id43">
        2.7.5.2. 최상의 모델 성능 배포
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id43">
+      <a class="reference internal nav-link" href="#id44">
        2.7.5.3. 데이터셋 및 모델 백업
       </a>
      </li>
@@ -496,7 +498,7 @@
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id44">
+  <a class="reference internal nav-link" href="#id45">
    2.8. 실습 과제
   </a>
  </li>
@@ -634,42 +636,47 @@
      2.5.6. 변환 파이프라인
     </a>
    </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id21">
+     2.5.7. 캘리포니아 데이터셋 변환 파이프라인
+    </a>
+   </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id21">
+  <a class="reference internal nav-link" href="#id22">
    2.6. 모델 선택과 훈련
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id22">
+    <a class="reference internal nav-link" href="#id23">
      2.6.1. 훈련셋에서 훈련하고 평가하기
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id23">
+      <a class="reference internal nav-link" href="#id24">
        2.6.1.1. 선형 회귀 모델(4장)
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id24">
+      <a class="reference internal nav-link" href="#id25">
        2.6.1.2. 선형 회귀 모델의 훈련셋 대상 예측 성능
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id25">
+      <a class="reference internal nav-link" href="#id26">
        2.6.1.3. 결정트리 회귀 모델(6장)
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id26">
+      <a class="reference internal nav-link" href="#id27">
        2.6.1.4. 결정트리 회귀 모델의 훈련셋 대상 예측 성능
       </a>
      </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id27">
+    <a class="reference internal nav-link" href="#id28">
      2.6.2. 교차 검증을 사용한 평가
     </a>
     <ul class="nav section-nav flex-column">
@@ -684,17 +691,17 @@
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id28">
+      <a class="reference internal nav-link" href="#id29">
        2.6.2.3. 예제: 선형 회귀 모델 교차 검증 (k = 10 인 경우)
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id29">
+      <a class="reference internal nav-link" href="#id30">
        2.6.2.4. 앙상블 학습 (7장)
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id30">
+      <a class="reference internal nav-link" href="#id31">
        2.6.2.5. 랜덤 포레스트 회귀 모델 (7장)
       </a>
      </li>
@@ -703,71 +710,71 @@
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id31">
+  <a class="reference internal nav-link" href="#id32">
    2.7. 모델 세부 튜닝
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id32">
+    <a class="reference internal nav-link" href="#id33">
      2.7.1. 그리드 탐색
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id33">
+      <a class="reference internal nav-link" href="#id34">
        2.7.1.1. 예제: 그리드 탐색으로 랜덤 포레스트 모델에 대한 최적 조합 찾기
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id34">
+      <a class="reference internal nav-link" href="#id35">
        2.7.1.2. 그리드 탐색 결과
       </a>
      </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id35">
+    <a class="reference internal nav-link" href="#id36">
      2.7.2. 랜덤 탐색
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id36">
+      <a class="reference internal nav-link" href="#id37">
        2.7.2.1. 예제: 랜덤 탐색으로 랜덤 포레스트 모델에 대한 최적 조합 찾기
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id37">
+      <a class="reference internal nav-link" href="#id38">
        2.7.2.2. 랜덤 탐색 결과
       </a>
      </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id38">
+    <a class="reference internal nav-link" href="#id39">
      2.7.3. 앙상블 방법
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id39">
+    <a class="reference internal nav-link" href="#id40">
      2.7.4. 최상의 모델과 오차 분석
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id40">
+    <a class="reference internal nav-link" href="#id41">
      2.7.5. 테스트 셋으로 시스템 평가하기
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id41">
+      <a class="reference internal nav-link" href="#id42">
        2.7.5.1. 최상의 모델 성능 평가
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id42">
+      <a class="reference internal nav-link" href="#id43">
        2.7.5.2. 최상의 모델 성능 배포
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id43">
+      <a class="reference internal nav-link" href="#id44">
        2.7.5.3. 데이터셋 및 모델 백업
       </a>
      </li>
@@ -776,7 +783,7 @@
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id44">
+  <a class="reference internal nav-link" href="#id45">
    2.8. 실습 과제
   </a>
  </li>
@@ -1360,12 +1367,12 @@
 <div class="info admonition">
 <p class="admonition-title"><code class="docutils literal notranslate"><span class="pre">rbf_kernel</span></code> 함수</p>
 <p><code class="docutils literal notranslate"><span class="pre">rbf_kernel</span></code> 함수는 다음 가우시안 RBF 함수를 활용한다.
-단, <span class="math notranslate nohighlight">\(\ell\)</span> 은 특정 지점을 가리킨다.</p>
+단, <span class="math notranslate nohighlight">\(\mathbf{p}\)</span> 는 특정 지점을 가리킨다.</p>
 <div class="math notranslate nohighlight">
 \[
-\phi(\mathbf{x}, \ell) = \exp \left( -\gamma \|\mathbf{x} -\ell \|^2 \right)
+\phi(\mathbf{x},\mathbf{p}) = \exp \left( -\gamma \|\mathbf{x} - \mathbf{p} \|^2 \right)
 \]</div>
-<p><span class="math notranslate nohighlight">\(\ell\)</span> 에서 조금만 멀어져도 함숫값이 급격히 작아진다.
+<p><span class="math notranslate nohighlight">\(\mathbf{p}\)</span> 에서 조금만 멀어져도 함숫값이 급격히 작아진다.
 예를 들어 아래 이미지는 중간 주택 년수가 35년에서 멀어질 수록
 함숫값이 급격히 0에 가까워지는 것을 보여준다.
 감마(<span class="math notranslate nohighlight">\(\gamma\)</span>, gamma)는 얼마나 빠르게 감소하도록 하는가를 결정한다.
@@ -1442,8 +1449,8 @@
 <p><strong><code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> 클래스</strong></p>
 <p>예를 들어, 수치형 특성을 대상으로 결측치를 중앙값으로 채우는 정제와
 표준화 스케일링을 연속적으로 실행하는 파이프라인은 다음과 같이 정의한다.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Pipeline</span><span class="p">([(</span><span class="s2">&quot;impute&quot;</span><span class="p">,</span> <span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;median&quot;</span><span class="p">)),</span>
-          <span class="p">(</span><span class="s2">&quot;standardize&quot;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">())])</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">num_pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([(</span><span class="s2">&quot;impute&quot;</span><span class="p">,</span> <span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;median&quot;</span><span class="p">)),</span>
+                         <span class="p">(</span><span class="s2">&quot;standardize&quot;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">())])</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -1466,41 +1473,111 @@
 </pre></div>
 </div>
 <p><strong><code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> 클래스</strong></p>
-<p>수치형 / 범주형 특성 전처리 과정 통합 파이프라인 구성</p>
+<p><code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> 클래스는 특성별로 전처리를 지정할 수 있다.
+이 기능을 이용하여 수치형 특성과 범주형 특성을 알아서 구분해서
+전처리하는 통합 파이프라인을 다음과 같이 구성할 수 있다.</p>
 <ul class="simple">
-<li><p>사이킷런의 <code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> 클래스를 이용하여 특성별로 지정된 전처리를 처리할 수 있도록 지정 가능</p></li>
+<li><p>수치형 특성: <code class="docutils literal notranslate"><span class="pre">num_pipeline</span></code> 변환기</p></li>
+<li><p>범주형 특성: <code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code> 변환기</p></li>
 </ul>
-<ul class="simple">
-<li><p>인자: (이름, 추정기, 적용 대상 열(column) 리스트) 튜플로 이루어진 리스트</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">fit()</span></code> 메서드에 pandas의 데이터프레임을 직접 인자로 사용 가능</p></li>
-</ul>
-<ul class="simple">
-<li><p>수치형 특성: <code class="docutils literal notranslate"><span class="pre">num_pipeline</span></code> 변환기</p>
-<ul>
-<li><p>적용 대상 열(columns): <code class="docutils literal notranslate"><span class="pre">list(housing_num)</span></code></p></li>
-</ul>
-</li>
-<li><p>범주형 특성: <code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code> 변환기</p>
-<ul>
-<li><p>적용 대상 열(columns): <code class="docutils literal notranslate"><span class="pre">[&quot;ocean_proximity&quot;]</span></code></p></li>
-</ul>
-</li>
-</ul>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">num_attribs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">housing_num</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">num_attribs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;longitude&quot;</span><span class="p">,</span> <span class="s2">&quot;latitude&quot;</span><span class="p">,</span> <span class="s2">&quot;housing_median_age&quot;</span><span class="p">,</span> <span class="s2">&quot;total_rooms&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;total_bedrooms&quot;</span><span class="p">,</span> <span class="s2">&quot;population&quot;</span><span class="p">,</span> <span class="s2">&quot;households&quot;</span><span class="p">,</span> <span class="s2">&quot;median_income&quot;</span><span class="p">]</span>
 <span class="n">cat_attribs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ocean_proximity&quot;</span><span class="p">]</span>
 
-<span class="n">full_pipeline</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">([</span>
-        <span class="p">(</span><span class="s2">&quot;num&quot;</span><span class="p">,</span> <span class="n">num_pipeline</span><span class="p">,</span> <span class="n">num_attribs</span><span class="p">),</span>
-        <span class="p">(</span><span class="s2">&quot;cat&quot;</span><span class="p">,</span> <span class="n">OneHotEncoder</span><span class="p">(),</span> <span class="n">cat_attribs</span><span class="p">),</span>
-    <span class="p">])</span>
+<span class="n">cat_pipeline</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
+    <span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;most_frequent&quot;</span><span class="p">),</span>
+    <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">handle_unknown</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">))</span>
 
-<span class="n">housing_prepared</span> <span class="o">=</span> <span class="n">full_pipeline</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">housing</span><span class="p">)</span>
+<span class="n">preprocessing</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">([</span>
+    <span class="p">(</span><span class="s2">&quot;num&quot;</span><span class="p">,</span> <span class="n">num_pipeline</span><span class="p">,</span> <span class="n">num_attribs</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;cat&quot;</span><span class="p">,</span> <span class="n">cat_pipeline</span><span class="p">,</span> <span class="n">cat_attribs</span><span class="p">),</span>
+<span class="p">])</span>
+</pre></div>
+</div>
+<p><strong><code class="docutils literal notranslate"><span class="pre">make_column_selector()</span></code> 함수</strong></p>
+<p>파이프라인에 포함되는 각 변환기를 적용할 특성을 일일이 나열하는 일이
+귀찮거나 어려울 수 있다.
+이때 지정된 자료형을 사용하는 특성들만을 뽑아주는 <code class="docutils literal notranslate"><span class="pre">make_column_selector()</span></code> 함수를
+유용하게 활용할 수 있다.</p>
+<p>위 <code class="docutils literal notranslate"><span class="pre">preprocessing</span></code> 변환기를 아래와 같이 정의할 수 있다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">preprocessing</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">([</span>
+    <span class="p">(</span><span class="s2">&quot;num&quot;</span><span class="p">,</span> <span class="n">num_pipeline</span><span class="p">,</span> <span class="n">make_column_selector</span><span class="p">(</span><span class="n">dtype_include</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">)),</span>
+    <span class="p">(</span><span class="s2">&quot;cat&quot;</span><span class="p">,</span> <span class="n">cat_pipeline</span><span class="p">,</span> <span class="n">make_column_selector</span><span class="p">(</span><span class="n">dtype_include</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">object</span><span class="p">)</span>
+<span class="p">])</span>
+</pre></div>
+</div>
+<p><strong><code class="docutils literal notranslate"><span class="pre">make_column_transformer()</span></code> 함수</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> 파이프라인에 포함되는 변환기의 이름이 중요하지 않다면
+<code class="docutils literal notranslate"><span class="pre">make_column_transformer()</span></code> 함수를 이용할 수 있으며,
+<code class="docutils literal notranslate"><span class="pre">make_pipeline()</span></code> 함수와 유사하게 작동한다.</p>
+<p>위 <code class="docutils literal notranslate"><span class="pre">preprocessing</span></code> 변환기를 아래와 같이 정의할 수 있다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">preprocessing</span> <span class="o">=</span> <span class="n">make_column_transformer</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">num_pipeline</span><span class="p">,</span> <span class="n">make_column_selector</span><span class="p">(</span><span class="n">dtype_include</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">)),</span>
+    <span class="p">(</span><span class="n">cat_pipeline</span><span class="p">,</span> <span class="n">make_column_selector</span><span class="p">(</span><span class="n">dtype_include</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">object</span><span class="p">)),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id21">
+<h3><span class="section-number">2.5.7. </span>캘리포니아 데이터셋 변환 파이프라인<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
+<p>지금까지 소개한 변환을 한꺼번에 처리하는 파이프라인 변환기는 다음과 같다.</p>
+<p><strong>비율 변환기</strong></p>
+<p>가구당 방 개수, 방 하나당 침실 개수, 가구당 인원 등
+비율을 사용하는 특성을 새로 추가할 때 사용되는 변화기를 생성하는 함수를 정의한다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">column_ratio</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">X</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">/</span> <span class="n">X</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+
+<span class="k">def</span> <span class="nf">ratio_pipeline</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">make_pipeline</span><span class="p">(</span>
+        <span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;median&quot;</span><span class="p">),</span>
+        <span class="n">FunctionTransformer</span><span class="p">(</span><span class="n">column_ratio</span><span class="p">,</span>
+                            <span class="n">feature_names_out</span><span class="o">=</span><span class="p">[</span><span class="n">name</span><span class="p">]),</span>
+        <span class="n">StandardScaler</span><span class="p">())</span>
+</pre></div>
+</div>
+<p><strong>로그 변환기</strong></p>
+<p>데이터 분포가 두터운 꼬리를 갖는 특성을 대상으로 로그 함수를 적용하는 변환기를 지정한다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">log_pipeline</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;median&quot;</span><span class="p">),</span>
+                             <span class="n">FunctionTransformer</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
+                             <span class="n">StandardScaler</span><span class="p">())</span>
+</pre></div>
+</div>
+<p><strong>군집 변환기</strong></p>
+<p>구역의 위도와 경도를 이용하여 구역들의 군집 정보를 새로운 특성으로 추가하는 변환기를 지정한다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cluster_simil</span> <span class="o">=</span> <span class="n">ClusterSimilarity</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>기타 변환기</strong></p>
+<p>특별한 변환이 필요 없는 경우에도 기본적으로 결측치 문제 해결과 스케일을 조정하는 변환기는 사용한다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">default_num_pipeline</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;median&quot;</span><span class="p">),</span>
+                                     <span class="n">StandardScaler</span><span class="p">())</span>
+</pre></div>
+</div>
+<p><strong>종합: <code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> 변환기</strong></p>
+<p>앞서 언급된 모든 변환기를 특성별로 알아서 처리하는 변환기는 다음과 같다.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">remainder=default_num_pipeline</span></code>: 언급되지 않은 특성을 처리하는 변환기를 지정한다.
+삭제를 의미하는 <code class="docutils literal notranslate"><span class="pre">drop</span></code> 이 기본값이며 이외에 <code class="docutils literal notranslate"><span class="pre">passthrough</span></code> 는 변환하지 않는 것을 의미한다.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">preprocessing</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">([</span>
+        <span class="p">(</span><span class="s2">&quot;bedrooms_ratio&quot;</span><span class="p">,</span> <span class="n">ratio_pipeline</span><span class="p">(</span><span class="s2">&quot;bedrooms_ratio&quot;</span><span class="p">),</span>                  <span class="c1"># 방당 침실 수</span>
+                           <span class="p">[</span><span class="s2">&quot;total_bedrooms&quot;</span><span class="p">,</span> <span class="s2">&quot;total_rooms&quot;</span><span class="p">]),</span>
+        <span class="p">(</span><span class="s2">&quot;rooms_per_house&quot;</span><span class="p">,</span> <span class="n">ratio_pipeline</span><span class="p">(</span><span class="s2">&quot;rooms_per_house&quot;</span><span class="p">),</span>                 <span class="c1"># 가구당 방 수</span>
+                            <span class="p">[</span><span class="s2">&quot;total_rooms&quot;</span><span class="p">,</span> <span class="s2">&quot;households&quot;</span><span class="p">]),</span>
+        <span class="p">(</span><span class="s2">&quot;people_per_house&quot;</span><span class="p">,</span> <span class="n">ratio_pipeline</span><span class="p">(</span><span class="s2">&quot;people_per_house&quot;</span><span class="p">),</span>               <span class="c1"># 가구당 인원</span>
+                             <span class="p">[</span><span class="s2">&quot;population&quot;</span><span class="p">,</span> <span class="s2">&quot;households&quot;</span><span class="p">]),</span>
+        <span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">,</span> <span class="n">log_pipeline</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;total_bedrooms&quot;</span><span class="p">,</span> <span class="s2">&quot;total_rooms&quot;</span><span class="p">,</span>                <span class="c1"># 로그 변환</span>
+                               <span class="s2">&quot;population&quot;</span><span class="p">,</span> <span class="s2">&quot;households&quot;</span><span class="p">,</span> <span class="s2">&quot;median_income&quot;</span><span class="p">]),</span>
+        <span class="p">(</span><span class="s2">&quot;geo&quot;</span><span class="p">,</span> <span class="n">cluster_simil</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;latitude&quot;</span><span class="p">,</span> <span class="s2">&quot;longitude&quot;</span><span class="p">]),</span>                     <span class="c1"># 구역별 군집 정보</span>
+        <span class="p">(</span><span class="s2">&quot;cat&quot;</span><span class="p">,</span> <span class="n">cat_pipeline</span><span class="p">,</span> <span class="n">make_column_selector</span><span class="p">(</span><span class="n">dtype_include</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">object</span><span class="p">)),</span>  <span class="c1"># 범주형 특성 전처리</span>
+    <span class="p">],</span>
+    <span class="n">remainder</span><span class="o">=</span><span class="n">default_num_pipeline</span><span class="p">)</span>  <span class="c1"># 중간 주택 년수(housing_median_age) 특성만 남음.</span>
 </pre></div>
 </div>
 </div>
 </div>
-<div class="section" id="id21">
-<h2><span class="section-number">2.6. </span>모델 선택과 훈련<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id22">
+<h2><span class="section-number">2.6. </span>모델 선택과 훈련<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>목표 달성에 필요한 두 요소를 결정해야함</p>
 <ul>
@@ -1518,8 +1595,8 @@
 <ul class="simple">
 <li><p>회귀 모델 성능 측정 지표: 평균 제곱근 오차(RMSE)를 기본으로 사용</p></li>
 </ul>
-<div class="section" id="id22">
-<h3><span class="section-number">2.6.1. </span>훈련셋에서 훈련하고 평가하기<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id23">
+<h3><span class="section-number">2.6.1. </span>훈련셋에서 훈련하고 평가하기<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>지금까지 한 일</p>
 <ul>
@@ -1543,8 +1620,8 @@
 </ul>
 </li>
 </ul>
-<div class="section" id="id23">
-<h4><span class="section-number">2.6.1.1. </span>선형 회귀 모델(4장)<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id24">
+<h4><span class="section-number">2.6.1.1. </span>선형 회귀 모델(4장)<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>선형 회귀 모델 생성: 사이킷런의 <strong><code class="docutils literal notranslate"><span class="pre">LinearRegression</span></code></strong> 클래스 활용</p></li>
 </ul>
@@ -1565,8 +1642,8 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="id24">
-<h4><span class="section-number">2.6.1.2. </span>선형 회귀 모델의 훈련셋 대상 예측 성능<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id25">
+<h4><span class="section-number">2.6.1.2. </span>선형 회귀 모델의 훈련셋 대상 예측 성능<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>RMSE(평균 제곱근 오차)가 68628.198 정도로 별로 좋지 않음.</p></li>
 </ul>
@@ -1580,8 +1657,8 @@
 </li>
 </ul>
 </div>
-<div class="section" id="id25">
-<h4><span class="section-number">2.6.1.3. </span>결정트리 회귀 모델(6장)<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id26">
+<h4><span class="section-number">2.6.1.3. </span>결정트리 회귀 모델(6장)<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>결정 트리 모델은 데이터에서 복잡한 비선형 관계를 학습할 때 사용</p></li>
 </ul>
@@ -1604,8 +1681,8 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="id26">
-<h4><span class="section-number">2.6.1.4. </span>결정트리 회귀 모델의 훈련셋 대상 예측 성능<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id27">
+<h4><span class="section-number">2.6.1.4. </span>결정트리 회귀 모델의 훈련셋 대상 예측 성능<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>RMSE(평균 제곱근 오차)가 0으로 완벽해 보임.</p></li>
 </ul>
@@ -1619,8 +1696,8 @@
 </ul>
 </div>
 </div>
-<div class="section" id="id27">
-<h3><span class="section-number">2.6.2. </span>교차 검증을 사용한 평가<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id28">
+<h3><span class="section-number">2.6.2. </span>교차 검증을 사용한 평가<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>테스트셋을 사용하지 않으면서 훈련 과정을 평가할 수 있음.</p></li>
 </ul>
@@ -1670,8 +1747,8 @@
 </li>
 </ul>
 </div>
-<div class="section" id="id28">
-<h4><span class="section-number">2.6.2.3. </span>예제: 선형 회귀 모델 교차 검증 (k = 10 인 경우)<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id29">
+<h4><span class="section-number">2.6.2.3. </span>예제: 선형 회귀 모델 교차 검증 (k = 10 인 경우)<a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">lin_scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">lin_reg</span><span class="p">,</span> <span class="n">housing_prepared</span><span class="p">,</span> <span class="n">housing_labels</span><span class="p">,</span>
                              <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_squared_error&quot;</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 
@@ -1686,8 +1763,8 @@
 </li>
 </ul>
 </div>
-<div class="section" id="id29">
-<h4><span class="section-number">2.6.2.4. </span>앙상블 학습 (7장)<a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id30">
+<h4><span class="section-number">2.6.2.4. </span>앙상블 학습 (7장)<a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>여러 개의 다른 모델을 모아서 하나의 모델을 만드는 기법</p></li>
 </ul>
@@ -1695,8 +1772,8 @@
 <li><p>머신러닝 알고리즘의 성능을 극대화는 방법 중 하나</p></li>
 </ul>
 </div>
-<div class="section" id="id30">
-<h4><span class="section-number">2.6.2.5. </span>랜덤 포레스트 회귀 모델 (7장)<a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id31">
+<h4><span class="section-number">2.6.2.5. </span>랜덤 포레스트 회귀 모델 (7장)<a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>앙상블 학습에 사용되는 하나의 기법</p></li>
 </ul>
@@ -1729,8 +1806,8 @@
 </div>
 </div>
 </div>
-<div class="section" id="id31">
-<h2><span class="section-number">2.7. </span>모델 세부 튜닝<a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id32">
+<h2><span class="section-number">2.7. </span>모델 세부 튜닝<a class="headerlink" href="#id32" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>살펴 본 모델 중에서 <strong>랜덤 포레스트</strong> 모델의 성능이 가장 좋았음</p></li>
 </ul>
@@ -1746,16 +1823,16 @@
 </ul>
 </li>
 </ul>
-<div class="section" id="id32">
-<h3><span class="section-number">2.7.1. </span>그리드 탐색<a class="headerlink" href="#id32" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id33">
+<h3><span class="section-number">2.7.1. </span>그리드 탐색<a class="headerlink" href="#id33" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>지정한 하이퍼파라미터의 모든 조합을 교차검증하여 최선의 하이퍼파라미터 조합 찾기</p></li>
 </ul>
 <ul class="simple">
 <li><p>사이킷런의 <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code> 활용</p></li>
 </ul>
-<div class="section" id="id33">
-<h4><span class="section-number">2.7.1.1. </span>예제: 그리드 탐색으로 랜덤 포레스트 모델에 대한 최적 조합 찾기<a class="headerlink" href="#id33" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id34">
+<h4><span class="section-number">2.7.1.1. </span>예제: 그리드 탐색으로 랜덤 포레스트 모델에 대한 최적 조합 찾기<a class="headerlink" href="#id34" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
 
 <span class="n">param_grid</span> <span class="o">=</span> <span class="p">[</span>
@@ -1777,8 +1854,8 @@
 <li><p>5-겹 교차검증(<code class="docutils literal notranslate"><span class="pre">cv=5</span></code>)이므로, 총 (18x5 = 90)번 훈련함.</p></li>
 </ul>
 </div>
-<div class="section" id="id34">
-<h4><span class="section-number">2.7.1.2. </span>그리드 탐색 결과<a class="headerlink" href="#id34" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id35">
+<h4><span class="section-number">2.7.1.2. </span>그리드 탐색 결과<a class="headerlink" href="#id35" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>최고 성능의 랜덤 포레스트 하이퍼파라미터가 다음과 같음.</p>
 <ul>
@@ -1797,8 +1874,8 @@
 </ul>
 </div>
 </div>
-<div class="section" id="id35">
-<h3><span class="section-number">2.7.2. </span>랜덤 탐색<a class="headerlink" href="#id35" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id36">
+<h3><span class="section-number">2.7.2. </span>랜덤 탐색<a class="headerlink" href="#id36" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>그리드 탐색은 적은 수의 조합을 실험해볼 때 유용</p></li>
 </ul>
@@ -1812,8 +1889,8 @@
 <ul class="simple">
 <li><p>사이킷런의 <code class="docutils literal notranslate"><span class="pre">RandomizedSearchCV</span></code> 추정기가 랜덤 탐색을 지원</p></li>
 </ul>
-<div class="section" id="id36">
-<h4><span class="section-number">2.7.2.1. </span>예제: 랜덤 탐색으로 랜덤 포레스트 모델에 대한 최적 조합 찾기<a class="headerlink" href="#id36" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id37">
+<h4><span class="section-number">2.7.2.1. </span>예제: 랜덤 탐색으로 랜덤 포레스트 모델에 대한 최적 조합 찾기<a class="headerlink" href="#id37" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">RandomizedSearchCV</span>
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">randint</span>
 
@@ -1839,8 +1916,8 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">cv=5</span></code>: 5-겹 교차검증. 따라서 랜덤 포레스트 학습이 (10x5=50)번 이루어짐.</p></li>
 </ul>
 </div>
-<div class="section" id="id37">
-<h4><span class="section-number">2.7.2.2. </span>랜덤 탐색 결과<a class="headerlink" href="#id37" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id38">
+<h4><span class="section-number">2.7.2.2. </span>랜덤 탐색 결과<a class="headerlink" href="#id38" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>최고 성능의 랜덤 포레스트 하이퍼파라미터가 다음과 같음.</p>
 <ul>
@@ -1854,8 +1931,8 @@
 </ul>
 </div>
 </div>
-<div class="section" id="id38">
-<h3><span class="section-number">2.7.3. </span>앙상블 방법<a class="headerlink" href="#id38" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id39">
+<h3><span class="section-number">2.7.3. </span>앙상블 방법<a class="headerlink" href="#id39" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>결정 트리 모델 하나보다 랜덤 포레스트처럼 여러 모델로 이루어진 모델이 보다 좋은 성능을 낼 수 있음.</p></li>
 </ul>
@@ -1866,8 +1943,8 @@
 <li><p>7장에서 자세히 다룸</p></li>
 </ul>
 </div>
-<div class="section" id="id39">
-<h3><span class="section-number">2.7.4. </span>최상의 모델과 오차 분석<a class="headerlink" href="#id39" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id40">
+<h3><span class="section-number">2.7.4. </span>최상의 모델과 오차 분석<a class="headerlink" href="#id40" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>그리드 탐색과 랜덤 탐색 등을 통해 얻어진 최상의 모델을 분석해서 문제에 대한 좋은 통창을 얻을 수 있음</p></li>
 </ul>
@@ -1881,8 +1958,8 @@
 </li>
 </ul>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/feature-importance.png" width="400"></div></div>
-<div class="section" id="id40">
-<h3><span class="section-number">2.7.5. </span>테스트 셋으로 시스템 평가하기<a class="headerlink" href="#id40" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id41">
+<h3><span class="section-number">2.7.5. </span>테스트 셋으로 시스템 평가하기<a class="headerlink" href="#id41" title="Permalink to this headline">¶</a></h3>
 <ol class="simple">
 <li><p>최고 성능 모델 확인: 예를 들어, 그리드 탐색으로 찾은 최적 모델 사용</p></li>
 </ol>
@@ -1903,17 +1980,17 @@
 <ol class="simple">
 <li><p>최고 성능 모델 평가 및 론칭</p></li>
 </ol>
-<div class="section" id="id41">
-<h4><span class="section-number">2.7.5.1. </span>최상의 모델 성능 평가<a class="headerlink" href="#id41" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id42">
+<h4><span class="section-number">2.7.5.1. </span>최상의 모델 성능 평가<a class="headerlink" href="#id42" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>테스트셋에 대한 최고 성능 모델의 RMSE: 47730</p></li>
 </ul>
 </div>
-<div class="section" id="id42">
-<h4><span class="section-number">2.7.5.2. </span>최상의 모델 성능 배포<a class="headerlink" href="#id42" title="Permalink to this headline">¶</a></h4>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/model-launching01.png" width="600"></div></div>
 <div class="section" id="id43">
-<h4><span class="section-number">2.7.5.3. </span>데이터셋 및 모델 백업<a class="headerlink" href="#id43" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">2.7.5.2. </span>최상의 모델 성능 배포<a class="headerlink" href="#id43" title="Permalink to this headline">¶</a></h4>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/model-launching01.png" width="600"></div></div>
+<div class="section" id="id44">
+<h4><span class="section-number">2.7.5.3. </span>데이터셋 및 모델 백업<a class="headerlink" href="#id44" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>완성된 모델은 항상 백업해 두어야 함. 업데이트된 모델이 적절하지 않은 경우 이전 모델로 되돌려야 할 수도 있음.</p>
 <ul>
@@ -1931,8 +2008,8 @@
 </div>
 </div>
 </div>
-<div class="section" id="id44">
-<h2><span class="section-number">2.8. </span>실습 과제<a class="headerlink" href="#id44" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id45">
+<h2><span class="section-number">2.8. </span>실습 과제<a class="headerlink" href="#id45" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/notebooks/code_end2end_ml_project.ipynb">(구글코랩) 머신러닝 프로젝트 처음부터 끝까지</a>
 의 소스코드를 먼저 공부한 다음에
 <a class="reference external" href="https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_end2end_ml_project.ipynb">(실습) 머신러닝 프로젝트 처음부터 끝까지</a>
