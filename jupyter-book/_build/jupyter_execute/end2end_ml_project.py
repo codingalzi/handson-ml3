@@ -573,13 +573,13 @@
 # :class: info
 # 
 # `rbf_kernel` 함수는 다음 가우시안 RBF 함수를 활용한다.
-# 단, $\ell$ 은 특정 지점을 가리킨다.
+# 단, $\mathbf{p}$ 는 특정 지점을 가리킨다.
 # 
 # $$
-# \phi(\mathbf{x}, \ell) = \exp \left( -\gamma \|\mathbf{x} -\ell \|^2 \right)
+# \phi(\mathbf{x},\mathbf{p}) = \exp \left( -\gamma \|\mathbf{x} - \mathbf{p} \|^2 \right)
 # $$
 # 
-# $\ell$ 에서 조금만 멀어져도 함숫값이 급격히 작아진다. 
+# $\mathbf{p}$ 에서 조금만 멀어져도 함숫값이 급격히 작아진다. 
 # 예를 들어 아래 이미지는 중간 주택 년수가 35년에서 멀어질 수록 
 # 함숫값이 급격히 0에 가까워지는 것을 보여준다.
 # 감마($\gamma$, gamma)는 얼마나 빠르게 감소하도록 하는가를 결정한다.
@@ -671,8 +671,8 @@
 # 표준화 스케일링을 연속적으로 실행하는 파이프라인은 다음과 같이 정의한다.
 # 
 # ```python
-# Pipeline([("impute", SimpleImputer(strategy="median")),
-#           ("standardize", StandardScaler())])
+# num_pipeline = Pipeline([("impute", SimpleImputer(strategy="median")),
+#                          ("standardize", StandardScaler())])
 # ```
 # 
 # * `Pipeline` 객체를 생성할 때 사용되는 인자는 이름과 추정기로 이루어진 쌍들의 리스트이다.
@@ -701,31 +701,129 @@
 # ```
 
 # **`ColumnTransformer` 클래스**
-
-# 수치형 / 범주형 특성 전처리 과정 통합 파이프라인 구성
-
-# * 사이킷런의 `ColumnTransformer` 클래스를 이용하여 특성별로 지정된 전처리를 처리할 수 있도록 지정 가능
 # 
-# - 인자: (이름, 추정기, 적용 대상 열(column) 리스트) 튜플로 이루어진 리스트
-# 
-# - `fit()` 메서드에 pandas의 데이터프레임을 직접 인자로 사용 가능
+# `ColumnTransformer` 클래스는 특성별로 전처리를 지정할 수 있다.
+# 이 기능을 이용하여 수치형 특성과 범주형 특성을 알아서 구분해서 
+# 전처리하는 통합 파이프라인을 다음과 같이 구성할 수 있다.
 # 
 # * 수치형 특성: `num_pipeline` 변환기
-#     - 적용 대상 열(columns): `list(housing_num)`
-# 
 # * 범주형 특성: `OneHotEncoder` 변환기
-#     - 적용 대상 열(columns): `["ocean_proximity"]`
-
+# 
 # ```python
-# num_attribs = list(housing_num)
+# num_attribs = ["longitude", "latitude", "housing_median_age", "total_rooms",
+#                "total_bedrooms", "population", "households", "median_income"]
 # cat_attribs = ["ocean_proximity"]
 # 
-# full_pipeline = ColumnTransformer([
-#         ("num", num_pipeline, num_attribs),
-#         ("cat", OneHotEncoder(), cat_attribs),
-#     ])
+# cat_pipeline = make_pipeline(
+#     SimpleImputer(strategy="most_frequent"),
+#     OneHotEncoder(handle_unknown="ignore"))
 # 
-# housing_prepared = full_pipeline.fit_transform(housing)
+# preprocessing = ColumnTransformer([
+#     ("num", num_pipeline, num_attribs),
+#     ("cat", cat_pipeline, cat_attribs),
+# ])
+# ```
+
+# **`make_column_selector()` 함수**
+# 
+# 파이프라인에 포함되는 각 변환기를 적용할 특성을 일일이 나열하는 일이 
+# 귀찮거나 어려울 수 있다.
+# 이때 지정된 자료형을 사용하는 특성들만을 뽑아주는 `make_column_selector()` 함수를 
+# 유용하게 활용할 수 있다.
+# 
+# 위 `preprocessing` 변환기를 아래와 같이 정의할 수 있다.
+# 
+# ```python
+# preprocessing = ColumnTransformer([
+#     ("num", num_pipeline, make_column_selector(dtype_include=np.number)),
+#     ("cat", cat_pipeline, make_column_selector(dtype_include=np.object)
+# ])
+# ```
+
+# **`make_column_transformer()` 함수**
+# 
+# `ColumnTransformer` 파이프라인에 포함되는 변환기의 이름이 중요하지 않다면 
+# `make_column_transformer()` 함수를 이용할 수 있으며,
+# `make_pipeline()` 함수와 유사하게 작동한다.
+# 
+# 위 `preprocessing` 변환기를 아래와 같이 정의할 수 있다.
+# 
+# ```python
+# preprocessing = make_column_transformer(
+#     (num_pipeline, make_column_selector(dtype_include=np.number)),
+#     (cat_pipeline, make_column_selector(dtype_include=np.object)),
+# )
+# ```
+
+# ### 캘리포니아 데이터셋 변환 파이프라인
+
+# 지금까지 소개한 변환을 한꺼번에 처리하는 파이프라인 변환기는 다음과 같다.
+
+# **비율 변환기**
+# 
+# 가구당 방 개수, 방 하나당 침실 개수, 가구당 인원 등 
+# 비율을 사용하는 특성을 새로 추가할 때 사용되는 변화기를 생성하는 함수를 정의한다.
+
+# ```python
+# def column_ratio(X):
+#     return X[:, [0]] / X[:, [1]]
+# 
+# def ratio_pipeline(name=None):
+#     return make_pipeline(
+#         SimpleImputer(strategy="median"),
+#         FunctionTransformer(column_ratio,
+#                             feature_names_out=[name]),
+#         StandardScaler())
+# ```
+
+# **로그 변환기**
+# 
+# 데이터 분포가 두터운 꼬리를 갖는 특성을 대상으로 로그 함수를 적용하는 변환기를 지정한다.
+
+# ```python
+# log_pipeline = make_pipeline(SimpleImputer(strategy="median"),
+#                              FunctionTransformer(np.log),
+#                              StandardScaler())
+# ```
+
+# **군집 변환기**
+# 
+# 구역의 위도와 경도를 이용하여 구역들의 군집 정보를 새로운 특성으로 추가하는 변환기를 지정한다.
+
+# ```python
+# cluster_simil = ClusterSimilarity(n_clusters=10, gamma=1., random_state=42)
+# ```
+
+# **기타 변환기**
+# 
+# 특별한 변환이 필요 없는 경우에도 기본적으로 결측치 문제 해결과 스케일을 조정하는 변환기는 사용한다.
+
+# ```python
+# default_num_pipeline = make_pipeline(SimpleImputer(strategy="median"),
+#                                      StandardScaler())
+# ```
+
+# **종합: `ColumnTransformer` 변환기**
+# 
+# 앞서 언급된 모든 변환기를 특성별로 알아서 처리하는 변환기는 다음과 같다.
+# 
+# - `remainder=default_num_pipeline`: 언급되지 않은 특성을 처리하는 변환기를 지정한다.
+#     삭제를 의미하는 `drop` 이 기본값이며 이외에 `passthrough` 는 변환하지 않는 것을 의미한다.
+
+# ```python
+# preprocessing = ColumnTransformer([
+#         ("bedrooms_ratio", ratio_pipeline("bedrooms_ratio"),                  # 방당 침실 수
+#                            ["total_bedrooms", "total_rooms"]),
+#         ("rooms_per_house", ratio_pipeline("rooms_per_house"),                 # 가구당 방 수
+#                             ["total_rooms", "households"]),
+#         ("people_per_house", ratio_pipeline("people_per_house"),               # 가구당 인원
+#                              ["population", "households"]),
+#         ("log", log_pipeline, ["total_bedrooms", "total_rooms",                # 로그 변환
+#                                "population", "households", "median_income"]),
+#         ("geo", cluster_simil, ["latitude", "longitude"]),                     # 구역별 군집 정보
+#         ("cat", cat_pipeline, make_column_selector(dtype_include=np.object)),  # 범주형 특성 전처리
+#     ],
+#     remainder=default_num_pipeline)  # 중간 주택 년수(housing_median_age) 특성만 남음.
 # ```
 
 # ## 모델 선택과 훈련
