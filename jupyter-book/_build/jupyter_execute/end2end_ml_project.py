@@ -1025,6 +1025,9 @@
 # 
 # 예를 들어, 랜덤 탐색을 통해 찾아낸 최적의 모델에서 `feature_importances_`를 확인하면
 # 각 특성의 상대적 중요도를 다음과 같이 확인된다.
+# 
+# - `log__median_income` 특성이 가장 중요하다.
+# - 해안 근접도 특성 중에서 `INLAND` 특성만 중요하다.
 
 # ```python
 # final_model = rnd_search.best_estimator_  # includes preprocessing
@@ -1050,34 +1053,31 @@
 # ### 테스트 셋으로 시스템 평가하기
 
 # 1. 최고 성능 모델 확인: 예를 들어, 그리드 탐색으로 찾은 최적 모델 사용
+# 1. 최고 성능 모델을 이용하여 예측하기
+# 1. 최고 성능 모델 평가
+
+# ## 최상의 모델 성능 배포
+
+# 완성된 모델은 항상 저장해두어야 한다.
+# 업데이트된 모델이 적절하지 않은 경우 이전 모델로 되돌려야 할 수도 있기 때문이다.
+# 또한 버전의 데이터셋을 저장해두어야 하는데 이는 업데이트 과정에서 데이터셋이 오염될 수 있기 때문이다.
 # 
-# ```python
-# final_model = grid_search.best_estimator_
-# ```
+# 모델의 저장과 불러오기는 `joblib` 모듈을 활용한다. 
+# 
+# - 저장하기
+# 
+#     ```python
+#     joblib.dump(final_model, "my_california_housing_model.pkl")
+#     ```
+# - 불러오기
+# 
+#     ```python
+#     final_model_reloaded = joblib.load("my_california_housing_model.pkl")
+#     ```    
 
-# 2. 테스트셋 전처리
-#     * 전처리 파이프라인의 `transform()` 메서드를 직접 활용
-#     * __주의__: `fit()` 메서드는 전혀 사용하지 않음
-
-# 3. 최고 성능 모델을 이용하여 예측하기
-
-# 4. 최고 성능 모델 평가 및 론칭
-
-# #### 최상의 모델 성능 평가
-
-# * 테스트셋에 대한 최고 성능 모델의 RMSE: 47730
-
-# #### 최상의 모델 성능 배포
-
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/model-launching01.png" width="600"></div>
-
-# #### 데이터셋 및 모델 백업
-
-# * 완성된 모델은 항상 백업해 두어야 함. 업데이트된 모델이 적절하지 않은 경우 이전 모델로 되돌려야 할 수도 있음.
-#     * 백업된 모델과 새 모델을 쉽게 비교할 수 있음.
-
-# * 동일한 이유로 모든 버전의 데이터셋을 백업해 두어야 함.
-#     * 업데이트 과정에서 데이터셋이 오염될 수 있기 때문임.
+# 저장된 모델은 예를 들어 웹서비스에 포함된 앱으로 활용될 수 있다.
+# 
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/model-launching01.png" width="400"></div>
 
 # ## 실습 과제
 
