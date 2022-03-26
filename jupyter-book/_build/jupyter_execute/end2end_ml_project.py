@@ -895,7 +895,7 @@
 #     * 매 훈련이 끝날 때마다 선택된 검증 데이터셋을 이용하여 모델의 평가한다.
 # * 최종적으로 k 번의 모델 평가 결과의 평균값을 계산한다.
 # 
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/cross-val10.png" width="400"></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/cross-val10a.png" width="550"></div>
 
 # **효용 함수**
 # 
@@ -1017,16 +1017,35 @@
 # 학습시킨 후 평균값을 사용하면 보다 좋은 성능을 내는 모델을 얻게 된다. 
 # 앙상블 기법에 대해서는 {numref}`%s장 <ch:ensemble>`에서 자세히 다룬다.
 
-# ### 최상의 모델과 오차 분석
+# ### 최적 모델의 오차 분석 활용
 
-# * 그리드 탐색과 랜덤 탐색 등을 통해 얻어진 최상의 모델을 분석해서 문제에 대한 좋은 통창을 얻을 수 있음
+# 그리드 탐색 또는 랜덤 탐색을 통해 얻어진 최적의 모델을 분석해서 문제에 대한 통찰을 얻을 수 있다.
+# 예를 들어, 최적의 랜덤 포레스트 모델로부터 타깃 예측에 사용된 특성들의 상대적 중요도를 확인하여
+# 중요한 특성만을 남기도 나머지 특성을 제외시킬 수 있다.
+# 
+# 예를 들어, 랜덤 탐색을 통해 찾아낸 최적의 모델에서 `feature_importances_`를 확인하면
+# 각 특성의 상대적 중요도를 다음과 같이 확인된다.
 
-# * 예를 들어, 최상의 랜덤 포레스트 모델에서 사용된 특성들의 중요도를 확인하여 일부 특성을 제외할 수 있음.
-#     * 중간 소득(median income)과 INLAND(내륙, 해안 근접도)가 가장 중요한 특성으로 확인됨
-#     * 해안 근접도의 다른 네 가지 특성은 별로 중요하지 않음
-#     * 중요도가 낮은 특성은 삭제할 수 있음.
-
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/feature-importance.png" width="400"></div>
+# ```python
+# final_model = rnd_search.best_estimator_  # includes preprocessing
+# feature_importances = final_model["random_forest"].feature_importances_
+# 
+# sorted(zip(feature_importances,
+#            final_model["preprocessing"].get_feature_names_out()),
+#            reverse=True)
+# ```
+# 
+# ```
+# [(0.18694559869103852, 'log__median_income'),
+#  (0.0748194905715524, 'cat__ocean_proximity_INLAND'),
+#  (0.06926417748515576, 'bedrooms_ratio__bedrooms_ratio'),
+#  (0.05446998753775219, 'rooms_per_house__rooms_per_house'),
+#  (0.05262301809680712, 'people_per_house__people_per_house'),
+#  (0.03819415873915732, 'geo__Cluster 0 similarity'),
+#  [...]
+#  (0.00015061247730531558, 'cat__ocean_proximity_NEAR BAY'),
+#  (7.301686597099842e-05, 'cat__ocean_proximity_ISLAND')]
+# ```
 
 # ### 테스트 셋으로 시스템 평가하기
 

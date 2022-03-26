@@ -397,7 +397,7 @@
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id29">
-     2.7.4. 최상의 모델과 오차 분석
+     2.7.4. 최적 모델의 오차 분석 활용
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -609,7 +609,7 @@
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id29">
-     2.7.4. 최상의 모델과 오차 분석
+     2.7.4. 최적 모델의 오차 분석 활용
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -1507,7 +1507,7 @@
 </li>
 <li><p>최종적으로 k 번의 모델 평가 결과의 평균값을 계산한다.</p></li>
 </ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/cross-val10.png" width="400"></div><p><strong>효용 함수</strong></p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/cross-val10a.png" width="550"></div><p><strong>효용 함수</strong></p>
 <p>k-겹 교차 검증은 <code class="docutils literal notranslate"><span class="pre">cross_val_score()</span></code>을 이용하여 모델 학습 과정에서 훈련중인 모델의 성능을 측정하며,
 높은 값일 수록 좋은 성능으로 평가된다.
 회귀 모델의 경우 RMSE가 낮을 수록 좋은 모델이기에
@@ -1611,20 +1611,32 @@ RMSE의 음숫값을 사용하려면 <code class="docutils literal notranslate">
 앙상블 기법에 대해서는 <a class="reference internal" href="ensemble_learning_random_forests.html#ch-ensemble"><span class="std std-numref">7장</span></a>에서 자세히 다룬다.</p>
 </div>
 <div class="section" id="id29">
-<h3><span class="section-number">2.7.4. </span>최상의 모델과 오차 분석<a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p>그리드 탐색과 랜덤 탐색 등을 통해 얻어진 최상의 모델을 분석해서 문제에 대한 좋은 통창을 얻을 수 있음</p></li>
-</ul>
-<ul class="simple">
-<li><p>예를 들어, 최상의 랜덤 포레스트 모델에서 사용된 특성들의 중요도를 확인하여 일부 특성을 제외할 수 있음.</p>
-<ul>
-<li><p>중간 소득(median income)과 INLAND(내륙, 해안 근접도)가 가장 중요한 특성으로 확인됨</p></li>
-<li><p>해안 근접도의 다른 네 가지 특성은 별로 중요하지 않음</p></li>
-<li><p>중요도가 낮은 특성은 삭제할 수 있음.</p></li>
-</ul>
-</li>
-</ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/feature-importance.png" width="400"></div></div>
+<h3><span class="section-number">2.7.4. </span>최적 모델의 오차 분석 활용<a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h3>
+<p>그리드 탐색 또는 랜덤 탐색을 통해 얻어진 최적의 모델을 분석해서 문제에 대한 통찰을 얻을 수 있다.
+예를 들어, 최적의 랜덤 포레스트 모델로부터 타깃 예측에 사용된 특성들의 상대적 중요도를 확인하여
+중요한 특성만을 남기도 나머지 특성을 제외시킬 수 있다.</p>
+<p>예를 들어, 랜덤 탐색을 통해 찾아낸 최적의 모델에서 <code class="docutils literal notranslate"><span class="pre">feature_importances_</span></code>를 확인하면
+각 특성의 상대적 중요도를 다음과 같이 확인된다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">final_model</span> <span class="o">=</span> <span class="n">rnd_search</span><span class="o">.</span><span class="n">best_estimator_</span>  <span class="c1"># includes preprocessing</span>
+<span class="n">feature_importances</span> <span class="o">=</span> <span class="n">final_model</span><span class="p">[</span><span class="s2">&quot;random_forest&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">feature_importances_</span>
+
+<span class="nb">sorted</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">feature_importances</span><span class="p">,</span>
+           <span class="n">final_model</span><span class="p">[</span><span class="s2">&quot;preprocessing&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">()),</span>
+           <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[(</span><span class="mf">0.18694559869103852</span><span class="p">,</span> <span class="s1">&#39;log__median_income&#39;</span><span class="p">),</span>
+ <span class="p">(</span><span class="mf">0.0748194905715524</span><span class="p">,</span> <span class="s1">&#39;cat__ocean_proximity_INLAND&#39;</span><span class="p">),</span>
+ <span class="p">(</span><span class="mf">0.06926417748515576</span><span class="p">,</span> <span class="s1">&#39;bedrooms_ratio__bedrooms_ratio&#39;</span><span class="p">),</span>
+ <span class="p">(</span><span class="mf">0.05446998753775219</span><span class="p">,</span> <span class="s1">&#39;rooms_per_house__rooms_per_house&#39;</span><span class="p">),</span>
+ <span class="p">(</span><span class="mf">0.05262301809680712</span><span class="p">,</span> <span class="s1">&#39;people_per_house__people_per_house&#39;</span><span class="p">),</span>
+ <span class="p">(</span><span class="mf">0.03819415873915732</span><span class="p">,</span> <span class="s1">&#39;geo__Cluster 0 similarity&#39;</span><span class="p">),</span>
+ <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+ <span class="p">(</span><span class="mf">0.00015061247730531558</span><span class="p">,</span> <span class="s1">&#39;cat__ocean_proximity_NEAR BAY&#39;</span><span class="p">),</span>
+ <span class="p">(</span><span class="mf">7.301686597099842e-05</span><span class="p">,</span> <span class="s1">&#39;cat__ocean_proximity_ISLAND&#39;</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="id30">
 <h3><span class="section-number">2.7.5. </span>테스트 셋으로 시스템 평가하기<a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h3>
 <ol class="simple">
