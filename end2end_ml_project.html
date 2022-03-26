@@ -397,36 +397,24 @@
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id29">
-     2.7.4. 최상의 모델과 오차 분석
+     2.7.4. 최적 모델의 오차 분석 활용
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id30">
      2.7.5. 테스트 셋으로 시스템 평가하기
     </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id31">
-       2.7.5.1. 최상의 모델 성능 평가
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id32">
-       2.7.5.2. 최상의 모델 성능 배포
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id33">
-       2.7.5.3. 데이터셋 및 모델 백업
-      </a>
-     </li>
-    </ul>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id34">
-   2.8. 실습 과제
+  <a class="reference internal nav-link" href="#id31">
+   2.8. 최상의 모델 성능 배포
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id32">
+   2.9. 실습 과제
   </a>
  </li>
 </ul>
@@ -609,36 +597,24 @@
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id29">
-     2.7.4. 최상의 모델과 오차 분석
+     2.7.4. 최적 모델의 오차 분석 활용
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id30">
      2.7.5. 테스트 셋으로 시스템 평가하기
     </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id31">
-       2.7.5.1. 최상의 모델 성능 평가
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id32">
-       2.7.5.2. 최상의 모델 성능 배포
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id33">
-       2.7.5.3. 데이터셋 및 모델 백업
-      </a>
-     </li>
-    </ul>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id34">
-   2.8. 실습 과제
+  <a class="reference internal nav-link" href="#id31">
+   2.8. 최상의 모델 성능 배포
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id32">
+   2.9. 실습 과제
   </a>
  </li>
 </ul>
@@ -1507,7 +1483,7 @@
 </li>
 <li><p>최종적으로 k 번의 모델 평가 결과의 평균값을 계산한다.</p></li>
 </ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/cross-val10.png" width="400"></div><p><strong>효용 함수</strong></p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/cross-val10a.png" width="550"></div><p><strong>효용 함수</strong></p>
 <p>k-겹 교차 검증은 <code class="docutils literal notranslate"><span class="pre">cross_val_score()</span></code>을 이용하여 모델 학습 과정에서 훈련중인 모델의 성능을 측정하며,
 높은 값일 수록 좋은 성능으로 평가된다.
 회귀 모델의 경우 RMSE가 낮을 수록 좋은 모델이기에
@@ -1611,72 +1587,67 @@ RMSE의 음숫값을 사용하려면 <code class="docutils literal notranslate">
 앙상블 기법에 대해서는 <a class="reference internal" href="ensemble_learning_random_forests.html#ch-ensemble"><span class="std std-numref">7장</span></a>에서 자세히 다룬다.</p>
 </div>
 <div class="section" id="id29">
-<h3><span class="section-number">2.7.4. </span>최상의 모델과 오차 분석<a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">2.7.4. </span>최적 모델의 오차 분석 활용<a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h3>
+<p>그리드 탐색 또는 랜덤 탐색을 통해 얻어진 최적의 모델을 분석해서 문제에 대한 통찰을 얻을 수 있다.
+예를 들어, 최적의 랜덤 포레스트 모델로부터 타깃 예측에 사용된 특성들의 상대적 중요도를 확인하여
+중요한 특성만을 남기도 나머지 특성을 제외시킬 수 있다.</p>
+<p>예를 들어, 랜덤 탐색을 통해 찾아낸 최적의 모델에서 <code class="docutils literal notranslate"><span class="pre">feature_importances_</span></code>를 확인하면
+각 특성의 상대적 중요도를 다음과 같이 확인된다.</p>
 <ul class="simple">
-<li><p>그리드 탐색과 랜덤 탐색 등을 통해 얻어진 최상의 모델을 분석해서 문제에 대한 좋은 통창을 얻을 수 있음</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">log__median_income</span></code> 특성이 가장 중요하다.</p></li>
+<li><p>해안 근접도 특성 중에서 <code class="docutils literal notranslate"><span class="pre">INLAND</span></code> 특성만 중요하다.</p></li>
 </ul>
-<ul class="simple">
-<li><p>예를 들어, 최상의 랜덤 포레스트 모델에서 사용된 특성들의 중요도를 확인하여 일부 특성을 제외할 수 있음.</p>
-<ul>
-<li><p>중간 소득(median income)과 INLAND(내륙, 해안 근접도)가 가장 중요한 특성으로 확인됨</p></li>
-<li><p>해안 근접도의 다른 네 가지 특성은 별로 중요하지 않음</p></li>
-<li><p>중요도가 낮은 특성은 삭제할 수 있음.</p></li>
-</ul>
-</li>
-</ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/feature-importance.png" width="400"></div></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">final_model</span> <span class="o">=</span> <span class="n">rnd_search</span><span class="o">.</span><span class="n">best_estimator_</span>  <span class="c1"># includes preprocessing</span>
+<span class="n">feature_importances</span> <span class="o">=</span> <span class="n">final_model</span><span class="p">[</span><span class="s2">&quot;random_forest&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">feature_importances_</span>
+
+<span class="nb">sorted</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">feature_importances</span><span class="p">,</span>
+           <span class="n">final_model</span><span class="p">[</span><span class="s2">&quot;preprocessing&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">()),</span>
+           <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[(</span><span class="mf">0.18694559869103852</span><span class="p">,</span> <span class="s1">&#39;log__median_income&#39;</span><span class="p">),</span>
+ <span class="p">(</span><span class="mf">0.0748194905715524</span><span class="p">,</span> <span class="s1">&#39;cat__ocean_proximity_INLAND&#39;</span><span class="p">),</span>
+ <span class="p">(</span><span class="mf">0.06926417748515576</span><span class="p">,</span> <span class="s1">&#39;bedrooms_ratio__bedrooms_ratio&#39;</span><span class="p">),</span>
+ <span class="p">(</span><span class="mf">0.05446998753775219</span><span class="p">,</span> <span class="s1">&#39;rooms_per_house__rooms_per_house&#39;</span><span class="p">),</span>
+ <span class="p">(</span><span class="mf">0.05262301809680712</span><span class="p">,</span> <span class="s1">&#39;people_per_house__people_per_house&#39;</span><span class="p">),</span>
+ <span class="p">(</span><span class="mf">0.03819415873915732</span><span class="p">,</span> <span class="s1">&#39;geo__Cluster 0 similarity&#39;</span><span class="p">),</span>
+ <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+ <span class="p">(</span><span class="mf">0.00015061247730531558</span><span class="p">,</span> <span class="s1">&#39;cat__ocean_proximity_NEAR BAY&#39;</span><span class="p">),</span>
+ <span class="p">(</span><span class="mf">7.301686597099842e-05</span><span class="p">,</span> <span class="s1">&#39;cat__ocean_proximity_ISLAND&#39;</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="id30">
 <h3><span class="section-number">2.7.5. </span>테스트 셋으로 시스템 평가하기<a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h3>
 <ol class="simple">
 <li><p>최고 성능 모델 확인: 예를 들어, 그리드 탐색으로 찾은 최적 모델 사용</p></li>
+<li><p>최고 성능 모델을 이용하여 예측하기</p></li>
+<li><p>최고 성능 모델 평가</p></li>
 </ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">final_model</span> <span class="o">=</span> <span class="n">grid_search</span><span class="o">.</span><span class="n">best_estimator_</span>
+</div>
+</div>
+<div class="section" id="id31">
+<h2><span class="section-number">2.8. </span>최상의 모델 성능 배포<a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h2>
+<p>완성된 모델은 항상 저장해두어야 한다.
+업데이트된 모델이 적절하지 않은 경우 이전 모델로 되돌려야 할 수도 있기 때문이다.
+또한 버전의 데이터셋을 저장해두어야 하는데 이는 업데이트 과정에서 데이터셋이 오염될 수 있기 때문이다.</p>
+<p>모델의 저장과 불러오기는 <code class="docutils literal notranslate"><span class="pre">joblib</span></code> 모듈을 활용한다.</p>
+<ul>
+<li><p>저장하기</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">final_model</span><span class="p">,</span> <span class="s2">&quot;my_california_housing_model.pkl&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<ol class="simple">
-<li><p>테스트셋 전처리</p>
-<ul class="simple">
-<li><p>전처리 파이프라인의 <code class="docutils literal notranslate"><span class="pre">transform()</span></code> 메서드를 직접 활용</p></li>
-<li><p><strong>주의</strong>: <code class="docutils literal notranslate"><span class="pre">fit()</span></code> 메서드는 전혀 사용하지 않음</p></li>
-</ul>
 </li>
-</ol>
-<ol class="simple">
-<li><p>최고 성능 모델을 이용하여 예측하기</p></li>
-</ol>
-<ol class="simple">
-<li><p>최고 성능 모델 평가 및 론칭</p></li>
-</ol>
-<div class="section" id="id31">
-<h4><span class="section-number">2.7.5.1. </span>최상의 모델 성능 평가<a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li><p>테스트셋에 대한 최고 성능 모델의 RMSE: 47730</p></li>
-</ul>
+<li><p>불러오기</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">final_model_reloaded</span> <span class="o">=</span> <span class="n">joblib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;my_california_housing_model.pkl&quot;</span><span class="p">)</span>
+</pre></div>
 </div>
+</li>
+</ul>
+<p>저장된 모델은 예를 들어 웹서비스에 포함된 앱으로 활용될 수 있다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/model-launching01.png" width="400"></div></div>
 <div class="section" id="id32">
-<h4><span class="section-number">2.7.5.2. </span>최상의 모델 성능 배포<a class="headerlink" href="#id32" title="Permalink to this headline">¶</a></h4>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/model-launching01.png" width="600"></div></div>
-<div class="section" id="id33">
-<h4><span class="section-number">2.7.5.3. </span>데이터셋 및 모델 백업<a class="headerlink" href="#id33" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li><p>완성된 모델은 항상 백업해 두어야 함. 업데이트된 모델이 적절하지 않은 경우 이전 모델로 되돌려야 할 수도 있음.</p>
-<ul>
-<li><p>백업된 모델과 새 모델을 쉽게 비교할 수 있음.</p></li>
-</ul>
-</li>
-</ul>
-<ul class="simple">
-<li><p>동일한 이유로 모든 버전의 데이터셋을 백업해 두어야 함.</p>
-<ul>
-<li><p>업데이트 과정에서 데이터셋이 오염될 수 있기 때문임.</p></li>
-</ul>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="section" id="id34">
-<h2><span class="section-number">2.8. </span>실습 과제<a class="headerlink" href="#id34" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">2.9. </span>실습 과제<a class="headerlink" href="#id32" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/notebooks/code_end2end_ml_project.ipynb">(구글코랩) 머신러닝 프로젝트 처음부터 끝까지</a>
 의 소스코드를 먼저 공부한 다음에
 <a class="reference external" href="https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_end2end_ml_project.ipynb">(실습) 머신러닝 프로젝트 처음부터 끝까지</a>
