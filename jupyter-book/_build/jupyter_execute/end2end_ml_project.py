@@ -956,7 +956,7 @@
 # 
 # * 그리드 탐색
 # * 랜덤 탐색
-# * 앙상블 방법
+# * 앙상블 기법
 
 # ### 그리드 탐색
 
@@ -986,50 +986,36 @@
 
 # ### 랜덤 탐색
 
-# * 그리드 탐색은 적은 수의 조합을 실험해볼 때 유용
+# 그리드 탐색은 적은 수의 조합을 실험해볼 때 유용하다.
+# 하이퍼파라미터의 탐색 공간이 커지면 랜덤 탐색이 보다 효율적이다. 
+# 이유는 하이퍼라라미터를 임의로 선택하는 횟수를 지정하면
+# 그 횟수만큼만 모델 선택을 반복하기 때문이다.
 
-# * 조합의 수가 커지거나, 설정된 탐색 공간이 커지면 랜덤 탐색이 효율적
-#   * 설정값이 연속적인 값을 다루는 경우 랜덤 탐색이 유용
-
-# * 사이킷런의 `RandomizedSearchCV` 추정기가 랜덤 탐색을 지원
-
-# #### 예제: 랜덤 탐색으로 랜덤 포레스트 모델에 대한 최적 조합 찾기
-
+# **`RandomizedSearchCV` 클래스**
+# 
+# `preprocessing__geo__n_clusters`와 `random_forest__max_features` 값을 
+# 지정된 구간에서 무작위로 선택한 후 훈련하는 과정을 
+# 10번(`n_iter=10`) 반복한다. 
+# 또한 3-겹 교차검증(`cv=3`)을 진행하기에 모델 훈련을 총 (10x3=30)번 진행한다.
+# 
 # ```python
-# from sklearn.model_selection import RandomizedSearchCV
-# from scipy.stats import randint
+# param_distribs = {'preprocessing__geo__n_clusters': randint(low=3, high=50),
+#                   'random_forest__max_features': randint(low=2, high=20)}
 # 
-# param_distribs = {
-#         'n_estimators': randint(low=1, high=200),
-#         'max_features': randint(low=1, high=8),
-#     }
+# rnd_search = RandomizedSearchCV(
+#     full_pipeline, param_distributions=param_distribs, n_iter=10, cv=3,
+#     scoring='neg_root_mean_squared_error', random_state=42)
 # 
-# forest_reg = RandomForestRegressor(random_state=42)
-# rnd_search = RandomizedSearchCV(forest_reg, param_distributions=param_distribs,
-#                                 n_iter=10, cv=5, scoring='neg_mean_squared_error', random_state=42)
-# rnd_search.fit(housing_prepared, housing_labels)
+# rnd_search.fit(housing, housing_labels)
 # ```
 
-# * `n_iter=10`: 랜덤 탐색이 총 10회 진행
-#     * `n_estimators`와 `max_features` 값을 지정된 구간에서 무작위 선택
+# ### 앙상블 기법
 
-# * `cv=5`: 5-겹 교차검증. 따라서 랜덤 포레스트 학습이 (10x5=50)번 이루어짐.
-
-# #### 랜덤 탐색 결과 
-
-# * 최고 성능의 랜덤 포레스트 하이퍼파라미터가 다음과 같음. 
-#     - `max_features`: 7
-#     - `n_estimators`: 180
-
-# * 최고 성능의 랜덤 포레스트에 대한 교차검증 RMSE: 49150
-
-# ### 앙상블 방법
-
-# * 결정트리 모델 하나보다 랜덤 포레스트처럼 여러 모델로 이루어진 모델이 보다 좋은 성능을 낼 수 있음.
-
-# * 또한 최고 성능을 보이는 서로 다른 개별 모델을 조합하면 보다 좋은 성능을 얻을 수 있음
-
-# * 7장에서 자세히 다룸
+# 결정트리 모델 하나보다 랜덤 포레스트처럼 여러 모델을 활용하는 모델이
+# 일반적으로 보다 좋은 성능을 낸다.
+# 이처럼 좋은 성능을 내는 여러 모델을 **함께**<font size="2">ensemble</font> 
+# 학습시킨 후 평균값을 사용하면 보다 좋은 성능을 내는 모델을 얻게 된다. 
+# 앙상블 기법에 대해서는 {numref}`%s장 <ch:ensemble>`에서 자세히 다룬다.
 
 # ### 최상의 모델과 오차 분석
 
