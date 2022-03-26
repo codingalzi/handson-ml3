@@ -329,7 +329,7 @@
 # 방 하나당 침실 개수와 중간 주택 가격 사이의 선형 상관관계가
 # 중간 소득을 제외한 기존의 다른 특성들에 비해 높게 나타난다.
 
-# ## 머신러닝 알고리즘 훈련용 데이터 준비
+# ## 데이터 준비
 
 # 머신러닝 모델 훈련에 사용되는 알고리즘을 이용하려면
 # 적재된 데이터셋을 데이터 정제와 전처리 과정을 수행해서
@@ -828,210 +828,161 @@
 
 # ## 모델 선택과 훈련
 
-# * 목표 달성에 필요한 두 요소를 결정해야함
-#   * 학습 모델
-#   * 회귀 모델 성능 측정 지표
+# 훈련셋 준비가 완료된 상황에서 모델을 선택하고 훈련시키는 일이 남아 있다.
+# 사이킷런이 제공하는 예측기 모델을 사용하면 훈련은 기본적으로 간단하게 진행된다.
 # 
-# * 목표: 구역별 중간 주택 가격 예측 모델
-# 
-# * 학습 모델: 회귀 모델
-# 
-# * 회귀 모델 성능 측정 지표: 평균 제곱근 오차(RMSE)를 기본으로 사용
+# 여기서는 사이킷런이 제공하는 다양한 모델의 사용법과 차이점을 간단하게 살펴본다.
+# 각 모델의 자세한 특징과 상세 설명은 이어지는 장에서 이루어질 것이다. 
 
-# ### 훈련셋에서 훈련하고 평가하기
+# ### 훈련셋 대상 훈련 및 평가
 
-# * 지금까지 한 일
-#     * 훈련셋 / 테스트셋 구분
-#     * 변환 파이프라인을 활용한 데이터 전처리
-
-# * 이제 할 일
-#     * 예측기 모델 선택 후 훈련시키기
-#     * 예제: 선형 회귀, 결정트리 회귀
-
-# * 예측기 모델 선택 후 훈련과정은 매우 단순함.
-#     * `fit()` 메서드를 전처리 처리가 된 훈련셋에 적용
-
-# #### 선형 회귀 모델(4장)
-
-# * 선형 회귀 모델 생성: 사이킷런의 **`LinearRegression`** 클래스 활용
+# **선형 회귀 모델 ({numref}`%s장 <ch:trainingModels>`)**
 
 # * 훈련 및 예측
-#     - 훈련: `LinearRegression` 모델은 무어-펜로즈 역행렬을 이용하여 파라미터 직접 계산 (4장 참조)
-#     - 예측: (여기서는 연습 용도로) 훈련셋에 포함된 몇 개 데이터를 대상으로 예측 실행
 # 
-# ```python
-# from sklearn.linear_model import LinearRegression
+#     ```python
+#     lin_reg = make_pipeline(preprocessing, LinearRegression())
+#     lin_reg.fit(housing, housing_labels)
+#     lin_reg.predict(housing)
+#     ```
 # 
-# lin_reg = LinearRegression()
-# lin_reg.fit(housing_prepared, housing_labels)
+# - RMSE(평균 제곱근 오차)
 # 
-# lin_reg.predict(housing_prepared)
-# ```
+#     ```python
+#     lin_rmse = mean_squared_error(housing_labels, housing_predictions,
+#                                   squared=False)
+#     ```
 
-# #### 선형 회귀 모델의 훈련셋 대상 예측 성능
+# - 훈련 결과
+#     - 선형회귀 모델이 작동한다.
+#     - 하지만 RMSE(`lin_rmse`)가 68687.89 정도로 별로 좋지 않다.
+#     - 훈련된 모델이 훈련셋에 __과소적합__ 되었다. 
+#     - 보다 좋은 특성을 찾거나 더 강력한 모델을 적용해야 한다. 
+#     - 모델에 적용된 규제를 완화할 수도 있지만 위 모델에선 어떤 규제도 적용하지 않았다.
 
-# - RMSE(평균 제곱근 오차)가 68628.198 정도로 별로 좋지 않음.
+# **결정트리 회귀 모델 ({numref}`%s장 <ch:decisionTrees>`)**
 
-# * 훈련된 모델이 훈련셋에 __과소적합__ 됨.
-#     - 보다 좋은 특성을 찾거나 더 강력한 모델을 적용해야 함.
-#     - 보다 좋은 특성 예제: 로그 함수를 적용한 인구수 등
-#     - 모델에 사용되는 규제(regulaization, 4장)를 완화할 수도 있지만 위 모델에선 어떤 규제도 적용하지 않았음.
-
-# #### 결정트리 회귀 모델(6장)
-
-# * 결정 트리 모델은 데이터에서 복잡한 비선형 관계를 학습할 때 사용
-
-# * 결정트리 회귀 모델 생성: 사이킷런의 **`DecisionTreeRegressor`** 클래스 활용
-
+# 결정트리 회귀 모델은 데이터에서 복잡한 비선형 관계를 학습할 때 사용한다. 
+# 
 # * 훈련 및 예측
-#     - 예측은 훈련셋에 포함된 몇 개 데이터를 대상으로 예측 실행
 # 
 # ```python
-# from sklearn.tree import DecisionTreeRegressor
+# tree_reg = make_pipeline(preprocessing, DecisionTreeRegressor(random_state=42))
+# tree_reg.fit(housing, housing_labels)
+# housing_predictions = tree_reg.predict(housing)
 # 
-# tree_reg = DecisionTreeRegressor(random_state=42)
-# tree_reg.fit(housing_prepared, housing_labels)
-# 
-# housing_predictions = tree_reg.predict(housing_prepared)
+# tree_rmse = mean_squared_error(housing_labels, housing_predictions,
+#                               squared=False)
 # ```
 
-# #### 결정트리 회귀 모델의 훈련셋 대상 예측 성능
+# - 훈련 결과
+#     - RMSE(`tree_rmse`)가 0으로 완벽해 보인다.
+#     - 하지만 이는 모델이 훈련셋에 심각하게 __과대적합__ 되었음을 의미한다.
+#     - 실전 상황에서 RMSE가 0이 되는 것은 불가능하다.
+#     - 테스트셋에 적용할 경우 RMSE가 크게 나올 것이다.
 
-# - RMSE(평균 제곱근 오차)가 0으로 완벽해 보임.
+# ### 교차 검증
 
-# * 훈련된 모델이 훈련셋에 심각하게 __과대적합__ 됨.
-#     - 실전 상황에서 RMSE가 0이 되는 것은 불가능.
-#     - 훈련셋이 아닌 테스트셋에 적용할 경우 RMSE가 크게 나올 것임.
+# __교차 검증__<font size="2">cross validation</font>을 이용하여 
+# 훈련중인 모델의 성능을 평가할 수 있다.
 
-# ### 교차 검증을 사용한 평가
-
-# * 테스트셋을 사용하지 않으면서 훈련 과정을 평가할 수 있음.
-
-# * __교차 검증__ 활용
-
-# #### k-겹 교차 검증
-
-# * 훈련셋을 __폴드__(fold)라 불리는 k-개의 부분 집합으로 무작위로 분할
+# **사이킷런의 k-겹 교차 검증**
 # 
-# * 총 k 번 지정된 모델을 훈련
-#     * 훈련할 때마다 매번 다른 하나의 폴드 선택하여 검증 데이터셋으로 활용
-#     * 다른 (k-1) 개의 폴드를 이용해 훈련
-# 
-# * 최종적으로 k 번의 평가 결과가 담긴 배열 생성
-
-# * k = 5인 경우
+# * 훈련셋을 __폴드__(fold)라 불리는 k-개의 부분 집합으로 무작위로 분할한다.
+# * 모델을 총 k 번 훈련한다.
+#     * 매 훈련마다 매번 다른 하나의 폴드를 검증 데이터셋으로 지정한다.
+#     * 훈련은 다른 (k-1) 개의 폴드를 이용한다.
+#     * 매 훈련이 끝날 때마다 선택된 검증 데이터셋을 이용하여 모델의 평가한다.
+# * 최종적으로 k 번의 모델 평가 결과의 평균값을 계산한다.
 # 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/cross-val10.png" width="400"></div>
 
-# #### 예제: 결정 트리 모델 교차 검증 (k = 10인 경우)
-
-# ```python
-# from sklearn.model_selection import cross_val_score
+# **효용 함수**
 # 
-# scores = cross_val_score(tree_reg, housing_prepared, housing_labels,
-#                          scoring="neg_mean_squared_error", cv=10)
+# k-겹 교차 검증은 `cross_val_score()`을 이용하여 모델 학습 과정에서 훈련중인 모델의 성능을 측정하며,
+# 높은 값일 수록 좋은 성능으로 평가된다.
+# 회귀 모델의 경우 RMSE가 낮을 수록 좋은 모델이기에 
+# RMSE의 음숫값을 사용하려면 `scoring` 키워드의 인자로 다음과 같이 지정한다.
 # 
-# tree_rmse_scores = np.sqrt(-scores)
-# ```
-
-# * k-겹 교차 검증의 모델 학습 과정에서 성능을 측정할 때 높을 수록 좋은 __효용함수__ 활용
-#     * `scoring="neg_mean_squared_error"`
-#     * RMSE의 음숫값
+# * `scoring="neg_mean_squared_error"`
 # 
-
-# * 교차 검증의 RMSE: 다시 음숫값(`-scores`) 사용
-#     - 평균 RMSE: 약 71407
-#     - 별로 좋지 않음.
-
-# #### 예제: 선형 회귀 모델 교차 검증 (k = 10 인 경우)
-
-# ```python
-# lin_scores = cross_val_score(lin_reg, housing_prepared, housing_labels,
-#                              scoring="neg_mean_squared_error", cv=10)
-# 
-# lin_rmse_scores = np.sqrt(-lin_scores)
-# ```
-
-# * 교차 검증의 RMSE 평균: 약 69052
-#     - 결정트리 회귀 모델보다 좋음.
-
-# #### 앙상블 학습 (7장)
-
-# * 여러 개의 다른 모델을 모아서 하나의 모델을 만드는 기법
-
-# * 머신러닝 알고리즘의 성능을 극대화는 방법 중 하나
-
-# #### 랜덤 포레스트 회귀 모델 (7장)
-
-# * 앙상블 학습에 사용되는 하나의 기법
-
-# * 무작위로 선택한 특성을 이용하는 결정 트리 여러 개를 훈련 시킨 후 
-#     훈련된 모델들의 평균 예측값을 예측값으로 사용하는 모델
-
-# * 사이킷런의 `RandomForestRegressor` 클래스 활용
-
-# * 훈련 및 예측
+# 다음은 k=10, 즉 10 개의 폴드를 사용하여 결정트리 회귀 모델에 대한 교차 검증을 진행한다.
 # 
 # ```python
-# from sklearn.ensemble import RandomForestRegressor
-# 
-# forest_reg = RandomForestRegressor(n_estimators=100, random_state=42)
-# forest_reg.fit(housing_prepared, housing_labels)
-# 
-# housing_predictions = forest_reg.predict(housing_prepared)
+# tree_rmses = - cross_val_score(tree_reg, housing, housing_labels,
+#                               scoring="neg_root_mean_squared_error", cv=10)
 # ```
 
-# * 랜덤 포레스트 모델의 RMSE: 약 50182
-#     - 지금까지 사용해본 모델 중 최고
-#     - 하지만 여전히 과대적합되어 있음. 
+# :::{admonition} `scoring` 키워드 인자
+# :class: info
+# 
+# 교차 검증에 사용되는 모델의 종류에 따라 다양한 방식으로 모델의 성능을 측정할 수 있으며
+# `scoring` 키워드 인자를 이용하여 지정한다. 
+# 현재 사용 가능한 옵션값은 [사이킷런의 모델 평가 문서](https://scikit-learn.org/stable/modules/model_evaluation.html)에서
+# 확인할 수 있다.
+# :::
 
-# ## 모델 세부 튜닝
+# **랜덤 포레스트 회귀 모델 ({numref}`%s장 <ch:ensemble>`)**
+# 
+# **랜덤 포레스트**<font size="2">random forest</font> 회귀 모델은 
+# 여러 개의 결정트리를 각자 임의로 선택한 특성만을 이용하여 훈련시킨 후 
+# 각 모델의 예측값의 평균을 예측값으로 사용하는 모델이다. 
+# 
+# 이렇게 여러 개의 모델을 이용한 모델 학습을 
+# **앙상블**<font size="2">ensemble</font> 학습이며,
+# 머신러닝 알고리즘의 성능을 극대화하는 가장 일반적인 기법이다.
+# 
+# 앙상블 학습 모델에 대한 교차 검증은 
+# 여러 개의 모델과 여러 개의 폴드를 사용하기 때문에
+# 경우에 따라 시간이 매우 오래 걸리기도 한다.
+#  
+# 
+# ```python
+# forest_reg = make_pipeline(preprocessing,
+#                            RandomForestRegressor(random_state=42))
+# forest_rmses = -cross_val_score(forest_reg, housing, housing_labels,
+#                                 scoring="neg_root_mean_squared_error", cv=10)
+# ```
+# 
+# 지금까지 사용해본 모델 중 최고의 성능을 보이지만 하지만 여전히 과대적합이 발생한다.
 
-# * 살펴 본 모델 중에서 **랜덤 포레스트** 모델의 성능이 가장 좋았음
+# ## 모델 튜닝
 
-# * 가능성이 높은 모델을 선정한 후에 **모델 세부 설정을 튜닝**해야함
-
-# * 튜닝을 위한 세 가지 방식
-#   * **그리드 탐색**
-#   * **랜덤 탐색**
-#   * **앙상블 방법**
+# 지금까지 살펴 본 모델 중에서 랜덤 포레스트 회귀 모델의 성능이 가장 좋았다.
+# 이렇게 가능성이 높은 모델을 찾은 다음엔 모델의 세부 설정을 튜닝하면
+# 모델의 성능을 끌어올릴 수 있다.
+# 
+# 모델 튜닝은 다음 세 가지 방식을 사용한다.
+# 
+# * 그리드 탐색
+# * 랜덤 탐색
+# * 앙상블 방법
 
 # ### 그리드 탐색
 
-# * 지정한 하이퍼파라미터의 모든 조합을 교차검증하여 최선의 하이퍼파라미터 조합 찾기
+# 지정된 하이퍼파라미터의 모든 조합을 교차 검증하여 최선의 하이퍼파라미터를 찾는다. 
 
-# * 사이킷런의 `GridSearchCV` 활용
-
-# #### 예제: 그리드 탐색으로 랜덤 포레스트 모델에 대한 최적 조합 찾기
-
+# **`GridSearchCV` 클래스**
+# 
+# 랜덤 포레스트 모델을 대상으로 그리드 탐색을 다음과 같이 실행하면
+# 총 (3x3 + 2x3 = 15) 가지의 모델의 성능을 확인한다. 
+# 또한 3-겹 교차 검증(`cv=3`)을 진행하기에 모델 훈련을 총 (15x3 = 45)번 진행한다.
+# 
 # ```python
-# from sklearn.model_selection import GridSearchCV
-# 
+# full_pipeline = Pipeline([
+#     ("preprocessing", preprocessing),
+#     ("random_forest", RandomForestRegressor(random_state=42)),
+# ])
 # param_grid = [
-#     {'n_estimators': [3, 10, 30], 'max_features': [2, 4, 6, 8]},
-#     {'bootstrap': [False], 'n_estimators': [3, 10], 'max_features': [2, 3, 4]},
-#   ]
-# 
-# forest_reg = RandomForestRegressor(random_state=42)
-# grid_search = GridSearchCV(forest_reg, param_grid, cv=5,
-#                            scoring='neg_mean_squared_error',
-#                            return_train_score=True)
-# grid_search.fit(housing_prepared, housing_labels)
+#     {'preprocessing__geo__n_clusters': [5, 8, 10],
+#      'random_forest__max_features': [4, 6, 8]},
+#     {'preprocessing__geo__n_clusters': [10, 15],
+#      'random_forest__max_features': [6, 8, 10]},
+# ]
+# grid_search = GridSearchCV(full_pipeline, param_grid, cv=3,
+#                            scoring='neg_root_mean_squared_error')
+# grid_search.fit(housing, housing_labels)
 # ```
-
-# * 총 (3x4 + 2x3 = 18) 가지의 경우 확인
-
-# * 5-겹 교차검증(`cv=5`)이므로, 총 (18x5 = 90)번 훈련함.
-
-# #### 그리드 탐색 결과 
-
-# * 최고 성능의 랜덤 포레스트 하이퍼파라미터가 다음과 같음. 
-#     - `max_features`: 8
-#     - `n_estimators`: 30
-#     - 지정된 구간의 최고값들이기에 구간을 좀 더 넓히는 게 좋아 보임
-
-# * 최고 성능의 랜덤 포레스트에 대한 교차검증 RMSE: 49682
-#     - 하나의 랜덤 포레스트보다 좀 더 좋아졌음.
 
 # ### 랜덤 탐색
 
@@ -1074,7 +1025,7 @@
 
 # ### 앙상블 방법
 
-# * 결정 트리 모델 하나보다 랜덤 포레스트처럼 여러 모델로 이루어진 모델이 보다 좋은 성능을 낼 수 있음.
+# * 결정트리 모델 하나보다 랜덤 포레스트처럼 여러 모델로 이루어진 모델이 보다 좋은 성능을 낼 수 있음.
 
 # * 또한 최고 성능을 보이는 서로 다른 개별 모델을 조합하면 보다 좋은 성능을 얻을 수 있음
 
