@@ -209,11 +209,11 @@
 # 만약 이용하게 되면 미래에 실전에서 사용되는 데이터를 미리 안다고 가정하고 모델을 훈련시키는
 # 것과 동일하게 되어 매우 잘못된 모델을 훈련시킬 위험을 키우게 된다.
 # 
-# 데이터셋을 훈련셋과 데이터셋으로 구분할 때 보통 계층적 샘플링을 사용한다.
+# 데이터셋을 훈련셋과 데이터셋으로 구분할 때 보통 층화표집을 사용한다.
 
-# **계층적 샘플링**
+# **층화표집**
 # 
-# 각 계층별로 적절한 샘플을 추측하는 기법이다. 
+# **층화표집**<font size="2">stratified sampling</font>은 각 계층별로 적절한 샘플을 추측하는 기법이다. 
 # 이유는 계층별로 충분한 크기의 샘플이 포함되도록 지정해야 학습 과정에서 편향이 발생하지 않는다.
 # 예를 들어, 특정 소득 구간에 포함된 샘플이 과하게 적거나 많으면 해당 계층의 중요도가 
 # 과소 혹은 과대 평가될 수 있다.
@@ -223,7 +223,7 @@
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-08.png" width="400"></div>
 
-# 소득 구간을 아래 숫자들을 기준으로 5개로 구분한 다음에 계층적 샘플링을 이용하여
+# 소득 구간을 아래 숫자들을 기준으로 5개로 구분한 다음에 층화표집을 이용하여
 # 훈련셋과 테스트셋을 구분할 수 있다.
 # 
 # | 구간 | 범위 |
@@ -238,9 +238,9 @@
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-08a.png" width="400"></div>
 
-# 무작위 샘플링 방식과는 달리 계층별 샘플의 비율을 거의 동일하게 유지함을 확인할 수 있다.
+# 무작위 추출 방식과는 달리 계층별 샘플의 비율을 거의 동일하게 유지함을 확인할 수 있다.
 
-# |  | 전체 | 계층샘플링 | 무작위 샘플링 | 계층 샘플링 오류율 | 무작위 샘플링 오류율 |
+# |  | 전체 | 층화표집 | 무작위 추출 | 층화표집 오류율 | 무작위 추출 오류율 |
 # | :--- | :--- | :--- | :--- | :--- | :--- |
 # | 1 | 3.98 | 4.00 | 4.24 | 0.36 | 6.45 |
 # | 2 | 31.88 | 31.88 | 30.74 | -0.02 | -3.59 |
@@ -342,7 +342,7 @@
 
 # **입력 데이터셋과 타깃 데이터셋**
 # 
-# 계층별 샘플링으로 얻어진  훈련셋 `strat_train_set` 을 
+# 층화표집으로 얻어진  훈련셋 `strat_train_set` 을 
 # 다시 입력 데이터셋 과 타깃 데이터셋으로 구분한다. 
 # 
 # * 입력 데이터셋: 중간 주택 가격 특성이 제거된 훈련셋 
@@ -736,7 +736,7 @@
 # ```python
 # preprocessing = ColumnTransformer([
 #     ("num", num_pipeline, make_column_selector(dtype_include=np.number)),
-#     ("cat", cat_pipeline, make_column_selector(dtype_include=np.object)
+#     ("cat", cat_pipeline, make_column_selector(dtype_include=object)
 # ])
 # ```
 
@@ -751,7 +751,7 @@
 # ```python
 # preprocessing = make_column_transformer(
 #     (num_pipeline, make_column_selector(dtype_include=np.number)),
-#     (cat_pipeline, make_column_selector(dtype_include=np.object)),
+#     (cat_pipeline, make_column_selector(dtype_include=object)),
 # )
 # ```
 
@@ -821,7 +821,7 @@
 #         ("log", log_pipeline, ["total_bedrooms", "total_rooms",                # 로그 변환
 #                                "population", "households", "median_income"]),
 #         ("geo", cluster_simil, ["latitude", "longitude"]),                     # 구역별 군집 정보
-#         ("cat", cat_pipeline, make_column_selector(dtype_include=np.object)),  # 범주형 특성 전처리
+#         ("cat", cat_pipeline, make_column_selector(dtype_include=object)),  # 범주형 특성 전처리
 #     ],
 #     remainder=default_num_pipeline)  # 중간 주택 년수(housing_median_age) 특성만 남음.
 # ```
@@ -909,7 +909,7 @@
 # 다음은 k=10, 즉 10 개의 폴드를 사용하여 결정트리 회귀 모델에 대한 교차 검증을 진행한다.
 # 
 # ```python
-# tree_rmses = - cross_val_score(tree_reg, housing, housing_labels,
+# tree_rmses = -cross_val_score(tree_reg, housing, housing_labels,
 #                               scoring="neg_root_mean_squared_error", cv=10)
 # ```
 
@@ -1017,7 +1017,7 @@
 # 학습시킨 후 평균값을 사용하면 보다 좋은 성능을 내는 모델을 얻게 된다. 
 # 앙상블 기법에 대해서는 {numref}`%s장 <ch:ensemble>`에서 자세히 다룬다.
 
-# ### 최적 모델의 오차 분석 활용
+# ### 최적 모델 활용
 
 # 그리드 탐색 또는 랜덤 탐색을 통해 얻어진 최적의 모델을 분석해서 문제에 대한 통찰을 얻을 수 있다.
 # 예를 들어, 최적의 랜덤 포레스트 모델로부터 타깃 예측에 사용된 특성들의 상대적 중요도를 확인하여
@@ -1030,14 +1030,14 @@
 # - 해안 근접도 특성 중에서 `INLAND` 특성만 중요하다.
 
 # ```python
-# final_model = rnd_search.best_estimator_  # includes preprocessing
+# final_model = rnd_search.best_estimator_  # 전처리 포함
 # feature_importances = final_model["random_forest"].feature_importances_
 # 
 # sorted(zip(feature_importances,
 #            final_model["preprocessing"].get_feature_names_out()),
 #            reverse=True)
 # ```
-# 
+
 # ```
 # [(0.18694559869103852, 'log__median_income'),
 #  (0.0748194905715524, 'cat__ocean_proximity_INLAND'),
@@ -1056,7 +1056,7 @@
 # 1. 최고 성능 모델을 이용하여 예측하기
 # 1. 최고 성능 모델 평가
 
-# ## 최상의 모델 성능 배포
+# ## 최적 모델 저장 및 활용
 
 # 완성된 모델은 항상 저장해두어야 한다.
 # 업데이트된 모델이 적절하지 않은 경우 이전 모델로 되돌려야 할 수도 있기 때문이다.
