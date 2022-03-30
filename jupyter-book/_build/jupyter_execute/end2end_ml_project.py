@@ -563,37 +563,6 @@
 # FunctionTransformer(np.log, inverse_func=np.exp)
 # ```
 
-# **가우시안 RBF 적용 변환기**
-# 
-# 특정 지점과의 유사도를 새로운 특성으로 사용하고자 할 때 `rbf_kernel` 함수를 이용한다.
-# 아래 코드는 샌프란시스코 도시와의 근접도를 새로운 특성으로 생성하는 과정을 보여준다. 
-# 샌프란시스코의 위도와 경도는 (37.7749, -122.41)이다.
-# 
-# ```python
-# FunctionTransformer(rbf_kernel,
-#                     kw_args=dict(Y=[37.7749, -122.41], gamma=0.1))
-# ```
-
-# :::{admonition} `rbf_kernel` 함수
-# :class: info
-# 
-# `rbf_kernel` 함수는 다음 가우시안 RBF 함수를 활용한다.
-# $\mathbf{p}$ 는 특정 지점을 가리키며,
-# $\mathbf{p}$ 에서 조금만 멀어져도 함숫값이 급격히 작아진다. 
-# 
-# 
-# $$
-# \phi(\mathbf{x},\mathbf{p}) = \exp \left( -\gamma \|\mathbf{x} - \mathbf{p} \|^2 \right)
-# $$
-# 
-# 예를 들어 아래 이미지는 중간 주택 년수가 35년에서 멀어질 수록 
-# 함숫값이 급격히 0에 가까워지는 것을 보여준다.
-# 하이퍼파라미터인 **감마**($\gamma$, gamma)는 얼마나 빠르게 감소하도록 하는가를 결정한다.
-# 즉, 감마 값이 클 수록 보다 좁은 종 모양의 그래프가 그려진다.
-# 
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-rbf_kernel.jpg" width="400"></div>
-# :::
-
 # **비율 계산 변환기**
 # 
 # 두 개의 특성 사이의 비율을 계산하여 새로운 특성을 생성하는 변환기 또한 
@@ -639,11 +608,32 @@
 #         return [f"Cluster {i} similarity" for i in range(self.n_clusters)]
 # ```
 
-# :::{admonition} `KMeans` 모델
+# :::{admonition} `KMeans` 모델과 `rbf_kernel()` 함수
 # :class: info
 # 
-# `KMeans` 모델은 나중에 
+# 위 클래스는 `KMeans` 모델과 `rbf_kernel()` 함수를 활용한다.
+# 
+# **`KMeans` 모델**
+# 
 # {numref}`%s장 <ch:unsupervisedLearning>` 비지도 학습에서 다룰 군집 알고리즘 모델이다.
+# 
+# **`rbf_kernel()` 함수**
+# 
+# 다음 가우시안 RBF 함수를 활용한다.
+# $\mathbf{p}$ 는 특정 지점을 가리키며,
+# $\mathbf{p}$ 에서 조금만 멀어져도 함숫값이 급격히 작아진다. 
+# 
+# 
+# $$
+# \phi(\mathbf{x},\mathbf{p}) = \exp \left( -\gamma \|\mathbf{x} - \mathbf{p} \|^2 \right)
+# $$
+# 
+# 예를 들어 아래 이미지는 중간 주택 년수가 35년에서 멀어질 수록 
+# 함숫값이 급격히 0에 가까워지는 것을 보여준다.
+# 하이퍼파라미터인 **감마**($\gamma$, gamma)는 얼마나 빠르게 감소하도록 하는가를 결정한다.
+# 즉, 감마 값이 클 수록 보다 좁은 종 모양의 그래프가 그려진다.
+# 
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-rbf_kernel.jpg" width="400"></div>
 # :::
 
 # `ClusterSimilarity` 변환기를 이용하여 얻어진 군집 특성을 이용하면
@@ -698,7 +688,7 @@
 # **`ColumnTransformer` 클래스**
 # 
 # `ColumnTransformer` 클래스는 특성별로 전처리를 지정할 수 있다.
-# 이 기능을 이용하여 수치형 특성과 범주형 특성을 알아서 구분해서 
+# 이 기능을 이용하여 수치형 특성과 범주형 특성을 구분해서 
 # 전처리하는 통합 파이프라인을 다음과 같이 구성할 수 있다.
 # 
 # * 수치형 특성: `num_pipeline` 변환기
@@ -721,8 +711,7 @@
 
 # **`make_column_selector()` 함수**
 # 
-# 파이프라인에 포함되는 각 변환기를 적용할 특성을 일일이 나열하는 일이 
-# 귀찮거나 어려울 수 있다.
+# 파이프라인에 포함되는 각 변환기를 적용할 특성을 일일이 나열하는 일이 어려울 수 있다.
 # 이때 지정된 자료형을 사용하는 특성들만을 뽑아주는 `make_column_selector()` 함수를 
 # 유용하게 활용할 수 있다.
 # 
@@ -752,9 +741,9 @@
 
 # ### 캘리포니아 데이터셋 변환 파이프라인
 
-# 지금까지 소개한 변환을 한꺼번에 처리하는 파이프라인 변환기는 다음과 같다.
+# 다음 변환기를 모아 캘리포니아 데이터셋 전용 변환 파이프라인을 생성할 수 있다.
 
-# **비율 변환기**
+# **(1) 비율 변환기**
 # 
 # 가구당 방 개수, 방 하나당 침실 개수, 가구당 인원 등 
 # 비율을 사용하는 특성을 새로 추가할 때 사용되는 변화기를 생성하는 함수를 정의한다.
@@ -771,7 +760,7 @@
 #         StandardScaler())
 # ```
 
-# **로그 변환기**
+# **(2) 로그 변환기**
 # 
 # 데이터 분포가 두터운 꼬리를 갖는 특성을 대상으로 로그 함수를 적용하는 변환기를 지정한다.
 
@@ -781,7 +770,7 @@
 #                              StandardScaler())
 # ```
 
-# **군집 변환기**
+# **(3) 군집 변환기**
 # 
 # 구역의 위도와 경도를 이용하여 구역들의 군집 정보를 새로운 특성으로 추가하는 변환기를 지정한다.
 
@@ -789,25 +778,22 @@
 # cluster_simil = ClusterSimilarity(n_clusters=10, gamma=1., random_state=42)
 # ```
 
-# **기타 변환기**
+# **(4) 기타**
 # 
-# 특별한 변환이 필요 없는 경우에도 기본적으로 결측치 문제 해결과 스케일을 조정하는 변환기는 사용한다.
+# 특별한 변환이 필요 없는 경우에도 기본적으로 결측치 문제 해결과 스케일을 조정하는 변환기를 사용한다.
 
 # ```python
 # default_num_pipeline = make_pipeline(SimpleImputer(strategy="median"),
 #                                      StandardScaler())
 # ```
 
-# **종합: `ColumnTransformer` 변환기**
-# 
 # 앞서 언급된 모든 변환기를 특성별로 알아서 처리하는 변환기는 다음과 같다.
-# 
-# - `remainder=default_num_pipeline`: 언급되지 않은 특성을 처리하는 변환기를 지정한다.
-#     삭제를 의미하는 `drop` 이 기본값이며 이외에 `passthrough` 는 변환하지 않는 것을 의미한다.
+# `remainder=default_num_pipeline`: 언급되지 않은 특성을 처리하는 변환기를 지정한다.
+# 삭제를 의미하는 `drop` 이 기본값이며 이외에 `passthrough` 는 변환하지 않는 것을 의미한다.
 
 # ```python
 # preprocessing = ColumnTransformer([
-#         ("bedrooms_ratio", ratio_pipeline("bedrooms_ratio"),                  # 방당 침실 수
+#         ("bedrooms_ratio", ratio_pipeline("bedrooms_ratio"),                   # 방당 침실 수
 #                            ["total_bedrooms", "total_rooms"]),
 #         ("rooms_per_house", ratio_pipeline("rooms_per_house"),                 # 가구당 방 수
 #                             ["total_rooms", "households"]),
@@ -816,18 +802,25 @@
 #         ("log", log_pipeline, ["total_bedrooms", "total_rooms",                # 로그 변환
 #                                "population", "households", "median_income"]),
 #         ("geo", cluster_simil, ["latitude", "longitude"]),                     # 구역별 군집 정보
-#         ("cat", cat_pipeline, make_column_selector(dtype_include=object)),  # 범주형 특성 전처리
+#         ("cat", cat_pipeline, make_column_selector(dtype_include=object)),     # 범주형 특성 전처리
 #     ],
-#     remainder=default_num_pipeline)  # 중간 주택 년수(housing_median_age) 특성만 남음.
+#     remainder=default_num_pipeline)                                            # 중간 주택 년수(housing_median_age) 대상
 # ```
 
 # ## 모델 선택과 훈련
 
 # 훈련셋 준비가 완료된 상황에서 모델을 선택하고 훈련시키는 일이 남아 있다.
-# 사이킷런이 제공하는 예측기 모델을 사용하면 훈련은 기본적으로 간단하게 진행된다.
 # 
+# 사이킷런이 제공하는 예측기 모델을 사용하면 훈련은 기본적으로 간단하게 진행된다.
 # 여기서는 사이킷런이 제공하는 다양한 모델의 사용법과 차이점을 간단하게 살펴본다.
-# 각 모델의 자세한 특징과 상세 설명은 이어지는 장에서 이루어질 것이다. 
+# 각 모델의 자세한 특징과 상세 설명은 앞으로 차차 이루어질 것이다.
+
+# :::{admonition} 전처리 포함 파이프라인 모델
+# :class: info
+# 
+# 소개되는 모든 모델은 앞서 설명한 전처리 과정과 함께 하나의 파이프라인으로 묶여서 정의된다.
+# 이는 테스트셋과 미래의 모든 입력 데이터셋에 대해서도 전처리를 별도로 신경쓸 필요가 없게 해준다.
+# :::
 
 # ### 훈련셋 대상 훈련 및 평가
 
@@ -849,11 +842,9 @@
 #     ```
 
 # - 훈련 결과
-#     - 선형회귀 모델이 작동한다.
-#     - 하지만 RMSE(`lin_rmse`)가 68687.89 정도로 별로 좋지 않다.
+#     - RMSE(`lin_rmse`)가 68687.89 정도로 별로 좋지 않다.
 #     - 훈련된 모델이 훈련셋에 __과소적합__ 되었다. 
 #     - 보다 좋은 특성을 찾거나 더 강력한 모델을 적용해야 한다. 
-#     - 모델에 적용된 규제를 완화할 수도 있지만 위 모델에선 어떤 규제도 적용하지 않았다.
 
 # **결정트리 회귀 모델 ({numref}`%s장 <ch:decisionTrees>`)**
 
@@ -872,36 +863,37 @@
 
 # - 훈련 결과
 #     - RMSE(`tree_rmse`)가 0으로 완벽해 보인다.
-#     - 하지만 이는 모델이 훈련셋에 심각하게 __과대적합__ 되었음을 의미한다.
+#     - 모델이 훈련셋에 심각하게 __과대적합__ 되었음을 의미한다.
 #     - 실전 상황에서 RMSE가 0이 되는 것은 불가능하다.
-#     - 테스트셋에 적용할 경우 RMSE가 크게 나올 것이다.
+#     - 테스트셋에 대한 RMSE는 매우 높게 나온다.
 
 # ### 교차 검증
 
 # __교차 검증__<font size="2">cross validation</font>을 이용하여 
 # 훈련중인 모델의 성능을 평가할 수 있다.
 
-# **사이킷런의 k-겹 교차 검증**
+# **k-겹 교차 검증**
 # 
 # * 훈련셋을 __폴드__(fold)라 불리는 k-개의 부분 집합으로 무작위로 분할한다.
 # * 모델을 총 k 번 훈련한다.
-#     * 매 훈련마다 매번 다른 하나의 폴드를 검증 데이터셋으로 지정한다.
-#     * 훈련은 다른 (k-1) 개의 폴드를 이용한다.
-#     * 매 훈련이 끝날 때마다 선택된 검증 데이터셋을 이용하여 모델의 평가한다.
-# * 최종적으로 k 번의 모델 평가 결과의 평균값을 계산한다.
+#     * 매 훈련마나다 하나의 폴드를 선택하여 검증 데이터셋 지정.
+#     * 나머지 (k-1) 개의 폴드를 대상으로 훈련
+#     * 매 훈련이 끝날 때마다 선택된 검증 데이터셋을 이용하여 모델 평가
+#     * 매번 다른 폴드 활용
+# * 최종평가는 k-번 평가 결과의 평균값을 활용한다.
 # 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/cross-val10a.png" width="550"></div>
 
-# **효용 함수**
+# **사이킷런의 `cross_val_score()` 함수**
 # 
-# k-겹 교차 검증은 `cross_val_score()`을 이용하여 모델 학습 과정에서 훈련중인 모델의 성능을 측정하며,
-# 높은 값일 수록 좋은 성능으로 평가된다.
-# 회귀 모델의 경우 RMSE가 낮을 수록 좋은 모델이기에 
-# RMSE의 음숫값을 사용하려면 `scoring` 키워드의 인자로 다음과 같이 지정한다.
+# `cross_val_score()` 함수는 k-겹 교차 검증 과정에서
+# 훈련중인 모델의 성능을 측정한다.
 # 
-# * `scoring="neg_mean_squared_error"`
+# 측정값은 높을 수록 좋은 성능으로 평가되기에 회귀 모델의 경우
+# 일반적으로 RMSE의 음숫값을 사용한다.
+# 이를 위해 `scoring="neg_mean_squared_error"` 키워드 인자를 사용한다.
 # 
-# 다음은 k=10, 즉 10 개의 폴드를 사용하여 결정트리 회귀 모델에 대한 교차 검증을 진행한다.
+# 아래 코드는 10 개의 폴드를 사용(`cv=10`)하여 결정트리 회귀 모델에 대한 교차 검증을 진행하고 평가한다. 
 # 
 # ```python
 # tree_rmses = -cross_val_score(tree_reg, housing, housing_labels,
@@ -913,85 +905,86 @@
 # 
 # 교차 검증에 사용되는 모델의 종류에 따라 다양한 방식으로 모델의 성능을 측정할 수 있으며
 # `scoring` 키워드 인자를 이용하여 지정한다. 
-# 현재 사용 가능한 옵션값은 [사이킷런의 모델 평가 문서](https://scikit-learn.org/stable/modules/model_evaluation.html)에서
+# 현재 사용 가능한 옵션값은 [사이킷런의 Metrics and Scoring 문서](https://scikit-learn.org/stable/modules/model_evaluation.html)에서
 # 확인할 수 있다.
 # :::
 
 # **랜덤 포레스트 회귀 모델 ({numref}`%s장 <ch:ensemble>`)**
 # 
 # **랜덤 포레스트**<font size="2">random forest</font> 회귀 모델은 
-# 여러 개의 결정트리를 각자 임의로 선택한 특성만을 이용하여 훈련시킨 후 
-# 각 모델의 예측값의 평균을 예측값으로 사용하는 모델이다. 
+# 여러 개의 결정트리를 동시에 훈련시킨 후 
+# 각 모델의 예측값의 평균값 등을 이용하는 모델이다.
+# 각 모델은 교차 검증처럼 서로 다른 훈련셋을 대상으로 학습한다.
 # 
-# 이렇게 여러 개의 모델을 이용한 모델 학습을 
-# **앙상블**<font size="2">ensemble</font> 학습이며,
-# 머신러닝 알고리즘의 성능을 극대화하는 가장 일반적인 기법이다.
-# 
-# 앙상블 학습 모델에 대한 교차 검증은 
-# 여러 개의 모델과 여러 개의 폴드를 사용하기 때문에
-# 경우에 따라 시간이 매우 오래 걸리기도 한다.
-#  
+# 사이킷런의 `RandomForestRegressor` 모델은 기본값으로 100개의 결정트리를 동시에 훈련시킨다.
 # 
 # ```python
 # forest_reg = make_pipeline(preprocessing,
-#                            RandomForestRegressor(random_state=42))
+#                            RandomForestRegressor(n_estimators=100, random_state=42))
+# ```
+# 
+# 래덤 포레스트 모델에 대한 교차 검증을 적용하면 폴드 수에 비례하여 훈련 시간이 더 오래 걸린다.
+# 
+# ```python
 # forest_rmses = -cross_val_score(forest_reg, housing, housing_labels,
 #                                 scoring="neg_root_mean_squared_error", cv=10)
 # ```
-# 
-# 지금까지 사용해본 모델 중 최고의 성능을 보이지만 하지만 여전히 과대적합이 발생한다.
 
 # ## 모델 튜닝
 
 # 지금까지 살펴 본 모델 중에서 랜덤 포레스트 회귀 모델의 성능이 가장 좋았다.
-# 이렇게 가능성이 높은 모델을 찾은 다음엔 모델의 세부 설정을 튜닝하면
-# 모델의 성능을 끌어올릴 수 있다.
+# 이렇게 가능성이 높은 모델을 찾은 다음엔 모델의 세부 설정(하이퍼파라미터)을 조정하거나
+# 성능이 좋은 모델 여러 개를 이용하여 모델의 성능을 최대한 끌어올릴 수 있다.
 # 
-# 모델 튜닝은 다음 세 가지 방식을 사용한다.
+# 모델 튜닝은 보통 다음 두 가지 방식을 사용한다.
 # 
 # * 그리드 탐색
 # * 랜덤 탐색
-# * 앙상블 기법
 
 # ### 그리드 탐색
 
-# 지정된 하이퍼파라미터의 모든 조합을 교차 검증하여 최선의 하이퍼파라미터를 찾는다. 
+# 지정된 하이퍼파라미터의 모든 조합에 대해 교차 검증을 진행하여 최선의 하이퍼파라미터 조합을 찾는다. 
 
 # **`GridSearchCV` 클래스**
 # 
 # 랜덤 포레스트 모델을 대상으로 그리드 탐색을 다음과 같이 실행하면
 # 총 (3x3 + 2x3 = 15) 가지의 모델의 성능을 확인한다. 
-# 또한 3-겹 교차 검증(`cv=3`)을 진행하기에 모델 훈련을 총 (15x3 = 45)번 진행한다.
+# 또한 3-겹 교차 검증(`cv=3`)을 진행하기에 모델 훈련을 총 45(=15x3)번 진행한다.
 # 
 # ```python
 # full_pipeline = Pipeline([
 #     ("preprocessing", preprocessing),
 #     ("random_forest", RandomForestRegressor(random_state=42)),
 # ])
+# 
 # param_grid = [
 #     {'preprocessing__geo__n_clusters': [5, 8, 10],
 #      'random_forest__max_features': [4, 6, 8]},
 #     {'preprocessing__geo__n_clusters': [10, 15],
 #      'random_forest__max_features': [6, 8, 10]},
 # ]
+# 
 # grid_search = GridSearchCV(full_pipeline, param_grid, cv=3,
 #                            scoring='neg_root_mean_squared_error')
+# 
 # grid_search.fit(housing, housing_labels)
 # ```
 
 # ### 랜덤 탐색
 
-# 그리드 탐색은 적은 수의 조합을 실험해볼 때 유용하다.
-# 하이퍼파라미터의 탐색 공간이 커지면 랜덤 탐색이 보다 효율적이다. 
-# 이유는 하이퍼라라미터를 임의로 선택하는 횟수를 지정하면
-# 그 횟수만큼만 모델 선택을 반복하기 때문이다.
+# 그리드 탐색은 적은 수의 조합을 실험해볼 때만 유용하다.
+# 반면에 하이퍼파라미터의 탐색 공간이 크면 랜덤 탐색이 보다 유용하다.
+# 랜덤 탐색은 하이퍼라라미터 조합을 임의로 지정된 횟수만큼 진행한다.
 
 # **`RandomizedSearchCV` 클래스**
 # 
-# `preprocessing__geo__n_clusters`와 `random_forest__max_features` 값을 
-# 지정된 구간에서 무작위로 선택한 후 훈련하는 과정을 
-# 10번(`n_iter=10`) 반복한다. 
-# 또한 3-겹 교차검증(`cv=3`)을 진행하기에 모델 훈련을 총 (10x3=30)번 진행한다.
+# 아래 코드는 다음 두 하이퍼파라미터를 대상으로 
+# 10번(`n_iter=10`) 지정된 구간 내에서 무작위 선택을 진행한다. 
+# 
+# - `preprocessing__geo__n_clusters`
+# - `random_forest__max_features`
+# 
+# 또한 3-겹 교차검증(`cv=3`)을 진행하기에 모델 훈련을 총 30(=10x30)번 진행한다.
 # 
 # ```python
 # param_distribs = {'preprocessing__geo__n_clusters': randint(low=3, high=50),
@@ -1012,28 +1005,28 @@
 # 학습시킨 후 평균값을 사용하면 보다 좋은 성능을 내는 모델을 얻게 된다. 
 # 앙상블 기법에 대해서는 {numref}`%s장 <ch:ensemble>`에서 자세히 다룬다.
 
-# ### 최적 모델 활용
+# ### 훈련된 최선의 모델 활용
 
-# 그리드 탐색 또는 랜덤 탐색을 통해 얻어진 최적의 모델을 분석해서 문제에 대한 통찰을 얻을 수 있다.
-# 예를 들어, 최적의 랜덤 포레스트 모델로부터 타깃 예측에 사용된 특성들의 상대적 중요도를 확인하여
-# 중요한 특성만을 남기도 나머지 특성을 제외시킬 수 있다.
+# 그리드 탐색 또는 랜덤 탐색을 통해 얻어진 최선의 모델을 분석해서 문제에 대한 통찰을 얻을 수 있다.
 # 
-# 예를 들어, 랜덤 탐색을 통해 찾아낸 최적의 모델에서 `feature_importances_`를 확인하면
-# 각 특성의 상대적 중요도를 다음과 같이 확인된다.
+# 예를 들어, 최선의 랜덤 포레스트 모델로부터 타깃 예측에 사용된 특성들의 상대적 중요도를 확인하여
+# 중요하지 않은 특성을 제외할 수 있다.
+# 
+# 캘리포니아 주택 가격 예측 모델의 경우 랜덤 탐색을 통해 찾아낸 최선의 모델에서 
+# `feature_importances_`를 확인하면 다음 정보를 얻는다.
 # 
 # - `log__median_income` 특성이 가장 중요하다.
 # - 해안 근접도 특성 중에서 `INLAND` 특성만 중요하다.
 
 # ```python
-# final_model = rnd_search.best_estimator_  # 전처리 포함
-# feature_importances = final_model["random_forest"].feature_importances_
+# final_model = rnd_search.best_estimator_                                 # 최선 모델
+# feature_importances = final_model["random_forest"].feature_importances_  # 특성뱔 상대적 중요도
 # 
+# # 중요도 내림차순 정렬
 # sorted(zip(feature_importances,
 #            final_model["preprocessing"].get_feature_names_out()),
 #            reverse=True)
-# ```
-
-# ```
+# 
 # [(0.18694559869103852, 'log__median_income'),
 #  (0.0748194905715524, 'cat__ocean_proximity_INLAND'),
 #  (0.06926417748515576, 'bedrooms_ratio__bedrooms_ratio'),
@@ -1045,18 +1038,10 @@
 #  (7.301686597099842e-05, 'cat__ocean_proximity_ISLAND')]
 # ```
 
-# ### 테스트 셋으로 시스템 평가하기
-
-# 1. 최고 성능 모델 확인: 예를 들어, 그리드 탐색으로 찾은 최적 모델 사용
-# 1. 최고 성능 모델을 이용하여 예측하기
-# 1. 최고 성능 모델 평가
-
-# ## 최적 모델 저장 및 활용
+# ## 최선 모델 저장 및 활용
 
 # 완성된 모델은 항상 저장해두어야 한다.
 # 업데이트된 모델이 적절하지 않은 경우 이전 모델로 되돌려야 할 수도 있기 때문이다.
-# 또한 버전의 데이터셋을 저장해두어야 하는데 이는 업데이트 과정에서 데이터셋이 오염될 수 있기 때문이다.
-# 
 # 모델의 저장과 불러오기는 `joblib` 모듈을 활용한다. 
 # 
 # - 저장하기
@@ -1070,13 +1055,6 @@
 #     final_model_reloaded = joblib.load("my_california_housing_model.pkl")
 #     ```    
 
-# 저장된 모델은 예를 들어 웹서비스에 포함된 앱으로 활용될 수 있다.
-# 
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/model-launching01.png" width="400"></div>
-
 # ## 실습 과제
 
-# [(구글코랩) 머신러닝 프로젝트 처음부터 끝까지](https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/notebooks/code_end2end_ml_project.ipynb)
-# 의 소스코드를 먼저 공부한 다음에
-# [(실습) 머신러닝 프로젝트 처음부터 끝까지](https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_end2end_ml_project.ipynb)
-# 에 있는 실습 과제를 풀어보세요.
+# 참고: [(실습) 머신러닝 프로젝트 처음부터 끝까지](https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_end2end_ml_project.ipynb)

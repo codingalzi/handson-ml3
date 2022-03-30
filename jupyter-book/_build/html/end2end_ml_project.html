@@ -392,23 +392,18 @@
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id28">
-     2.7.4. 최적 모델 활용
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id29">
-     2.7.5. 테스트 셋으로 시스템 평가하기
+     2.7.4. 훈련된 최선의 모델 활용
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id30">
-   2.8. 최적 모델 저장 및 활용
+  <a class="reference internal nav-link" href="#id29">
+   2.8. 최선 모델 저장 및 활용
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id31">
+  <a class="reference internal nav-link" href="#id30">
    2.9. 실습 과제
   </a>
  </li>
@@ -587,23 +582,18 @@
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id28">
-     2.7.4. 최적 모델 활용
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id29">
-     2.7.5. 테스트 셋으로 시스템 평가하기
+     2.7.4. 훈련된 최선의 모델 활용
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id30">
-   2.8. 최적 모델 저장 및 활용
+  <a class="reference internal nav-link" href="#id29">
+   2.8. 최선 모델 저장 및 활용
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id31">
+  <a class="reference internal nav-link" href="#id30">
    2.9. 실습 과제
   </a>
  </li>
@@ -1179,29 +1169,6 @@
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">FunctionTransformer</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">,</span> <span class="n">inverse_func</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><strong>가우시안 RBF 적용 변환기</strong></p>
-<p>특정 지점과의 유사도를 새로운 특성으로 사용하고자 할 때 <code class="docutils literal notranslate"><span class="pre">rbf_kernel</span></code> 함수를 이용한다.
-아래 코드는 샌프란시스코 도시와의 근접도를 새로운 특성으로 생성하는 과정을 보여준다.
-샌프란시스코의 위도와 경도는 (37.7749, -122.41)이다.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">FunctionTransformer</span><span class="p">(</span><span class="n">rbf_kernel</span><span class="p">,</span>
-                    <span class="n">kw_args</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">Y</span><span class="o">=</span><span class="p">[</span><span class="mf">37.7749</span><span class="p">,</span> <span class="o">-</span><span class="mf">122.41</span><span class="p">],</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.1</span><span class="p">))</span>
-</pre></div>
-</div>
-<div class="info admonition">
-<p class="admonition-title"><code class="docutils literal notranslate"><span class="pre">rbf_kernel</span></code> 함수</p>
-<p><code class="docutils literal notranslate"><span class="pre">rbf_kernel</span></code> 함수는 다음 가우시안 RBF 함수를 활용한다.
-<span class="math notranslate nohighlight">\(\mathbf{p}\)</span> 는 특정 지점을 가리키며,
-<span class="math notranslate nohighlight">\(\mathbf{p}\)</span> 에서 조금만 멀어져도 함숫값이 급격히 작아진다.</p>
-<div class="math notranslate nohighlight">
-\[
-\phi(\mathbf{x},\mathbf{p}) = \exp \left( -\gamma \|\mathbf{x} - \mathbf{p} \|^2 \right)
-\]</div>
-<p>예를 들어 아래 이미지는 중간 주택 년수가 35년에서 멀어질 수록
-함숫값이 급격히 0에 가까워지는 것을 보여준다.
-하이퍼파라미터인 <strong>감마</strong>(<span class="math notranslate nohighlight">\(\gamma\)</span>, gamma)는 얼마나 빠르게 감소하도록 하는가를 결정한다.
-즉, 감마 값이 클 수록 보다 좁은 종 모양의 그래프가 그려진다.</p>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-rbf_kernel.jpg" width="400"></div>
-</div>
 <p><strong>비율 계산 변환기</strong></p>
 <p>두 개의 특성 사이의 비율을 계산하여 새로운 특성을 생성하는 변환기 또한
 <code class="docutils literal notranslate"><span class="pre">FunctionTransformer</span></code>를 활용할 수 있다.</p>
@@ -1243,9 +1210,23 @@
 </pre></div>
 </div>
 <div class="info admonition">
-<p class="admonition-title"><code class="docutils literal notranslate"><span class="pre">KMeans</span></code> 모델</p>
-<p><code class="docutils literal notranslate"><span class="pre">KMeans</span></code> 모델은 나중에
-<a class="reference internal" href="unsupervised_learning.html#ch-unsupervisedlearning"><span class="std std-numref">9장</span></a> 비지도 학습에서 다룰 군집 알고리즘 모델이다.</p>
+<p class="admonition-title"><code class="docutils literal notranslate"><span class="pre">KMeans</span></code> 모델과 <code class="docutils literal notranslate"><span class="pre">rbf_kernel()</span></code> 함수</p>
+<p>위 클래스는 <code class="docutils literal notranslate"><span class="pre">KMeans</span></code> 모델과 <code class="docutils literal notranslate"><span class="pre">rbf_kernel()</span></code> 함수를 활용한다.</p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">KMeans</span></code> 모델</strong></p>
+<p><a class="reference internal" href="unsupervised_learning.html#ch-unsupervisedlearning"><span class="std std-numref">9장</span></a> 비지도 학습에서 다룰 군집 알고리즘 모델이다.</p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">rbf_kernel()</span></code> 함수</strong></p>
+<p>다음 가우시안 RBF 함수를 활용한다.
+<span class="math notranslate nohighlight">\(\mathbf{p}\)</span> 는 특정 지점을 가리키며,
+<span class="math notranslate nohighlight">\(\mathbf{p}\)</span> 에서 조금만 멀어져도 함숫값이 급격히 작아진다.</p>
+<div class="math notranslate nohighlight">
+\[
+\phi(\mathbf{x},\mathbf{p}) = \exp \left( -\gamma \|\mathbf{x} - \mathbf{p} \|^2 \right)
+\]</div>
+<p>예를 들어 아래 이미지는 중간 주택 년수가 35년에서 멀어질 수록
+함숫값이 급격히 0에 가까워지는 것을 보여준다.
+하이퍼파라미터인 <strong>감마</strong>(<span class="math notranslate nohighlight">\(\gamma\)</span>, gamma)는 얼마나 빠르게 감소하도록 하는가를 결정한다.
+즉, 감마 값이 클 수록 보다 좁은 종 모양의 그래프가 그려진다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-rbf_kernel.jpg" width="400"></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">ClusterSimilarity</span></code> 변환기를 이용하여 얻어진 군집 특성을 이용하면
 아래 그림과 같은 결과를 얻을 수 있다.</p>
@@ -1288,7 +1269,7 @@
 </div>
 <p><strong><code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> 클래스</strong></p>
 <p><code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> 클래스는 특성별로 전처리를 지정할 수 있다.
-이 기능을 이용하여 수치형 특성과 범주형 특성을 알아서 구분해서
+이 기능을 이용하여 수치형 특성과 범주형 특성을 구분해서
 전처리하는 통합 파이프라인을 다음과 같이 구성할 수 있다.</p>
 <ul class="simple">
 <li><p>수치형 특성: <code class="docutils literal notranslate"><span class="pre">num_pipeline</span></code> 변환기</p></li>
@@ -1309,8 +1290,7 @@
 </pre></div>
 </div>
 <p><strong><code class="docutils literal notranslate"><span class="pre">make_column_selector()</span></code> 함수</strong></p>
-<p>파이프라인에 포함되는 각 변환기를 적용할 특성을 일일이 나열하는 일이
-귀찮거나 어려울 수 있다.
+<p>파이프라인에 포함되는 각 변환기를 적용할 특성을 일일이 나열하는 일이 어려울 수 있다.
 이때 지정된 자료형을 사용하는 특성들만을 뽑아주는 <code class="docutils literal notranslate"><span class="pre">make_column_selector()</span></code> 함수를
 유용하게 활용할 수 있다.</p>
 <p>위 <code class="docutils literal notranslate"><span class="pre">preprocessing</span></code> 변환기를 아래와 같이 정의할 수 있다.</p>
@@ -1334,8 +1314,8 @@
 </div>
 <div class="section" id="id20">
 <h3><span class="section-number">2.5.7. </span>캘리포니아 데이터셋 변환 파이프라인<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
-<p>지금까지 소개한 변환을 한꺼번에 처리하는 파이프라인 변환기는 다음과 같다.</p>
-<p><strong>비율 변환기</strong></p>
+<p>다음 변환기를 모아 캘리포니아 데이터셋 전용 변환 파이프라인을 생성할 수 있다.</p>
+<p><strong>(1) 비율 변환기</strong></p>
 <p>가구당 방 개수, 방 하나당 침실 개수, 가구당 인원 등
 비율을 사용하는 특성을 새로 추가할 때 사용되는 변화기를 생성하는 함수를 정의한다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">column_ratio</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
@@ -1349,32 +1329,29 @@
         <span class="n">StandardScaler</span><span class="p">())</span>
 </pre></div>
 </div>
-<p><strong>로그 변환기</strong></p>
+<p><strong>(2) 로그 변환기</strong></p>
 <p>데이터 분포가 두터운 꼬리를 갖는 특성을 대상으로 로그 함수를 적용하는 변환기를 지정한다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">log_pipeline</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;median&quot;</span><span class="p">),</span>
                              <span class="n">FunctionTransformer</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
                              <span class="n">StandardScaler</span><span class="p">())</span>
 </pre></div>
 </div>
-<p><strong>군집 변환기</strong></p>
+<p><strong>(3) 군집 변환기</strong></p>
 <p>구역의 위도와 경도를 이용하여 구역들의 군집 정보를 새로운 특성으로 추가하는 변환기를 지정한다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cluster_simil</span> <span class="o">=</span> <span class="n">ClusterSimilarity</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><strong>기타 변환기</strong></p>
-<p>특별한 변환이 필요 없는 경우에도 기본적으로 결측치 문제 해결과 스케일을 조정하는 변환기는 사용한다.</p>
+<p><strong>(4) 기타</strong></p>
+<p>특별한 변환이 필요 없는 경우에도 기본적으로 결측치 문제 해결과 스케일을 조정하는 변환기를 사용한다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">default_num_pipeline</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;median&quot;</span><span class="p">),</span>
                                      <span class="n">StandardScaler</span><span class="p">())</span>
 </pre></div>
 </div>
-<p><strong>종합: <code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> 변환기</strong></p>
-<p>앞서 언급된 모든 변환기를 특성별로 알아서 처리하는 변환기는 다음과 같다.</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">remainder=default_num_pipeline</span></code>: 언급되지 않은 특성을 처리하는 변환기를 지정한다.
-삭제를 의미하는 <code class="docutils literal notranslate"><span class="pre">drop</span></code> 이 기본값이며 이외에 <code class="docutils literal notranslate"><span class="pre">passthrough</span></code> 는 변환하지 않는 것을 의미한다.</p></li>
-</ul>
+<p>앞서 언급된 모든 변환기를 특성별로 알아서 처리하는 변환기는 다음과 같다.
+<code class="docutils literal notranslate"><span class="pre">remainder=default_num_pipeline</span></code>: 언급되지 않은 특성을 처리하는 변환기를 지정한다.
+삭제를 의미하는 <code class="docutils literal notranslate"><span class="pre">drop</span></code> 이 기본값이며 이외에 <code class="docutils literal notranslate"><span class="pre">passthrough</span></code> 는 변환하지 않는 것을 의미한다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">preprocessing</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">([</span>
-        <span class="p">(</span><span class="s2">&quot;bedrooms_ratio&quot;</span><span class="p">,</span> <span class="n">ratio_pipeline</span><span class="p">(</span><span class="s2">&quot;bedrooms_ratio&quot;</span><span class="p">),</span>                  <span class="c1"># 방당 침실 수</span>
+        <span class="p">(</span><span class="s2">&quot;bedrooms_ratio&quot;</span><span class="p">,</span> <span class="n">ratio_pipeline</span><span class="p">(</span><span class="s2">&quot;bedrooms_ratio&quot;</span><span class="p">),</span>                   <span class="c1"># 방당 침실 수</span>
                            <span class="p">[</span><span class="s2">&quot;total_bedrooms&quot;</span><span class="p">,</span> <span class="s2">&quot;total_rooms&quot;</span><span class="p">]),</span>
         <span class="p">(</span><span class="s2">&quot;rooms_per_house&quot;</span><span class="p">,</span> <span class="n">ratio_pipeline</span><span class="p">(</span><span class="s2">&quot;rooms_per_house&quot;</span><span class="p">),</span>                 <span class="c1"># 가구당 방 수</span>
                             <span class="p">[</span><span class="s2">&quot;total_rooms&quot;</span><span class="p">,</span> <span class="s2">&quot;households&quot;</span><span class="p">]),</span>
@@ -1383,19 +1360,24 @@
         <span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">,</span> <span class="n">log_pipeline</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;total_bedrooms&quot;</span><span class="p">,</span> <span class="s2">&quot;total_rooms&quot;</span><span class="p">,</span>                <span class="c1"># 로그 변환</span>
                                <span class="s2">&quot;population&quot;</span><span class="p">,</span> <span class="s2">&quot;households&quot;</span><span class="p">,</span> <span class="s2">&quot;median_income&quot;</span><span class="p">]),</span>
         <span class="p">(</span><span class="s2">&quot;geo&quot;</span><span class="p">,</span> <span class="n">cluster_simil</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;latitude&quot;</span><span class="p">,</span> <span class="s2">&quot;longitude&quot;</span><span class="p">]),</span>                     <span class="c1"># 구역별 군집 정보</span>
-        <span class="p">(</span><span class="s2">&quot;cat&quot;</span><span class="p">,</span> <span class="n">cat_pipeline</span><span class="p">,</span> <span class="n">make_column_selector</span><span class="p">(</span><span class="n">dtype_include</span><span class="o">=</span><span class="nb">object</span><span class="p">)),</span>  <span class="c1"># 범주형 특성 전처리</span>
+        <span class="p">(</span><span class="s2">&quot;cat&quot;</span><span class="p">,</span> <span class="n">cat_pipeline</span><span class="p">,</span> <span class="n">make_column_selector</span><span class="p">(</span><span class="n">dtype_include</span><span class="o">=</span><span class="nb">object</span><span class="p">)),</span>     <span class="c1"># 범주형 특성 전처리</span>
     <span class="p">],</span>
-    <span class="n">remainder</span><span class="o">=</span><span class="n">default_num_pipeline</span><span class="p">)</span>  <span class="c1"># 중간 주택 년수(housing_median_age) 특성만 남음.</span>
+    <span class="n">remainder</span><span class="o">=</span><span class="n">default_num_pipeline</span><span class="p">)</span>                                            <span class="c1"># 중간 주택 년수(housing_median_age) 대상</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="section" id="id21">
 <h2><span class="section-number">2.6. </span>모델 선택과 훈련<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h2>
-<p>훈련셋 준비가 완료된 상황에서 모델을 선택하고 훈련시키는 일이 남아 있다.
-사이킷런이 제공하는 예측기 모델을 사용하면 훈련은 기본적으로 간단하게 진행된다.</p>
-<p>여기서는 사이킷런이 제공하는 다양한 모델의 사용법과 차이점을 간단하게 살펴본다.
-각 모델의 자세한 특징과 상세 설명은 이어지는 장에서 이루어질 것이다.</p>
+<p>훈련셋 준비가 완료된 상황에서 모델을 선택하고 훈련시키는 일이 남아 있다.</p>
+<p>사이킷런이 제공하는 예측기 모델을 사용하면 훈련은 기본적으로 간단하게 진행된다.
+여기서는 사이킷런이 제공하는 다양한 모델의 사용법과 차이점을 간단하게 살펴본다.
+각 모델의 자세한 특징과 상세 설명은 앞으로 차차 이루어질 것이다.</p>
+<div class="info admonition">
+<p class="admonition-title">전처리 포함 파이프라인 모델</p>
+<p>소개되는 모든 모델은 앞서 설명한 전처리 과정과 함께 하나의 파이프라인으로 묶여서 정의된다.
+이는 테스트셋과 미래의 모든 입력 데이터셋에 대해서도 전처리를 별도로 신경쓸 필요가 없게 해준다.</p>
+</div>
 <div class="section" id="id22">
 <h3><span class="section-number">2.6.1. </span>훈련셋 대상 훈련 및 평가<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h3>
 <p><strong>선형 회귀 모델 (<a class="reference internal" href="training_models.html#ch-trainingmodels"><span class="std std-numref">4장</span></a>)</strong></p>
@@ -1419,11 +1401,9 @@
 <ul class="simple">
 <li><p>훈련 결과</p>
 <ul>
-<li><p>선형회귀 모델이 작동한다.</p></li>
-<li><p>하지만 RMSE(<code class="docutils literal notranslate"><span class="pre">lin_rmse</span></code>)가 68687.89 정도로 별로 좋지 않다.</p></li>
+<li><p>RMSE(<code class="docutils literal notranslate"><span class="pre">lin_rmse</span></code>)가 68687.89 정도로 별로 좋지 않다.</p></li>
 <li><p>훈련된 모델이 훈련셋에 <strong>과소적합</strong> 되었다.</p></li>
 <li><p>보다 좋은 특성을 찾거나 더 강력한 모델을 적용해야 한다.</p></li>
-<li><p>모델에 적용된 규제를 완화할 수도 있지만 위 모델에선 어떤 규제도 적용하지 않았다.</p></li>
 </ul>
 </li>
 </ul>
@@ -1444,9 +1424,9 @@
 <li><p>훈련 결과</p>
 <ul>
 <li><p>RMSE(<code class="docutils literal notranslate"><span class="pre">tree_rmse</span></code>)가 0으로 완벽해 보인다.</p></li>
-<li><p>하지만 이는 모델이 훈련셋에 심각하게 <strong>과대적합</strong> 되었음을 의미한다.</p></li>
+<li><p>모델이 훈련셋에 심각하게 <strong>과대적합</strong> 되었음을 의미한다.</p></li>
 <li><p>실전 상황에서 RMSE가 0이 되는 것은 불가능하다.</p></li>
-<li><p>테스트셋에 적용할 경우 RMSE가 크게 나올 것이다.</p></li>
+<li><p>테스트셋에 대한 RMSE는 매우 높게 나온다.</p></li>
 </ul>
 </li>
 </ul>
@@ -1455,27 +1435,26 @@
 <h3><span class="section-number">2.6.2. </span>교차 검증<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h3>
 <p><strong>교차 검증</strong><font size="2">cross validation</font>을 이용하여
 훈련중인 모델의 성능을 평가할 수 있다.</p>
-<p><strong>사이킷런의 k-겹 교차 검증</strong></p>
+<p><strong>k-겹 교차 검증</strong></p>
 <ul class="simple">
 <li><p>훈련셋을 <strong>폴드</strong>(fold)라 불리는 k-개의 부분 집합으로 무작위로 분할한다.</p></li>
 <li><p>모델을 총 k 번 훈련한다.</p>
 <ul>
-<li><p>매 훈련마다 매번 다른 하나의 폴드를 검증 데이터셋으로 지정한다.</p></li>
-<li><p>훈련은 다른 (k-1) 개의 폴드를 이용한다.</p></li>
-<li><p>매 훈련이 끝날 때마다 선택된 검증 데이터셋을 이용하여 모델의 평가한다.</p></li>
+<li><p>매 훈련마나다 하나의 폴드를 선택하여 검증 데이터셋 지정.</p></li>
+<li><p>나머지 (k-1) 개의 폴드를 대상으로 훈련</p></li>
+<li><p>매 훈련이 끝날 때마다 선택된 검증 데이터셋을 이용하여 모델 평가</p></li>
+<li><p>매번 다른 폴드 활용</p></li>
 </ul>
 </li>
-<li><p>최종적으로 k 번의 모델 평가 결과의 평균값을 계산한다.</p></li>
+<li><p>최종평가는 k-번 평가 결과의 평균값을 활용한다.</p></li>
 </ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/cross-val10a.png" width="550"></div><p><strong>효용 함수</strong></p>
-<p>k-겹 교차 검증은 <code class="docutils literal notranslate"><span class="pre">cross_val_score()</span></code>을 이용하여 모델 학습 과정에서 훈련중인 모델의 성능을 측정하며,
-높은 값일 수록 좋은 성능으로 평가된다.
-회귀 모델의 경우 RMSE가 낮을 수록 좋은 모델이기에
-RMSE의 음숫값을 사용하려면 <code class="docutils literal notranslate"><span class="pre">scoring</span></code> 키워드의 인자로 다음과 같이 지정한다.</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">scoring=&quot;neg_mean_squared_error&quot;</span></code></p></li>
-</ul>
-<p>다음은 k=10, 즉 10 개의 폴드를 사용하여 결정트리 회귀 모델에 대한 교차 검증을 진행한다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/cross-val10a.png" width="550"></div><p><strong>사이킷런의 <code class="docutils literal notranslate"><span class="pre">cross_val_score()</span></code> 함수</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">cross_val_score()</span></code> 함수는 k-겹 교차 검증 과정에서
+훈련중인 모델의 성능을 측정한다.</p>
+<p>측정값은 높을 수록 좋은 성능으로 평가되기에 회귀 모델의 경우
+일반적으로 RMSE의 음숫값을 사용한다.
+이를 위해 <code class="docutils literal notranslate"><span class="pre">scoring=&quot;neg_mean_squared_error&quot;</span></code> 키워드 인자를 사용한다.</p>
+<p>아래 코드는 10 개의 폴드를 사용(<code class="docutils literal notranslate"><span class="pre">cv=10</span></code>)하여 결정트리 회귀 모델에 대한 교차 검증을 진행하고 평가한다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tree_rmses</span> <span class="o">=</span> <span class="o">-</span><span class="n">cross_val_score</span><span class="p">(</span><span class="n">tree_reg</span><span class="p">,</span> <span class="n">housing</span><span class="p">,</span> <span class="n">housing_labels</span><span class="p">,</span>
                               <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_root_mean_squared_error&quot;</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
@@ -1484,73 +1463,75 @@ RMSE의 음숫값을 사용하려면 <code class="docutils literal notranslate">
 <p class="admonition-title"><code class="docutils literal notranslate"><span class="pre">scoring</span></code> 키워드 인자</p>
 <p>교차 검증에 사용되는 모델의 종류에 따라 다양한 방식으로 모델의 성능을 측정할 수 있으며
 <code class="docutils literal notranslate"><span class="pre">scoring</span></code> 키워드 인자를 이용하여 지정한다.
-현재 사용 가능한 옵션값은 <a class="reference external" href="https://scikit-learn.org/stable/modules/model_evaluation.html">사이킷런의 모델 평가 문서</a>에서
+현재 사용 가능한 옵션값은 <a class="reference external" href="https://scikit-learn.org/stable/modules/model_evaluation.html">사이킷런의 Metrics and Scoring 문서</a>에서
 확인할 수 있다.</p>
 </div>
 <p><strong>랜덤 포레스트 회귀 모델 (<a class="reference internal" href="ensemble_learning_random_forests.html#ch-ensemble"><span class="std std-numref">7장</span></a>)</strong></p>
 <p><strong>랜덤 포레스트</strong><font size="2">random forest</font> 회귀 모델은
-여러 개의 결정트리를 각자 임의로 선택한 특성만을 이용하여 훈련시킨 후
-각 모델의 예측값의 평균을 예측값으로 사용하는 모델이다.</p>
-<p>이렇게 여러 개의 모델을 이용한 모델 학습을
-<strong>앙상블</strong><font size="2">ensemble</font> 학습이며,
-머신러닝 알고리즘의 성능을 극대화하는 가장 일반적인 기법이다.</p>
-<p>앙상블 학습 모델에 대한 교차 검증은
-여러 개의 모델과 여러 개의 폴드를 사용하기 때문에
-경우에 따라 시간이 매우 오래 걸리기도 한다.</p>
+여러 개의 결정트리를 동시에 훈련시킨 후
+각 모델의 예측값의 평균값 등을 이용하는 모델이다.
+각 모델은 교차 검증처럼 서로 다른 훈련셋을 대상으로 학습한다.</p>
+<p>사이킷런의 <code class="docutils literal notranslate"><span class="pre">RandomForestRegressor</span></code> 모델은 기본값으로 100개의 결정트리를 동시에 훈련시킨다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">forest_reg</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">preprocessing</span><span class="p">,</span>
-                           <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">))</span>
-<span class="n">forest_rmses</span> <span class="o">=</span> <span class="o">-</span><span class="n">cross_val_score</span><span class="p">(</span><span class="n">forest_reg</span><span class="p">,</span> <span class="n">housing</span><span class="p">,</span> <span class="n">housing_labels</span><span class="p">,</span>
+                           <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>래덤 포레스트 모델에 대한 교차 검증을 적용하면 폴드 수에 비례하여 훈련 시간이 더 오래 걸린다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">forest_rmses</span> <span class="o">=</span> <span class="o">-</span><span class="n">cross_val_score</span><span class="p">(</span><span class="n">forest_reg</span><span class="p">,</span> <span class="n">housing</span><span class="p">,</span> <span class="n">housing_labels</span><span class="p">,</span>
                                 <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_root_mean_squared_error&quot;</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>지금까지 사용해본 모델 중 최고의 성능을 보이지만 하지만 여전히 과대적합이 발생한다.</p>
 </div>
 </div>
 <div class="section" id="id24">
 <h2><span class="section-number">2.7. </span>모델 튜닝<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h2>
 <p>지금까지 살펴 본 모델 중에서 랜덤 포레스트 회귀 모델의 성능이 가장 좋았다.
-이렇게 가능성이 높은 모델을 찾은 다음엔 모델의 세부 설정을 튜닝하면
-모델의 성능을 끌어올릴 수 있다.</p>
-<p>모델 튜닝은 다음 세 가지 방식을 사용한다.</p>
+이렇게 가능성이 높은 모델을 찾은 다음엔 모델의 세부 설정(하이퍼파라미터)을 조정하거나
+성능이 좋은 모델 여러 개를 이용하여 모델의 성능을 최대한 끌어올릴 수 있다.</p>
+<p>모델 튜닝은 보통 다음 두 가지 방식을 사용한다.</p>
 <ul class="simple">
 <li><p>그리드 탐색</p></li>
 <li><p>랜덤 탐색</p></li>
-<li><p>앙상블 기법</p></li>
 </ul>
 <div class="section" id="id25">
 <h3><span class="section-number">2.7.1. </span>그리드 탐색<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h3>
-<p>지정된 하이퍼파라미터의 모든 조합을 교차 검증하여 최선의 하이퍼파라미터를 찾는다.</p>
+<p>지정된 하이퍼파라미터의 모든 조합에 대해 교차 검증을 진행하여 최선의 하이퍼파라미터 조합을 찾는다.</p>
 <p><strong><code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code> 클래스</strong></p>
 <p>랜덤 포레스트 모델을 대상으로 그리드 탐색을 다음과 같이 실행하면
 총 (3x3 + 2x3 = 15) 가지의 모델의 성능을 확인한다.
-또한 3-겹 교차 검증(<code class="docutils literal notranslate"><span class="pre">cv=3</span></code>)을 진행하기에 모델 훈련을 총 (15x3 = 45)번 진행한다.</p>
+또한 3-겹 교차 검증(<code class="docutils literal notranslate"><span class="pre">cv=3</span></code>)을 진행하기에 모델 훈련을 총 45(=15x3)번 진행한다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">full_pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
     <span class="p">(</span><span class="s2">&quot;preprocessing&quot;</span><span class="p">,</span> <span class="n">preprocessing</span><span class="p">),</span>
     <span class="p">(</span><span class="s2">&quot;random_forest&quot;</span><span class="p">,</span> <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)),</span>
 <span class="p">])</span>
+
 <span class="n">param_grid</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">{</span><span class="s1">&#39;preprocessing__geo__n_clusters&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>
      <span class="s1">&#39;random_forest__max_features&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">]},</span>
     <span class="p">{</span><span class="s1">&#39;preprocessing__geo__n_clusters&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">],</span>
      <span class="s1">&#39;random_forest__max_features&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">]},</span>
 <span class="p">]</span>
+
 <span class="n">grid_search</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">full_pipeline</span><span class="p">,</span> <span class="n">param_grid</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
                            <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;neg_root_mean_squared_error&#39;</span><span class="p">)</span>
+
 <span class="n">grid_search</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">housing</span><span class="p">,</span> <span class="n">housing_labels</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="id26">
 <h3><span class="section-number">2.7.2. </span>랜덤 탐색<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h3>
-<p>그리드 탐색은 적은 수의 조합을 실험해볼 때 유용하다.
-하이퍼파라미터의 탐색 공간이 커지면 랜덤 탐색이 보다 효율적이다.
-이유는 하이퍼라라미터를 임의로 선택하는 횟수를 지정하면
-그 횟수만큼만 모델 선택을 반복하기 때문이다.</p>
+<p>그리드 탐색은 적은 수의 조합을 실험해볼 때만 유용하다.
+반면에 하이퍼파라미터의 탐색 공간이 크면 랜덤 탐색이 보다 유용하다.
+랜덤 탐색은 하이퍼라라미터 조합을 임의로 지정된 횟수만큼 진행한다.</p>
 <p><strong><code class="docutils literal notranslate"><span class="pre">RandomizedSearchCV</span></code> 클래스</strong></p>
-<p><code class="docutils literal notranslate"><span class="pre">preprocessing__geo__n_clusters</span></code>와 <code class="docutils literal notranslate"><span class="pre">random_forest__max_features</span></code> 값을
-지정된 구간에서 무작위로 선택한 후 훈련하는 과정을
-10번(<code class="docutils literal notranslate"><span class="pre">n_iter=10</span></code>) 반복한다.
-또한 3-겹 교차검증(<code class="docutils literal notranslate"><span class="pre">cv=3</span></code>)을 진행하기에 모델 훈련을 총 (10x3=30)번 진행한다.</p>
+<p>아래 코드는 다음 두 하이퍼파라미터를 대상으로
+10번(<code class="docutils literal notranslate"><span class="pre">n_iter=10</span></code>) 지정된 구간 내에서 무작위 선택을 진행한다.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">preprocessing__geo__n_clusters</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">random_forest__max_features</span></code></p></li>
+</ul>
+<p>또한 3-겹 교차검증(<code class="docutils literal notranslate"><span class="pre">cv=3</span></code>)을 진행하기에 모델 훈련을 총 30(=10x30)번 진행한다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">param_distribs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;preprocessing__geo__n_clusters&#39;</span><span class="p">:</span> <span class="n">randint</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">50</span><span class="p">),</span>
                   <span class="s1">&#39;random_forest__max_features&#39;</span><span class="p">:</span> <span class="n">randint</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">20</span><span class="p">)}</span>
 
@@ -1571,25 +1552,25 @@ RMSE의 음숫값을 사용하려면 <code class="docutils literal notranslate">
 앙상블 기법에 대해서는 <a class="reference internal" href="ensemble_learning_random_forests.html#ch-ensemble"><span class="std std-numref">7장</span></a>에서 자세히 다룬다.</p>
 </div>
 <div class="section" id="id28">
-<h3><span class="section-number">2.7.4. </span>최적 모델 활용<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h3>
-<p>그리드 탐색 또는 랜덤 탐색을 통해 얻어진 최적의 모델을 분석해서 문제에 대한 통찰을 얻을 수 있다.
-예를 들어, 최적의 랜덤 포레스트 모델로부터 타깃 예측에 사용된 특성들의 상대적 중요도를 확인하여
-중요한 특성만을 남기도 나머지 특성을 제외시킬 수 있다.</p>
-<p>예를 들어, 랜덤 탐색을 통해 찾아낸 최적의 모델에서 <code class="docutils literal notranslate"><span class="pre">feature_importances_</span></code>를 확인하면
-각 특성의 상대적 중요도를 다음과 같이 확인된다.</p>
+<h3><span class="section-number">2.7.4. </span>훈련된 최선의 모델 활용<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h3>
+<p>그리드 탐색 또는 랜덤 탐색을 통해 얻어진 최선의 모델을 분석해서 문제에 대한 통찰을 얻을 수 있다.</p>
+<p>예를 들어, 최선의 랜덤 포레스트 모델로부터 타깃 예측에 사용된 특성들의 상대적 중요도를 확인하여
+중요하지 않은 특성을 제외할 수 있다.</p>
+<p>캘리포니아 주택 가격 예측 모델의 경우 랜덤 탐색을 통해 찾아낸 최선의 모델에서
+<code class="docutils literal notranslate"><span class="pre">feature_importances_</span></code>를 확인하면 다음 정보를 얻는다.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">log__median_income</span></code> 특성이 가장 중요하다.</p></li>
 <li><p>해안 근접도 특성 중에서 <code class="docutils literal notranslate"><span class="pre">INLAND</span></code> 특성만 중요하다.</p></li>
 </ul>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">final_model</span> <span class="o">=</span> <span class="n">rnd_search</span><span class="o">.</span><span class="n">best_estimator_</span>  <span class="c1"># 전처리 포함</span>
-<span class="n">feature_importances</span> <span class="o">=</span> <span class="n">final_model</span><span class="p">[</span><span class="s2">&quot;random_forest&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">feature_importances_</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">final_model</span> <span class="o">=</span> <span class="n">rnd_search</span><span class="o">.</span><span class="n">best_estimator_</span>                                 <span class="c1"># 최선 모델</span>
+<span class="n">feature_importances</span> <span class="o">=</span> <span class="n">final_model</span><span class="p">[</span><span class="s2">&quot;random_forest&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">feature_importances_</span>  <span class="c1"># 특성뱔 상대적 중요도</span>
 
+<span class="c1"># 중요도 내림차순 정렬</span>
 <span class="nb">sorted</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">feature_importances</span><span class="p">,</span>
            <span class="n">final_model</span><span class="p">[</span><span class="s2">&quot;preprocessing&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">()),</span>
            <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[(</span><span class="mf">0.18694559869103852</span><span class="p">,</span> <span class="s1">&#39;log__median_income&#39;</span><span class="p">),</span>
+
+<span class="p">[(</span><span class="mf">0.18694559869103852</span><span class="p">,</span> <span class="s1">&#39;log__median_income&#39;</span><span class="p">),</span>
  <span class="p">(</span><span class="mf">0.0748194905715524</span><span class="p">,</span> <span class="s1">&#39;cat__ocean_proximity_INLAND&#39;</span><span class="p">),</span>
  <span class="p">(</span><span class="mf">0.06926417748515576</span><span class="p">,</span> <span class="s1">&#39;bedrooms_ratio__bedrooms_ratio&#39;</span><span class="p">),</span>
  <span class="p">(</span><span class="mf">0.05446998753775219</span><span class="p">,</span> <span class="s1">&#39;rooms_per_house__rooms_per_house&#39;</span><span class="p">),</span>
@@ -1601,21 +1582,12 @@ RMSE의 음숫값을 사용하려면 <code class="docutils literal notranslate">
 </pre></div>
 </div>
 </div>
+</div>
 <div class="section" id="id29">
-<h3><span class="section-number">2.7.5. </span>테스트 셋으로 시스템 평가하기<a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h3>
-<ol class="simple">
-<li><p>최고 성능 모델 확인: 예를 들어, 그리드 탐색으로 찾은 최적 모델 사용</p></li>
-<li><p>최고 성능 모델을 이용하여 예측하기</p></li>
-<li><p>최고 성능 모델 평가</p></li>
-</ol>
-</div>
-</div>
-<div class="section" id="id30">
-<h2><span class="section-number">2.8. </span>최적 모델 저장 및 활용<a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">2.8. </span>최선 모델 저장 및 활용<a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h2>
 <p>완성된 모델은 항상 저장해두어야 한다.
 업데이트된 모델이 적절하지 않은 경우 이전 모델로 되돌려야 할 수도 있기 때문이다.
-또한 버전의 데이터셋을 저장해두어야 하는데 이는 업데이트 과정에서 데이터셋이 오염될 수 있기 때문이다.</p>
-<p>모델의 저장과 불러오기는 <code class="docutils literal notranslate"><span class="pre">joblib</span></code> 모듈을 활용한다.</p>
+모델의 저장과 불러오기는 <code class="docutils literal notranslate"><span class="pre">joblib</span></code> 모듈을 활용한다.</p>
 <ul>
 <li><p>저장하기</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">final_model</span><span class="p">,</span> <span class="s2">&quot;my_california_housing_model.pkl&quot;</span><span class="p">)</span>
@@ -1628,14 +1600,10 @@ RMSE의 음숫값을 사용하려면 <code class="docutils literal notranslate">
 </div>
 </li>
 </ul>
-<p>저장된 모델은 예를 들어 웹서비스에 포함된 앱으로 활용될 수 있다.</p>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/model-launching01.png" width="400"></div></div>
-<div class="section" id="id31">
-<h2><span class="section-number">2.9. </span>실습 과제<a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference external" href="https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/notebooks/code_end2end_ml_project.ipynb">(구글코랩) 머신러닝 프로젝트 처음부터 끝까지</a>
-의 소스코드를 먼저 공부한 다음에
-<a class="reference external" href="https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_end2end_ml_project.ipynb">(실습) 머신러닝 프로젝트 처음부터 끝까지</a>
-에 있는 실습 과제를 풀어보세요.</p>
+</div>
+<div class="section" id="id30">
+<h2><span class="section-number">2.9. </span>실습 과제<a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h2>
+<p>참고: <a class="reference external" href="https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_end2end_ml_project.ipynb">(실습) 머신러닝 프로젝트 처음부터 끝까지</a></p>
 </div>
 </div>
 
