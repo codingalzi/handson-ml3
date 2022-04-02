@@ -274,9 +274,9 @@
 #     * 각각의 훈련 샘플에 대해 가장 많은 결투를 이긴 숫자의 클래스를 예측값으로 사용함.
 #         예를 들어, 숫자 1이 9번의 결투를 모두 이기면 숫자 1을 예측값으로 지정함.
 
-# 일대다 방식 vs. 일대일 방식
+# **일대다 방식 vs. 일대일 방식**
 # 
-# #### <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/ovo_ova.png" width="600"/></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/ovo_ova.png" width="600"/></div>
 # 
 # <그림 출처: [SVM with the mlr package](https://www.r-bloggers.com/2019/10/support-vector-machines-with-the-mlr-package/)>
 
