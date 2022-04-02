@@ -53,12 +53,9 @@
 # **훈련 셋과 데이터 셋 나누기**
 # 
 # * MNIST 데이터셋 이미 6:1 분류되어 있음\
-# 
 # * 무작위로 섞여 있음. 교차 검증 등에 문제없이 사용될 수 있음.
-# 
-# * 훈련 세트: 앞쪽 60,000개 이미지
-# 
-# * 테스트 세트: 나머지 10,000개의 이미지
+# * 훈련 세트(`X_train`): 앞쪽 60,000개 이미지
+# * 테스트 세트(`X_test`): 나머지 10,000개의 이미지
 
 # ## 이진 분류기 훈련
 
@@ -66,10 +63,9 @@
 # 
 # * 이미지 샘플이 숫자 5를 표현하는지 여부를 판단하는 이진 분류기
 # 
-# * 모든 레이블을 0 또는 1로 수정해야 함
+# * 타깃 데이터셋 새로 설정: `y_train_5`
 #     * 0: 숫자 5 이외의 수를 가리키는 이미지 레이블
 #     * 1: 숫자 5를 가리키는 이미지 레이블
-#     * 결과: `y_train_5`
 
 # **SGD 분류기**
 
@@ -78,79 +74,67 @@
 #   * 한 번에 하나씩 훈련 샘플 처리 후 파라미터 조정
 #   * 매우 큰 데이터셋 처리에 효율적이며 온라인 학습에도 적합함.
 # 
-# * 훈련: `fit()` 메서드 호출
-# 
-#     ```python
-#     from sklearn.linear_model import SGDClassifier
-# 
-#     sgd_clf = SGDClassifier(max_iter=1000, tol=1e-3, random_state=42)
-#     sgd_clf.fit(X_train, y_train_5)
-#     ```
+# ```python
+# sgd_clf = SGDClassifier(random_state=42)
+# ```
 
 # ## 분류기 성능 측정
 
-# **성능 측정 세가지 방법**
+# **성능 측정 기준**
 # 
-# * 교차 검증을 활용한 정확도 측정
-# * 정밀도/재현율 측정
-# * AUC 측정
+# * 정확도
+# * 정밀도/재현율
+# * AUC
 
-# ### 교차 검증을 사용한 정확도 측정
+# ### 교차 검증 활용 정확도 측정
 
-# * 2장에서 배운 교차검증 기술을 이용하여 SGD 분류기의 성능을 측정
-# 
-# * 성능 측정 기준: 정확도
+# * 교차 검증을 이용하여 SGD 분류기의 성능을 측정. 성능 측정 기준은 **정확도**.
 # 
 # * 예제: 숫자 5를 표현하는 이미지를 정확하게 예측한 비율.
-#     `cross_val_score` 모델의 `scoring="accuracy"` 키워드 인자 지정 <br><br>
 # 
 #     ```python
-#     from sklearn.model_selection import cross_val_score
-# 
 #     cross_val_score(sgd_clf, X_train, y_train_5, cv=3, scoring="accuracy")
 #     ```
+#     
+#     * 정확도가 95% 정도로 매우 좋은 결과로 평가됨.
+#     * 하지만 무조건 5가 아니다라고 예측하는 모델도 90%의 정확도를 보임.
+#     * 특정 범주에 속하는 데이터가 상대적으로 너무 많을 경우 정확도는 신뢰하기 어려운 경가 기준임.
 
 # ### 오차 행렬, 정밀도, 재현율
 
-# **오차 행렬**
+# #### 오차 행렬
 
-# * 교차 검증 결과가 95% 이상으로 매우 우수한 것으로 나옴.
-#     * 하지만 무조건 '5 아님'이라고 찍는 분류기도 90%의 정확도를 보임.
-#     * 훈련 세트의 샘플이 불균형적으로 구성되었다면, 
-#         정확도를 분류기의 성능 측정 기준으로 사용하는 것은 피해야 함
-# 
-# * 오차 행렬을 조사하여 분류기의 성능을 다르게 평가할 수 있음
-# 
 # * __오차 행렬__: 클래스별 예측 결과를 정리한 행렬
 # 
 # * 오차 행렬의 행은 실제 클래스를, 열은 예측된 클래스를 가리킴
-#     * 클래스 A의 샘플이 클래스 B의 샘플로 분류된 횟수를 알고자 하면 A행 B열의 값을 확인 
 # 
-# * 예제: 숫자 5의 이미지 샘플을 3으로 잘못 예측한 횟수를 알고 싶다면?
-#     * 6행 4열, 즉, (6,4) 인덱스에 위치한 값을 확인 (0부터 9까지의 숫자임에 주의)
+#     * 예제: 숫자 5의 이미지 샘플을 3으로 잘못 예측한 횟수를 알고 싶다면?
+#         => 6행 4열, 즉, (6,4) 인덱스에 위치한 값을 확인 (0부터 9까지의 숫자임에 주의)
 # 
 # * 예제: '숫자 5-감지기'에 대한 오차 행렬은 `(2, 2)` 모양의 2차원 (넘파이) 어레이로 생성됨.
 #     * 레이블의 값이 0과 1 두 개의 값으로 구성되기 때문
 # 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-02.png" width="500"/></div>
 
-# **정밀도(precision)**
+# #### 정밀도와 재현율
 
+# **정밀도(precision)**
+# 
 # * 책 134쪽의 오차 행렬
 # 
 #     ```
-#     array([[53057, 1522],
-#            [ 1325, 4096]])
+#     array([[53892,   687],
+#            [ 1891,  3530]])
 #     ```
 # 
 # * 양성 예측의 정확도
 # 
 # * 여기서는 숫자 5라고 예측된 값들 중에서 진짜로 5인 숫자들의 비율
 # 
-#     $$\text{precision} = \frac{TP}{TP+FP} = \frac{4096}{4096 + 1522} = 0.729$$
+#     $$\text{precision} = \frac{TP}{TP+FP} = \frac{3530}{3530 + 687} = 0.837$$
 
 # **재현율(recall)**
-
+# 
 # * 정밀도 하나만으로 분류기의 성능을 평가할 수는 없음
 #     * 숫자 5를 가리키는 이미지 중에 숫자 5라고 판명한 비율인 __재현율__을 고려하지 않기 때문
 # 
@@ -158,10 +142,10 @@
 # 
 # * 재현율을 __민감도__(sensitivity) 또는 __참 양성 비율__(true positive rate)로도 부름
 # 
-#     $$\text{recall} = \frac{TP}{TP+FN} = \frac{4096}{4096 + 1325} = 0.756$$
+#     $$\text{recall} = \frac{TP}{TP+FN} = \frac{3530}{3530 + 1891} = 0.651$$
 
 # **F<sub>1</sub> 점수**
-
+# 
 # * 정밀도와 재현율의 조화 평균인 F<sub>1</sub> 점수를 이용하여 분류기의 성능을 평가하기도 함.
 # 
 # $$\text{F}_1 = \frac{2}{\frac{1}{\text{정밀도}} + \frac{1}{\text{재현율}}}$$
@@ -171,7 +155,7 @@
 #     * 앞서 정의된 F<sub>1</sub> 점수는 재현율과 정밀도의 중요도가 동일하다고 가정하였음.
 
 # **정밀도 vs. 재현율**
-
+# 
 # * 모델 사용의 목적에 따라 정밀도와 재현율의 중요도가 다를 수 있음.
 # 
 # * 재현율이 보다 중요한 경우: 암 진단 기준
@@ -182,7 +166,7 @@
 #   * 정밀도: 안전하다고 판단된 동영상 중에서 실제로도 안전한 동영상의 비율
 #   * 재현율: 실제로 좋은 동영상 중에서 좋은 동영상이라고 판단되는 동영상 비율
 
-# **정밀도/재현율 트레이드오프**
+# ### 정밀도/재현율 트레이드오프
 
 # * 정밀도와 재현율은 상호 반비례 관계임.
 # 
@@ -192,24 +176,28 @@
 # * 적절한 __결정 임곗값__을 지정해야 함.
 
 # **결정 함수와 결정 임곗값**
-
+# 
 # * __결정 함수__(decision function): 분류기가 각 샘플의 점수를 계산할 때 사용
 # 
 # * __결정 임계값__(decision threshold): 결정 함수가 양성 클래스 또는 음성 클래스로 분류하는 데에 사용하는 기준값
 # 
 # * 임곗값이 커질 수록 정밀도는 올라가지만 재현율은 떨어짐.
 # 
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-03.png" width="700"/></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-03.png" width="500"/></div>
 
-# **임곗값, 재현율, 정밀도**
+# **임곗값 지정: 재현율과 정밀도**
 # 
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-04.png" width="700"/></div>
-
-# 재현율 대 정밀도
+# - 임곗값이 커질 수록 정밀도는 순간적으로 떨어질 수 있지만 결국엔 계속해서 상승한다.
+# - 정밀도는 90%, 재현율은 50% 정도가 되는 임곗값이 좋아보인다.
+# - `SGDClassifier` 는 0을 임곗값으로 사용한다.
 # 
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-05.png" width="700"/></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-04.png" width="500"/></div>
 
-# ### ROC 곡선과 AUC 점수
+# **재현율 대 정밀도**
+# 
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-05.png" width="500"/></div>
+
+# ### ROC 곡선과 AUC
 
 # * __수신기 조작 특성__(receiver operating characteristic, ROC) 곡선을 활용하여 이진 분류기의 성능 측정 가능
 # 
@@ -224,7 +212,7 @@
 
 # **TPR vs. FPR**
 # 
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-06.png" width="700"/></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-06.png" width="500"/></div>
 
 # **AUC와 분류기 성능**
 
@@ -237,9 +225,13 @@
 # 
 # * __AUC__(ROC 곡선 아래의 면적)가 1에 가까울 수록 성능이 좋은 분류기로 평가됨.
 
-# **SGD와 랜덤 포레스트의 AUC 비교**
+# **SGD와 랜덤 포레스트 비교**
 # 
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-07.png" width="700"/></div>
+# MNIST 훈련 데이터셋으로 훈련된 `SGDClassifier` 와 `RandomForestClassifier`를 
+# PR(정밀도 대 재현율) 그래프로 비교해보면
+# `RandomForestClassifier` 가 훨씬 좋은 성능을 보임을 확인할 수 있다.
+# 
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-07.png" width="500"/></div>
 
 # ## 3.4 다중 클래스 분류
 
@@ -331,14 +323,14 @@
 # * 대체로 잘 분류됨: 대각선이 밝음.
 # * 5행은 좀 어두움. 숫자 5의 분류 정확도가 상대적으로 낮음
 
-# #### <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-08.png" width="400"/></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-08.png" width="400"/></div>
 
 # #### 오차율 이미지
 # 
 # * 8행이 전반적으로 어두움. 즉, 8은 잘 분류되었음.
 # * (3, 5)와 (5,3)의 위치가 상대적으로 밝음. 즉, 3과 5가 서로 많이 혼동됨.
 
-# #### <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-09.png" width="400"/></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-09.png" width="400"/></div>
 
 # * 3과 5의 오차행렬 그려보기
 #     * 음성: 3으로 판정
