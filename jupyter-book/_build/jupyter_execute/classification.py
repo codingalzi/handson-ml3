@@ -112,7 +112,7 @@
 
 # ### 오차 행렬, 정밀도, 재현율
 
-# #### 오차 행렬
+# **오차 행렬**
 
 # * 교차 검증 결과가 95% 이상으로 매우 우수한 것으로 나옴.
 #     * 하지만 무조건 '5 아님'이라고 찍는 분류기도 90%의 정확도를 보임.
@@ -134,7 +134,7 @@
 # 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-02.png" width="500"/></div>
 
-# #### 정밀도(precision)
+# **정밀도(precision)**
 
 # * 책 134쪽의 오차 행렬
 # 
@@ -149,7 +149,7 @@
 # 
 #     $$\text{precision} = \frac{TP}{TP+FP} = \frac{4096}{4096 + 1522} = 0.729$$
 
-# #### 재현율(recall)
+# **재현율(recall)**
 
 # * 정밀도 하나만으로 분류기의 성능을 평가할 수는 없음
 #     * 숫자 5를 가리키는 이미지 중에 숫자 5라고 판명한 비율인 __재현율__을 고려하지 않기 때문
@@ -160,7 +160,7 @@
 # 
 #     $$\text{recall} = \frac{TP}{TP+FN} = \frac{4096}{4096 + 1325} = 0.756$$
 
-# #### F<sub>1</sub> 점수
+# **F<sub>1</sub> 점수**
 
 # * 정밀도와 재현율의 조화 평균인 F<sub>1</sub> 점수를 이용하여 분류기의 성능을 평가하기도 함.
 # 
@@ -170,7 +170,7 @@
 #   경우에 따라 재현율과 정밀도 둘 중의 하나에 높은 가중치를 두어야 할 때가 있음.
 #     * 앞서 정의된 F<sub>1</sub> 점수는 재현율과 정밀도의 중요도가 동일하다고 가정하였음.
 
-# #### 정밀도 대 재현율
+# **정밀도 vs. 재현율**
 
 # * 모델 사용의 목적에 따라 정밀도와 재현율의 중요도가 다를 수 있음.
 # 
@@ -182,7 +182,7 @@
 #   * 정밀도: 안전하다고 판단된 동영상 중에서 실제로도 안전한 동영상의 비율
 #   * 재현율: 실제로 좋은 동영상 중에서 좋은 동영상이라고 판단되는 동영상 비율
 
-# #### 정밀도/재현율 트레이드오프
+# **정밀도/재현율 트레이드오프**
 
 # * 정밀도와 재현율은 상호 반비례 관계임.
 # 
@@ -191,7 +191,7 @@
 # 
 # * 적절한 __결정 임곗값__을 지정해야 함.
 
-# #### 결정 함수와 결정 임곗값
+# **결정 함수와 결정 임곗값**
 
 # * __결정 함수__(decision function): 분류기가 각 샘플의 점수를 계산할 때 사용
 # 
@@ -201,7 +201,7 @@
 # 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-03.png" width="700"/></div>
 
-# 임곗값, 재현율, 정밀도
+# **임곗값, 재현율, 정밀도**
 # 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-04.png" width="700"/></div>
 
@@ -222,11 +222,11 @@
 # 
 #     $$\text{FPR} = \frac{FP}{FP+TN}$$
 
-# TPR 대 FPR
+# **TPR vs. FPR**
 # 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-06.png" width="700"/></div>
 
-# #### AUC와 분류기 성능
+# **AUC와 분류기 성능**
 
 # * 재현율(TPR)과 거짓 양성 비율(FPR) 사이에도 서로 상쇄하는 기능이 있다는 것을 확인 가능
 #     * 재현율(TPR)을 높이고자 하면 거짓 양성 비율(FPR)도 함께 증가
@@ -237,7 +237,7 @@
 # 
 # * __AUC__(ROC 곡선 아래의 면적)가 1에 가까울 수록 성능이 좋은 분류기로 평가됨.
 
-# SGD와 랜덤 포레스트의 AUC 비교
+# **SGD와 랜덤 포레스트의 AUC 비교**
 # 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-07.png" width="700"/></div>
 
