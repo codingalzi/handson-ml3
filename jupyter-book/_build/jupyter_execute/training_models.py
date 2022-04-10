@@ -14,127 +14,183 @@
 # [(구글코랩) 모델 훈련](https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/notebooks/code_training_models.ipynb)에서 
 # 확인할 수 있다.
 
-# **목표**
-# 
-# 모델 훈련의 기본 작동 과정과 원리를 살펴본다. 
-# 이를 통해 다음을 얻을 수 있다.
-# 
-# - 적정 모델 선택
-# - 적정 훈련 알고리즘 선택
-# - 적정 하이퍼파라미터 선택
-# - 디버깅과 오차 분석에 도움
-# - 신경망 구현 및 훈련 과정 이해에 도움
-
 # **주요 내용**
 # 
-# * 수학적으로 선형 회귀 모델 구하기
-# * 경사하강법으로 선형 회귀 모델 구하기
+# * 선형 회귀 모델 구현
+#     * 선형대수 활용
+#     * 경사하강법 활용
 # * 경사하강법 종류
 #     * 배치 경사하강법
 #     * 미니배치 경사하강법
 #     * 확률적 경사하강법(SGD)
-# * 다항 회귀: 비선형 모델 훈련법    
+# * 다항 회귀: 비선형 회귀 모델
 # * 학습 곡선: 과소, 과대 적합 감지
-# * 규제 선형 모델
-#     * 과대적합 위험 감소시키기
-# * 로지스틱 회귀와 소프트맥스 회귀
-#     * 회귀 모델을 분류기로 활용하기
+# * 모델 규제: 과대 적합 방지
+# * 로지스틱 회귀와 소프트맥스 회귀: 분류 모델
+
+# **목표**
+# 
+# 모델 훈련의 기본 작동 과정과 원리를 살펴보며,
+# 이를 통해 다음 사항들에 대한 이해를 넓힌다.
+# 
+# - 적정 모델 선택
+# - 적정 훈련 알고리즘 선택
+# - 적정 하이퍼파라미터 선택
+# - 디버깅과 오차 분석
+# - 신경망 구현 및 훈련 과정 이해
 
 # ## 선형 회귀
 
-# ### 선형 회귀 모델 함수
-
-# - 한 개의 특성 $x_1$을 사용하는 $i$ 번째 훈련 샘플에 대한 예측값
+# {numref}`%s 절 <sec:model_based_learning>`에서 1인당 GDP와 삶의 만족도 사이의 
+# 관계를 다음 1차 함수로 표현할 수 있었다.
 # 
-# $$\hat y^{(i)} = \theta_0 + \theta_1\, x_1^{(i)}$$
-
-# - $n\ge 1$ 개의 특성을 사용하는 $i$번째 훈련 샘플에 대한 예측값 
-#     - 예제: 캘리포니아 주택 가격 예측 모델
+# $$(\text{삶의만족도}) = \theta_0 + \theta_1\cdot (\text{1인당GDP})$$
 # 
-#     $$\hat y^{(i)} = \theta_0 + \theta_1\, x_1^{(i)} + \cdots + \theta_{16}\, x_{16}^{(i)}$$
-#     ```
-#     ```
-#     * $\hat y^{(i)}$: $i$ 번째 훈련 샘플에 대한 예측값
-#     * $x_k^{(i)}$: $i$ 번째 훈련 샘플의 $k$ 번째 특성값
-#     * $\theta_k$: 편향($\theta_0$) 및 $k$ 번째 특성에 대한 가중치 파라미터
+# 즉, 1인당 GDP가 주어지면 위 함수를 이용하여 삶의 만족도를 예측하였다.
+# 주어진 1인당 GDP를 **입력 특성**<font size="2">input feature</font> $x$, 
+# 예측된 삶의 만족도를 **예측값** $\hat y$ 라 하면 다음 식으로 변환된다.
+# 
+# $$\hat y = \theta_0 + \theta_1\cdot x_1$$
+# 
+# $\theta_0$ 와 $\theta_1$ 은 (선형) 모델의 **파라미터**<font size="2">parameter</font>이며
+# 선형 회귀 모델이 알아냈다.
 
-# #### 예측 함수
+# 반면에 {numref}`%s 장 <ch:end2end>`의 캘리포니아 주택 가격 예측 선형 회귀 모델은
+# 24개의 입력 특성을 사용하는 다음 함수를 이용한다.
+# 
+# $$\hat y = \theta_0 + \theta_1\cdot x_1 + \cdots + \theta_{24}\cdot x_{24}$$
+# 
+# * $\hat y$: 예측값
+# * $x_i$: 구역의 $i$ 번째 특성값
+# * $\theta_0$: 편향
+# * $\theta_i$: $i$ 번째 특성에 대한 가중치 파라미터, 단 $i > 0$.
 
+# 이를 일반화하면 다음과 같다.
+# 
+# $$\hat y = \theta_0 + \theta_1\cdot x_1 + \cdots + \theta_{n}\cdot x_{n}$$
+# 
+# * $\hat y$: 예측값
+# * $x_i$: 구역의 $i$ 번째 특성값
+# * $\theta_0$: 편향
+# * $\theta_j$: $j$ 번째 특성에 대한 가중치 파라미터(단, $1 \le j \le n$)
+
+# **벡터 표기법**
+# 
+# 예측값을 벡터의 **내적**<font size="2">inner product</font>으로 표현할 수 있다.
+# 
 # $$
-# \begin{align*}
-# \hat y^{(i)} &  
-# = \theta_0 + \theta_1\, x_1^{(i)} + \cdots + \theta_n\, x_n^{(i)}\\
-# & = \theta^T\, \mathbf{x}^{(i)} \\
-# & = h_\theta (\mathbf{x}^{(i)})
-# \end{align*}
+# \hat y
+# = h_\theta (\mathbf{x})
+# = \mathbf{\theta} \cdot \mathbf{x}
+# $$
+# 
+# * $h_\theta(\cdot)$: 예측 함수, 즉 모델의 `predict()` 메서드.
+# * $\mathbf{x} = (1, x_1, \dots, x_n)$
+# * $\mathbf{\theta} = (\theta_0, \theta_1, \dots, \theta_n)$
+
+# **2D 어레이 표기법**
+# 
+# 머신러닝에서는 입력 벡터와 파라미터 벡터를 일반적으로 아래 모양의 행렬로 나타낸다.
+# 
+# $$
+# \mathbf{x}=
+# \begin{bmatrix}
+# 1 \\
+# x_1 \\
+# \vdots \\
+# x_n
+# \end{bmatrix},
+# \qquad
+# \mathbf{\theta}=
+# \begin{bmatrix}
+# \theta_0\\
+# \theta_1 \\
+# \vdots \\
+# \theta_n
+# \end{bmatrix}
+# $$
+# 
+# 따라서 예측값은 다음과 같이 행렬 연산으로 표기된다.
+# 단, $A^T$ 는 행렬 $A$의 전치행렬을 가리킨다.
+# 
+# $$
+# \hat y
+# = h_\theta (\mathbf{x})
+# = \mathbf{\theta}^{T} \mathbf{x}
 # $$
 
-# * $\mathbf{x}^{(i)} = [1, x_1^{(i)}, \dots, x_n^{(i)}]^T$. 
-#     - $n$은 특성 개수
-#     - 1이 추가됨에 주의할 것.
-# * $\theta = [\theta_0, \theta_1, \dots, \theta_n]^T$
-# * $h_\theta(\cdot)$: 예측 함수, 즉 모델의 `predict()` 메서드를 가리킴.
+# **선형 회귀 모델의 행렬 연산 표기법**
 
-# ### 선형 회귀 모델의 행렬 연산 표기법
-
-# * $\mathbf{X}$: 전체 훈련 세트, 즉 모든 훈련 샘플을 모아놓은 행렬. 
-#     - $m$은 훈련 세트의 크기.
-#     - $\mathbf{X}$는 $(m, n+1)$ 모양의 행렬
+# $\mathbf{X}$가 전체 입력 데이터셋을 가리키는 (m, 1+n) 모양의 2D 어레이, 즉 행렬이라 하자.
+# - $m$: 입력 데이터셋의 크기.
+# - $n$: 특성 수
+# 
+# 그러면 $\mathbf{X}$ 는 다음과 같이 표현된다.
+# 단, $\mathbf{x}_j^{(i)}$ 는 $i$-번째 입력 샘플의 $j$-번째 특성값을 가리킨다.
 # 
 # $$
 # \mathbf{X}= 
 # \begin{bmatrix} 
-# (\mathbf{x}^{(1)})^T \\
+# [1, \mathbf{x}_1^{(1)}, \dots, \mathbf{x}_n^{(1)}] \\
 # \vdots \\
-# (x_n^{(m)})^T
+# [1, \mathbf{x}_1^{(m)}, \dots, \mathbf{x}_n^{(m)}] \\
 # \end{bmatrix}
 # $$
 
-# * 넘파이 2차원 어레이 표현
+# 결론적으로 모든 예측값을 하나의 행렬식으로 표현하면 다음과 같다.
+
+# $$
+# \hat{\mathbf y} = \mathbf{X}\, \mathbf{\theta}
+# $$
+
+# 위 식에 사용된 기호들의 의미와 어레이 모양은 다음과 같다.
 # 
 # | 데이터 | 어레이 기호           |     어레이 모양(shape) | 
 # |:-------------:|:-------------:|:---------------:|
-# | 레이블, 예측값 | $\mathbf y$, $\hat{\mathbf y}$  | $(m, 1)$ |
-# | 가중치 | $\theta$      | $(n+1, 1)$ |
-# | 훈련 세트 | $\mathbf X$   | $(m, n+1)$     |
+# | 예측값 | $\hat{\mathbf y}$  | $(m, 1)$ |
+# | 입력 데이터셋 | $\mathbf X$   | $(m, 1+n)$     |
+# | 가중치 | $\theta$      | $(1+n, 1)$ |
 
-# ### 비용함수: 평균 제곱 오차(MSE)
+# **비용함수: 평균 제곱 오차(MSE)**
 
-# * MSE를 활용한 선형 회귀 모델 성능 평가
+# 회귀 모델은 훈련 중에 **평균 제곱 오차**<font size="2">mean squared error</font>(MSE)를 이용하여
+# 성능을 평가한다.
 
 # $$
 # \mathrm{MSE}(\theta) := \mathrm{MSE}(\mathbf X, h_\theta) = 
-# \frac 1 m \sum_{i=1}^{m} \big(\theta^{T}\, \mathbf{x^{(i)}} - y^{(i)}\big)^2
+# \frac 1 m \sum_{i=1}^{m} \big(\theta^{T}\, \mathbf{x}^{(i)} - y^{(i)}\big)^2
 # $$
 
-# * 목표: $\mathrm{MSE}(\theta)$가 최소가 되도록 하는 $\theta$ 찾기
-
-# * __참고:__ $m, \mathbf{x}^{(i)}, y^{(i)}$은 모두 주어졌음.
-
+# 최종 목표는 훈련셋이 주어졌을 때 $\mathrm{MSE}(\theta)$가 최소가 되도록 하는 $\theta$ 찾는 것이다.
+# 
 # * 방식 1: 정규방정식 또는 특이값 분해(SVD) 활용
 #     * 드물지만 수학적으로 비용함수를 최소화하는 $\theta$ 값을 직접 계산할 수 있는 경우 활용
 #     * 계산복잡도가 $O(n^2)$ 이상인 행렬 연산을 수행해야 함. 
 #     * 따라서 특성 수($n$)이 큰 경우 메모리 관리 및 시간복잡도 문제때문에 비효율적임.
-
+# 
 # * 방식 2: 경사하강법
 #     * 특성 수가 매우 크거나 훈련 샘플이 너무 많아 메모리에 한꺼번에 담을 수 없을 때 적합
 #     * 일반적으로 선형 회귀 모델 훈련에 적용되는 기법
 
-# ### 4.1.1 정규 방정식
-
-# 정규 방정식을 이용하여 비용함수를 최소화 하는 $\theta$를 아래와 같이 구할 수 있음:
+# **정규 방정식**
+# 
+# **정규 방정식**<font size="2">normal equation</font>을 이용하여 
+# 비용함수를 최소화 하는 $\theta$를 아래와 같이 바로 계산할 수 있다.
+# 단, $\mathbf{X}^T\, \mathbf{X}$ 의 역행렬이 존재해야 한다.
 # 
 # $$
 # \hat \theta = 
 # (\mathbf{X}^T\, \mathbf{X})^{-1}\, \mathbf{X}^T\, \mathbf{y}
 # $$
 
-# #### SVD(특잇값 분해) 활용
-
-# * 행렬 연산과 역행렬 계산은 계산 복잡도가 $O(n^{2.4})$ 이상이고 항상 역행렬 계산이 가능한 것도 아님.
+# **SVD(특잇값 분해) 활용**
 # 
-# * 반면에, 특잇값 분해를 활용하여 얻어지는 무어-펜로즈(Moore-Penrose) 유사 역행렬 $\mathbf{X}^+$ 계산이 보다 효율적임.
-#     계산 복잡도는 $O(n^2)$.
+# 그런데 행렬 연산과 역행렬 계산은 계산 복잡도가 $O(n^{2.4})$ 이상이며
+# 항상 역행렬 계산이 가능한 것도 아니다.
+# 반면에, **특잇값 분해**를 활용하여 얻어지는 
+# **무어-펜로즈(Moore-Penrose) 유사 역행렬** $\mathbf{X}^+$은 항상 존재하며
+# 계산 복잡도가 $O(n^2)$ 로 보다 빠른 계산을 지원한다.
+# 또한 다음이 성립한다.
 # 
 # $$
 # \hat \theta = 
@@ -211,7 +267,7 @@
 #     2. 학습 후 $\mathrm{MSE}(\theta)$ 계산.
 #     3. 이전 $\theta$에서 $\nabla_\theta \textrm{MSE}(\theta)$과 학습률 $\eta$를 곱한 값 빼기.
 
-# <div align="center"><img src="images/ch04/homl04-01.png" width="600"/></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-01.png" width="600"/></div>
 
 # ```
 # ```
@@ -220,15 +276,15 @@
 
 # * 학습률이 너무 작은 경우: 비용 함수가 전역 최소값에 너무 느리게 수렴.
 
-# <div align="center"><img src="images/ch04/homl04-02.png" width="600"/></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-02.png" width="600"/></div>
 
 # * 학습률이 너무 큰 경우: 비용 함수가 수렴하지 않음.
 
-# <div align="center"><img src="images/ch04/homl04-03.png" width="600"/></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-03.png" width="600"/></div>
 
 # * (선형 회귀가 아닌 경우에) 시작점에 따라 지역 최솟값에 수렴하지 못할 수도 있음.
 
-# <div align="center"><img src="images/ch04/homl04-04.png" width="600"/></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-04.png" width="600"/></div>
 
 # * 선형 회귀와 학습률
 # 
@@ -239,7 +295,7 @@
 
 # * 특성들의 스켈일을 통일시키면 보다 빠른 학습 이루어짐.
 
-# <div align="center"><img src="images/ch04/homl04-04a.png" width="600"/></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-04a.png" width="600"/></div>
 
 # #### 하이퍼파라미터(hyperparameter)
 
@@ -296,7 +352,7 @@
 
 # #### 학습율과 경사 하강법의 관계
 
-# <div align="center"><img src="images/ch04/homl04-04b.png" width="700"/></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-04b.png" width="700"/></div>
 
 # ### 4.2.2 확률적 경사 하강법
 
@@ -308,11 +364,11 @@
 
 # * 단점: 학습 과정에서 파라미터의 동요가 심해서 경우에 따라 전역 최솟값에 수렴하지 못하고 계속해서 발산할 가능성도 높음
 
-# <div align="center"><img src="images/ch04/homl04-04c.png" width="400"/></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-04c.png" width="400"/></div>
 
 # 처음 20 단계 동안의 SGD 학습 내용: 모델이 수렴하지 못함을 확인할 수 있음.
 
-# <div align="center"><img src="images/ch04/homl04-04d.png" width="600"/></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-04d.png" width="600"/></div>
 
 # #### 학습 스케줄
 # 
@@ -351,7 +407,7 @@
 
 # ### 경사 하강법 비교
 
-# <div align="center"><img src="images/ch04/homl04-05.png" width="600"/></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-05.png" width="600"/></div>
 
 # ### 선형 회귀 알고리즘 비교
 # 
@@ -380,13 +436,13 @@
 # 
 # $$\hat y = \theta_0 + \theta_1\, x_1$$
 
-# <div align="center"><img src="images/ch04/homl04-06.png" width="600"/></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-06.png" width="600"/></div>
 
 # #### 다항 회귀: 2차 다항식 모델
 # 
 # $$\hat y = \theta_0 + \theta_1\, x_1 + \theta_2\, x_1^{2}$$
 
-# <div align="center"><img src="images/ch04/homl04-07.png" width="600"/></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-07.png" width="600"/></div>
 
 # #### 사이킷런의 `PolynomialFeatures` 변환기
 
@@ -408,7 +464,7 @@
 # 
 # * 다항 회귀 모델의 차수에 따라 훈련된 모델이 훈련 세트에 과소 또는 과대 적합할 수 있음.
 
-# <div align="center"><img src="images/ch04/homl04-08.png" width="600"/></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-08.png" width="600"/></div>
 
 # ### 교차 검증 vs. 학습 곡선
 # 
@@ -422,7 +478,7 @@
 
 # ### 과소적합 모델의 학습 곡선 특징
 
-# <div align="center"><img src="images/ch04/homl04-09.png" width="600"/></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-09.png" width="600"/></div>
 
 # * 훈련 데이터(빨강)에 대한 성능
 #     * 훈련 세트가 커지면서 RMSE(평균 제곱근 오차)가 커짐
@@ -434,7 +490,7 @@
 # 
 # ### 과대적합 모델의 학습 곡선 특징
 
-# <div align="center"><img src="images/ch04/homl04-10.png" width="600"/></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-10.png" width="600"/></div>
 
 # * 훈련 데이터(빨강)에 대한 성능: 훈련 데이터에 대한 평균 제곱근 오차가 매우 낮음.
 
@@ -528,7 +584,7 @@
 
 # #### 라쏘 회귀 대 릿지 회귀 비교
 
-# <div align="center"><img src="images/ch04/lasso_vs_ridge_plot.png" width="600"/></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/lasso_vs_ridge_plot.png" width="600"/></div>
 
 # ### 4.5.3 엘라스틱넷
 
@@ -560,7 +616,7 @@
 
 # * 조기 종료: 검증 데이터에 대한 손실이 줄어 들다가 다시 커지는 순간 훈련 종료
 
-# <div align="center"><img src="images/ch04/homl04-11.png" width="600"/></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-11.png" width="600"/></div>
 
 # * 확률적 경사 하강법 등의 경우 손실 곡선의 진동 발생. 
 #     검증 손실이 한동안 최솟값보다 높게 유지될 때 훈련 멈춤. 최소 검증 손실 모델 확인.
@@ -579,7 +635,7 @@
 # 
 # $$\sigma(t) = \frac{1}{1 + e^{-t}}$$
 
-# <div align="center"><img src="images/ch04/homl04-12.png" width="600"/></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-12.png" width="600"/></div>
 
 # * 로지스틱 회귀 모델에서 샘플 $\mathbf x$가 양성 클래스에 속할 확률
 # 
@@ -623,7 +679,7 @@
 # - [y\, \log(\,\hat p\,) + (1-y)\, \log(\,1 - \hat p\,)]
 # $$
 
-# <div align="center"><img src="images/ch04/homl04-12-10a.png" width="700"/></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-12-10a.png" width="700"/></div>
 
 # #### 로그 손실 함수의 편도 함수
 
@@ -654,13 +710,13 @@
 # 
 # * 결정경계: 약 1.6cm
 
-# <div align="center"><img src="images/ch04/homl04-14.png" width="700"/></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-14.png" width="700"/></div>
 
 # #### 꽃잎의 너비와 길이를 기준으로 Iris-Virginica 여부 판정하기
 # 
 # * 결정경계: 검정 점선
 
-# <div align="center"><img src="images/ch04/homl04-15.png" width="700"/></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-15.png" width="700"/></div>
 
 # ### 로지스틱 회귀 규제하기
 
@@ -736,7 +792,7 @@
 #     * 결정경계: 배경색으로 구분
 #     * 곡선: Iris-Versicolor 클래스에 속할 확률
 
-# <div align="center"><img src="images/ch04/homl04-16.png" width="700"/></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-16.png" width="700"/></div>
 
 # In[ ]:
 

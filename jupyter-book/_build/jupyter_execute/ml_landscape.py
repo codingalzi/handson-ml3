@@ -466,6 +466,7 @@
 # <div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-15.png?raw=true" style="width:450px;"></div>
 # :::
 
+# (sec:model_based_learning)=
 # #### 모델 기반 학습
 
 # 훈련 데이터셋을 대상으로 모델을 미리 지정한 후 예측을 수행하는 모델을 훈련시킨다.
