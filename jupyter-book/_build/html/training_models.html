@@ -43,15 +43,14 @@
     <script src="_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-    <script>
-        const thebe_selector = ".thebe"
-        const thebe_selector_input = "pre"
-        const thebe_selector_output = ".output"
-    </script>
-    <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="5. 서포트 벡터 머신" href="svm.html" />
@@ -244,115 +243,44 @@
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id3">
-   4.2. 4.2 경사 하강법
+   4.2. 경사 하강법
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id4">
-     4.2.1. 기본 아이디어
+     4.2.1. 선형 회귀 모델 파라미터 조정
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id5">
-     4.2.2. 경사 하강법 관련 주요 개념
+     4.2.2. 경사 하강법 종류
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#id6">
-       4.2.2.1. 최적 학습 모델
+       4.2.2.1. 배치 경사 하강법
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#id7">
-       4.2.2.2. 파라미터
+       4.2.2.2. 학습율과 경사 하강법의 관계
       </a>
      </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id8">
-       4.2.2.3. 비용함수
-      </a>
-     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id8">
+     4.2.3. 4.2.2 확률적 경사 하강법
+    </a>
+    <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#id9">
-       4.2.2.4. 전역 최솟값
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id10">
-       4.2.2.5. 그레이디언트 벡터
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id11">
-       4.2.2.6. 학습률
-      </a>
-      <ul class="nav section-nav flex-column">
-       <li class="toc-h5 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id12">
-         4.2.2.6.1. 예제: 선형회귀 모델 파라미터 조정 과정
-        </a>
-       </li>
-      </ul>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id13">
-       4.2.2.7. 특성 스케일링
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#hyperparameter">
-       4.2.2.8. 하이퍼파라미터(hyperparameter)
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id14">
-     4.2.3. 경사 하강법 종류
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id15">
-       4.2.3.1. 배치 경사 하강법
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id16">
-       4.2.3.2. 확률적 경사 하강법
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id17">
-       4.2.3.3. 미니배치 경사 하강법
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id18">
-     4.2.4. 4.2.1 배치 경사 하강법
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id19">
-       4.2.4.1. 학습율과 경사 하강법의 관계
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id20">
-     4.2.5. 4.2.2 확률적 경사 하강법
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id21">
-       4.2.5.1. 학습 스케줄
+       4.2.3.1. 학습 스케줄
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#sgdregressor">
-       4.2.5.2. 사이킷런의
+       4.2.3.2. 사이킷런의
        <code class="docutils literal notranslate">
         <span class="pre">
          SGDRegressor
@@ -363,24 +291,24 @@
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id22">
-     4.2.6. 4.2.3 미니배치 경사 하강법
+    <a class="reference internal nav-link" href="#id10">
+     4.2.4. 4.2.3 미니배치 경사 하강법
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id23">
-     4.2.7. 경사 하강법 비교
+    <a class="reference internal nav-link" href="#id11">
+     4.2.5. 경사 하강법 비교
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id24">
-     4.2.8. 선형 회귀 알고리즘 비교
+    <a class="reference internal nav-link" href="#id12">
+     4.2.6. 선형 회귀 알고리즘 비교
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id25">
+  <a class="reference internal nav-link" href="#id13">
    4.3. 4.3 다항 회귀
   </a>
   <ul class="nav section-nav flex-column">
@@ -390,12 +318,12 @@
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id26">
+      <a class="reference internal nav-link" href="#id14">
        4.3.1.1. 선형 회귀: 1차 선형 모델
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id27">
+      <a class="reference internal nav-link" href="#id15">
        4.3.1.2. 다항 회귀: 2차 다항식 모델
       </a>
      </li>
@@ -415,137 +343,137 @@
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id28">
+  <a class="reference internal nav-link" href="#id16">
    4.4. 4.4 학습 곡선
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id29">
+    <a class="reference internal nav-link" href="#id17">
      4.4.1. 과소적합/과대적합 판정
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id30">
+    <a class="reference internal nav-link" href="#id18">
      4.4.2. 교차 검증 vs. 학습 곡선
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id31">
+    <a class="reference internal nav-link" href="#id19">
      4.4.3. 과소적합 모델의 학습 곡선 특징
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id32">
+    <a class="reference internal nav-link" href="#id20">
      4.4.4. 과대적합 모델의 학습 곡선 특징
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id33">
+    <a class="reference internal nav-link" href="#id21">
      4.4.5. 편향 vs 분산
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id34">
+    <a class="reference internal nav-link" href="#id22">
      4.4.6. 모델 일반화 오차
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id35">
+  <a class="reference internal nav-link" href="#id23">
    4.5. 4.5 규제를 사용하는 선형 모델
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id36">
+    <a class="reference internal nav-link" href="#id24">
      4.5.1. 자유도와 규제
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id37">
+    <a class="reference internal nav-link" href="#id25">
      4.5.2. 가중치를 규제하는 선형 회귀 모델
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id38">
+    <a class="reference internal nav-link" href="#id26">
      4.5.3. 규제 적용 주의사항
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id39">
+    <a class="reference internal nav-link" href="#id27">
      4.5.4. 4.5.1 릿지 회귀
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id40">
+    <a class="reference internal nav-link" href="#id28">
      4.5.5. 4.5.2 라쏘 회귀
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id41">
+      <a class="reference internal nav-link" href="#id29">
        4.5.5.1. 라쏘 회귀 대 릿지 회귀 비교
       </a>
      </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id42">
+    <a class="reference internal nav-link" href="#id30">
      4.5.6. 4.5.3 엘라스틱넷
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id43">
+    <a class="reference internal nav-link" href="#id31">
      4.5.7. 규제 사용 방법
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id44">
+    <a class="reference internal nav-link" href="#id32">
      4.5.8. 4.5.4 조기 종료
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id45">
+  <a class="reference internal nav-link" href="#id33">
    4.6. 4.6 로지스틱 회귀
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id46">
+    <a class="reference internal nav-link" href="#id34">
      4.6.1. 4.6.1 확률 추정
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id47">
+      <a class="reference internal nav-link" href="#id35">
        4.6.1.1. 예측값
       </a>
      </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id48">
+    <a class="reference internal nav-link" href="#id36">
      4.6.2. 4.6.2 훈련과 비용함수
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id49">
+      <a class="reference internal nav-link" href="#id37">
        4.6.2.1. 로그 손실 함수 이해
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id50">
+      <a class="reference internal nav-link" href="#id38">
        4.6.2.2. 로그 손실 함수의 편도 함수
       </a>
      </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id51">
+    <a class="reference internal nav-link" href="#id39">
      4.6.3. 4.6.3 결정 경계
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id52">
+      <a class="reference internal nav-link" href="#id40">
        4.6.3.1. 예제: 붓꽃 데이터셋
       </a>
      </li>
@@ -555,14 +483,14 @@
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id53">
+      <a class="reference internal nav-link" href="#id41">
        4.6.3.3. 꽃잎의 너비와 길이를 기준으로 Iris-Virginica 여부 판정하기
       </a>
      </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id54">
+    <a class="reference internal nav-link" href="#id42">
      4.6.4. 로지스틱 회귀 규제하기
     </a>
    </li>
@@ -572,19 +500,19 @@
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id55">
+      <a class="reference internal nav-link" href="#id43">
        4.6.5.1. 소프트맥스 회귀 학습 아이디어
       </a>
      </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id56">
+    <a class="reference internal nav-link" href="#id44">
      4.6.6. 소프트맥스 회귀 비용함수
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id57">
+    <a class="reference internal nav-link" href="#id45">
      4.6.7. 다중 클래스 분류 예제
     </a>
    </li>
@@ -617,115 +545,44 @@
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id3">
-   4.2. 4.2 경사 하강법
+   4.2. 경사 하강법
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id4">
-     4.2.1. 기본 아이디어
+     4.2.1. 선형 회귀 모델 파라미터 조정
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id5">
-     4.2.2. 경사 하강법 관련 주요 개념
+     4.2.2. 경사 하강법 종류
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#id6">
-       4.2.2.1. 최적 학습 모델
+       4.2.2.1. 배치 경사 하강법
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#id7">
-       4.2.2.2. 파라미터
+       4.2.2.2. 학습율과 경사 하강법의 관계
       </a>
      </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id8">
-       4.2.2.3. 비용함수
-      </a>
-     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id8">
+     4.2.3. 4.2.2 확률적 경사 하강법
+    </a>
+    <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#id9">
-       4.2.2.4. 전역 최솟값
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id10">
-       4.2.2.5. 그레이디언트 벡터
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id11">
-       4.2.2.6. 학습률
-      </a>
-      <ul class="nav section-nav flex-column">
-       <li class="toc-h5 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id12">
-         4.2.2.6.1. 예제: 선형회귀 모델 파라미터 조정 과정
-        </a>
-       </li>
-      </ul>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id13">
-       4.2.2.7. 특성 스케일링
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#hyperparameter">
-       4.2.2.8. 하이퍼파라미터(hyperparameter)
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id14">
-     4.2.3. 경사 하강법 종류
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id15">
-       4.2.3.1. 배치 경사 하강법
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id16">
-       4.2.3.2. 확률적 경사 하강법
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id17">
-       4.2.3.3. 미니배치 경사 하강법
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id18">
-     4.2.4. 4.2.1 배치 경사 하강법
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id19">
-       4.2.4.1. 학습율과 경사 하강법의 관계
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id20">
-     4.2.5. 4.2.2 확률적 경사 하강법
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id21">
-       4.2.5.1. 학습 스케줄
+       4.2.3.1. 학습 스케줄
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#sgdregressor">
-       4.2.5.2. 사이킷런의
+       4.2.3.2. 사이킷런의
        <code class="docutils literal notranslate">
         <span class="pre">
          SGDRegressor
@@ -736,24 +593,24 @@
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id22">
-     4.2.6. 4.2.3 미니배치 경사 하강법
+    <a class="reference internal nav-link" href="#id10">
+     4.2.4. 4.2.3 미니배치 경사 하강법
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id23">
-     4.2.7. 경사 하강법 비교
+    <a class="reference internal nav-link" href="#id11">
+     4.2.5. 경사 하강법 비교
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id24">
-     4.2.8. 선형 회귀 알고리즘 비교
+    <a class="reference internal nav-link" href="#id12">
+     4.2.6. 선형 회귀 알고리즘 비교
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id25">
+  <a class="reference internal nav-link" href="#id13">
    4.3. 4.3 다항 회귀
   </a>
   <ul class="nav section-nav flex-column">
@@ -763,12 +620,12 @@
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id26">
+      <a class="reference internal nav-link" href="#id14">
        4.3.1.1. 선형 회귀: 1차 선형 모델
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id27">
+      <a class="reference internal nav-link" href="#id15">
        4.3.1.2. 다항 회귀: 2차 다항식 모델
       </a>
      </li>
@@ -788,137 +645,137 @@
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id28">
+  <a class="reference internal nav-link" href="#id16">
    4.4. 4.4 학습 곡선
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id29">
+    <a class="reference internal nav-link" href="#id17">
      4.4.1. 과소적합/과대적합 판정
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id30">
+    <a class="reference internal nav-link" href="#id18">
      4.4.2. 교차 검증 vs. 학습 곡선
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id31">
+    <a class="reference internal nav-link" href="#id19">
      4.4.3. 과소적합 모델의 학습 곡선 특징
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id32">
+    <a class="reference internal nav-link" href="#id20">
      4.4.4. 과대적합 모델의 학습 곡선 특징
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id33">
+    <a class="reference internal nav-link" href="#id21">
      4.4.5. 편향 vs 분산
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id34">
+    <a class="reference internal nav-link" href="#id22">
      4.4.6. 모델 일반화 오차
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id35">
+  <a class="reference internal nav-link" href="#id23">
    4.5. 4.5 규제를 사용하는 선형 모델
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id36">
+    <a class="reference internal nav-link" href="#id24">
      4.5.1. 자유도와 규제
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id37">
+    <a class="reference internal nav-link" href="#id25">
      4.5.2. 가중치를 규제하는 선형 회귀 모델
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id38">
+    <a class="reference internal nav-link" href="#id26">
      4.5.3. 규제 적용 주의사항
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id39">
+    <a class="reference internal nav-link" href="#id27">
      4.5.4. 4.5.1 릿지 회귀
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id40">
+    <a class="reference internal nav-link" href="#id28">
      4.5.5. 4.5.2 라쏘 회귀
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id41">
+      <a class="reference internal nav-link" href="#id29">
        4.5.5.1. 라쏘 회귀 대 릿지 회귀 비교
       </a>
      </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id42">
+    <a class="reference internal nav-link" href="#id30">
      4.5.6. 4.5.3 엘라스틱넷
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id43">
+    <a class="reference internal nav-link" href="#id31">
      4.5.7. 규제 사용 방법
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id44">
+    <a class="reference internal nav-link" href="#id32">
      4.5.8. 4.5.4 조기 종료
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id45">
+  <a class="reference internal nav-link" href="#id33">
    4.6. 4.6 로지스틱 회귀
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id46">
+    <a class="reference internal nav-link" href="#id34">
      4.6.1. 4.6.1 확률 추정
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id47">
+      <a class="reference internal nav-link" href="#id35">
        4.6.1.1. 예측값
       </a>
      </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id48">
+    <a class="reference internal nav-link" href="#id36">
      4.6.2. 4.6.2 훈련과 비용함수
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id49">
+      <a class="reference internal nav-link" href="#id37">
        4.6.2.1. 로그 손실 함수 이해
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id50">
+      <a class="reference internal nav-link" href="#id38">
        4.6.2.2. 로그 손실 함수의 편도 함수
       </a>
      </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id51">
+    <a class="reference internal nav-link" href="#id39">
      4.6.3. 4.6.3 결정 경계
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id52">
+      <a class="reference internal nav-link" href="#id40">
        4.6.3.1. 예제: 붓꽃 데이터셋
       </a>
      </li>
@@ -928,14 +785,14 @@
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id53">
+      <a class="reference internal nav-link" href="#id41">
        4.6.3.3. 꽃잎의 너비와 길이를 기준으로 Iris-Virginica 여부 판정하기
       </a>
      </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id54">
+    <a class="reference internal nav-link" href="#id42">
      4.6.4. 로지스틱 회귀 규제하기
     </a>
    </li>
@@ -945,19 +802,19 @@
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id55">
+      <a class="reference internal nav-link" href="#id43">
        4.6.5.1. 소프트맥스 회귀 학습 아이디어
       </a>
      </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id56">
+    <a class="reference internal nav-link" href="#id44">
      4.6.6. 소프트맥스 회귀 비용함수
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id57">
+    <a class="reference internal nav-link" href="#id45">
      4.6.7. 다중 클래스 분류 예제
     </a>
    </li>
@@ -1012,6 +869,7 @@
 </ul>
 <div class="section" id="id2">
 <h2><span class="section-number">4.1. </span>선형 회귀<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p><strong>선형 회귀 예제: 1인당 GDP와 삶의 만족도</strong></p>
 <p><a class="reference internal" href="ml_landscape.html#sec-model-based-learning"><span class="std std-numref">1.4.3.2 절</span></a>에서 1인당 GDP와 삶의 만족도 사이의
 관계를 다음 1차 함수로 표현할 수 있었다.</p>
 <div class="math notranslate nohighlight">
@@ -1021,27 +879,38 @@
 예측된 삶의 만족도를 <strong>예측값</strong> <span class="math notranslate nohighlight">\(\hat y\)</span> 라 하면 다음 식으로 변환된다.</p>
 <div class="math notranslate nohighlight">
 \[\hat y = \theta_0 + \theta_1\cdot x_1\]</div>
-<p><span class="math notranslate nohighlight">\(\theta_0\)</span> 와 <span class="math notranslate nohighlight">\(\theta_1\)</span> 은 (선형) 모델의 <strong>파라미터</strong><font size="2">parameter</font>이며
-선형 회귀 모델이 알아냈다.</p>
+<p>절편 <span class="math notranslate nohighlight">\(\theta_0\)</span> 와 기울기 <span class="math notranslate nohighlight">\(\theta_1\)</span> 은 (선형) 모델의 <strong>파라미터</strong><font size="2">weight parameter</font>이다.
+머신러닝에서는 절편은 <strong>편향</strong><font size="2">bias</font>,
+기울기는 <strong>가중치</strong><font size="2">weight</font> 라 부른다.</p>
+<p>따라서 1인당 GDP와 삶의 만족도 사이의 선형 관계를 모델로 구현하려면
+적절한 하나의 편향과 하나의 가중치, 즉 총 2개의 파라미터를 결정해야 한다.</p>
+<p><strong>선형 회귀 예제: 캘리포니아 주택 가격 예측</strong></p>
 <p>반면에 <a class="reference internal" href="end2end_ml_project.html#ch-end2end"><span class="std std-numref">2 장</span></a>의 캘리포니아 주택 가격 예측 선형 회귀 모델은
 24개의 입력 특성을 사용하는 다음 함수를 이용한다.</p>
 <div class="math notranslate nohighlight">
 \[\hat y = \theta_0 + \theta_1\cdot x_1 + \cdots + \theta_{24}\cdot x_{24}\]</div>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(\hat y\)</span>: 예측값</p></li>
-<li><p><span class="math notranslate nohighlight">\(x_i\)</span>: 구역의 <span class="math notranslate nohighlight">\(i\)</span> 번째 특성값</p></li>
+<li><p><span class="math notranslate nohighlight">\(x_i\)</span>: 구역의 <span class="math notranslate nohighlight">\(i\)</span> 번째 특성값(위도, 경도, 중간소득, 가구당 인원 등등등)</p></li>
 <li><p><span class="math notranslate nohighlight">\(\theta_0\)</span>: 편향</p></li>
-<li><p><span class="math notranslate nohighlight">\(\theta_i\)</span>: <span class="math notranslate nohighlight">\(i\)</span> 번째 특성에 대한 가중치 파라미터, 단 <span class="math notranslate nohighlight">\(i &gt; 0\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\theta_i\)</span>: <span class="math notranslate nohighlight">\(i\)</span> 번째 특성에 대한 (가중치) 파라미터, 단 <span class="math notranslate nohighlight">\(i &gt; 0\)</span>.</p></li>
 </ul>
+<p>따라서 캘리포니아의 구역별 중간 주택 가격을 예측하는 선형 회귀 모델을 구하려면
+적절한 하나의 편향과 24개의 가중치,
+즉 총 25개의 파라미터를 결정해야 한다.</p>
+<p><strong>선형 회귀 함수</strong></p>
 <p>이를 일반화하면 다음과 같다.</p>
 <div class="math notranslate nohighlight">
 \[\hat y = \theta_0 + \theta_1\cdot x_1 + \cdots + \theta_{n}\cdot x_{n}\]</div>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(\hat y\)</span>: 예측값</p></li>
+<li><p><span class="math notranslate nohighlight">\(n\)</span>: 특성 수</p></li>
 <li><p><span class="math notranslate nohighlight">\(x_i\)</span>: 구역의 <span class="math notranslate nohighlight">\(i\)</span> 번째 특성값</p></li>
 <li><p><span class="math notranslate nohighlight">\(\theta_0\)</span>: 편향</p></li>
-<li><p><span class="math notranslate nohighlight">\(\theta_j\)</span>: <span class="math notranslate nohighlight">\(j\)</span> 번째 특성에 대한 가중치 파라미터(단, <span class="math notranslate nohighlight">\(1 \le j \le n\)</span>)</p></li>
+<li><p><span class="math notranslate nohighlight">\(\theta_j\)</span>: <span class="math notranslate nohighlight">\(j\)</span> 번째 특성에 대한 (가중치) 파라미터(단, <span class="math notranslate nohighlight">\(1 \le j \le n\)</span>)</p></li>
 </ul>
+<p>일반적으로 선형 회귀 모델을 구현하려면
+한 개의 편향과 <span class="math notranslate nohighlight">\(n\)</span> 개의 가중치, 즉 총 <span class="math notranslate nohighlight">\((1+n)\)</span> 개의 파라미터를 결정해야 한다.</p>
 <p><strong>벡터 표기법</strong></p>
 <p>예측값을 벡터의 <strong>내적</strong><font size="2">inner product</font>으로 표현할 수 있다.</p>
 <div class="math notranslate nohighlight">
@@ -1100,7 +969,29 @@ x_n
 [1, \mathbf{x}_1^{(m)}, \dots, \mathbf{x}_n^{(m)}] \\
 \end{bmatrix}
 \end{split}\]</div>
-<p>결론적으로 모든 예측값을 하나의 행렬식으로 표현하면 다음과 같다.</p>
+<p>결론적으로 모든 입력값에 대한 예측값을 하나의 행렬식으로 표현하면 다음과 같다.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{bmatrix}
+\hat y_1 \\
+\vdots \\
+\hat y_m
+\end{bmatrix}
+= 
+\begin{bmatrix} 
+[1, \mathbf{x}_1^{(1)}, \dots, \mathbf{x}_n^{(1)}] \\
+\vdots \\
+[1, \mathbf{x}_1^{(m)}, \dots, \mathbf{x}_n^{(m)}] \\
+\end{bmatrix}
+\,\, 
+\begin{bmatrix}
+\theta_0\\
+\theta_1 \\
+\vdots \\
+\theta_n
+\end{bmatrix}
+\end{split}\]</div>
+<p>간략하게 줄이면 다음과 같다.</p>
 <div class="math notranslate nohighlight">
 \[
 \hat{\mathbf y} = \mathbf{X}\, \mathbf{\theta}
@@ -1122,8 +1013,8 @@ x_n
 <td class="text-align:center"><p><span class="math notranslate nohighlight">\(\mathbf X\)</span></p></td>
 <td class="text-align:center"><p><span class="math notranslate nohighlight">\((m, 1+n)\)</span></p></td>
 </tr>
-<tr class="row-even"><td class="text-align:center"><p>가중치</p></td>
-<td class="text-align:center"><p><span class="math notranslate nohighlight">\(\theta\)</span></p></td>
+<tr class="row-even"><td class="text-align:center"><p>파라미터</p></td>
+<td class="text-align:center"><p><span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span></p></td>
 <td class="text-align:center"><p><span class="math notranslate nohighlight">\((1+n, 1)\)</span></p></td>
 </tr>
 </tbody>
@@ -1133,14 +1024,15 @@ x_n
 성능을 평가한다.</p>
 <div class="math notranslate nohighlight">
 \[
-\mathrm{MSE}(\theta) := \mathrm{MSE}(\mathbf X, h_\theta) = 
-\frac 1 m \sum_{i=1}^{m} \big(\theta^{T}\, \mathbf{x}^{(i)} - y^{(i)}\big)^2
+\mathrm{MSE}(\mathbf{\theta}) := \mathrm{MSE}(\mathbf X, h_{\mathbf{\theta}}) = 
+\frac 1 m \sum_{i=1}^{m} \big(\mathbf{\theta}^{T}\, \mathbf{x}^{(i)} - y^{(i)}\big)^2
 \]</div>
-<p>최종 목표는 훈련셋이 주어졌을 때 <span class="math notranslate nohighlight">\(\mathrm{MSE}(\theta)\)</span>가 최소가 되도록 하는 <span class="math notranslate nohighlight">\(\theta\)</span> 찾는 것이다.</p>
+<p>최종 목표는 훈련셋이 주어졌을 때 <span class="math notranslate nohighlight">\(\mathrm{MSE}(\mathbf{\theta})\)</span>가 최소가 되도록 하는
+<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>를 찾는 것이다.</p>
 <ul class="simple">
 <li><p>방식 1: 정규방정식 또는 특이값 분해(SVD) 활용</p>
 <ul>
-<li><p>드물지만 수학적으로 비용함수를 최소화하는 <span class="math notranslate nohighlight">\(\theta\)</span> 값을 직접 계산할 수 있는 경우 활용</p></li>
+<li><p>드물지만 수학적으로 비용함수를 최소화하는 <span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span> 값을 직접 계산할 수 있는 경우 활용</p></li>
 <li><p>계산복잡도가 <span class="math notranslate nohighlight">\(O(n^2)\)</span> 이상인 행렬 연산을 수행해야 함.</p></li>
 <li><p>따라서 특성 수(<span class="math notranslate nohighlight">\(n\)</span>)이 큰 경우 메모리 관리 및 시간복잡도 문제때문에 비효율적임.</p></li>
 </ul>
@@ -1153,12 +1045,13 @@ x_n
 </li>
 </ul>
 <p><strong>정규 방정식</strong></p>
-<p><strong>정규 방정식</strong><font size="2">normal equation</font>을 이용하여
-비용함수를 최소화 하는 <span class="math notranslate nohighlight">\(\theta\)</span>를 아래와 같이 바로 계산할 수 있다.
+<p>비용함수를 최소화 하는 <span class="math notranslate nohighlight">\(\theta\)</span>를
+정규 방정식<font size="2">normal equation</font>을 이용하여
+아래와 같이 바로 계산할 수 있다.
 단, <span class="math notranslate nohighlight">\(\mathbf{X}^T\, \mathbf{X}\)</span> 의 역행렬이 존재해야 한다.</p>
 <div class="math notranslate nohighlight">
 \[
-\hat \theta = 
+\hat{\mathbf{\theta}} = 
 (\mathbf{X}^T\, \mathbf{X})^{-1}\, \mathbf{X}^T\, \mathbf{y}
 \]</div>
 <p><strong>SVD(특잇값 분해) 활용</strong></p>
@@ -1170,182 +1063,106 @@ x_n
 또한 다음이 성립한다.</p>
 <div class="math notranslate nohighlight">
 \[
-\hat \theta = 
+\hat{\mathbf{\theta}} = 
 \mathbf{X}^+\, \mathbf{y}
 \]</div>
 </div>
 <div class="section" id="id3">
-<h2><span class="section-number">4.2. </span>4.2 경사 하강법<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id4">
-<h3><span class="section-number">4.2.1. </span>기본 아이디어<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p>훈련 세트를 이용한 훈련 과정 중에 가중치 등과 같은 <strong>파라미터를 조금씩 반복적으로 조정하기</strong></p></li>
-</ul>
-<ul class="simple">
-<li><p>조정 기준: 비용 함수의 크기 줄이기</p></li>
-</ul>
-</div>
-<div class="section" id="id5">
-<h3><span class="section-number">4.2.2. </span>경사 하강법 관련 주요 개념<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="id6">
-<h4><span class="section-number">4.2.2.1. </span>최적 학습 모델<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li><p>비용함수를 최소화하는 또는 효용함수를 최대화하는 파라미터를 사용하는 모델</p></li>
-</ul>
-</div>
-<div class="section" id="id7">
-<h4><span class="section-number">4.2.2.2. </span>파라미터<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li><p>예측값을 생성하는 함수로 구현되는 학습 모델에 사용되는 파라미터</p></li>
-<li><p>예제: 선형 회귀 모델에 사용되는 편향과 가중치 파라미터</p></li>
-</ul>
-<div class="math notranslate nohighlight">
-\[\theta = \theta_0,\theta_1, \dots, \theta_n\]</div>
-</div>
-<div class="section" id="id8">
-<h4><span class="section-number">4.2.2.3. </span>비용함수<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li><p>모델이 얼마나 나쁜지를 계산해주는 함수</p></li>
-<li><p>예제: 선형 회귀 모델의 평균 제곱 오차(MSE)</p></li>
-</ul>
-<div class="math notranslate nohighlight">
-\[
-\mathrm{MSE}(\theta) = 
-\frac 1 m \sum_{i=1}^{m} \big(\theta^{T}\, \mathbf{x^{(i)}} - y^{(i)}\big)^2
-\]</div>
-</div>
-<div class="section" id="id9">
-<h4><span class="section-number">4.2.2.4. </span>전역 최솟값<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li><p>비용함수가 가질 수 있는 최솟값</p></li>
-<li><p>예제: 선형 회귀 모델의 평균 제곱 오차(MSE) 함수가 갖는 최솟값</p></li>
-</ul>
-</div>
-<div class="section" id="id10">
-<h4><span class="section-number">4.2.2.5. </span>그레이디언트 벡터<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li><p>다변수 함수의 미분값.</p></li>
-<li><p>(그레이디언트) 벡터는 방향과 크기에 대한 정보 제공</p></li>
-<li><p>그레이디언트가 가리키는 방향의 __반대 방향__으로 움직여야 가장 빠르게 전역 최솟값에 접근</p></li>
-<li><p>예제: 선형 회귀 MSE의 그레이디언트 벡터 <span class="math notranslate nohighlight">\(\nabla_\theta \textrm{MSE}(\theta)\)</span></p></li>
-</ul>
+<h2><span class="section-number">4.2. </span>경사 하강법<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>훈련 세트를 이용한 훈련 과정 중에 가중치 파라미터를 조금씩 반복적으로 조정한다.
+이때 비용 함수의 크기를 줄이는 방향으로 조정한다.</p>
+<p>경사 하강법 이해를 위해 다음 개념들을 충분히 이해하고 있어야 한다.</p>
+<p><strong>최적 학습 모델</strong></p>
+<p>비용 함수를 최소화하는 또는 효용 함수를 최대화하는 파라미터를 사용하는 모델이며,
+최종적으로 훈련시킬 대상이다.</p>
+<p><strong>파라미터</strong></p>
+<p>선형 회귀 모델에 사용되는 편향과 가중치 파라미터처럼 모델 훈련중에 학습되는 파라미터를 가리킨다.</p>
+<p><strong>비용 함수</strong></p>
+<p>평균 제곱 오차(MSE)처럼 모델이 얼마나 나쁜가를 측정하는 함수다.</p>
+<p><strong>전역 최솟값</strong></p>
+<p>비용 함수의 최솟값이다.</p>
+<p><strong>비용 함수의 그레이디언트</strong></p>
+<p>MSE를 비용함수로 사용하는 경우 <span class="math notranslate nohighlight">\(\textrm{MSE}(\mathbf{\theta})\)</span> 함수의 <span class="math notranslate nohighlight">\(\mathbf{\mathbf{\theta}}\)</span> 에 대한 그레이디언트를 사용한다.
+그레이디언트 벡터는 방향과 크기에 대한 정보를 제공하며,
+그레이디언트가 가리키는 방향의 __반대 방향__으로 움직이면
+빠르게 전역 최솟값에 접근한다.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\nabla_\theta \textrm{MSE}(\theta) =
+\nabla_\mathbf{\theta} \textrm{MSE}(\mathbf{\theta}) =
 \begin{bmatrix}
-    \frac{\partial}{\partial \theta_0} \textrm{MSE}(\theta) \\
-    \frac{\partial}{\partial \theta_1} \textrm{MSE}(\theta) \\
+    \frac{\partial}{\partial \mathbf{\theta}_0} \textrm{MSE}(\mathbf{\theta}) \\
+    \frac{\partial}{\partial \mathbf{\theta}_1} \textrm{MSE}(\mathbf{\theta}) \\
     \vdots \\
-    \frac{\partial}{\partial \theta_n} \textrm{MSE}(\theta)
-\end{bmatrix} =
-\frac{2}{m}\, \mathbf{X}^T\, (\mathbf{X}\, \theta^T - \mathbf y)
+    \frac{\partial}{\partial \mathbf{\theta}_n} \textrm{MSE}(\mathbf{\theta})
+\end{bmatrix}
 \end{split}\]</div>
-</div>
-<div class="section" id="id11">
-<h4><span class="section-number">4.2.2.6. </span>학습률<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li><p>훈련 과정에서의 비용함수 파라미터 조정 비율</p></li>
-</ul>
-<div class="section" id="id12">
-<h5><span class="section-number">4.2.2.6.1. </span>예제: 선형회귀 모델 파라미터 조정 과정<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h5>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\theta\)</span>를 임의의 값으로 지정한 후 훈련 시작</p></li>
-</ul>
-<ul class="simple">
-<li><p>아래 단계를 <span class="math notranslate nohighlight">\(\theta\)</span>가 특정 값에 지정된 오차범위 내로 수렴할 때까지 반복</p>
-<ol class="simple">
-<li><p>(배치 크기로) 지정된 수의 훈련 샘플을 이용하여 학습.</p></li>
-<li><p>학습 후 <span class="math notranslate nohighlight">\(\mathrm{MSE}(\theta)\)</span> 계산.</p></li>
-<li><p>이전 <span class="math notranslate nohighlight">\(\theta\)</span>에서 <span class="math notranslate nohighlight">\(\nabla_\theta \textrm{MSE}(\theta)\)</span>과 학습률 <span class="math notranslate nohighlight">\(\eta\)</span>를 곱한 값 빼기.</p></li>
-</ol>
-</li>
-</ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-01.png" width="600"/></div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
+<p><strong>참고:</strong> 산에서 가장 경사가 급한 길을 따를 때 가장 빠르게 하산하는 원리와 동일하다.</p>
+<p><strong>학습률(<span class="math notranslate nohighlight">\(\eta\)</span>)</strong></p>
+<p>훈련 과정에서의 비용함수의 파라미터(<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>)를 조정할 때 사용하는 조정 비율이다.</p>
+<p><strong>허용오차</strong></p>
+<p>비용함수의 그레이디언트 벡터의 크기가 허용오차보다 작아지면 모델의 훈련을 종료시키는 데에
+허용오차<font size="2">tolerance</font>를 사용한다.</p>
+<div class="section" id="id4">
+<h3><span class="section-number">4.2.1. </span>선형 회귀 모델 파라미터 조정<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>선형회귀 모델 파라미터를 조정하는 과정을 이용하여 경사 하강법의 기본 아이디어를 설명한다.</p>
+<p>먼저 <span class="math notranslate nohighlight">\(\mathrm{MSE}(\mathbf{\theta})\)</span> 는 <span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span> 에 대한 2차 함수임에 주의한다.
+여기서는 <span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span> 가 하나의 파라미터로 구성되었다고 가정한다.
+따라서 <span class="math notranslate nohighlight">\(\mathrm{MSE}(\mathbf{\theta})\)</span>의 그래프는 포물선이 된다.</p>
+<div class="math notranslate nohighlight">
+\[
+\mathrm{MSE}(\mathbf{\theta}) =
+\frac 1 m \sum_{i=1}^{m} \big(\mathbf{\theta}^{T}\, \mathbf{x}^{(i)} - y^{(i)}\big)^2
+\]</div>
+<p>경사 하강법은 다음 과정으로 이루어진다.</p>
+<ol>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>를 임의의 값으로 지정한 후 훈련을 시작한다.</p></li>
+<li><p>아래 단계를 <span class="math notranslate nohighlight">\(\nabla_\theta \textrm{MSE}(\theta)\)</span> 의 크기가 허용오차보다 작아질 때까지 반복한다.</p>
+<ol>
+<li><p>지정된 수의 훈련 샘플을 이용한 학습.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathrm{MSE}(\mathbf{\theta})\)</span> 계산.</p></li>
+<li><p>이전 <span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>에서 <span class="math notranslate nohighlight">\(\nabla_\mathbf{\theta} \textrm{MSE}(\mathbf{\theta})\)</span> 와
+학습률 <span class="math notranslate nohighlight">\(\eta\)</span>를 곱한 값 빼기.</p>
 <div class="math notranslate nohighlight">
 \[\theta^{(\text{new})} = \theta^{(\text{old})}\, -\, \eta\cdot \nabla_\theta \textrm{MSE}(\theta^{(\text{old})})\]</div>
+</li>
+</ol>
+</li>
+</ol>
+<p>아래 그림이 경사 하강법을 잘 설명한다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-01.png" width="500"/></div><p>학습률이 너무 작거나 크면 비용 함수의 전역 최솟값에 수렴하지 않을 수 있다.</p>
 <ul class="simple">
 <li><p>학습률이 너무 작은 경우: 비용 함수가 전역 최소값에 너무 느리게 수렴.</p></li>
 </ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-02.png" width="600"/></div><ul class="simple">
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-02.png" width="500"/></div><ul class="simple">
 <li><p>학습률이 너무 큰 경우: 비용 함수가 수렴하지 않음.</p></li>
 </ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-03.png" width="600"/></div><ul class="simple">
-<li><p>(선형 회귀가 아닌 경우에) 시작점에 따라 지역 최솟값에 수렴하지 못할 수도 있음.</p></li>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-03.png" width="500"/></div><p>선형 회귀의 경우 학습률이 너무 크거나 너무 작지 않으면 적정한 시간 내에 비용 함수의
+전역 최솟값에 수렴하는 것이 보장된다.
+하지만 선형 회귀가 아닌 경우에는 시작점에 따라 지역 최솟값에 수렴하거나 정체될 수 있음을
+아래 그림이 잘 보여준다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-04.png" width="500"/></div><p><strong>특성 스케일링의 중요성</strong></p>
+<p>특성들의 스켈일을 통일시키면 보다 빠른 학습이 이루어지는 이유를
+아래 그림이 설명한다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-04a.png" width="500"/></div></div>
+<div class="section" id="id5">
+<h3><span class="section-number">4.2.2. </span>경사 하강법 종류<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>모델을 지정할 때 지정하는 배치 크기, 에포크 수, 허용오차에 따라
+세 종류로 나뉜다.</p>
+<ul class="simple">
+<li><p>에포크<font size="2">epoch</font>: 입력 데이터셋에 포함된 모든 데이터를 대상으로 예측값을 계산하는 과정.</p></li>
+<li><p>허용오차<font size="2">tolerance</font>: 비용함수의 그레이디언트 벡터의 크기가 허용오차보다 작아지면 훈련 종료</p></li>
+<li><p>배치 크기<font size="2">batch size</font>: 파라미터를 업데이트하기 위해, 즉 그레이디언트 벡터를 계산하기 위해 사용되는 훈련 샘플 수.</p></li>
 </ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-04.png" width="600"/></div><ul class="simple">
-<li><p>선형 회귀와 학습률</p>
-<ul>
-<li><p>비용함수(MSE)가 볼록 함수. 즉, 지역 최솟값을 갖지 않음</p></li>
-<li><p>따라서 학습률이 너무 크지 않으면 언젠가는 전역 최솟값에 수렴</p></li>
-</ul>
-</li>
-</ul>
+<p><strong>참고:</strong> 지정된 배치 크기의 샘플에 대해 예측을 한 후에 경사하강법을 이용하여 파라미터를 조정하는 단계를
+스텝<font size="2">step</font>라 하며, 다음이 성립힌다.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>스텝 크기 = (훈련 샘플 수) / (배치 크기)
+</pre></div>
 </div>
-</div>
-<div class="section" id="id13">
-<h4><span class="section-number">4.2.2.7. </span>특성 스케일링<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li><p>특성들의 스켈일을 통일시키면 보다 빠른 학습 이루어짐.</p></li>
-</ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-04a.png" width="600"/></div></div>
-<div class="section" id="hyperparameter">
-<h4><span class="section-number">4.2.2.8. </span>하이퍼파라미터(hyperparameter)<a class="headerlink" href="#hyperparameter" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li><p>학습 모델을 지정할 때 사용되는 값.
-학습률, 배치 크기, 에포크, 허용오차, 스텝 크기 등</p></li>
-</ul>
-<ul class="simple">
-<li><p>에포크(epoch): 훈련 세트 크기만큼의 샘플을 훈련하는 단계</p>
-<ul>
-<li><p>에포크 수: 에포크 반복 횟수</p></li>
-</ul>
-</li>
-</ul>
-<ul class="simple">
-<li><p>배치(batch) 크기: 파라미터를 업데이트하기 위해, 즉 그레이디언트 벡터를 계산하기 위해 사용되는 훈련 샘플 수.</p></li>
-</ul>
-<ul class="simple">
-<li><p>허용오차(tolerance): 비용함수의 그레이디언트 벡터의 크기가 허용오차보다 작아지면 학습 종료</p></li>
-</ul>
-<ul class="simple">
-<li><p>스텝(step): 지정된 배치 크기의 샘플을 학습한 후에 파라미터를 조정하는 단계</p>
-<ul>
-<li><p>스텝 크기 = (훈련 샘플 수) / (배치 크기)</p></li>
-<li><p>예제: 훈련 세트의 크기가 1,000이고 배치 크기가 10이면,
-하나의 에포크 기간동안 총 100번의 스텝이 실행됨.</p></li>
-</ul>
-</li>
-</ul>
-</div>
-</div>
-<div class="section" id="id14">
-<h3><span class="section-number">4.2.3. </span>경사 하강법 종류<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="id15">
-<h4><span class="section-number">4.2.3.1. </span>배치 경사 하강법<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li><p>전체 훈련 샘플을 대상으로 훈련한 후에, 즉 에포크마다 그레이디언트를 계산하여 파라미터 조정</p></li>
-<li><p><strong>주의</strong>: 여기서 사용되는 ‘배치’의 의미가 ‘배치 크기’의 ‘배치’와 다른 의미</p></li>
-</ul>
-</div>
-<div class="section" id="id16">
-<h4><span class="section-number">4.2.3.2. </span>확률적 경사 하강법<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li><p>배치 크기: 1</p></li>
-<li><p>즉, 하나의 훈련 샘플을 학습할 때마다 그레이디언트를 계산해서 파라미터 조정</p></li>
-</ul>
-</div>
-<div class="section" id="id17">
-<h4><span class="section-number">4.2.3.3. </span>미니배치 경사 하강법<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li><p>배치 크기: 2에서 수백 사이</p></li>
-<li><p>최적 배치 크기: 경우에 따라 다름. 여러 논문이 32 이하 추천</p></li>
-</ul>
-</div>
-</div>
-<div class="section" id="id18">
-<h3><span class="section-number">4.2.4. </span>4.2.1 배치 경사 하강법<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<p>예를 들어, 훈련 세트의 크기가 1,000이고 배치 크기가 10이면, 에포크 당 100번의 스텝이 실행된다.</p>
+<div class="section" id="id6">
+<h4><span class="section-number">4.2.2.1. </span>배치 경사 하강법<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+<p>에포크마다 그레이디언트를 계산하여 파라미터를 조정한다.
+즉, 배치의 크기가 전체 입력 데이터셋의 크기와 같고 따라서 스텝의 크기는 1이다.</p>
 <ul class="simple">
 <li><p>에포크와 허용오차</p>
 <ul>
@@ -1371,12 +1188,16 @@ x_n
 </ul>
 </li>
 </ul>
-<div class="section" id="id19">
-<h4><span class="section-number">4.2.4.1. </span>학습율과 경사 하강법의 관계<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="id7">
+<h4><span class="section-number">4.2.2.2. </span>학습율과 경사 하강법의 관계<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-04b.png" width="700"/></div></div>
 </div>
-<div class="section" id="id20">
-<h3><span class="section-number">4.2.5. </span>4.2.2 확률적 경사 하강법<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id8">
+<h3><span class="section-number">4.2.3. </span>4.2.2 확률적 경사 하강법<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p><strong>확률적 경사 하강법</strong></p>
+<p>배치 크기가 1이다.
+즉, 하나의 훈련 샘플에 대해 예측을 하면 그 결과를 이용하여 그레이디언트를 계산하고 파라미터를 조정한다.</p>
 <ul class="simple">
 <li><p>장점</p>
 <ul>
@@ -1390,8 +1211,8 @@ x_n
 <li><p>단점: 학습 과정에서 파라미터의 동요가 심해서 경우에 따라 전역 최솟값에 수렴하지 못하고 계속해서 발산할 가능성도 높음</p></li>
 </ul>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-04c.png" width="400"/></div><p>처음 20 단계 동안의 SGD 학습 내용: 모델이 수렴하지 못함을 확인할 수 있음.</p>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-04d.png" width="600"/></div><div class="section" id="id21">
-<h4><span class="section-number">4.2.5.1. </span>학습 스케줄<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h4>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-04d.png" width="600"/></div><div class="section" id="id9">
+<h4><span class="section-number">4.2.3.1. </span>학습 스케줄<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>요동치는 파라미터를 제어하기 위해 학습률을 학습 과정 동안 천천히 줄어들게 만들 수 있음</p></li>
 </ul>
@@ -1413,7 +1234,7 @@ x_n
 </ul>
 </div>
 <div class="section" id="sgdregressor">
-<h4><span class="section-number">4.2.5.2. </span>사이킷런의 <code class="docutils literal notranslate"><span class="pre">SGDRegressor</span></code><a class="headerlink" href="#sgdregressor" title="Permalink to this headline">¶</a></h4>
+<h4><span class="section-number">4.2.3.2. </span>사이킷런의 <code class="docutils literal notranslate"><span class="pre">SGDRegressor</span></code><a class="headerlink" href="#sgdregressor" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>경사 하강법 사용</p></li>
 <li><p>사용되는 하이퍼파라미터</p>
@@ -1427,8 +1248,11 @@ x_n
 </ul>
 </div>
 </div>
-<div class="section" id="id22">
-<h3><span class="section-number">4.2.6. </span>4.2.3 미니배치 경사 하강법<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id10">
+<h3><span class="section-number">4.2.4. </span>4.2.3 미니배치 경사 하강법<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p><strong>미니배치 경사 하강법</strong></p>
+<p>배치 크기가 2에서 수백 사이로 정해지며,
+최적 배치 크기는 경우에 따라 다르다.</p>
 <ul class="simple">
 <li><p>장점</p>
 <ul>
@@ -1446,11 +1270,11 @@ x_n
 </li>
 </ul>
 </div>
-<div class="section" id="id23">
-<h3><span class="section-number">4.2.7. </span>경사 하강법 비교<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id11">
+<h3><span class="section-number">4.2.5. </span>경사 하강법 비교<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-05.png" width="600"/></div></div>
-<div class="section" id="id24">
-<h3><span class="section-number">4.2.8. </span>선형 회귀 알고리즘 비교<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id12">
+<h3><span class="section-number">4.2.6. </span>선형 회귀 알고리즘 비교<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
 <table class="colwidths-auto table">
 <thead>
 <tr class="row-odd"><th class="text-align:center head"><p>알고리즘</p></th>
@@ -1507,8 +1331,8 @@ x_n
 </table>
 </div>
 </div>
-<div class="section" id="id25">
-<h2><span class="section-number">4.3. </span>4.3 다항 회귀<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id13">
+<h2><span class="section-number">4.3. </span>4.3 다항 회귀<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>다항 회귀(polynomial regression)란?</p>
 <ul>
@@ -1527,13 +1351,13 @@ x_n
 </ul>
 <div class="section" id="vs">
 <h3><span class="section-number">4.3.1. </span>선형 회귀 vs. 다항 회귀<a class="headerlink" href="#vs" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="id26">
-<h4><span class="section-number">4.3.1.1. </span>선형 회귀: 1차 선형 모델<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id14">
+<h4><span class="section-number">4.3.1.1. </span>선형 회귀: 1차 선형 모델<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h4>
 <div class="math notranslate nohighlight">
 \[\hat y = \theta_0 + \theta_1\, x_1\]</div>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-06.png" width="600"/></div></div>
-<div class="section" id="id27">
-<h4><span class="section-number">4.3.1.2. </span>다항 회귀: 2차 다항식 모델<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id15">
+<h4><span class="section-number">4.3.1.2. </span>다항 회귀: 2차 다항식 모델<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h4>
 <div class="math notranslate nohighlight">
 \[\hat y = \theta_0 + \theta_1\, x_1 + \theta_2\, x_1^{2}\]</div>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-07.png" width="600"/></div></div>
@@ -1557,17 +1381,17 @@ x_n
 </div>
 </div>
 </div>
-<div class="section" id="id28">
-<h2><span class="section-number">4.4. </span>4.4 학습 곡선<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id29">
-<h3><span class="section-number">4.4.1. </span>과소적합/과대적합 판정<a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id16">
+<h2><span class="section-number">4.4. </span>4.4 학습 곡선<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id17">
+<h3><span class="section-number">4.4.1. </span>과소적합/과대적합 판정<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>예제: 선형 모델, 2차 다항 회귀 모델, 300차 다항 회귀 모델 비교</p></li>
 <li><p>다항 회귀 모델의 차수에 따라 훈련된 모델이 훈련 세트에 과소 또는 과대 적합할 수 있음.</p></li>
 </ul>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-08.png" width="600"/></div></div>
-<div class="section" id="id30">
-<h3><span class="section-number">4.4.2. </span>교차 검증 vs. 학습 곡선<a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id18">
+<h3><span class="section-number">4.4.2. </span>교차 검증 vs. 학습 곡선<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>교차 검증(2장)</p>
 <ul>
@@ -1585,8 +1409,8 @@ x_n
 </li>
 </ul>
 </div>
-<div class="section" id="id31">
-<h3><span class="section-number">4.4.3. </span>과소적합 모델의 학습 곡선 특징<a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id19">
+<h3><span class="section-number">4.4.3. </span>과소적합 모델의 학습 곡선 특징<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-09.png" width="600"/></div><ul class="simple">
 <li><p>훈련 데이터(빨강)에 대한 성능</p>
 <ul>
@@ -1603,8 +1427,8 @@ x_n
 </li>
 </ul>
 </div>
-<div class="section" id="id32">
-<h3><span class="section-number">4.4.4. </span>과대적합 모델의 학습 곡선 특징<a class="headerlink" href="#id32" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id20">
+<h3><span class="section-number">4.4.4. </span>과대적합 모델의 학습 곡선 특징<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-10.png" width="600"/></div><ul class="simple">
 <li><p>훈련 데이터(빨강)에 대한 성능: 훈련 데이터에 대한 평균 제곱근 오차가 매우 낮음.</p></li>
 </ul>
@@ -1615,8 +1439,8 @@ x_n
 <li><p>과대적합 모델 개선법: 훈련 데이터 추가</p></li>
 </ul>
 </div>
-<div class="section" id="id33">
-<h3><span class="section-number">4.4.5. </span>편향 vs 분산<a class="headerlink" href="#id33" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id21">
+<h3><span class="section-number">4.4.5. </span>편향 vs 분산<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>편향(bias)</p>
 <ul>
@@ -1642,8 +1466,8 @@ x_n
 </li>
 </ul>
 </div>
-<div class="section" id="id34">
-<h3><span class="section-number">4.4.6. </span>모델 일반화 오차<a class="headerlink" href="#id34" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id22">
+<h3><span class="section-number">4.4.6. </span>모델 일반화 오차<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>훈련 후에 새로운 데이터 대한 예측에서 발생하는 오차를 가리키며 세 종류의 오차가 있음.</p></li>
 </ul>
@@ -1663,10 +1487,10 @@ x_n
 </ul>
 </div>
 </div>
-<div class="section" id="id35">
-<h2><span class="section-number">4.5. </span>4.5 규제를 사용하는 선형 모델<a class="headerlink" href="#id35" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id36">
-<h3><span class="section-number">4.5.1. </span>자유도와 규제<a class="headerlink" href="#id36" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id23">
+<h2><span class="section-number">4.5. </span>4.5 규제를 사용하는 선형 모델<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id24">
+<h3><span class="section-number">4.5.1. </span>자유도와 규제<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>자유도(degree of freedom): 학습 모델 결정에 영향을 주는 요소(특성)들의 수</p>
 <ul>
@@ -1684,8 +1508,8 @@ x_n
 </li>
 </ul>
 </div>
-<div class="section" id="id37">
-<h3><span class="section-number">4.5.2. </span>가중치를 규제하는 선형 회귀 모델<a class="headerlink" href="#id37" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id25">
+<h3><span class="section-number">4.5.2. </span>가중치를 규제하는 선형 회귀 모델<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>릿지 회귀</p></li>
 </ul>
@@ -1696,8 +1520,8 @@ x_n
 <li><p>엘라스틱넷</p></li>
 </ul>
 </div>
-<div class="section" id="id38">
-<h3><span class="section-number">4.5.3. </span>규제 적용 주의사항<a class="headerlink" href="#id38" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id26">
+<h3><span class="section-number">4.5.3. </span>규제 적용 주의사항<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h3>
 <p>규제항은 훈련 과정에만 사용된다. 테스트 과정에는 다른 기준으로 성능을 평가한다.</p>
 <ul class="simple">
 <li><p>훈련 과정: 비용 최소화 목표</p></li>
@@ -1710,8 +1534,8 @@ x_n
 </li>
 </ul>
 </div>
-<div class="section" id="id39">
-<h3><span class="section-number">4.5.4. </span>4.5.1 릿지 회귀<a class="headerlink" href="#id39" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id27">
+<h3><span class="section-number">4.5.4. </span>4.5.1 릿지 회귀<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>비용함수</p></li>
 </ul>
@@ -1732,8 +1556,8 @@ x_n
 <li><p>주의사항: 특성 스케일링 전처리를 해야 성능이 좋아짐.</p></li>
 </ul>
 </div>
-<div class="section" id="id40">
-<h3><span class="section-number">4.5.5. </span>4.5.2 라쏘 회귀<a class="headerlink" href="#id40" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id28">
+<h3><span class="section-number">4.5.5. </span>4.5.2 라쏘 회귀<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>비용함수</p></li>
 </ul>
@@ -1749,12 +1573,12 @@ x_n
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(\theta_0\)</span>은 규제하지 않음</p></li>
 </ul>
-<div class="section" id="id41">
-<h4><span class="section-number">4.5.5.1. </span>라쏘 회귀 대 릿지 회귀 비교<a class="headerlink" href="#id41" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id29">
+<h4><span class="section-number">4.5.5.1. </span>라쏘 회귀 대 릿지 회귀 비교<a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h4>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/lasso_vs_ridge_plot.png" width="600"/></div></div>
 </div>
-<div class="section" id="id42">
-<h3><span class="section-number">4.5.6. </span>4.5.3 엘라스틱넷<a class="headerlink" href="#id42" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id30">
+<h3><span class="section-number">4.5.6. </span>4.5.3 엘라스틱넷<a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>비용함수</p></li>
 </ul>
@@ -1767,8 +1591,8 @@ x_n
 <li><p>혼합 비율 <span class="math notranslate nohighlight">\(r\)</span>을 이용하여 릿지 규제와 라쏘 규제를 적절하게 조절</p></li>
 </ul>
 </div>
-<div class="section" id="id43">
-<h3><span class="section-number">4.5.7. </span>규제 사용 방법<a class="headerlink" href="#id43" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id31">
+<h3><span class="section-number">4.5.7. </span>규제 사용 방법<a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>대부분의 경우 약간이라도 규제 사용 추천</p></li>
 </ul>
@@ -1792,8 +1616,8 @@ x_n
 </li>
 </ul>
 </div>
-<div class="section" id="id44">
-<h3><span class="section-number">4.5.8. </span>4.5.4 조기 종료<a class="headerlink" href="#id44" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id32">
+<h3><span class="section-number">4.5.8. </span>4.5.4 조기 종료<a class="headerlink" href="#id32" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>모델의 훈련 세트에 대한 과대 적합 방지를 위해 훈련을 적절한 시기에 중단시키기.</p></li>
 </ul>
@@ -1806,8 +1630,8 @@ x_n
 </ul>
 </div>
 </div>
-<div class="section" id="id45">
-<h2><span class="section-number">4.6. </span>4.6 로지스틱 회귀<a class="headerlink" href="#id45" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id33">
+<h2><span class="section-number">4.6. </span>4.6 로지스틱 회귀<a class="headerlink" href="#id33" title="Permalink to this headline">¶</a></h2>
 <p>회귀 모델을 분류 모델로 활용할 수 있다.</p>
 <ul class="simple">
 <li><p>이진 분류: 로지스틱 회귀</p></li>
@@ -1815,8 +1639,8 @@ x_n
 <ul class="simple">
 <li><p>다중 클래스 분류: 소프트맥스 회귀</p></li>
 </ul>
-<div class="section" id="id46">
-<h3><span class="section-number">4.6.1. </span>4.6.1 확률 추정<a class="headerlink" href="#id46" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id34">
+<h3><span class="section-number">4.6.1. </span>4.6.1 확률 추정<a class="headerlink" href="#id34" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>시그모이드 함수</p></li>
 </ul>
@@ -1828,8 +1652,8 @@ x_n
 <div class="math notranslate nohighlight">
 \[\hat p = h_\theta (\mathbf x)
 = \sigma(\theta_0 + \theta_1\, x_1 + \cdots + \theta_n\, x_n)\]</div>
-<div class="section" id="id47">
-<h4><span class="section-number">4.6.1.1. </span>예측값<a class="headerlink" href="#id47" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id35">
+<h4><span class="section-number">4.6.1.1. </span>예측값<a class="headerlink" href="#id35" title="Permalink to this headline">¶</a></h4>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \hat y = 
@@ -1850,8 +1674,8 @@ x_n
 \[\theta_0 + \theta_1\, x_1 + \cdots + \theta_n\, x_n &lt; 0\]</div>
 </div>
 </div>
-<div class="section" id="id48">
-<h3><span class="section-number">4.6.2. </span>4.6.2 훈련과 비용함수<a class="headerlink" href="#id48" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id36">
+<h3><span class="section-number">4.6.2. </span>4.6.2 훈련과 비용함수<a class="headerlink" href="#id36" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>비용함수: 로그 손실(log loss) 함수 사용</p></li>
 </ul>
@@ -1863,8 +1687,8 @@ J(\theta) =
 <ul class="simple">
 <li><p>모델 훈련: 위 비용함수에 대해 경사 하강법 적용</p></li>
 </ul>
-<div class="section" id="id49">
-<h4><span class="section-number">4.6.2.1. </span>로그 손실 함수 이해<a class="headerlink" href="#id49" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id37">
+<h4><span class="section-number">4.6.2.1. </span>로그 손실 함수 이해<a class="headerlink" href="#id37" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>틀린 예측을 하면 손실값이 많이 커짐</p></li>
 </ul>
@@ -1873,8 +1697,8 @@ J(\theta) =
 - [y\, \log(\,\hat p\,) + (1-y)\, \log(\,1 - \hat p\,)]
 \]</div>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-12-10a.png" width="700"/></div></div>
-<div class="section" id="id50">
-<h4><span class="section-number">4.6.2.2. </span>로그 손실 함수의 편도 함수<a class="headerlink" href="#id50" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id38">
+<h4><span class="section-number">4.6.2.2. </span>로그 손실 함수의 편도 함수<a class="headerlink" href="#id38" title="Permalink to this headline">¶</a></h4>
 <div class="math notranslate nohighlight">
 \[
 \dfrac{\partial}{\partial \theta_j} \text{J}(\boldsymbol{\theta}) = \dfrac{1}{m}\sum\limits_{i=1}^{m}\left(\mathbf{\sigma(\boldsymbol{\theta}}^T \mathbf{x}^{(i)}) - y^{(i)}\right)\, x_j^{(i)}
@@ -1887,10 +1711,10 @@ J(\theta) =
 </ul>
 </div>
 </div>
-<div class="section" id="id51">
-<h3><span class="section-number">4.6.3. </span>4.6.3 결정 경계<a class="headerlink" href="#id51" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="id52">
-<h4><span class="section-number">4.6.3.1. </span>예제: 붓꽃 데이터셋<a class="headerlink" href="#id52" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id39">
+<h3><span class="section-number">4.6.3. </span>4.6.3 결정 경계<a class="headerlink" href="#id39" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id40">
+<h4><span class="section-number">4.6.3.1. </span>예제: 붓꽃 데이터셋<a class="headerlink" href="#id40" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>꽃받침(sepal)과 꽃입(petal)과 관련된 4개의 특성 사용</p>
 <ul>
@@ -1917,15 +1741,15 @@ J(\theta) =
 <li><p>결정경계: 약 1.6cm</p></li>
 </ul>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-14.png" width="700"/></div></div>
-<div class="section" id="id53">
-<h4><span class="section-number">4.6.3.3. </span>꽃잎의 너비와 길이를 기준으로 Iris-Virginica 여부 판정하기<a class="headerlink" href="#id53" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id41">
+<h4><span class="section-number">4.6.3.3. </span>꽃잎의 너비와 길이를 기준으로 Iris-Virginica 여부 판정하기<a class="headerlink" href="#id41" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>결정경계: 검정 점선</p></li>
 </ul>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-15.png" width="700"/></div></div>
 </div>
-<div class="section" id="id54">
-<h3><span class="section-number">4.6.4. </span>로지스틱 회귀 규제하기<a class="headerlink" href="#id54" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id42">
+<h3><span class="section-number">4.6.4. </span>로지스틱 회귀 규제하기<a class="headerlink" href="#id42" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>하이퍼파라미터 <code class="docutils literal notranslate"><span class="pre">penalty</span></code>와 <code class="docutils literal notranslate"><span class="pre">C</span></code> 이용</p></li>
 </ul>
@@ -1959,8 +1783,8 @@ J(\theta) =
 <li><p>주의사항: 소프트맥스 회귀는 다중 출력 분류 지원 못함.
 예를 들어, 하나의 사진에서 여러 사람의 얼굴 인식 불가능.</p></li>
 </ul>
-<div class="section" id="id55">
-<h4><span class="section-number">4.6.5.1. </span>소프트맥스 회귀 학습 아이디어<a class="headerlink" href="#id55" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id43">
+<h4><span class="section-number">4.6.5.1. </span>소프트맥스 회귀 학습 아이디어<a class="headerlink" href="#id43" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>샘플 <span class="math notranslate nohighlight">\(\mathbf x\)</span>가 주어졌을 때 각각의 분류 클래스 <span class="math notranslate nohighlight">\(k\)</span> 에 대한 점수 <span class="math notranslate nohighlight">\(s_k(\mathbf x)\)</span> 계산.
 즉, <code class="docutils literal notranslate"><span class="pre">k*(n+1)</span></code> 개의 파라미터를 학습시켜야 함.</p></li>
@@ -1987,8 +1811,8 @@ s_k(\mathbf x) = \theta_0^{(k)} + \theta_1^{(k)}\, x_1 + \cdots + \theta_n^{(k)}
 \]</div>
 </div>
 </div>
-<div class="section" id="id56">
-<h3><span class="section-number">4.6.6. </span>소프트맥스 회귀 비용함수<a class="headerlink" href="#id56" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id44">
+<h3><span class="section-number">4.6.6. </span>소프트맥스 회귀 비용함수<a class="headerlink" href="#id44" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>각 분류 클래스 <span class="math notranslate nohighlight">\(k\)</span>에 대한 적절한 가중치 벡터 <span class="math notranslate nohighlight">\(\theta_k\)</span>를 학습해 나가야 함.</p></li>
 </ul>
@@ -2013,8 +1837,8 @@ J(\Theta) =
 <li><p>크로스 엔트로피 개념은 정보 이론에서 유래함. 자세한 설명은 생략.</p></li>
 </ul>
 </div>
-<div class="section" id="id57">
-<h3><span class="section-number">4.6.7. </span>다중 클래스 분류 예제<a class="headerlink" href="#id57" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id45">
+<h3><span class="section-number">4.6.7. </span>다중 클래스 분류 예제<a class="headerlink" href="#id45" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>사이킷런의 <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> 예측기 활용</p>
 <ul>

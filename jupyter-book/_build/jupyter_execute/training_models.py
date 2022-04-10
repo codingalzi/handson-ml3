@@ -41,6 +41,8 @@
 
 # ## 선형 회귀
 
+# **선형 회귀 예제: 1인당 GDP와 삶의 만족도**
+
 # {numref}`%s 절 <sec:model_based_learning>`에서 1인당 GDP와 삶의 만족도 사이의 
 # 관계를 다음 1차 함수로 표현할 수 있었다.
 # 
@@ -52,8 +54,14 @@
 # 
 # $$\hat y = \theta_0 + \theta_1\cdot x_1$$
 # 
-# $\theta_0$ 와 $\theta_1$ 은 (선형) 모델의 **파라미터**<font size="2">parameter</font>이며
-# 선형 회귀 모델이 알아냈다.
+# 절편 $\theta_0$ 와 기울기 $\theta_1$ 은 (선형) 모델의 **파라미터**<font size="2">weight parameter</font>이다.
+# 머신러닝에서는 절편은 **편향**<font size="2">bias</font>, 
+# 기울기는 **가중치**<font size="2">weight</font> 라 부른다.
+# 
+# 따라서 1인당 GDP와 삶의 만족도 사이의 선형 관계를 모델로 구현하려면
+# 적절한 하나의 편향과 하나의 가중치, 즉 총 2개의 파라미터를 결정해야 한다.
+
+# **선형 회귀 예제: 캘리포니아 주택 가격 예측**
 
 # 반면에 {numref}`%s 장 <ch:end2end>`의 캘리포니아 주택 가격 예측 선형 회귀 모델은
 # 24개의 입력 특성을 사용하는 다음 함수를 이용한다.
@@ -61,18 +69,28 @@
 # $$\hat y = \theta_0 + \theta_1\cdot x_1 + \cdots + \theta_{24}\cdot x_{24}$$
 # 
 # * $\hat y$: 예측값
-# * $x_i$: 구역의 $i$ 번째 특성값
+# * $x_i$: 구역의 $i$ 번째 특성값(위도, 경도, 중간소득, 가구당 인원 등등등)
 # * $\theta_0$: 편향
-# * $\theta_i$: $i$ 번째 특성에 대한 가중치 파라미터, 단 $i > 0$.
+# * $\theta_i$: $i$ 번째 특성에 대한 (가중치) 파라미터, 단 $i > 0$.
+# 
+# 따라서 캘리포니아의 구역별 중간 주택 가격을 예측하는 선형 회귀 모델을 구하려면 
+# 적절한 하나의 편향과 24개의 가중치,
+# 즉 총 25개의 파라미터를 결정해야 한다.
+
+# **선형 회귀 함수**
 
 # 이를 일반화하면 다음과 같다.
 # 
 # $$\hat y = \theta_0 + \theta_1\cdot x_1 + \cdots + \theta_{n}\cdot x_{n}$$
 # 
 # * $\hat y$: 예측값
+# * $n$: 특성 수
 # * $x_i$: 구역의 $i$ 번째 특성값
 # * $\theta_0$: 편향
-# * $\theta_j$: $j$ 번째 특성에 대한 가중치 파라미터(단, $1 \le j \le n$)
+# * $\theta_j$: $j$ 번째 특성에 대한 (가중치) 파라미터(단, $1 \le j \le n$)
+# 
+# 일반적으로 선형 회귀 모델을 구현하려면
+# 한 개의 편향과 $n$ 개의 가중치, 즉 총 $(1+n)$ 개의 파라미터를 결정해야 한다.
 
 # **벡터 표기법**
 # 
@@ -137,7 +155,30 @@
 # \end{bmatrix}
 # $$
 
-# 결론적으로 모든 예측값을 하나의 행렬식으로 표현하면 다음과 같다.
+# 결론적으로 모든 입력값에 대한 예측값을 하나의 행렬식으로 표현하면 다음과 같다.
+
+# $$
+# \begin{bmatrix}
+# \hat y_1 \\
+# \vdots \\
+# \hat y_m
+# \end{bmatrix}
+# = 
+# \begin{bmatrix} 
+# [1, \mathbf{x}_1^{(1)}, \dots, \mathbf{x}_n^{(1)}] \\
+# \vdots \\
+# [1, \mathbf{x}_1^{(m)}, \dots, \mathbf{x}_n^{(m)}] \\
+# \end{bmatrix}
+# \,\, 
+# \begin{bmatrix}
+# \theta_0\\
+# \theta_1 \\
+# \vdots \\
+# \theta_n
+# \end{bmatrix}
+# $$
+
+# 간략하게 줄이면 다음과 같다.
 
 # $$
 # \hat{\mathbf y} = \mathbf{X}\, \mathbf{\theta}
@@ -149,7 +190,7 @@
 # |:-------------:|:-------------:|:---------------:|
 # | 예측값 | $\hat{\mathbf y}$  | $(m, 1)$ |
 # | 입력 데이터셋 | $\mathbf X$   | $(m, 1+n)$     |
-# | 가중치 | $\theta$      | $(1+n, 1)$ |
+# | 파라미터 | $\mathbf{\theta}$      | $(1+n, 1)$ |
 
 # **비용함수: 평균 제곱 오차(MSE)**
 
@@ -157,14 +198,15 @@
 # 성능을 평가한다.
 
 # $$
-# \mathrm{MSE}(\theta) := \mathrm{MSE}(\mathbf X, h_\theta) = 
-# \frac 1 m \sum_{i=1}^{m} \big(\theta^{T}\, \mathbf{x}^{(i)} - y^{(i)}\big)^2
+# \mathrm{MSE}(\mathbf{\theta}) := \mathrm{MSE}(\mathbf X, h_{\mathbf{\theta}}) = 
+# \frac 1 m \sum_{i=1}^{m} \big(\mathbf{\theta}^{T}\, \mathbf{x}^{(i)} - y^{(i)}\big)^2
 # $$
 
-# 최종 목표는 훈련셋이 주어졌을 때 $\mathrm{MSE}(\theta)$가 최소가 되도록 하는 $\theta$ 찾는 것이다.
+# 최종 목표는 훈련셋이 주어졌을 때 $\mathrm{MSE}(\mathbf{\theta})$가 최소가 되도록 하는 
+# $\mathbf{\theta}$를 찾는 것이다.
 # 
 # * 방식 1: 정규방정식 또는 특이값 분해(SVD) 활용
-#     * 드물지만 수학적으로 비용함수를 최소화하는 $\theta$ 값을 직접 계산할 수 있는 경우 활용
+#     * 드물지만 수학적으로 비용함수를 최소화하는 $\mathbf{\theta}$ 값을 직접 계산할 수 있는 경우 활용
 #     * 계산복잡도가 $O(n^2)$ 이상인 행렬 연산을 수행해야 함. 
 #     * 따라서 특성 수($n$)이 큰 경우 메모리 관리 및 시간복잡도 문제때문에 비효율적임.
 # 
@@ -174,12 +216,13 @@
 
 # **정규 방정식**
 # 
-# **정규 방정식**<font size="2">normal equation</font>을 이용하여 
-# 비용함수를 최소화 하는 $\theta$를 아래와 같이 바로 계산할 수 있다.
+# 비용함수를 최소화 하는 $\theta$를 
+# 정규 방정식<font size="2">normal equation</font>을 이용하여 
+# 아래와 같이 바로 계산할 수 있다.
 # 단, $\mathbf{X}^T\, \mathbf{X}$ 의 역행렬이 존재해야 한다.
 # 
 # $$
-# \hat \theta = 
+# \hat{\mathbf{\theta}} = 
 # (\mathbf{X}^T\, \mathbf{X})^{-1}\, \mathbf{X}^T\, \mathbf{y}
 # $$
 
@@ -193,145 +236,137 @@
 # 또한 다음이 성립한다.
 # 
 # $$
-# \hat \theta = 
+# \hat{\mathbf{\theta}} = 
 # \mathbf{X}^+\, \mathbf{y}
 # $$
 
-# ## 4.2 경사 하강법
+# ## 경사 하강법
 
-# ### 기본 아이디어
+# 훈련 세트를 이용한 훈련 과정 중에 가중치 파라미터를 조금씩 반복적으로 조정한다. 
+# 이때 비용 함수의 크기를 줄이는 방향으로 조정한다.
 
-# * 훈련 세트를 이용한 훈련 과정 중에 가중치 등과 같은 **파라미터를 조금씩 반복적으로 조정하기**
+# 경사 하강법 이해를 위해 다음 개념들을 충분히 이해하고 있어야 한다.
 
-# * 조정 기준: 비용 함수의 크기 줄이기
-
-# ### 경사 하강법 관련 주요 개념
-
-# #### 최적 학습 모델
+# **최적 학습 모델**
 # 
-# * 비용함수를 최소화하는 또는 효용함수를 최대화하는 파라미터를 사용하는 모델
+# 비용 함수를 최소화하는 또는 효용 함수를 최대화하는 파라미터를 사용하는 모델이며,
+# 최종적으로 훈련시킬 대상이다.
 
-# #### 파라미터
+# **파라미터**
 # 
-# * 예측값을 생성하는 함수로 구현되는 학습 모델에 사용되는 파라미터
-# * 예제: 선형 회귀 모델에 사용되는 편향과 가중치 파라미터 
-# 
-# $$\theta = \theta_0,\theta_1, \dots, \theta_n$$
+# 선형 회귀 모델에 사용되는 편향과 가중치 파라미터처럼 모델 훈련중에 학습되는 파라미터를 가리킨다.
 
-# #### 비용함수
+# **비용 함수**
 # 
-# * 모델이 얼마나 나쁜지를 계산해주는 함수
-# * 예제: 선형 회귀 모델의 평균 제곱 오차(MSE)
+# 평균 제곱 오차(MSE)처럼 모델이 얼마나 나쁜가를 측정하는 함수다.
+
+# **전역 최솟값**
+# 
+# 비용 함수의 최솟값이다. 
+
+# **비용 함수의 그레이디언트**
+# 
+# MSE를 비용함수로 사용하는 경우 $\textrm{MSE}(\mathbf{\theta})$ 함수의 $\mathbf{\mathbf{\theta}}$ 에 대한 그레이디언트를 사용한다.
+# 그레이디언트 벡터는 방향과 크기에 대한 정보를 제공하며, 
+# 그레이디언트가 가리키는 방향의 __반대 방향__으로 움직이면
+# 빠르게 전역 최솟값에 접근한다.
 # 
 # $$
-# \mathrm{MSE}(\theta) = 
-# \frac 1 m \sum_{i=1}^{m} \big(\theta^{T}\, \mathbf{x^{(i)}} - y^{(i)}\big)^2
-# $$
-
-# #### 전역 최솟값
-# 
-# * 비용함수가 가질 수 있는 최솟값
-# * 예제: 선형 회귀 모델의 평균 제곱 오차(MSE) 함수가 갖는 최솟값
-
-# #### 그레이디언트 벡터
-# 
-# * 다변수 함수의 미분값. 
-# 
-# * (그레이디언트) 벡터는 방향과 크기에 대한 정보 제공
-# 
-# * 그레이디언트가 가리키는 방향의 __반대 방향__으로 움직여야 가장 빠르게 전역 최솟값에 접근
-# 
-# * 예제: 선형 회귀 MSE의 그레이디언트 벡터 $\nabla_\theta \textrm{MSE}(\theta)$
-# 
-# $$
-# \nabla_\theta \textrm{MSE}(\theta) =
+# \nabla_\mathbf{\theta} \textrm{MSE}(\mathbf{\theta}) =
 # \begin{bmatrix}
-#     \frac{\partial}{\partial \theta_0} \textrm{MSE}(\theta) \\
-#     \frac{\partial}{\partial \theta_1} \textrm{MSE}(\theta) \\
+#     \frac{\partial}{\partial \mathbf{\theta}_0} \textrm{MSE}(\mathbf{\theta}) \\
+#     \frac{\partial}{\partial \mathbf{\theta}_1} \textrm{MSE}(\mathbf{\theta}) \\
 #     \vdots \\
-#     \frac{\partial}{\partial \theta_n} \textrm{MSE}(\theta)
-# \end{bmatrix} =
-# \frac{2}{m}\, \mathbf{X}^T\, (\mathbf{X}\, \theta^T - \mathbf y)
+#     \frac{\partial}{\partial \mathbf{\theta}_n} \textrm{MSE}(\mathbf{\theta})
+# \end{bmatrix}
+# $$
+# 
+# **참고:** 산에서 가장 경사가 급한 길을 따를 때 가장 빠르게 하산하는 원리와 동일하다.
+
+# **학습률($\eta$)**
+# 
+# 훈련 과정에서의 비용함수의 파라미터($\mathbf{\theta}$)를 조정할 때 사용하는 조정 비율이다.
+
+# **허용오차**
+# 
+# 비용함수의 그레이디언트 벡터의 크기가 허용오차보다 작아지면 모델의 훈련을 종료시키는 데에 
+# 허용오차<font size="2">tolerance</font>를 사용한다.
+
+# ### 선형 회귀 모델 파라미터 조정
+
+# 선형회귀 모델 파라미터를 조정하는 과정을 이용하여 경사 하강법의 기본 아이디어를 설명한다.
+# 
+# 먼저 $\mathrm{MSE}(\mathbf{\theta})$ 는 $\mathbf{\theta}$ 에 대한 2차 함수임에 주의한다.
+# 여기서는 $\mathbf{\theta}$ 가 하나의 파라미터로 구성되었다고 가정한다.
+# 따라서 $\mathrm{MSE}(\mathbf{\theta})$의 그래프는 포물선이 된다.
+# 
+# $$
+# \mathrm{MSE}(\mathbf{\theta}) =
+# \frac 1 m \sum_{i=1}^{m} \big(\mathbf{\theta}^{T}\, \mathbf{x}^{(i)} - y^{(i)}\big)^2
 # $$
 
-# #### 학습률
+# 경사 하강법은 다음 과정으로 이루어진다. 
 # 
-# * 훈련 과정에서의 비용함수 파라미터 조정 비율
+# 1. $\mathbf{\theta}$를 임의의 값으로 지정한 후 훈련을 시작한다.
+# 
+# 1. 아래 단계를 $\nabla_\theta \textrm{MSE}(\theta)$ 의 크기가 허용오차보다 작아질 때까지 반복한다.
+#     1. 지정된 수의 훈련 샘플을 이용한 학습.
+#     2. $\mathrm{MSE}(\mathbf{\theta})$ 계산.
+#     3. 이전 $\mathbf{\theta}$에서 $\nabla_\mathbf{\theta} \textrm{MSE}(\mathbf{\theta})$ 와
+#         학습률 $\eta$를 곱한 값 빼기.
+# 
+#         $$\theta^{(\text{new})} = \theta^{(\text{old})}\, -\, \eta\cdot \nabla_\theta \textrm{MSE}(\theta^{(\text{old})})$$    
 
-# ##### 예제: 선형회귀 모델 파라미터 조정 과정
+# 아래 그림이 경사 하강법을 잘 설명한다.
 
-# * $\theta$를 임의의 값으로 지정한 후 훈련 시작
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-01.png" width="500"/></div>
 
-# * 아래 단계를 $\theta$가 특정 값에 지정된 오차범위 내로 수렴할 때까지 반복
-#     1. (배치 크기로) 지정된 수의 훈련 샘플을 이용하여 학습.
-#     2. 학습 후 $\mathrm{MSE}(\theta)$ 계산.
-#     3. 이전 $\theta$에서 $\nabla_\theta \textrm{MSE}(\theta)$과 학습률 $\eta$를 곱한 값 빼기.
+# 학습률이 너무 작거나 크면 비용 함수의 전역 최솟값에 수렴하지 않을 수 있다.
+# 
+# - 학습률이 너무 작은 경우: 비용 함수가 전역 최소값에 너무 느리게 수렴.
 
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-01.png" width="600"/></div>
-
-# ```
-# ```
-
-# $$\theta^{(\text{new})} = \theta^{(\text{old})}\, -\, \eta\cdot \nabla_\theta \textrm{MSE}(\theta^{(\text{old})})$$    
-
-# * 학습률이 너무 작은 경우: 비용 함수가 전역 최소값에 너무 느리게 수렴.
-
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-02.png" width="600"/></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-02.png" width="500"/></div>
 
 # * 학습률이 너무 큰 경우: 비용 함수가 수렴하지 않음.
 
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-03.png" width="600"/></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-03.png" width="500"/></div>
 
-# * (선형 회귀가 아닌 경우에) 시작점에 따라 지역 최솟값에 수렴하지 못할 수도 있음.
+# 선형 회귀의 경우 학습률이 너무 크거나 너무 작지 않으면 적정한 시간 내에 비용 함수의
+# 전역 최솟값에 수렴하는 것이 보장된다.
+# 하지만 선형 회귀가 아닌 경우에는 시작점에 따라 지역 최솟값에 수렴하거나 정체될 수 있음을
+# 아래 그림이 잘 보여준다.
 
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-04.png" width="600"/></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-04.png" width="500"/></div>
 
-# * 선형 회귀와 학습률
-# 
-#     * 비용함수(MSE)가 볼록 함수. 즉, 지역 최솟값을 갖지 않음
-#     * 따라서 학습률이 너무 크지 않으면 언젠가는 전역 최솟값에 수렴
+# **특성 스케일링의 중요성**
 
-# #### 특성 스케일링
+# 특성들의 스켈일을 통일시키면 보다 빠른 학습이 이루어지는 이유를 
+# 아래 그림이 설명한다.
 
-# * 특성들의 스켈일을 통일시키면 보다 빠른 학습 이루어짐.
-
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-04a.png" width="600"/></div>
-
-# #### 하이퍼파라미터(hyperparameter)
-
-# * 학습 모델을 지정할 때 사용되는 값.
-#     학습률, 배치 크기, 에포크, 허용오차, 스텝 크기 등
-
-# * 에포크(epoch): 훈련 세트 크기만큼의 샘플을 훈련하는 단계
-#     * 에포크 수: 에포크 반복 횟수
-
-# * 배치(batch) 크기: 파라미터를 업데이트하기 위해, 즉 그레이디언트 벡터를 계산하기 위해 사용되는 훈련 샘플 수. 
-
-# * 허용오차(tolerance): 비용함수의 그레이디언트 벡터의 크기가 허용오차보다 작아지면 학습 종료
-
-# * 스텝(step): 지정된 배치 크기의 샘플을 학습한 후에 파라미터를 조정하는 단계
-#     * 스텝 크기 = (훈련 샘플 수) / (배치 크기)
-#     * 예제: 훈련 세트의 크기가 1,000이고 배치 크기가 10이면, 
-#         하나의 에포크 기간동안 총 100번의 스텝이 실행됨.
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-04a.png" width="500"/></div>
 
 # ### 경사 하강법 종류
 
+# 모델을 지정할 때 지정하는 배치 크기, 에포크 수, 허용오차에 따라 
+# 세 종류로 나뉜다.
+# 
+# * 에포크<font size="2">epoch</font>: 입력 데이터셋에 포함된 모든 데이터를 대상으로 예측값을 계산하는 과정.
+# 
+# * 허용오차<font size="2">tolerance</font>: 비용함수의 그레이디언트 벡터의 크기가 허용오차보다 작아지면 훈련 종료
+# 
+# * 배치 크기<font size="2">batch size</font>: 파라미터를 업데이트하기 위해, 즉 그레이디언트 벡터를 계산하기 위해 사용되는 훈련 샘플 수. 
+# 
+# **참고:** 지정된 배치 크기의 샘플에 대해 예측을 한 후에 경사하강법을 이용하여 파라미터를 조정하는 단계를
+# 스텝<font size="2">step</font>라 하며, 다음이 성립힌다.
+# 
+#     스텝 크기 = (훈련 샘플 수) / (배치 크기)
+# 
+# 예를 들어, 훈련 세트의 크기가 1,000이고 배치 크기가 10이면, 에포크 당 100번의 스텝이 실행된다.
+
 # #### 배치 경사 하강법
-# 
-# * 전체 훈련 샘플을 대상으로 훈련한 후에, 즉 에포크마다 그레이디언트를 계산하여 파라미터 조정
-# * __주의__: 여기서 사용되는 '배치'의 의미가 '배치 크기'의 '배치'와 다른 의미
 
-# #### 확률적 경사 하강법
-# 
-# * 배치 크기: 1
-# * 즉, 하나의 훈련 샘플을 학습할 때마다 그레이디언트를 계산해서 파라미터 조정
-
-# #### 미니배치 경사 하강법
-# 
-# * 배치 크기: 2에서 수백 사이
-# * 최적 배치 크기: 경우에 따라 다름. 여러 논문이 32 이하 추천
-
-# ### 4.2.1 배치 경사 하강법
+# 에포크마다 그레이디언트를 계산하여 파라미터를 조정한다.
+# 즉, 배치의 크기가 전체 입력 데이터셋의 크기와 같고 따라서 스텝의 크기는 1이다.
 
 # * 에포크와 허용오차
 # 
@@ -355,6 +390,11 @@
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-04b.png" width="700"/></div>
 
 # ### 4.2.2 확률적 경사 하강법
+
+# **확률적 경사 하강법**
+# 
+# 배치 크기가 1이다. 
+# 즉, 하나의 훈련 샘플에 대해 예측을 하면 그 결과를 이용하여 그레이디언트를 계산하고 파라미터를 조정한다.
 
 # * 장점
 # 
@@ -394,6 +434,11 @@
 #   * `penalty=l2`: 규제 사용 여부 결정 (추후 설명)
 
 # ### 4.2.3 미니배치 경사 하강법
+
+# **미니배치 경사 하강법**
+# 
+# 배치 크기가 2에서 수백 사이로 정해지며, 
+# 최적 배치 크기는 경우에 따라 다르다.
 
 # * 장점
 # 
