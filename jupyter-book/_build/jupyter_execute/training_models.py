@@ -342,6 +342,8 @@
 # 이유는 해당 지점에서 그레이디언트 벡터를 계산하면 정상으로 가는 가장 빠른 길을 안내할 것이기에
 # 그 반대방향으로 움직여야 하기 때문이다.
 # 
+# 아래 그림은 경사 하강법을 담당하는 여러 알고리즘을 비교해서 보여준다.
+# 
 # <table>
 #     <tr>
 #         <td style="padding:1px">
@@ -362,8 +364,8 @@
 # **그림 출처:** [An overview of gradient descent optimization algorithms](https://ruder.io/optimizing-gradient-descent/index.html)
 # :::
 
-# **학습률과 수렴**
-
+# **학습률의 중요성**
+# 
 # 선형 회귀 모델은 적절할 학습률로 훈련될 경우 빠른 시간에 비용 함수의 최솟값에 도달한다.
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-01.png" width="500"/></div>
@@ -384,9 +386,12 @@
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-04.png" width="500"/></div>
 
 # **특성 스케일링의 중요성**
-
+# 
 # 특성들의 스켈일을 통일시키면 보다 빠른 학습이 이루어지는 이유를 
 # 아래 그림이 설명한다.
+# 
+# * 왼편 그림: 두 특성의 스케일이 동일하게 조정된 경우 비용 함수의 최솟값으로 최단거리로 수렴한다.
+# * 오른편 그림: 두 특성의 스케일이 다른 경우 비용 함수의 최솟값으로 보다 먼 거리를 지나간다.
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-04a.png" width="500"/></div>
 
@@ -504,15 +509,13 @@
 
 # ## 다항 회귀
 
-# * 다항 회귀(polynomial regression)란?
-#     * 선형 회귀를 이용하여 비선형 데이터를 학습하는 기법
-#     * 즉, 비선형 데이터를 학습하는 데 선형 모델 사용을 가능하게 함.
-
-# * 기본 아이디어
-#     * 특성들의 조합 활용
-#     * 특성 변수들의 다항식을 조합 특성으로 추가
+# 비선형 데이터를 선형 회귀를 이용하여 학습하는 기법을
+# **다항 회귀**<font size="2">polynomial regression</font>라 한다.
+# 이때 다항식을 이용하여 새로운 특성을 생성하는 아이디어를 사용한다.
 
 # **2차 함수 모델를 따르는 데이터셋에 선형 회귀 모델 적용 결과**
+# 
+# 아래 그림은 2차 함수의 그래프 형식으로 분포된 데이터셋을 선형 회귀 모델로 학습시킨 결과를 보여준다.
 # 
 # $$\hat y = \theta_0 + \theta_1\, x_1$$
 
@@ -520,23 +523,23 @@
 
 # **2차 함수 모델를 따르는 데이터셋에 2차 다항식 모델 적용 결과**
 # 
+# 반면에 아래 그림은 $x_1^2$에 해당하는 특성을 새로이 추가한 후에 선형 회귀 모델을 학습시킨 결과를 보여준다.
+# 
 # $$\hat y = \theta_0 + \theta_1\, x_1 + \theta_2\, x_1^{2}$$
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-07.png" width="600"/></div>
 
 # **사이킷런의 `PolynomialFeatures` 변환기**
 # 
+# 주어진 다항식에 포함된 항목에 해당하는 특성들을 생성하는 변환기이다.
+# 
+# * `degree=d`: 몇 차 다항식을 활용할지 지정하는 하이퍼파라미터
+# 
 # ```python
 # PolynomialFeatures(degree=2, include_bias=False)
 # ```
 # 
-# * 주어진 특성들의 거듭제곱과 특성들 사이의 곱셈을 실행하여 특성을 추가하는 기능 제공
-# 
-# * `degree=d`: 몇 차 다항식을 활용할지 지정하는 하이퍼파라미터
-# 
-#     * 이전 예제: $d=2$으로 지정하여  $x_1^2$에 대한 특성 변수가 추가됨.
-# 
-# * 예제: $n=2, d=3$인 경우에 $(x_1+x_2)^2$과 $(x_1+x_2)^3$의 항목에 해당하는 7개 특성 추가
+# 예를 들어, $n=2, d=3$인 경우에 $(x_1+x_2)^2$과 $(x_1+x_2)^3$의 항목에 해당하는 7개 특성 추가
 # 
 # $$x_1^2,\,\, x_1 x_2,\,\, x_2^2,\,\, x_1^3,\,\, x_1^2 x_2,\,\, x_1 x_2^2,\,\, x_2^3$$
 
