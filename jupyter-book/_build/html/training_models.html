@@ -38,12 +38,9 @@
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script>let toggleHintShow = 'Click to show';</script>
-    <script>let toggleHintHide = 'Click to hide';</script>
-    <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
@@ -886,15 +883,15 @@ x_n
 </div>
 <div class="section" id="id7">
 <h4><span class="section-number">4.2.2.3. </span>미니 배치 경사 하강법<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
-<p>배치 크기가 2에서 수백 사이로 정해지며, 최적 배치 크기는 경우에 따라 다르다.</p>
-<p>배치 크기를 어느 정도 크게 하면 확률적 경사 하강법(SGD) 보다 파라미터의 움직임이 덜 불규칙적이 되며,
-배치 경사 하강법보다 빠르게 학습한다.</p>
-<p>반면에 SGD에 비해 지역 최솟값에 수렴할 위험도가 보다 커진다.</p>
+<p>배치 크기가 2에서 수백 사이로 정해지며, 최적의 배치 크기는 경우에 따라 다르다.
+배치 크기를 어느 정도 크게 하면 확률적 경사 하강법(SGD) 보다 파라미터의 움직임이 덜 불규칙적이 되며,
+배치 경사 하강법보다 빠르게 학습한다.
+반면에 SGD에 비해 지역 최솟값에 수렴할 위험도가 보다 커진다.</p>
 <p><strong>경사 하강법 비교</strong></p>
 <p>배치 GD, 미니 배치 GD, SGD의 순서대로 최적의 파라미터 값에
 수렴할 확률이 높다.
 훈련 시간 또한 동일한 순서대로 오래 걸린다.</p>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-05.png" width="600"/></div><p><strong>선형 회귀 알고리즘 비교</strong></p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-05.png" width="500"/></div><p><strong>선형 회귀 알고리즘 비교</strong></p>
 <table class="colwidths-auto table">
 <thead>
 <tr class="row-odd"><th class="text-align:center head"><p>알고리즘</p></th>
@@ -963,120 +960,108 @@ x_n
 <p>아래 그림은 2차 함수의 그래프 형식으로 분포된 데이터셋을 선형 회귀 모델로 학습시킨 결과를 보여준다.</p>
 <div class="math notranslate nohighlight">
 \[\hat y = \theta_0 + \theta_1\, x_1\]</div>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-06.png" width="600"/></div><p><strong>2차 함수 모델를 따르는 데이터셋에 2차 다항식 모델 적용 결과</strong></p>
-<p>반면에 아래 그림은 <span class="math notranslate nohighlight">\(x_1^2\)</span>에 해당하는 특성을 새로이 추가한 후에 선형 회귀 모델을 학습시킨 결과를 보여준다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-06.png" width="500"/></div><p><strong>2차 함수 모델를 따르는 데이터셋에 2차 다항식 모델 적용 결과</strong></p>
+<p>반면에 아래 그림은 <span class="math notranslate nohighlight">\(x_1^2\)</span> 에 해당하는 특성 <span class="math notranslate nohighlight">\(x_2\)</span> 를 새로이 추가한 후에
+선형 회귀 모델을 학습시킨 결과를 보여준다.</p>
 <div class="math notranslate nohighlight">
-\[\hat y = \theta_0 + \theta_1\, x_1 + \theta_2\, x_1^{2}\]</div>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-07.png" width="600"/></div><p><strong>사이킷런의 <code class="docutils literal notranslate"><span class="pre">PolynomialFeatures</span></code> 변환기</strong></p>
-<p>주어진 다항식에 포함된 항목에 해당하는 특성들을 생성하는 변환기이다.</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">degree=d</span></code>: 몇 차 다항식을 활용할지 지정하는 하이퍼파라미터</p></li>
-</ul>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">include_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+\[\hat y = \theta_0 + \theta_1\, x_1 + \theta_2\, x_{2}\]</div>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-07.png" width="500"/></div><p><strong>사이킷런의 <code class="docutils literal notranslate"><span class="pre">PolynomialFeatures</span></code> 변환기</strong></p>
+<p>활용하고자 하는 다항식에 포함되어야 하는 항목에 해당하는 특성들을 생성하는 변환기이다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">include_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>예를 들어, <span class="math notranslate nohighlight">\(n=2, d=3\)</span>인 경우에 <span class="math notranslate nohighlight">\((x_1+x_2)^2\)</span>과 <span class="math notranslate nohighlight">\((x_1+x_2)^3\)</span>의 항목에 해당하는 7개 특성 추가</p>
+<p><code class="docutils literal notranslate"><span class="pre">degree=d</span></code>는 몇 차 다항식을 활용할지 지정하는 하이퍼파라미터이다.</p>
+<div class="proof example admonition" id="exp:3rd_poly_reg">
+<p class="admonition-title"><span class="caption-number">Example 4.1 </span> (3차 다항 회귀)</p>
+<div class="example-content section" id="proof-content">
+<p>기존에 두 개의 <span class="math notranslate nohighlight">\(x_1, x_2\)</span> 두 개의 특성을 갖는 데이터셋에 대해
+3차 다항식 모델을 훈련시키고자 하면 <span class="math notranslate nohighlight">\(d=3\)</span>으로 설정한다.
+그러면 <span class="math notranslate nohighlight">\(x_1, x_2\)</span> 을 이용한 2차, 3차 다항식에 포함될 항목을 새로운 특성으로 추가해야 한다.
+이는 <span class="math notranslate nohighlight">\((x_1+x_2)^2\)</span>과 <span class="math notranslate nohighlight">\((x_1+x_2)^3\)</span>의 항목에 해당하는 다음 7개의 특성을 추가해야 함을 의미한다.</p>
 <div class="math notranslate nohighlight">
 \[x_1^2,\,\, x_1 x_2,\,\, x_2^2,\,\, x_1^3,\,\, x_1^2 x_2,\,\, x_1 x_2^2,\,\, x_2^3\]</div>
 </div>
+</div></div>
 <div class="section" id="id9">
 <h2><span class="section-number">4.4. </span>학습 곡선<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
-<p><strong>예제: 선형 모델, 2차 다항 회귀 모델, 300차 다항 회귀 모델 비교</strong></p>
-<p>다항 회귀 모델의 차수에 따라 훈련된 모델이 훈련 세트에 과소 또는 과대 적합할 수 있다.</p>
+<p>다항 회귀 모델의 차수에 따라 훈련된 모델이 훈련 세트에 과소 또는 과대 적합할 수 있다.
+아래 그림이 보여주듯이 선형 모델은 과소 적합되어 있는 반면에
+300차 다항 회귀 모델 과대 적합 되어 있다.
+그리고 2차 다항 회귀 모델의 일반화 성능이 가장 좋다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-08.png" width="500"/></div><p><strong>교차 검증 vs. 학습 곡선</strong></p>
+<p>하지만 일반적으로 몇 차 다항 회귀가 가장 좋은지 미리 알 수 없다.
+따라서 다양한 모델을 대상으로 교차 검증을 진행하여 과소 또는 과대 적합 모델을 구별해야 한다.</p>
 <ul class="simple">
-<li><p>교차 검증(2장)</p>
-<ul>
-<li><p>과소적합: 훈련 세트와 교차 검증 점수 모두 낮은 경우</p></li>
-<li><p>과대적합: 훈련 세트에 대한 검증은 우수하지만 교차 검증 점수가 낮은 경우</p></li>
+<li><p>과소 적합: 훈련 세트와 교차 검증 점수 모두 낮은 경우</p></li>
+<li><p>과대 적합: 훈련 세트에 대한 검증은 우수하지만 교차 검증 점수가 낮은 경우</p></li>
 </ul>
-</li>
-<li><p>학습 곡선 살피기</p>
-<ul>
-<li><p>학습 곡선: 훈련 세트와 검증 세트에 대한 모델 성능을 비교하는 그래프</p></li>
-<li><p>학습 곡선의 모양에 따라 과소적합/과대적합 판정 가능</p></li>
-</ul>
-</li>
-</ul>
-<p><strong>과소적합 모델의 학습 곡선 특징</strong></p>
+<p>다른 검증 방법은 <strong>학습 곡선</strong><font size='2'>learning curve</font>을 잘 살펴보는 것이다.
+학습 곡선은 훈련 세트와 검증 세트에 대한 모델 성능을 비교하는 그래프이며,
+학습 곡선의 모양에 따라 과소 적합 또는 과대 적합 여부를 판정할 수 있다.</p>
+<p>사이킷런의 <code class="docutils literal notranslate"><span class="pre">learning_curve()</span></code> 함수를 이용하여 학습 곡선을 그릴 수 있다.</p>
 <ul class="simple">
-<li><p>훈련 데이터(빨강)에 대한 성능</p>
+<li><p>x 축: 훈련셋 크기. 전체 훈련셋의 10%에서 출발하여 훈련셋 전체를 대상으로 할 때까지
+훈련셋의 크기를 키워가며 교차 검증 진행.</p></li>
+<li><p>y 축: 교차 검증을 통해 확인된 훈련셋 및 검증셋 대상 RMSE(평균 제곱근 오차).</p></li>
+</ul>
+<p><strong>과소 적합 모델의 학습 곡선 특징</strong></p>
+<ul class="simple">
+<li><p>훈련셋(빨강)에 대한 성능</p>
 <ul>
-<li><p>훈련 세트가 커지면서 RMSE(평균 제곱근 오차)가 커짐</p></li>
-<li><p>훈련 세트가 어느 정도 커지면 더 이상 RMSE가 변하지 않음</p></li>
+<li><p>훈련 세트가 커지면서 RMSE 증가</p></li>
+<li><p>훈련 세트가 어느 정도 커지면 더 이상 RMSE 거의 불변</p></li>
 </ul>
 </li>
-<li><p>검증 데이터(파랑)에 대한 성능</p>
+<li><p>검증셋(파랑)에 대한 성능</p>
 <ul>
 <li><p>검증 세트에 대한 성능이 훈련 세트에 대한 성능과 거의 비슷해짐</p></li>
 </ul>
 </li>
 </ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-09.png" width="500"/></div><p><strong>과대적합 모델의 학습 곡선 특징</strong></p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-09.png" width="500"/></div><p><strong>과대 적합 모델의 학습 곡선 특징</strong></p>
 <ul class="simple">
-<li><p>훈련 데이터(빨강)에 대한 성능: 훈련 데이터에 대한 평균 제곱근 오차가 매우 낮음.</p></li>
-<li><p>검증 데이터(파랑)에 대한 성능: 훈련 데이터에 대한 성능과 차이가 크게 벌어짐.</p></li>
-<li><p>과대적합 모델 개선법: 두 그래프가 맞닿을 때까지 훈련 데이터 추가</p></li>
+<li><p>훈련셋(빨강)에 대한 성능: 훈련 데이터에 대한 평균 제곱근 오차가 매우 낮음.</p></li>
+<li><p>검증셋(파랑)에 대한 성능: 훈련 데이터에 대한 성능과 차이가 크게 벌어짐.</p></li>
+<li><p>과대 적합 모델 개선법: 두 그래프가 맞닿을 때까지 훈련 데이터 추가.
+하지만 일반적으로 더 많은 훈련 데이터를 구하는 일이 매우 어렵거나 불가능할 수 있음.
+아니면 모델에 규제를 가할 수 있음.</p></li>
 </ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-10.png" width="500"/></div><p><strong>편향 vs 분산</strong></p>
-<ul class="simple">
-<li><p>편향(bias)</p>
-<ul>
-<li><p>실제로는 2차원 모델인데 1차원 모델을 사용하는 경우처럼 잘못된 가정으로 인해 발생.</p></li>
-<li><p>과소적합 발생 가능성 높음.</p></li>
-</ul>
-</li>
-<li><p>분산(variance)</p>
-<ul>
-<li><p>모델이 훈련 데이터에 민감하게 반응하는 정도</p></li>
-<li><p>고차 다항 회귀 모델의 경우 분산이 높아질 수 있음.</p></li>
-<li><p>일반적으로 <strong>자유도</strong><font size='2'>degree of freedom</font>가 높은 모델일 수록 분산이 커짐.</p></li>
-<li><p>과대적합 발생 가능성 높음.</p></li>
-</ul>
-</li>
-<li><p>편향과 분산의 트레이드 오프</p>
-<ul>
-<li><p>복잡한 모델일 수록 편향을 줄어들지만 분산을 커짐.</p></li>
-</ul>
-</li>
-</ul>
-<p><strong>모델 일반화 오차의 종류</strong></p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-10.png" width="500"/></div><p><strong>모델 일반화 오차의 종류</strong></p>
 <p>훈련 후에 새로운 데이터 대한 예측에서 발생하는 오차를 가리키며 세 종류의 오차가 있다.</p>
 <ul class="simple">
-<li><p>편향</p></li>
-<li><p>분산</p></li>
-<li><p>줄일 수 없는 오차</p>
-<ul>
-<li><p>데이터 자체가 갖고 있는 잡음(noise) 때문에 발생.</p></li>
-<li><p>잡음을 제거해야 오차를 줄일 수 있음.</p></li>
+<li><p>편향: 실제로는 2차원 모델인데 1차원 모델을 사용하는 경우처럼 잘못된 가정으로 인해 발생한다.
+과소 적합이 발생할 가능성이 매우 높다.</p></li>
+<li><p>분산: 모델이 훈련 데이터에 민감하게 반응하는 정도를 가리킨다.
+고차 다항 회귀 모델일 수록 분산이 높아질 수 있다.
+일반적으로 <strong>자유도</strong><font size='2'>degree of freedom</font>가 높은 모델일 수록 분산이 커지며,
+과대 적합이 발생할 가능성도 매우 높다.</p></li>
+<li><p>축소 불가능 오차: 잡음(noise) 등 데이터 자체의 한계로 인해 발생한다.
+잡음 등을 제거해야 오차를 줄일 수 있다.</p></li>
 </ul>
-</li>
-</ul>
+<div class="proof example admonition" id="exp:bias_variance">
+<p class="admonition-title"><span class="caption-number">Example 4.2 </span> (편향-분산 트레이드오프)</p>
+<div class="example-content section" id="proof-content">
+<p>복잡한 모델일 수록 편향을 줄어들지만 분산을 커진다.</p>
 </div>
+</div></div>
 <div class="section" id="id10">
 <h2><span class="section-number">4.5. </span>규제 사용 선형 모델<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
-<p><strong>자유도와 규제</strong></p>
-<ul class="simple">
-<li><p>자유도(degree of freedom): 학습 모델 결정에 영향을 주는 요소(특성)들의 수</p>
-<ul>
-<li><p>단순 선형 회귀의 경우: 특성 수</p></li>
-<li><p>다항 선형 회귀 경우: 차수</p></li>
-</ul>
-</li>
-<li><p>규제(regularization): 자유도 제한</p>
-<ul>
-<li><p>단순 선형 회귀 모델에 대한 규제: 가중치 역할 제한</p></li>
-<li><p>다항 선형 회귀 모델에 대한 규제: 차수 줄이기</p></li>
-</ul>
-</li>
-</ul>
-<p><strong>가중치를 규제하는 선형 회귀 모델</strong></p>
+<p>훈련 중에 과소 적합이 발생하면 보다 복잡한 모델을 선택해야 한다.
+반면에 과대 적합이 발생할 경우 먼저 모델에 규제를 가해 과대 적합을 방지하거나
+아니면 최소한 과대 적합이 최대한 늦게 발생하도록 유도해야 한다.</p>
+<p>모델 규제는 보통 모델의 자유도를 제한하는 방식으로 이루어진다.
+<strong>자유도</strong><font size="2">degree of freedom</font>는 모델 결정에 영향을 주는 요소들의 개수이다.
+예를 들어 선형 회귀의 경우에는 특성 수가 자유도를 결정하며,
+다항 회귀의 경우엔 차수도 자유도에 기여한다.</p>
+<p>선형 회귀 모델에 대한 <strong>규제</strong><font size='2'>regularization</font>는 가중치를 제한하는 방식으로 이루어지면
+다음 세 가지 방식이 알려져 있다.</p>
 <ul class="simple">
 <li><p>릿지 회귀</p></li>
 <li><p>라쏘 회귀</p></li>
 <li><p>엘라스틱넷</p></li>
 </ul>
-<p><strong>규제 적용 주의사항</strong></p>
+<div class="warning admonition">
+<p class="admonition-title">주의사항</p>
 <p>규제항은 훈련 과정에만 사용된다. 테스트 과정에는 다른 기준으로 성능을 평가한다.</p>
 <ul class="simple">
 <li><p>훈련 과정: 비용 최소화 목표</p></li>
@@ -1086,6 +1071,7 @@ x_n
 </ul>
 </li>
 </ul>
+</div>
 <div class="section" id="id11">
 <h3><span class="section-number">4.5.1. </span>릿지 회귀<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
