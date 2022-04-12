@@ -38,19 +38,23 @@
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/togglebutton.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="_static/sphinx-thebe.js"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="5. 서포트 벡터 머신" href="svm.html" />
@@ -1017,12 +1021,9 @@ x_n
 <p>평균 제곱 오차(MSE)처럼 모델이 얼마나 나쁜가를 측정하는 함수다.</p>
 <p><strong>전역 최솟값<font size="2">global minimum</font></strong></p>
 <p>비용 함수의 전역 최솟값이다.</p>
-<p><strong>비용 함수의 그레이디언트</strong></p>
+<p><strong>비용 함수의 그레이디언트 벡터</strong></p>
 <p>MSE를 비용함수로 사용하는 경우 <span class="math notranslate nohighlight">\(\textrm{MSE}(\mathbf{\theta})\)</span> 함수의 <span class="math notranslate nohighlight">\(\mathbf{\mathbf{\theta}}\)</span> 에
-대한 그레이디언트<font size="2">gradient</font>를 사용한다.
-그레이디언트 벡터는 방향과 크기에 대한 정보를 제공하며,
-그레이디언트가 가리키는 방향의 __반대 방향__으로 움직이면
-빠르게 전역 최솟값에 접근한다.</p>
+대한 그레이디언트<font size="2">gradient</font> 벡터를 사용한다.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \nabla_\mathbf{\theta} \textrm{MSE}(\mathbf{\theta}) =
@@ -1033,7 +1034,6 @@ x_n
     \frac{\partial}{\partial \mathbf{\theta}_n} \textrm{MSE}(\mathbf{\theta})
 \end{bmatrix}
 \end{split}\]</div>
-<p><strong>참고:</strong> 산에서 가장 경사가 급한 길을 따를 때 가장 빠르게 하산하는 원리와 동일하다.</p>
 <p><strong>학습률(<span class="math notranslate nohighlight">\(\eta\)</span>)</strong></p>
 <p>훈련 과정에서의 비용함수의 파라미터(<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>)를 조정할 때 사용하는 조정 비율이다.</p>
 <p><strong>에포크<font size="2">epoch</font></strong></p>
@@ -1070,17 +1070,46 @@ x_n
 </ul>
 </li>
 </ol>
-<p>아래 그림이 경사 하강법을 잘 설명한다.</p>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-01.png" width="500"/></div><p>학습률이 너무 작거나 크면 비용 함수의 전역 최솟값에 수렴하지 않을 수 있다.</p>
+<p>위 수식은 산에서 가장 경사가 급한 길을 따를 때 가장 빠르게 하산하는 원리와 동일하다.
+이유는 해당 지점에서 그레이디언트 벡터를 계산하면 정상으로 가는 가장 빠른 길을 안내할 것이기에
+그 반대방향으로 움직여야 하기 때문이다.</p>
+<div class="info admonition">
+<p class="admonition-title">벡터의 방향과 크기</p>
+<p>모든 벡터는 방향과 크기를 갖는다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/vector01.png" width="200"/></div>
+<p>그레이디언트 벡터 또한 방향과 크기에 대한 정보를 제공하며,
+그레이디언트가 가리키는 방향의 __반대 방향__으로 움직이면 빠르게 전역 최솟값에 접근한다.</p>
+<p>이는 아래 그림이 표현하듯이 산에서 가장 경사가 급한 길을 따를 때 가장 빠르게 하산하는 원리와 동일하다.
+이유는 해당 지점에서 그레이디언트 벡터를 계산하면 정상으로 가는 가장 빠른 길을 안내할 것이기에
+그 반대방향으로 움직여야 하기 때문이다.</p>
+<table>
+    <tr>
+        <td style="padding:1px">
+            <figure>
+                <img src="https://ruder.io/content/images/2016/09/contours_evaluation_optimizers.gif" style="width:90%" title="SGD without momentum">
+                <figcaption>SGD optimization on loss surface contours</figcaption>
+            </figure>
+        </td>
+        <td style="padding:1px">
+            <figure>
+                <img src="https://ruder.io/content/images/2016/09/saddle_point_evaluation_optimizers.gif" style="width:90%" title="SGD without momentum">
+                <figcaption>SGD optimization on saddle point</figcaption>
+            </figure>
+        </td>        
+    </tr>
+</table>
+<p><strong>그림 출처:</strong> <a class="reference external" href="https://ruder.io/optimizing-gradient-descent/index.html">An overview of gradient descent optimization algorithms</a></p>
+</div>
+<p><strong>학습률과 수렴</strong></p>
+<p>선형 회귀 모델은 적절할 학습률로 훈련될 경우 빠른 시간에 비용 함수의 최솟값에 도달한다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-01.png" width="500"/></div><p>반면에 학습률이 너무 작거나 크면 비용 함수의 전역 최솟값에 수렴하지 않을 수 있다.</p>
 <ul class="simple">
 <li><p>학습률이 너무 작은 경우: 비용 함수가 전역 최소값에 너무 느리게 수렴.</p></li>
 </ul>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-02.png" width="500"/></div><ul class="simple">
 <li><p>학습률이 너무 큰 경우: 비용 함수가 수렴하지 않음.</p></li>
 </ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-03.png" width="500"/></div><p>선형 회귀의 경우 학습률이 너무 크거나 너무 작지 않으면 적정한 시간 내에 비용 함수의
-전역 최솟값에 수렴하는 것이 보장된다.
-하지만 선형 회귀가 아닌 경우에는 시작점에 따라 지역 최솟값에 수렴하거나 정체될 수 있음을
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-03.png" width="500"/></div><p>선형 회귀가 아닌 경우에는 시작점에 따라 지역 최솟값에 수렴하거나 정체될 수 있음을
 아래 그림이 잘 보여준다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-04.png" width="500"/></div><p><strong>특성 스케일링의 중요성</strong></p>
 <p>특성들의 스켈일을 통일시키면 보다 빠른 학습이 이루어지는 이유를

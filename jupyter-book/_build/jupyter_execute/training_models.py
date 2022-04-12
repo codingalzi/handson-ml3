@@ -264,13 +264,10 @@
 # 
 # 비용 함수의 전역 최솟값이다. 
 
-# **비용 함수의 그레이디언트**
+# **비용 함수의 그레이디언트 벡터**
 # 
 # MSE를 비용함수로 사용하는 경우 $\textrm{MSE}(\mathbf{\theta})$ 함수의 $\mathbf{\mathbf{\theta}}$ 에 
-# 대한 그레이디언트<font size="2">gradient</font>를 사용한다.
-# 그레이디언트 벡터는 방향과 크기에 대한 정보를 제공하며, 
-# 그레이디언트가 가리키는 방향의 __반대 방향__으로 움직이면
-# 빠르게 전역 최솟값에 접근한다.
+# 대한 그레이디언트<font size="2">gradient</font> 벡터를 사용한다.
 # 
 # $$
 # \nabla_\mathbf{\theta} \textrm{MSE}(\mathbf{\theta}) =
@@ -281,8 +278,6 @@
 #     \frac{\partial}{\partial \mathbf{\theta}_n} \textrm{MSE}(\mathbf{\theta})
 # \end{bmatrix}
 # $$
-# 
-# **참고:** 산에서 가장 경사가 급한 길을 따를 때 가장 빠르게 하산하는 원리와 동일하다.
 
 # **학습률($\eta$)**
 # 
@@ -329,11 +324,51 @@
 # 
 #         $$\theta^{(\text{new})} = \theta^{(\text{old})}\, -\, \eta\cdot \nabla_\theta \textrm{MSE}(\theta^{(\text{old})})$$    
 
-# 아래 그림이 경사 하강법을 잘 설명한다.
+# 위 수식은 산에서 가장 경사가 급한 길을 따를 때 가장 빠르게 하산하는 원리와 동일하다.
+# 이유는 해당 지점에서 그레이디언트 벡터를 계산하면 정상으로 가는 가장 빠른 길을 안내할 것이기에
+# 그 반대방향으로 움직여야 하기 때문이다.
+
+# :::{admonition} 벡터의 방향과 크기
+# :class: info
+# 
+# 모든 벡터는 방향과 크기를 갖는다. 
+# 
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/vector01.png" width="200"/></div>
+# 
+# 그레이디언트 벡터 또한 방향과 크기에 대한 정보를 제공하며, 
+# 그레이디언트가 가리키는 방향의 __반대 방향__으로 움직이면 빠르게 전역 최솟값에 접근한다.
+# 
+# 이는 아래 그림이 표현하듯이 산에서 가장 경사가 급한 길을 따를 때 가장 빠르게 하산하는 원리와 동일하다.
+# 이유는 해당 지점에서 그레이디언트 벡터를 계산하면 정상으로 가는 가장 빠른 길을 안내할 것이기에
+# 그 반대방향으로 움직여야 하기 때문이다.
+# 
+# <table>
+#     <tr>
+#         <td style="padding:1px">
+#             <figure>
+#                 <img src="https://ruder.io/content/images/2016/09/contours_evaluation_optimizers.gif" style="width:90%" title="SGD without momentum">
+#                 <figcaption>SGD optimization on loss surface contours</figcaption>
+#             </figure>
+#         </td>
+#         <td style="padding:1px">
+#             <figure>
+#                 <img src="https://ruder.io/content/images/2016/09/saddle_point_evaluation_optimizers.gif" style="width:90%" title="SGD without momentum">
+#                 <figcaption>SGD optimization on saddle point</figcaption>
+#             </figure>
+#         </td>        
+#     </tr>
+# </table>
+# 
+# **그림 출처:** [An overview of gradient descent optimization algorithms](https://ruder.io/optimizing-gradient-descent/index.html)
+# :::
+
+# **학습률과 수렴**
+
+# 선형 회귀 모델은 적절할 학습률로 훈련될 경우 빠른 시간에 비용 함수의 최솟값에 도달한다.
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-01.png" width="500"/></div>
 
-# 학습률이 너무 작거나 크면 비용 함수의 전역 최솟값에 수렴하지 않을 수 있다.
+# 반면에 학습률이 너무 작거나 크면 비용 함수의 전역 최솟값에 수렴하지 않을 수 있다.
 # 
 # - 학습률이 너무 작은 경우: 비용 함수가 전역 최소값에 너무 느리게 수렴.
 
@@ -343,9 +378,7 @@
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-03.png" width="500"/></div>
 
-# 선형 회귀의 경우 학습률이 너무 크거나 너무 작지 않으면 적정한 시간 내에 비용 함수의
-# 전역 최솟값에 수렴하는 것이 보장된다.
-# 하지만 선형 회귀가 아닌 경우에는 시작점에 따라 지역 최솟값에 수렴하거나 정체될 수 있음을
+# 선형 회귀가 아닌 경우에는 시작점에 따라 지역 최솟값에 수렴하거나 정체될 수 있음을
 # 아래 그림이 잘 보여준다.
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-04.png" width="500"/></div>
