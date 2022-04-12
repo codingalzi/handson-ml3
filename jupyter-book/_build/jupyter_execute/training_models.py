@@ -108,7 +108,7 @@
 
 # **2D 어레이 표기법**
 # 
-# 머신러닝에서는 입력 벡터와 파라미터 벡터를 일반적으로 아래 모양의 행렬로 나타낸다.
+# 머신러닝에서는 훈련 샘플을 나타내는 입력 벡터와 파라미터 벡터를 일반적으로 아래 모양의 행렬로 나타낸다.
 # 
 # $$
 # \mathbf{x}=
@@ -139,8 +139,8 @@
 
 # **선형 회귀 모델의 행렬 연산 표기법**
 
-# $\mathbf{X}$가 전체 입력 데이터셋을 가리키는 (m, 1+n) 모양의 2D 어레이, 즉 행렬이라 하자.
-# - $m$: 입력 데이터셋의 크기.
+# $\mathbf{X}$가 전체 입력 데이터셋, 즉 전체 훈련셋을 가리키는 (m, 1+n) 모양의 2D 어레이, 즉 행렬이라 하자.
+# - $m$: 훈련셋의 크기.
 # - $n$: 특성 수
 # 
 # 그러면 $\mathbf{X}$ 는 다음과 같이 표현된다.
@@ -189,7 +189,7 @@
 # | 데이터 | 어레이 기호           |     어레이 모양(shape) | 
 # |:-------------:|:-------------:|:---------------:|
 # | 예측값 | $\hat{\mathbf y}$  | $(m, 1)$ |
-# | 입력 데이터셋 | $\mathbf X$   | $(m, 1+n)$     |
+# | 훈련셋 | $\mathbf X$   | $(m, 1+n)$     |
 # | 파라미터 | $\mathbf{\theta}$      | $(1+n, 1)$ |
 
 # **비용함수: 평균 제곱 오차(MSE)**
@@ -285,7 +285,7 @@
 
 # **에포크<font size="2">epoch</font>**
 # 
-# 입력 데이터셋에 포함된 모든 데이터를 대상으로 예측값을 계산하는 과정을 가리킨다.
+# 훈련셋에 포함된 모든 데이터를 대상으로 예측값을 계산하는 과정을 가리킨다.
 
 # **허용오차<font size="2">tolerance</font>**
 # 
@@ -293,7 +293,7 @@
 
 # **배치 크기<font size="2">batch size</font>**
 # 
-# 파라미터를 업데이트하기 위해, 즉 그레이디언트 벡터를 계산하기 위해 사용되는 입력 데이터의 개수이다.
+# 파라미터를 업데이트하기 위해, 즉 그레이디언트 벡터를 계산하기 위해 사용되는 훈련 데이터의 개수이다.
 
 # **하이퍼파라미터<font size="2">hyperparameter</font>**
 # 
@@ -404,7 +404,7 @@
 # #### 배치 경사 하강법
 
 # 에포크마다 그레이디언트를 계산하여 파라미터를 조정한다.
-# 즉, 배치의 크기가 전체 입력 데이터셋의 크기와 같고 따라서 스텝의 크기는 1이다.
+# 즉, 배치의 크기가 전체 훈련셋의 크기와 같고 따라서 스텝의 크기는 1이다.
 # 
 # 단점으로 훈련 세트가 크면 그레이디언트를 계산하는 데에 많은 시간과 메모리가 필요해지는 문제가 있다. 
 # 이와 같은 이유로 인해 사이킷런은 배치 경사 하강법을 지원하지 않는다.
@@ -512,126 +512,124 @@
 #     * 특성들의 조합 활용
 #     * 특성 변수들의 다항식을 조합 특성으로 추가
 
-# ### 선형 회귀 vs. 다항 회귀
-
-# #### 선형 회귀: 1차 선형 모델
+# **2차 함수 모델를 따르는 데이터셋에 선형 회귀 모델 적용 결과**
 # 
 # $$\hat y = \theta_0 + \theta_1\, x_1$$
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-06.png" width="600"/></div>
 
-# #### 다항 회귀: 2차 다항식 모델
+# **2차 함수 모델를 따르는 데이터셋에 2차 다항식 모델 적용 결과**
 # 
 # $$\hat y = \theta_0 + \theta_1\, x_1 + \theta_2\, x_1^{2}$$
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-07.png" width="600"/></div>
 
-# #### 사이킷런의 `PolynomialFeatures` 변환기
-
+# **사이킷런의 `PolynomialFeatures` 변환기**
+# 
+# ```python
+# PolynomialFeatures(degree=2, include_bias=False)
+# ```
+# 
 # * 주어진 특성들의 거듭제곱과 특성들 사이의 곱셈을 실행하여 특성을 추가하는 기능 제공
-
+# 
 # * `degree=d`: 몇 차 다항식을 활용할지 지정하는 하이퍼파라미터
 # 
 #     * 이전 예제: $d=2$으로 지정하여  $x_1^2$에 대한 특성 변수가 추가됨.
-
+# 
 # * 예제: $n=2, d=3$인 경우에 $(x_1+x_2)^2$과 $(x_1+x_2)^3$의 항목에 해당하는 7개 특성 추가
 # 
 # $$x_1^2,\,\, x_1 x_2,\,\, x_2^2,\,\, x_1^3,\,\, x_1^2 x_2,\,\, x_1 x_2^2,\,\, x_2^3$$
 
 # ## 학습 곡선
 
-# ### 과소적합/과대적합 판정
+# **예제: 선형 모델, 2차 다항 회귀 모델, 300차 다항 회귀 모델 비교**
 # 
-# * 예제: 선형 모델, 2차 다항 회귀 모델, 300차 다항 회귀 모델 비교
-# 
-# * 다항 회귀 모델의 차수에 따라 훈련된 모델이 훈련 세트에 과소 또는 과대 적합할 수 있음.
+# 다항 회귀 모델의 차수에 따라 훈련된 모델이 훈련 세트에 과소 또는 과대 적합할 수 있다.
 
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-08.png" width="600"/></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-08.png" width="500"/></div>
 
-# ### 교차 검증 vs. 학습 곡선
+# **교차 검증 vs. 학습 곡선**
 # 
 # * 교차 검증(2장)
 #     * 과소적합: 훈련 세트와 교차 검증 점수 모두 낮은 경우
 #     * 과대적합: 훈련 세트에 대한 검증은 우수하지만 교차 검증 점수가 낮은 경우
-
+# 
 # * 학습 곡선 살피기
 #     * 학습 곡선: 훈련 세트와 검증 세트에 대한 모델 성능을 비교하는 그래프
 #     * 학습 곡선의 모양에 따라 과소적합/과대적합 판정 가능
 
-# ### 과소적합 모델의 학습 곡선 특징
-
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-09.png" width="600"/></div>
-
+# **과소적합 모델의 학습 곡선 특징**
+# 
 # * 훈련 데이터(빨강)에 대한 성능
 #     * 훈련 세트가 커지면서 RMSE(평균 제곱근 오차)가 커짐
 #     * 훈련 세트가 어느 정도 커지면 더 이상 RMSE가 변하지 않음
-
+# 
 # * 검증 데이터(파랑)에 대한 성능
 #     * 검증 세트에 대한 성능이 훈련 세트에 대한 성능과 거의 비슷해짐
 
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-09.png" width="500"/></div>
+
+# **과대적합 모델의 학습 곡선 특징**
 # 
-# ### 과대적합 모델의 학습 곡선 특징
-
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-10.png" width="600"/></div>
-
 # * 훈련 데이터(빨강)에 대한 성능: 훈련 데이터에 대한 평균 제곱근 오차가 매우 낮음.
-
+# 
 # * 검증 데이터(파랑)에 대한 성능: 훈련 데이터에 대한 성능과 차이가 크게 벌어짐.
+# 
+# * 과대적합 모델 개선법: 두 그래프가 맞닿을 때까지 훈련 데이터 추가
 
-# * 과대적합 모델 개선법: 훈련 데이터 추가
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-10.png" width="500"/></div>
 
-# ### 편향 vs 분산
-
+# **편향 vs 분산**
+# 
 # * 편향(bias)
 #     - 실제로는 2차원 모델인데 1차원 모델을 사용하는 경우처럼 잘못된 가정으로 인해 발생.
 #     - 과소적합 발생 가능성 높음.
-
+# 
 # * 분산(variance)
 #     - 모델이 훈련 데이터에 민감하게 반응하는 정도
 #     - 고차 다항 회귀 모델의 경우 분산이 높아질 수 있음.
+#     - 일반적으로 **자유도**<font size='2'>degree of freedom</font>가 높은 모델일 수록 분산이 커짐.
 #     - 과대적합 발생 가능성 높음.
-
+# 
 # * 편향과 분산의 트레이드 오프
 #     - 복잡한 모델일 수록 편향을 줄어들지만 분산을 커짐.
 
-# ### 모델 일반화 오차
-
-# * 훈련 후에 새로운 데이터 대한 예측에서 발생하는 오차를 가리키며 세 종류의 오차가 있음.
-
+# **모델 일반화 오차의 종류**
+# 
+# 훈련 후에 새로운 데이터 대한 예측에서 발생하는 오차를 가리키며 세 종류의 오차가 있다.
+# 
 # - 편향
-
 # - 분산
-
 # - 줄일 수 없는 오차
 #     - 데이터 자체가 갖고 있는 잡음(noise) 때문에 발생.
 #     - 잡음을 제거해야 오차를 줄일 수 있음.
 
 # ## 규제 사용 선형 모델
 
-# ### 자유도와 규제
-
+# **자유도와 규제**
+# 
 # * 자유도(degree of freedom): 학습 모델 결정에 영향을 주는 요소(특성)들의 수
 #     * 단순 선형 회귀의 경우: 특성 수
 #     * 다항 선형 회귀 경우: 차수
-
+# 
 # * 규제(regularization): 자유도 제한
 #     * 단순 선형 회귀 모델에 대한 규제: 가중치 역할 제한
 #     * 다항 선형 회귀 모델에 대한 규제: 차수 줄이기
 
-# ### 가중치를 규제하는 선형 회귀 모델
-
+# **가중치를 규제하는 선형 회귀 모델**
+# 
 # * 릿지 회귀
-
+# 
 # * 라쏘 회귀
-
+# 
 # * 엘라스틱넷
 
-# ### 규제 적용 주의사항
-
+# **규제 적용 주의사항**
+# 
 # 규제항은 훈련 과정에만 사용된다. 테스트 과정에는 다른 기준으로 성능을 평가한다.
 # 
 # * 훈련 과정: 비용 최소화 목표
-
+# 
 # * 테스트 과정: 최종 목표에 따른 성능 평가
 #     * 예제: 분류기의 경우 재현율/정밀도 기준으로 성능 평가
 
@@ -639,76 +637,73 @@
 
 # * 비용함수
 # 
-# $$J(\theta) = \textrm{MSE}(\theta) + \alpha \, \frac{1}{2} \sum_{i=1}^{n}\theta_i^2$$
-
+# $$J(\theta) = \textrm{MSE}(\theta) + \alpha \sum_{i=1}^{n}\theta_i^2$$
+# 
 # * $\alpha$(알파): 규제 강도 지정. 
 #     $\alpha=0$이면 규제가 전혀 없는 기본 선형 회귀
-
+# 
 # * $\alpha$가 커질 수록 가중치의 역할이 줄어듦. 
 #     비용을 줄이기 위해 가중치를 작게 유지하는 방향으로 학습
-
+# 
 # * $\theta_0$은 규제하지 않음
-
+# 
 # * 주의사항: 특성 스케일링 전처리를 해야 성능이 좋아짐.
 
 # ### 라쏘 회귀
 
 # * 비용함수
 # 
-# $$J(\theta) = \textrm{MSE}(\theta) + \alpha \, \sum_{i=1}^{n}\mid\theta_i\mid$$
-
+# $$J(\theta) = \textrm{MSE}(\theta) + 2 \alpha \, \sum_{i=1}^{n}\mid \theta_i\mid$$
+# 
 # * $\alpha$(알파): 규제 강도 지정.
 #     $\alpha=0$이면 규제가 전혀 없는 기본 선형 회귀
-
+# 
 # * $\theta_i$: 덜 중요한 특성을 무시하기 위해 $\mid\theta_i\mid$가 0에 수렴하도록 학습 유도.
-
+# 
 # * $\theta_0$은 규제하지 않음
 
-# #### 라쏘 회귀 대 릿지 회귀 비교
-
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/lasso_vs_ridge_plot.png" width="600"/></div>
-
-# ### 엘라스틱넷
+# ### 엘라스틱 넷
 
 # * 비용함수
 # 
-# $$J(\theta) = \textrm{MSE}(\theta) + r\, \alpha \, \sum_{i=1}^{n}\mid\theta_i\mid + \,\frac{1-r}{2}\, \alpha\, \sum_{i=1}^{n}\theta_i^2$$
-
+# $$J(\theta) = \textrm{MSE}(\theta) + 2r\, \alpha \, \sum_{i=1}^{n}\mid\theta_i\mid + \,(1-r)\, \alpha\, \sum_{i=1}^{n}\theta_i^2$$
+# 
 # * 릿지 회귀와 라쏘 회귀를 절충한 모델
-
+# 
 # * 혼합 비율 $r$을 이용하여 릿지 규제와 라쏘 규제를 적절하게 조절
 
-# ### 규제 사용 방법
+# **규제 선택**
 
 # * 대부분의 경우 약간이라도 규제 사용 추천
-
+# 
 # * 릿지 규제가 기본
-
+# 
 # * 유용한 속성이 많지 않다고 판단되는 경우 
 #     * 라쏘 규제나 엘라스틱넷 활용 추천
 #     * 불필요한 속성의 가중치를 0으로 만들기 때문
-
+# 
 # * 특성 수가 훈련 샘플 수보다 크거나 특성 몇 개가 강하게 연관되어 있는 경우
 #     * 라쏘 규제는 적절치 않음.
 #     * 엘라스틱넷 추천
 
 # ### 조기 종료
 
-# * 모델의 훈련 세트에 대한 과대 적합 방지를 위해 훈련을 적절한 시기에 중단시키기.
+# 조기 종료는 모델의 훈련 세트에 과대 적합하는 것을 방지하기 위해 훈련을 적절한 시기에 중단시키는 기법이며,
+# 검증 데이터에 대한 손실이 줄어 들다가 다시 커지는 순간 훈련을 종료한다. 
+# 
+# 확률적 경사 하강법, 미니 배치 경사 하강법에서는 손실 곡선이 보다 많이 진동하기에
+# 검증 손실이 언제 최소가 되었는지 알기 어렵다.
+# 따라서 한동안 최솟값보다 높게 유지될 때 훈련을 멈추고 기억해둔 최소 검증 손실 모델로
+# 되돌린다.
 
-# * 조기 종료: 검증 데이터에 대한 손실이 줄어 들다가 다시 커지는 순간 훈련 종료
-
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-11.png" width="600"/></div>
-
-# * 확률적 경사 하강법 등의 경우 손실 곡선의 진동 발생. 
-#     검증 손실이 한동안 최솟값보다 높게 유지될 때 훈련 멈춤. 최소 검증 손실 모델 확인.
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-11.png" width="500"/></div>
 
 # ## 로지스틱 회귀
 
 # 회귀 모델을 분류 모델로 활용할 수 있다. 
-
+# 
 # * 이진 분류: 로지스틱 회귀
-
+# 
 # * 다중 클래스 분류: 소프트맥스 회귀
 
 # ### 확률 추정
@@ -717,14 +712,14 @@
 # 
 # $$\sigma(t) = \frac{1}{1 + e^{-t}}$$
 
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-12.png" width="600"/></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-12.png" width="500"/></div>
 
 # * 로지스틱 회귀 모델에서 샘플 $\mathbf x$가 양성 클래스에 속할 확률
 # 
 # $$\hat p = h_\theta (\mathbf x)
 # = \sigma(\theta_0 + \theta_1\, x_1 + \cdots + \theta_n\, x_n)$$
 
-# #### 예측값
+# **예측값**
 # 
 # $$
 # \hat y = 
@@ -753,7 +748,7 @@
 
 # * 모델 훈련: 위 비용함수에 대해 경사 하강법 적용
 
-# #### 로그 손실 함수 이해
+# **로그 손실 함수 이해**
 
 # * 틀린 예측을 하면 손실값이 많이 커짐
 
@@ -763,7 +758,7 @@
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-12-10a.png" width="700"/></div>
 
-# #### 로그 손실 함수의 편도 함수
+# **로그 손실 함수의 편도 함수**
 
 # $$
 # \dfrac{\partial}{\partial \theta_j} \text{J}(\boldsymbol{\theta}) = \dfrac{1}{m}\sum\limits_{i=1}^{m}\left(\mathbf{\sigma(\boldsymbol{\theta}}^T \mathbf{x}^{(i)}) - y^{(i)}\right)\, x_j^{(i)}
@@ -775,7 +770,7 @@
 
 # ### 결정 경계
 
-# #### 예제: 붓꽃 데이터셋
+# **예제: 붓꽃 데이터셋**
 
 # * 꽃받침(sepal)과 꽃입(petal)과 관련된 4개의 특성 사용
 #     * 꽃받침 길이
@@ -788,27 +783,27 @@
 #     * 1: Iris-Versicolor(버시컬러)
 #     * 2: Iris-Virginica(버지니카)
 
-# #### 꽃잎의 너비를 기준으로 Iris-Virginica 여부 판정하기
+# **꽃잎의 너비를 기준으로 Iris-Virginica 여부 판정하기**
 # 
 # * 결정경계: 약 1.6cm
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-14.png" width="700"/></div>
 
-# #### 꽃잎의 너비와 길이를 기준으로 Iris-Virginica 여부 판정하기
+# **꽃잎의 너비와 길이를 기준으로 Iris-Virginica 여부 판정하기**
 # 
 # * 결정경계: 검정 점선
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-15.png" width="700"/></div>
 
-# ### 로지스틱 회귀 규제하기
+# **로지스틱 회귀 규제하기**
 
 # * 하이퍼파라미터 `penalty`와 `C` 이용
-
+# 
 # * `penalty`
 #     * `l1`, `l2`, `elasticnet` 세 개중에 하나 사용.
 #     * 기본은 `l2`, 즉, $\ell_2$ 규제를 사용하는 릿지 규제.
 #     * `elasticnet`을 선택한 경우 `l1_ration` 옵션 값을 함께 지정.
-
+# 
 # * `C`
 #     * 릿지 또는 라쏘 규제 정도를 지정하는 $\alpha$의 역수에 해당. 
 #     * 따라서 0에 가까울 수록 강한 규제 의미.
@@ -816,13 +811,13 @@
 # ### 소프트맥스(softmax) 회귀
 
 # * 로지스틱 회귀 모델을 일반화하여 다중 클래스 분류를 지원하도록 한 회귀 모델
-
+# 
 # * **다항 로지스틱 회귀** 라고도 불림
-
+# 
 # * 주의사항: 소프트맥스 회귀는 다중 출력 분류 지원 못함. 
 #     예를 들어, 하나의 사진에서 여러 사람의 얼굴 인식 불가능.
 
-# #### 소프트맥스 회귀 학습 아이디어
+# **소프트맥스 회귀 학습 아이디어**
 
 # * 샘플 $\mathbf x$가 주어졌을 때 각각의 분류 클래스 $k$ 에 대한 점수 $s_k(\mathbf x)$ 계산.
 #     즉, `k*(n+1)` 개의 파라미터를 학습시켜야 함.
@@ -830,14 +825,14 @@
 # $$
 # s_k(\mathbf x) = \theta_0^{(k)} + \theta_1^{(k)}\, x_1 + \cdots + \theta_n^{(k)}\, x_n
 # $$    
-
+# 
 # * __소프트맥스 함수__를 이용하여 각 클래스 $k$에 속할 확률 $\hat p_k$ 계산
 # 
 # $$
 # \hat p_k = 
 # \frac{\exp(s_k(\mathbf x))}{\sum_{j=1}^{K}\exp(s_j(\mathbf x))}
 # $$
-
+# 
 # * 추정 확률이 가장 높은 클래스 선택
 # 
 # $$
@@ -845,31 +840,31 @@
 # \mathrm{argmax}_k s_k(\mathbf x)
 # $$
 
-# ### 소프트맥스 회귀 비용함수
+# **소프트맥스 회귀 비용함수**
 
 # * 각 분류 클래스 $k$에 대한 적절한 가중치 벡터 $\theta_k$를 학습해 나가야 함.
-
+# 
 # * 비용함수: 크로스 엔트로피 비용 함수 사용
 # 
 # $$
 # J(\Theta) = 
 # - \frac{1}{m}\, \sum_{i=1}^{m}\sum_{k=1}^{K} y^{(i)}_k\, \log(\hat{p}_k^{(i)})
 # $$
-
+# 
 # * 위 비용함수에 대해 경사 하강법 적용
-
+# 
 # * $K=2$이면 로지스틱 회귀의 로그 손실 함수와 정확하게 일치.
-
+# 
 # * 주어진 샘플의 타깃 클래스를 제대로 예측할 경우 높은 확률값 계산
-
+# 
 # * 크로스 엔트로피 개념은 정보 이론에서 유래함. 자세한 설명은 생략.
 
-# ### 다중 클래스 분류 예제
-
+# **다중 클래스 분류 예제**
+# 
 # * 사이킷런의 `LogisticRegression` 예측기 활용
 #     * `multi_class=multinomial`로 지정
 #     * `solver=lbfgs`: 다중 클래스 분류 사용할 때 반드시 지정
-
+# 
 # * 붓꽃 꽃잎의 너비와 길이를 기준으로 품종 분류
 #     * 결정경계: 배경색으로 구분
 #     * 곡선: Iris-Versicolor 클래스에 속할 확률
