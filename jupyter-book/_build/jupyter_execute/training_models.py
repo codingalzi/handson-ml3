@@ -214,8 +214,8 @@
 #     * 특성 수가 매우 크거나 훈련 샘플이 너무 많아 메모리에 한꺼번에 담을 수 없을 때 적합
 #     * 일반적으로 선형 회귀 모델 훈련에 적용되는 기법
 
-# **정규 방정식**
-# 
+# ### 정규 방정식
+
 # 비용함수를 최소화 하는 $\theta$를 
 # 정규 방정식<font size="2">normal equation</font>을 이용하여 
 # 아래와 같이 바로 계산할 수 있다.
@@ -225,6 +225,8 @@
 # \hat{\mathbf{\theta}} = 
 # (\mathbf{X}^T\, \mathbf{X})^{-1}\, \mathbf{X}^T\, \mathbf{y}
 # $$
+
+# ### `LinearRegression` 클래스
 
 # **SVD(특잇값 분해) 활용**
 # 
@@ -239,6 +241,11 @@
 # \hat{\mathbf{\theta}} = 
 # \mathbf{X}^+\, \mathbf{y}
 # $$
+
+# **`LinearRegression` 모델**
+
+# 사이킷런의 `LinearRegression` 모델은 특잇값 분해와 무어-펜로즈 유사 역행렬을 이용하여 
+# 최적의 $\hat \theta$ 를 계산한다.
 
 # ## 경사 하강법
 
@@ -625,12 +632,12 @@
 # 예를 들어 선형 회귀의 경우에는 특성 수가 자유도를 결정하며,
 # 다항 회귀의 경우엔 차수도 자유도에 기여한다.
 # 
-# 선형 회귀 모델에 대한 **규제**<font size='2'>regularization</font>는 가중치를 제한하는 방식으로 이루어지면
-# 다음 세 가지 방식이 알려져 있다.
+# 선형 회귀 모델에 대한 **규제**<font size='2'>regularization</font>는 가중치를 제한하는 방식으로 이루어지며,
+# 방식에 따라 다음 세 가지 선형 회귀 모델이 지정된다.
 # 
 # * 릿지 회귀
 # * 라쏘 회귀
-# * 엘라스틱넷
+# * 엘라스틱 넷
 
 # :::{admonition} 주의
 # :class: warning
@@ -664,6 +671,17 @@
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/ridge01.png" width="600"/></div>
 
+# :::{admonition} 릿지 회귀의 정규 방정식
+# :class: info
+# 
+# $A$ 가 `(n+1)x(n+1)` 모양의 단위 행렬<font size='2'>identity matrix</font>일 때 다음이 성립한다.
+# 
+# $$
+# \hat{\mathbf{\theta}} = 
+# (\mathbf{X}^T\, \mathbf{X} + \alpha A)^{-1}\, \mathbf{X}^T\, \mathbf{y}
+# $$
+# :::
+
 # ### 라쏘 회귀<font size='2'>Lasso Regression</font>
 
 # 다음 비용 함수를 사용한다.
@@ -682,6 +700,12 @@
 # - 오른편: 10차 다항 회귀 모델에 세 개의 $\alpha$ 값 적용.
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/lasso01.png" width="600"/></div>
+
+# :::{admonition} 주의 사항
+# :class: warning
+# 
+# 라쏘 회귀는 정규 방정식을 지원하지 않는다.
+# :::
 
 # ### 엘라스틱 넷<font size='2'>Elastic Net</font>
 
