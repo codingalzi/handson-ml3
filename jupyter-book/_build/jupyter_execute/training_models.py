@@ -668,10 +668,12 @@
 
 # 다음 비용 함수를 사용한다.
 # 
-# $$J(\theta) = \textrm{MSE}(\theta) + 2 \alpha \, \sum_{i=1}^{n}\mid \theta_i\mid$$
+# $$J(\theta) = \textrm{MSE}(\theta) + \alpha \, \sum_{i=1}^{n}\mid \theta_i\mid$$
 # 
-# * 비용 함숫값을 낮추기 위해 별로 중요하지 않은 특성을 무시하기 위해 $\mid\theta_i\mid$가 0에 
-#     수렴하도록 훈련 중에 유도된다.
+# * 별로 중요하지 않은 특성에 대해 $\theta_i$가 0에 빠르게 수렴하도록 훈련 중에 유도된다.
+#     이유는 $\mid \theta_i \mid$ 의 미분값이 1또는 -1 이기에 상대적으로 큰 값이기에
+#     파라미터 업데이크 과정에서 보다 작은 $\mid \theta_i \mid$ 가 보다 빠르게 0에 수렴하기 때문이다.
+#    
 # * $\alpha$ 와 $\theta_0$ 에 대한 설명은 릿지 회귀의 경우와 동일하다.
 
 # 아래 그림은 라쏘 규제를 적용한 적용한 6 개의 경우를 보여준다.
@@ -689,7 +691,7 @@
 # $$
 # J(\theta) = 
 # \textrm{MSE}(\theta) + 
-# r\cdot \bigg ( 2 \alpha \, \sum_{i=1}^{n}\mid\theta_i\mid \bigg) + 
+# r\cdot \bigg ( \alpha \, \sum_{i=1}^{n}\mid\theta_i\mid \bigg) + 
 # (1-r)\cdot \bigg ( \alpha\, \sum_{i=1}^{n}\theta_i^2 \bigg )
 # $$
 
