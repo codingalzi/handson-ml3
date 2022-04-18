@@ -711,12 +711,13 @@
 
 # 릿지 회귀와 라쏘 회귀를 절충한 모델이며 다음 비용 함수를 사용한다.
 # $r$ 은 릿지 규제와 라쏘 규제의 사용 비율이다. 
+# 단, 규제 강도를 의미하는 `\alpha` 가 각 규제에 가해지는 정도가 다름에 주의한다.
 # 
 # $$
 # J(\theta) = 
 # \textrm{MSE}(\theta) + 
-# r\cdot \bigg ( \alpha \, \sum_{i=1}^{n}\mid\theta_i\mid \bigg) + 
-# (1-r)\cdot \bigg ( \alpha\, \sum_{i=1}^{n}\theta_i^2 \bigg )
+# r\cdot \bigg (2 \alpha \, \sum_{i=1}^{n}\mid\theta_i\mid \bigg) + 
+# (1-r)\cdot \bigg (\frac{\alpha}{m}\, \sum_{i=1}^{n}\theta_i^2 \bigg )
 # $$
 
 # :::{admonition} 규제 선택
@@ -746,39 +747,39 @@
 # 회귀 모델을 분류 모델로 활용할 수 있다. 
 # 
 # * 이진 분류: 로지스틱 회귀
-# 
 # * 다중 클래스 분류: 소프트맥스 회귀
 
 # ### 확률 추정
 
-# * 시그모이드 함수
+# 선형 회귀 모델이 예측한 값에 **시그모이드**<font size='2'>sigmoid</font> 함수를
+# 적용하여 0과 1 사이의 값, 즉 양성일 **확률** $\hat p$ 로 지정한다.
 # 
-# $$\sigma(t) = \frac{1}{1 + e^{-t}}$$
+# $$
+# \hat p = h_\theta(\mathbf{x}) = \sigma(\mathbf{\theta}^T \, \mathbf{x})
+# = \sigma(\theta_0 + \theta_1\, x_1 + \cdots + \theta_n\, x_n)
+# $$
+
+# **시그모이드 함수**
+# 
+# $$\sigma(t) = \frac{1}{1 + \exp(-t)}$$
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-12.png" width="500"/></div>
 
-# * 로지스틱 회귀 모델에서 샘플 $\mathbf x$가 양성 클래스에 속할 확률
-# 
-# $$\hat p = h_\theta (\mathbf x)
-# = \sigma(\theta_0 + \theta_1\, x_1 + \cdots + \theta_n\, x_n)$$
-
-# **예측값**
+# 로지스틱 회귀 모델의 **예측값**은 아래와 같이 결정된다.
 # 
 # $$
 # \hat y = 
 # \begin{cases}
-# 0 & \text{if}\,\, \hat p < 0.5 \\
+# 0 & \text{if}\,\, \hat p < 0.5 \\[1ex]
 # 1 & \text{if}\,\, \hat p \ge 0.5
 # \end{cases}
 # $$
 
-# * 양성 클래스인 경우: 
+# 따라서 다음이 성립한다.
 # 
-# $$\theta_0 + \theta_1\, x_1 + \cdots + \theta_n\, x_n \ge 0$$
-
-# * 음성 클래스인 경우: 
+# * 양성 클래스인 경우: $\theta_0 + \theta_1\, x_1 + \cdots + \theta_n\, x_n \ge 0$
 # 
-# $$\theta_0 + \theta_1\, x_1 + \cdots + \theta_n\, x_n < 0$$
+# * 음성 클래스인 경우: $\theta_0 + \theta_1\, x_1 + \cdots + \theta_n\, x_n < 0$
 
 # ### 훈련과 비용함수
 
