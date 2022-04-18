@@ -1181,13 +1181,14 @@ x_n
 <div class="section" id="font-size-2-elastic-net-font">
 <h3><span class="section-number">4.5.3. </span>엘라스틱 넷<font size='2'>Elastic Net</font><a class="headerlink" href="#font-size-2-elastic-net-font" title="Permalink to this headline">¶</a></h3>
 <p>릿지 회귀와 라쏘 회귀를 절충한 모델이며 다음 비용 함수를 사용한다.
-<span class="math notranslate nohighlight">\(r\)</span> 은 릿지 규제와 라쏘 규제의 사용 비율이다.</p>
+<span class="math notranslate nohighlight">\(r\)</span> 은 릿지 규제와 라쏘 규제의 사용 비율이다.
+단, 규제 강도를 의미하는 <code class="docutils literal notranslate"><span class="pre">\alpha</span></code> 가 각 규제에 가해지는 정도가 다름에 주의한다.</p>
 <div class="math notranslate nohighlight">
 \[
 J(\theta) = 
 \textrm{MSE}(\theta) + 
-r\cdot \bigg ( \alpha \, \sum_{i=1}^{n}\mid\theta_i\mid \bigg) + 
-(1-r)\cdot \bigg ( \alpha\, \sum_{i=1}^{n}\theta_i^2 \bigg )
+r\cdot \bigg (2 \alpha \, \sum_{i=1}^{n}\mid\theta_i\mid \bigg) + 
+(1-r)\cdot \bigg (\frac{\alpha}{m}\, \sum_{i=1}^{n}\theta_i^2 \bigg )
 \]</div>
 <div class="info admonition">
 <p class="admonition-title">규제 선택</p>
@@ -1216,36 +1217,30 @@ r\cdot \bigg ( \alpha \, \sum_{i=1}^{n}\mid\theta_i\mid \bigg) +
 </ul>
 <div class="section" id="id13">
 <h3><span class="section-number">4.6.1. </span>확률 추정<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p>시그모이드 함수</p></li>
-</ul>
+<p>선형 회귀 모델이 예측한 값에 <strong>시그모이드</strong><font size='2'>sigmoid</font> 함수를
+적용하여 0과 1 사이의 값, 즉 양성일 <strong>확률</strong> <span class="math notranslate nohighlight">\(\hat p\)</span> 로 지정한다.</p>
 <div class="math notranslate nohighlight">
-\[\sigma(t) = \frac{1}{1 + e^{-t}}\]</div>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-12.png" width="500"/></div><ul class="simple">
-<li><p>로지스틱 회귀 모델에서 샘플 <span class="math notranslate nohighlight">\(\mathbf x\)</span>가 양성 클래스에 속할 확률</p></li>
-</ul>
+\[
+\hat p = h_\theta(\mathbf{x}) = \sigma(\mathbf{\theta}^T \, \mathbf{x})
+= \sigma(\theta_0 + \theta_1\, x_1 + \cdots + \theta_n\, x_n)
+\]</div>
+<p><strong>시그모이드 함수</strong></p>
 <div class="math notranslate nohighlight">
-\[\hat p = h_\theta (\mathbf x)
-= \sigma(\theta_0 + \theta_1\, x_1 + \cdots + \theta_n\, x_n)\]</div>
-<p><strong>예측값</strong></p>
+\[\sigma(t) = \frac{1}{1 + \exp(-t)}\]</div>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-12.png" width="500"/></div><p>로지스틱 회귀 모델의 <strong>예측값</strong>은 아래와 같이 결정된다.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \hat y = 
 \begin{cases}
-0 &amp; \text{if}\,\, \hat p &lt; 0.5 \\
+0 &amp; \text{if}\,\, \hat p &lt; 0.5 \\[1ex]
 1 &amp; \text{if}\,\, \hat p \ge 0.5
 \end{cases}
 \end{split}\]</div>
+<p>따라서 다음이 성립한다.</p>
 <ul class="simple">
-<li><p>양성 클래스인 경우:</p></li>
+<li><p>양성 클래스인 경우: <span class="math notranslate nohighlight">\(\theta_0 + \theta_1\, x_1 + \cdots + \theta_n\, x_n \ge 0\)</span></p></li>
+<li><p>음성 클래스인 경우: <span class="math notranslate nohighlight">\(\theta_0 + \theta_1\, x_1 + \cdots + \theta_n\, x_n &lt; 0\)</span></p></li>
 </ul>
-<div class="math notranslate nohighlight">
-\[\theta_0 + \theta_1\, x_1 + \cdots + \theta_n\, x_n \ge 0\]</div>
-<ul class="simple">
-<li><p>음성 클래스인 경우:</p></li>
-</ul>
-<div class="math notranslate nohighlight">
-\[\theta_0 + \theta_1\, x_1 + \cdots + \theta_n\, x_n &lt; 0\]</div>
 </div>
 <div class="section" id="id14">
 <h3><span class="section-number">4.6.2. </span>훈련과 비용함수<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
