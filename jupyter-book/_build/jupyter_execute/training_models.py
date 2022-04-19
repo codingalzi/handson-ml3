@@ -318,6 +318,12 @@
 # \mathrm{MSE}(\mathbf{\theta}) =
 # \frac 1 m \sum_{i=1}^{m} \big(\mathbf{\theta}^{T}\, \mathbf{x}^{(i)} - y^{(i)}\big)^2
 # $$
+# 
+# $\mathrm{MSE}(\mathbf{\theta})$의 그레이디언트 벡터는 다음과 같다.
+# 
+# $$
+# \nabla_\theta \textrm{MSE}(\theta) = \frac{2}{m}\, \mathbf{X}^T\, (\mathbf{X}\, \theta^T - \mathbf y)
+# $$
 
 # 경사 하강법은 다음 과정으로 이루어진다. 
 # 
@@ -329,7 +335,9 @@
 #     * 이전 $\mathbf{\theta}$에서 $\nabla_\mathbf{\theta} \textrm{MSE}(\mathbf{\theta})$ 와
 #         학습률 $\eta$를 곱한 값 빼기.<br><br>
 # 
-#         $$\theta^{(\text{new})} = \theta^{(\text{old})}\, -\, \eta\cdot \nabla_\theta \textrm{MSE}(\theta^{(\text{old})})$$    
+#         $$
+#         \theta^{(\text{new})} = \theta^{(\text{old})}\, -\, \eta\cdot \nabla_\theta \textrm{MSE}(\theta^{(\text{old})})
+#         $$
 
 # 위 수식은 산에서 가장 경사가 급한 길을 따를 때 가장 빠르게 하산하는 원리와 동일하다.
 # 이유는 해당 지점에서 그레이디언트 벡터를 계산하면 정상으로 가는 가장 빠른 길을 안내할 것이기에
@@ -765,7 +773,7 @@
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-12.png" width="500"/></div>
 
-# 로지스틱 회귀 모델의 **예측값**은 아래와 같이 결정된다.
+# 로지스틱 회귀 모델의 **예측값**은 다음과 같다.
 # 
 # $$
 # \hat y = 
@@ -775,42 +783,62 @@
 # \end{cases}
 # $$
 
-# 따라서 다음이 성립한다.
+# 즉, 다음이 성립한다.
 # 
-# * 양성 클래스인 경우: $\theta_0 + \theta_1\, x_1 + \cdots + \theta_n\, x_n \ge 0$
+# * 양성: $\theta_0 + \theta_1\, x_1 + \cdots + \theta_n\, x_n \ge 0$
 # 
-# * 음성 클래스인 경우: $\theta_0 + \theta_1\, x_1 + \cdots + \theta_n\, x_n < 0$
+# * 음성: $\theta_0 + \theta_1\, x_1 + \cdots + \theta_n\, x_n < 0$
 
 # ### 훈련과 비용함수
 
-# * 비용함수: 로그 손실(log loss) 함수 사용
+# 로지스틱 회귀 모델은 양성 샘플에 대해서는 1에 가까운 확률값을,
+# 음성 샘플에 대해서는 0에 가까운 확률값을 내도록 훈련한다.
+# 각 샘플에 대한 비용은 다음과 같다.
+# 
+# $$
+# c(\theta) = 
+# \begin{cases}
+# -\log(\,\hat p\,) & \text{$y=1$ 인 경우}\\
+# -\log(\,1 - \hat p\,) & \text{$y=0$ 인 경우}
+# \end{cases}
+# $$
+# 
+# 양성 샘플에 대해 0에 가까운 값을 예측하거나,
+# 음성 샘플에 대해 1에 가까운 값을 예측하면 
+# 위 비용 함수의 값이 무한히 커진다.
+# 
+# 모델 훈련은 따라서 전체 훈련셋에 대한 다음 
+# **로그 손실**<font size='2'>log loss</font> 함수는 다음과 같다.
 # 
 # $$
 # J(\theta) = 
 # - \frac{1}{m}\, \sum_{i=1}^{m}\, [y^{(i)}\, \log(\,\hat p^{(i)}\,) + (1-y^{(i)})\, \log(\,1 - \hat p^{(i)}\,)]
 # $$
 
-# * 모델 훈련: 위 비용함수에 대해 경사 하강법 적용
+# :::{admonition} 로그 손실 함수 이해
+# :class: info
+# 
+# $c(\theta)$ 는 틀린 예측을 하면 손실값이 매우 커진다.
+# 
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-12-10a.png" width="500"/></div>
+# 
+# 훈련셋이 가우시안 분포를 따른다는 전제하에 로그 손실 함수를 최소화하면 
+# **최대 우도**<font size='2'>maximal likelihood</font>를 갖는 최적의 모델을 얻을 수 있다는 사실은
+# 수학적으로 증명되었다.
+# 상세 내용은 [앤드류 응(Andrew Ng) 교수의 Stanford CS229](https://www.youtube.com/watch?v=jGwO_UgTS7I&list=PLoROMvodv4rMiGQp3WXShtMGgzqpfVfbU) 강의에서 들을 수 있다.
+# :::
 
-# **로그 손실 함수 이해**
-
-# * 틀린 예측을 하면 손실값이 많이 커짐
-
+# 최적의 $\theta$ 를 계산하는 정규 방정식은 하지 않는다.
+# 하지만 다행히도 경사 하강법은 적용할 수 있으며,
+# 선형 회귀의 경우처럼 적절한 학습률을 사용하면 언제나 최소 비용에 수렴하도록
+# 파라미터가 훈련된다.
+# 
+# 참고로 로그 손실 함수의 그레이디이언트 벡터는 선형 회귀의 그것과 매우 유사하며,
+# 다음 편도 함수들로 이루어진다.
+# 
 # $$
-# - [y\, \log(\,\hat p\,) + (1-y)\, \log(\,1 - \hat p\,)]
+# \dfrac{\partial}{\partial \theta_j} J(\boldsymbol{\theta}) = \dfrac{1}{m}\sum\limits_{i=1}^{m}\left(\mathbf{\sigma(\boldsymbol{\theta}}^T \mathbf{x}^{(i)}) - y^{(i)}\right)\, x_j^{(i)}
 # $$
-
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-12-10a.png" width="700"/></div>
-
-# **로그 손실 함수의 편도 함수**
-
-# $$
-# \dfrac{\partial}{\partial \theta_j} \text{J}(\boldsymbol{\theta}) = \dfrac{1}{m}\sum\limits_{i=1}^{m}\left(\mathbf{\sigma(\boldsymbol{\theta}}^T \mathbf{x}^{(i)}) - y^{(i)}\right)\, x_j^{(i)}
-# $$
-
-# * 편도 함수가 선형 회귀의 경우와 매우 비슷한 것에 대한 확률론적 근거가 있음.
-
-# * __참고:__ [앤드류 응(Andrew Ng) 교수의 Stanford CS229](https://www.youtube.com/watch?v=jGwO_UgTS7I&list=PLoROMvodv4rMiGQp3WXShtMGgzqpfVfbU)
 
 # ### 결정 경계
 
