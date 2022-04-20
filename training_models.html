@@ -38,9 +38,12 @@
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/togglebutton.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
@@ -363,8 +366,8 @@ const thebe_selector_output = ".output, .cell_output"
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#softmax">
-     4.6.4. 소프트맥스(softmax) 회귀
+    <a class="reference internal nav-link" href="#id16">
+     4.6.4. 소프트맥스 회귀
     </a>
    </li>
   </ul>
@@ -516,8 +519,8 @@ const thebe_selector_output = ".output, .cell_output"
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#softmax">
-     4.6.4. 소프트맥스(softmax) 회귀
+    <a class="reference internal nav-link" href="#id16">
+     4.6.4. 소프트맥스 회귀
     </a>
    </li>
   </ul>
@@ -1294,116 +1297,114 @@ J(\theta) =
 </div>
 <div class="section" id="id15">
 <h3><span class="section-number">4.6.3. </span>결정 경계<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
-<p><strong>예제: 붓꽃 데이터셋</strong></p>
+<p>붓꽃 데이터셋을 이용하여 로지스틱 회귀의 사용법을 살펴 본다.
+하나의 붓꽃 샘플은 꽃받침<font size='2'>sepal</font>의 길이와 너비,
+꽃입<font size='2'>petal</font>의 길이와 너비 등 총 4개의 특성으로
+이루어진다.</p>
+<p>타깃값은 0, 1, 2 중에 하나이며 각 숫자는 다음 세 개의 품종을 가리킨다.</p>
 <ul class="simple">
-<li><p>꽃받침(sepal)과 꽃입(petal)과 관련된 4개의 특성 사용</p>
-<ul>
-<li><p>꽃받침 길이</p></li>
-<li><p>꽃받침 너비</p></li>
-<li><p>꽃잎 길이</p></li>
-<li><p>꽃잎 너비</p></li>
-</ul>
-</li>
-</ul>
-<ul class="simple">
-<li><p>타깃: 세 개의 품종</p>
-<ul>
 <li><p>0: Iris-Setosa(세토사)</p></li>
 <li><p>1: Iris-Versicolor(버시컬러)</p></li>
 <li><p>2: Iris-Virginica(버지니카)</p></li>
 </ul>
-</li>
-</ul>
-<p><strong>꽃잎의 너비를 기준으로 Iris-Virginica 여부 판정하기</strong></p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/iris01.png" width="600"/></div><p><strong>버지니카 품종 감지기</strong></p>
+<p>로지스틱 회귀 모델을 이용하여 아이리스 데이터셋을 대상으로 버지니카 품종을 감지하는
+이진 분류기를 다음과 같이 훈련시킨다.
+단, 문제를 간단하기 만들기 위해 꽃잎의 너비 속성 하나만 이용한다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">[[</span><span class="s2">&quot;petal width (cm)&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">target_names</span><span class="p">[</span><span class="n">iris</span><span class="o">.</span><span class="n">target</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;virginica&#39;</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">log_reg</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">log_reg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>훈련 결과 꽃잎의 넙가 약 1.65cm 보다 큰 경우 버지니카 품종일 가능성이 높아짐이 확인된다.
+즉, 버지니카 품좀 감지기의
+<strong>결정 경계</strong><font size='2'>decision boundary</font>는 꽃잎 넙 기준으로 약 1.65cm 이다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/iris02.png" width="700"/></div><p>아래 그림은 꽃잎의 너비와 길이 두 속성을 이용한 버지니카 품종 감지기가 찾은
+결정 경계(검정 파선)를 보여준다.
+반면에 다양한 색상의 직선은 버지니카 품종일 가능성을 보여주는 영역을 표시한다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-15.png" width="700"/></div><p><strong>로지스틱 회귀 규제</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> 모델의 하이퍼파라미터 <code class="docutils literal notranslate"><span class="pre">penalty</span></code> 와 <code class="docutils literal notranslate"><span class="pre">C</span></code> 를 이용하여 규제와 규제의 강도를 지정한다.</p>
 <ul class="simple">
-<li><p>결정경계: 약 1.6cm</p></li>
-</ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-14.png" width="700"/></div><p><strong>꽃잎의 너비와 길이를 기준으로 Iris-Virginica 여부 판정하기</strong></p>
-<ul class="simple">
-<li><p>결정경계: 검정 점선</p></li>
-</ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-15.png" width="700"/></div><p><strong>로지스틱 회귀 규제하기</strong></p>
-<ul class="simple">
-<li><p>하이퍼파라미터 <code class="docutils literal notranslate"><span class="pre">penalty</span></code>와 <code class="docutils literal notranslate"><span class="pre">C</span></code> 이용</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">penalty</span></code></p>
-<ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">l1</span></code>, <code class="docutils literal notranslate"><span class="pre">l2</span></code>, <code class="docutils literal notranslate"><span class="pre">elasticnet</span></code> 세 개중에 하나 사용.</p></li>
-<li><p>기본은 <code class="docutils literal notranslate"><span class="pre">l2</span></code>, 즉, <span class="math notranslate nohighlight">\(\ell_2\)</span> 규제를 사용하는 릿지 규제.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">elasticnet</span></code>을 선택한 경우 <code class="docutils literal notranslate"><span class="pre">l1_ration</span></code> 옵션 값을 함께 지정.</p></li>
-</ul>
-</li>
-<li><p><code class="docutils literal notranslate"><span class="pre">C</span></code></p>
-<ul>
-<li><p>릿지 또는 라쏘 규제 정도를 지정하는 <span class="math notranslate nohighlight">\(\alpha\)</span>의 역수에 해당.</p></li>
-<li><p>따라서 0에 가까울 수록 강한 규제 의미.</p></li>
-</ul>
-</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">penalty</span></code>: <code class="docutils literal notranslate"><span class="pre">l1</span></code>(라쏘 규제), <code class="docutils literal notranslate"><span class="pre">l2</span></code>(릿지 규제), <code class="docutils literal notranslate"><span class="pre">elasticnet</span></code>(엘라스틱 넷) 방식 중 하나 선택하며,
+기본값은 <code class="docutils literal notranslate"><span class="pre">l2</span></code>, 즉, 릿지 규제를 기본으로 적용한다.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">C</span></code>: 릿지 또는 라쏘 규제 정도를 지정하는 <span class="math notranslate nohighlight">\(\alpha\)</span>의 역수에 해당한다.
+따라서 0에 가까울 수록 강한 규제를 의미한다.</p></li>
 </ul>
 </div>
-<div class="section" id="softmax">
-<h3><span class="section-number">4.6.4. </span>소프트맥스(softmax) 회귀<a class="headerlink" href="#softmax" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p>로지스틱 회귀 모델을 일반화하여 다중 클래스 분류를 지원하도록 한 회귀 모델</p></li>
-<li><p><strong>다항 로지스틱 회귀</strong> 라고도 불림</p></li>
-<li><p>주의사항: 소프트맥스 회귀는 다중 출력 분류 지원 못함.
-예를 들어, 하나의 사진에서 여러 사람의 얼굴 인식 불가능.</p></li>
-</ul>
-<p><strong>소프트맥스 회귀 학습 아이디어</strong></p>
-<ul class="simple">
-<li><p>샘플 <span class="math notranslate nohighlight">\(\mathbf x\)</span>가 주어졌을 때 각각의 분류 클래스 <span class="math notranslate nohighlight">\(k\)</span> 에 대한 점수 <span class="math notranslate nohighlight">\(s_k(\mathbf x)\)</span> 계산.
-즉, <code class="docutils literal notranslate"><span class="pre">k*(n+1)</span></code> 개의 파라미터를 학습시켜야 함.</p></li>
-</ul>
+<div class="section" id="id16">
+<h3><span class="section-number">4.6.4. </span>소프트맥스 회귀<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<p>로지스틱 회귀 모델을 일반화하여 다중 클래스 분류를 지원하도록 만든 모델이
+<strong>소프트맥스 회귀</strong><font size='2'>Softmax Regression</font>이며,
+<strong>다항 로지스틱 회귀</strong> 라고도 불린다.</p>
+<p><strong>클래스별 확률 예측</strong></p>
+<p>샘플 <span class="math notranslate nohighlight">\(\mathbf x\)</span>가 주어졌을 때 각각의 분류 클래스 <span class="math notranslate nohighlight">\(k\)</span> 에 대한 점수 <span class="math notranslate nohighlight">\(s_k(\mathbf x)\)</span>를
+선형 회귀 방식으로 계산한다.</p>
 <div class="math notranslate nohighlight">
 \[
-s_k(\mathbf x) = \theta_0^{(k)} + \theta_1^{(k)}\, x_1 + \cdots + \theta_n^{(k)}\, x_n
+s_k(\mathbf{x}) = \theta_0^{(k)} + \theta_1^{(k)} x_1 + \cdots + \theta_n^{(k)} x_n
 \]</div>
-<ul class="simple">
-<li><p>__소프트맥스 함수__를 이용하여 각 클래스 <span class="math notranslate nohighlight">\(k\)</span>에 속할 확률 <span class="math notranslate nohighlight">\(\hat p_k\)</span> 계산</p></li>
-</ul>
+<p>이는 <span class="math notranslate nohighlight">\(k\, (n+1)\)</span> 개의 파라미터를 학습시켜야 함을 의미한다.
+위 식에서 <span class="math notranslate nohighlight">\(\theta_i^{(k)}\)</span> 는 분류 클래스 <span class="math notranslate nohighlight">\(k\)</span>에 대해 필요한 <span class="math notranslate nohighlight">\(i\)</span> 번째 속성을
+대상으로 파라미터를 가리킨다.</p>
+<p>예를 들어, 붓꽃 데이터를 대상으로 하는 경우 최대 15개의 파라미터를 훈련시켜야 한다.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\Theta = 
+\begin{bmatrix}
+\theta_0^{(0)} &amp; \theta_1^{(0)} &amp; \theta_2^{(0)} &amp; \theta_3^{(0)} &amp; \theta_4^{(0)}\\
+\theta_0^{(1)} &amp; \theta_1^{(1)} &amp; \theta_2^{(1)} &amp; \theta_3^{(1)} &amp; \theta_4^{(1)}\\
+\theta_0^{(2)} &amp; \theta_1^{(2)} &amp; \theta_2^{(2)} &amp; \theta_3^{(2)} &amp; \theta_4^{(2)}
+\end{bmatrix}
+\end{split}\]</div>
+<p>이제 다음 <strong>소프트맥스</strong> 함수를 이용하여 클래스 <span class="math notranslate nohighlight">\(k\)</span>에 속할 확률 <span class="math notranslate nohighlight">\(\hat p_k\)</span> 를 계산한다.
+단, <span class="math notranslate nohighlight">\(K\)</span> 는 클래스의 개수를 나타낸다.</p>
 <div class="math notranslate nohighlight">
 \[
 \hat p_k = 
 \frac{\exp(s_k(\mathbf x))}{\sum_{j=1}^{K}\exp(s_j(\mathbf x))}
 \]</div>
-<ul class="simple">
-<li><p>추정 확률이 가장 높은 클래스 선택</p></li>
-</ul>
+<p>소프트맥스 회귀 모델은 각 샘플에 대해 추정 확률이 가장 높은 클래스를 선택한다.</p>
 <div class="math notranslate nohighlight">
 \[
 \hat y = 
 \mathrm{argmax}_k s_k(\mathbf x)
 \]</div>
-<p><strong>소프트맥스 회귀 비용함수</strong></p>
-<ul class="simple">
-<li><p>각 분류 클래스 <span class="math notranslate nohighlight">\(k\)</span>에 대한 적절한 가중치 벡터 <span class="math notranslate nohighlight">\(\theta_k\)</span>를 학습해 나가야 함.</p></li>
-<li><p>비용함수: 크로스 엔트로피 비용 함수 사용</p></li>
-</ul>
+<div class="tip admonition">
+<p class="admonition-title">소프트맥스 회귀와 다중 출력 분류</p>
+<p>소프트맥스 회귀는 다중 출력<font size='2'>multioutput</font> 분류를 지원하지 않는다.
+예를 들어, 하나의 사진에서 여러 사람의 얼굴을 인식하는 데에 사용할 수 없다.</p>
+</div>
+<p><strong>소프트맥스 회귀의 비용 함수</strong></p>
+<p>각 분류 클래스 <span class="math notranslate nohighlight">\(k\)</span>에 대한 적절한 가중치 벡터 <span class="math notranslate nohighlight">\(\theta_k\)</span>를
+경사 하강법을 이용하여 업데이트 한다.
+이를 위해 <strong>크로스 엔트로피</strong><font size='2'>cross entropy</font>를 비용 함수로 사용한다.</p>
 <div class="math notranslate nohighlight">
 \[
 J(\Theta) = 
-- \frac{1}{m}\, \sum_{i=1}^{m}\sum_{k=1}^{K} y^{(i)}_k\, \log(\hat{p}_k^{(i)})
+- \frac{1}{m}\, \sum_{i=1}^{m}\sum_{k=1}^{K} y^{(i)}_k\, \log\big( \hat{p}_k^{(i)}\big)
 \]</div>
-<ul class="simple">
-<li><p>위 비용함수에 대해 경사 하강법 적용</p></li>
-<li><p><span class="math notranslate nohighlight">\(K=2\)</span>이면 로지스틱 회귀의 로그 손실 함수와 정확하게 일치.</p></li>
-<li><p>주어진 샘플의 타깃 클래스를 제대로 예측할 경우 높은 확률값 계산</p></li>
-<li><p>크로스 엔트로피 개념은 정보 이론에서 유래함. 자세한 설명은 생략.</p></li>
-</ul>
-<p><strong>다중 클래스 분류 예제</strong></p>
-<ul class="simple">
-<li><p>사이킷런의 <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> 예측기 활용</p>
-<ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">multi_class=multinomial</span></code>로 지정</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">solver=lbfgs</span></code>: 다중 클래스 분류 사용할 때 반드시 지정</p></li>
-</ul>
-</li>
-<li><p>붓꽃 꽃잎의 너비와 길이를 기준으로 품종 분류</p>
-<ul>
-<li><p>결정경계: 배경색으로 구분</p></li>
-<li><p>곡선: Iris-Versicolor 클래스에 속할 확률</p></li>
-</ul>
-</li>
-</ul>
+<p>위 식에서 <span class="math notranslate nohighlight">\(y^{(i)}_k\)</span> 는 타깃 확률값을 가리키며, 0 또는 1 중에 하나의 값을 갖는다.
+<span class="math notranslate nohighlight">\(K=2\)</span>이면 로지스틱 회귀의 로그 손실 함수와 정확하게 일치한다.</p>
+<p>크로스 엔트로피는 주어진 샘플의 타깃 클래스를 제대로 예측하지 못하는 경우 높은 값을 갖는다.
+크로스 엔트로피 개념은 정보 이론에서 유래하며, 여기서는 더 이상 설명하지 않는다.</p>
+<p><strong>붓꽃 데이터 다중 클래스 분류</strong></p>
+<p>사이킷런의 <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> 예측기를 활용한다.
+기본값 <code class="docutils literal notranslate"><span class="pre">solver=lbfgs</span></code> 사용하면 모델이 알아서 다중 클래스 분류를 훈련한다.
+아래 코드는 꽃잎의 길이와 너비 두 특성을 이용하여
+세토사, 버시컬러, 버지니카 클래스를 선택하는 모델을 훈련시킨다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">[[</span><span class="s2">&quot;petal length (cm)&quot;</span><span class="p">,</span> <span class="s2">&quot;petal width (cm)&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">iris</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">]</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">softmax_reg</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">softmax_reg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>아래 그림은 붓꽃 꽃잎의 너비와 길이를 기준으로 세 개의 품종을 색까로 구분하는 결정 경계를 보여준다.
+다양한 색상의 곡선은 버시컬러 품종에 속할 확률의 영력을 보여준다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-16.png" width="700"/></div></div>
 </div>
 </div>
