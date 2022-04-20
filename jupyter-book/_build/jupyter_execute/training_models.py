@@ -842,103 +842,142 @@
 
 # ### 결정 경계
 
-# **예제: 붓꽃 데이터셋**
-
-# * 꽃받침(sepal)과 꽃입(petal)과 관련된 4개의 특성 사용
-#     * 꽃받침 길이
-#     * 꽃받침 너비
-#     * 꽃잎 길이
-#     * 꽃잎 너비
-
-# * 타깃: 세 개의 품종
-#     * 0: Iris-Setosa(세토사)
-#     * 1: Iris-Versicolor(버시컬러)
-#     * 2: Iris-Virginica(버지니카)
-
-# **꽃잎의 너비를 기준으로 Iris-Virginica 여부 판정하기**
+# 붓꽃 데이터셋을 이용하여 로지스틱 회귀의 사용법을 살펴 본다. 
+# 하나의 붓꽃 샘플은 꽃받침<font size='2'>sepal</font>의 길이와 너비, 
+# 꽃입<font size='2'>petal</font>의 길이와 너비 등 총 4개의 특성으로 
+# 이루어진다. 
 # 
-# * 결정경계: 약 1.6cm
-
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-14.png" width="700"/></div>
-
-# **꽃잎의 너비와 길이를 기준으로 Iris-Virginica 여부 판정하기**
+# 타깃값은 0, 1, 2 중에 하나이며 각 숫자는 다음 세 개의 품종을 가리킨다. 
 # 
-# * 결정경계: 검정 점선
+# * 0: Iris-Setosa(세토사)
+# * 1: Iris-Versicolor(버시컬러)
+# * 2: Iris-Virginica(버지니카)
+
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/iris01.png" width="600"/></div>
+
+# **버지니카 품종 감지기**
+# 
+# 로지스틱 회귀 모델을 이용하여 아이리스 데이터셋을 대상으로 버지니카 품종을 감지하는
+# 이진 분류기를 다음과 같이 훈련시킨다.
+# 단, 문제를 간단하기 만들기 위해 꽃잎의 너비 속성 하나만 이용한다. 
+# 
+# ```python
+# X = iris.data[["petal width (cm)"]].values
+# y = iris.target_names[iris.target] == 'virginica'
+# X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42)
+# 
+# log_reg = LogisticRegression(random_state=42)
+# log_reg.fit(X_train, y_train)
+# ```
+# 
+# 훈련 결과 꽃잎의 넙가 약 1.65cm 보다 큰 경우 버지니카 품종일 가능성이 높아짐이 확인된다.
+# 즉, 버지니카 품좀 감지기의 
+# **결정 경계**<font size='2'>decision boundary</font>는 꽃잎 넙 기준으로 약 1.65cm 이다.
+
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/iris02.png" width="700"/></div>
+
+# 아래 그림은 꽃잎의 너비와 길이 두 속성을 이용한 버지니카 품종 감지기가 찾은 
+# 결정 경계(검정 파선)를 보여준다. 
+# 반면에 다양한 색상의 직선은 버지니카 품종일 가능성을 보여주는 영역을 표시한다. 
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-15.png" width="700"/></div>
 
-# **로지스틱 회귀 규제하기**
-
-# * 하이퍼파라미터 `penalty`와 `C` 이용
+# **로지스틱 회귀 규제**
 # 
-# * `penalty`
-#     * `l1`, `l2`, `elasticnet` 세 개중에 하나 사용.
-#     * 기본은 `l2`, 즉, $\ell_2$ 규제를 사용하는 릿지 규제.
-#     * `elasticnet`을 선택한 경우 `l1_ration` 옵션 값을 함께 지정.
+# `LogisticRegression` 모델의 하이퍼파라미터 `penalty` 와 `C` 를 이용하여 규제와 규제의 강도를 지정한다. 
 # 
-# * `C`
-#     * 릿지 또는 라쏘 규제 정도를 지정하는 $\alpha$의 역수에 해당. 
-#     * 따라서 0에 가까울 수록 강한 규제 의미.
-
-# ### 소프트맥스(softmax) 회귀
-
-# * 로지스틱 회귀 모델을 일반화하여 다중 클래스 분류를 지원하도록 한 회귀 모델
+# * `penalty`: `l1`(라쏘 규제), `l2`(릿지 규제), `elasticnet`(엘라스틱 넷) 방식 중 하나 선택하며,
+#     기본값은 `l2`, 즉, 릿지 규제를 기본으로 적용한다.
 # 
-# * **다항 로지스틱 회귀** 라고도 불림
+# * `C`: 릿지 또는 라쏘 규제 정도를 지정하는 $\alpha$의 역수에 해당한다. 
+#     따라서 0에 가까울 수록 강한 규제를 의미한다.
+
+# ### 소프트맥스 회귀
+
+# 로지스틱 회귀 모델을 일반화하여 다중 클래스 분류를 지원하도록 만든 모델이
+# **소프트맥스 회귀**<font size='2'>Softmax Regression</font>이며, 
+# **다항 로지스틱 회귀** 라고도 불린다.
+
+# **클래스별 확률 예측**
 # 
-# * 주의사항: 소프트맥스 회귀는 다중 출력 분류 지원 못함. 
-#     예를 들어, 하나의 사진에서 여러 사람의 얼굴 인식 불가능.
-
-# **소프트맥스 회귀 학습 아이디어**
-
-# * 샘플 $\mathbf x$가 주어졌을 때 각각의 분류 클래스 $k$ 에 대한 점수 $s_k(\mathbf x)$ 계산.
-#     즉, `k*(n+1)` 개의 파라미터를 학습시켜야 함.
+# 샘플 $\mathbf x$가 주어졌을 때 각각의 분류 클래스 $k$ 에 대한 점수 $s_k(\mathbf x)$를
+# 선형 회귀 방식으로 계산한다.
 # 
 # $$
-# s_k(\mathbf x) = \theta_0^{(k)} + \theta_1^{(k)}\, x_1 + \cdots + \theta_n^{(k)}\, x_n
+# s_k(\mathbf{x}) = \theta_0^{(k)} + \theta_1^{(k)} x_1 + \cdots + \theta_n^{(k)} x_n
 # $$    
 # 
-# * __소프트맥스 함수__를 이용하여 각 클래스 $k$에 속할 확률 $\hat p_k$ 계산
+# 이는 $k\, (n+1)$ 개의 파라미터를 학습시켜야 함을 의미한다.
+# 위 식에서 $\theta_i^{(k)}$ 는 분류 클래스 $k$에 대해 필요한 $i$ 번째 속성을 
+# 대상으로 파라미터를 가리킨다.
+# 
+# 예를 들어, 붓꽃 데이터를 대상으로 하는 경우 최대 15개의 파라미터를 훈련시켜야 한다.
+# 
+# $$
+# \Theta = 
+# \begin{bmatrix}
+# \theta_0^{(0)} & \theta_1^{(0)} & \theta_2^{(0)} & \theta_3^{(0)} & \theta_4^{(0)}\\
+# \theta_0^{(1)} & \theta_1^{(1)} & \theta_2^{(1)} & \theta_3^{(1)} & \theta_4^{(1)}\\
+# \theta_0^{(2)} & \theta_1^{(2)} & \theta_2^{(2)} & \theta_3^{(2)} & \theta_4^{(2)}
+# \end{bmatrix}
+# $$
+# 
+# 이제 다음 **소프트맥스** 함수를 이용하여 클래스 $k$에 속할 확률 $\hat p_k$ 를 계산한다.
+# 단, $K$ 는 클래스의 개수를 나타낸다.
 # 
 # $$
 # \hat p_k = 
 # \frac{\exp(s_k(\mathbf x))}{\sum_{j=1}^{K}\exp(s_j(\mathbf x))}
 # $$
 # 
-# * 추정 확률이 가장 높은 클래스 선택
+# 소프트맥스 회귀 모델은 각 샘플에 대해 추정 확률이 가장 높은 클래스를 선택한다. 
 # 
 # $$
 # \hat y = 
 # \mathrm{argmax}_k s_k(\mathbf x)
 # $$
 
-# **소프트맥스 회귀 비용함수**
-
-# * 각 분류 클래스 $k$에 대한 적절한 가중치 벡터 $\theta_k$를 학습해 나가야 함.
+# :::{admonition} 소프트맥스 회귀와 다중 출력 분류
+# :class: tip
 # 
-# * 비용함수: 크로스 엔트로피 비용 함수 사용
+# 소프트맥스 회귀는 다중 출력<font size='2'>multioutput</font> 분류를 지원하지 않는다.
+# 예를 들어, 하나의 사진에서 여러 사람의 얼굴을 인식하는 데에 사용할 수 없다.
+# :::
+
+# **소프트맥스 회귀의 비용 함수**
+# 
+# 각 분류 클래스 $k$에 대한 적절한 가중치 벡터 $\theta_k$를 
+# 경사 하강법을 이용하여 업데이트 한다.
+# 이를 위해 **크로스 엔트로피**<font size='2'>cross entropy</font>를 비용 함수로 사용한다.
 # 
 # $$
 # J(\Theta) = 
-# - \frac{1}{m}\, \sum_{i=1}^{m}\sum_{k=1}^{K} y^{(i)}_k\, \log(\hat{p}_k^{(i)})
+# - \frac{1}{m}\, \sum_{i=1}^{m}\sum_{k=1}^{K} y^{(i)}_k\, \log\big( \hat{p}_k^{(i)}\big)
 # $$
 # 
-# * 위 비용함수에 대해 경사 하강법 적용
+# 위 식에서 $y^{(i)}_k$ 는 타깃 확률값을 가리키며, 0 또는 1 중에 하나의 값을 갖는다. 
+# $K=2$이면 로지스틱 회귀의 로그 손실 함수와 정확하게 일치한다.
 # 
-# * $K=2$이면 로지스틱 회귀의 로그 손실 함수와 정확하게 일치.
-# 
-# * 주어진 샘플의 타깃 클래스를 제대로 예측할 경우 높은 확률값 계산
-# 
-# * 크로스 엔트로피 개념은 정보 이론에서 유래함. 자세한 설명은 생략.
+# 크로스 엔트로피는 주어진 샘플의 타깃 클래스를 제대로 예측하지 못하는 경우 높은 값을 갖는다.
+# 크로스 엔트로피 개념은 정보 이론에서 유래하며, 여기서는 더 이상 설명하지 않는다.
 
-# **다중 클래스 분류 예제**
+# **붓꽃 데이터 다중 클래스 분류**
 # 
-# * 사이킷런의 `LogisticRegression` 예측기 활용
-#     * `multi_class=multinomial`로 지정
-#     * `solver=lbfgs`: 다중 클래스 분류 사용할 때 반드시 지정
+# 사이킷런의 `LogisticRegression` 예측기를 활용한다.
+# 기본값 `solver=lbfgs` 사용하면 모델이 알아서 다중 클래스 분류를 훈련한다.
+# 아래 코드는 꽃잎의 길이와 너비 두 특성을 이용하여 
+# 세토사, 버시컬러, 버지니카 클래스를 선택하는 모델을 훈련시킨다.
 # 
-# * 붓꽃 꽃잎의 너비와 길이를 기준으로 품종 분류
-#     * 결정경계: 배경색으로 구분
-#     * 곡선: Iris-Versicolor 클래스에 속할 확률
+# ```python
+# X = iris.data[["petal length (cm)", "petal width (cm)"]].values
+# y = iris["target"]
+# X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42)
+# 
+# softmax_reg = LogisticRegression(C=30, random_state=42)
+# softmax_reg.fit(X_train, y_train)
+# ```
+# 
+# 아래 그림은 붓꽃 꽃잎의 너비와 길이를 기준으로 세 개의 품종을 색까로 구분하는 결정 경계를 보여준다. 
+# 다양한 색상의 곡선은 버시컬러 품종에 속할 확률의 영력을 보여준다.
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-16.png" width="700"/></div>
