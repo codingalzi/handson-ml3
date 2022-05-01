@@ -11,7 +11,7 @@
 # **소스코드**
 # 
 # 본문 내용의 일부를 파이썬으로 구현한 내용은 
-# [(구글코랩) 모델 훈련](https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/notebooks/code_training_models.ipynb)에서 
+# [(구글코랩) 서포트 벡터 머신](https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/notebooks/code_svm.ipynb)에서 
 # 확인할 수 있다.
 
 # **주요 내용**
