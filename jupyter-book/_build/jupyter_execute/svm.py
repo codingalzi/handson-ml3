@@ -30,7 +30,7 @@
 # 선형 **서포트 벡터 머신**<font size="2">support vector machine</font>(SVM)은
 # 두 클래스 사이를 최대한으로 경계 도로를 최대한 넓게 잡으려고 시도한다. 
 # 이때 두 클래스 사이에 놓을 수 있는 결정 경계 도로의 폭의 **마진**<font size='2'>margin</font>이라 하며,
-# 마진을 최대로 하는 분류가 **큰 마진 분류**<font size='2'>large maring classication</font>이다.
+# 마진을 최대로 하는 분류가 **큰 마진 분류**<font size='2'>large margin classication</font>이다.
 # 
 # 아래 그림은 붓꽃 데이터셋을 대상으로 해서 선형 분류와 큰 마진 분류의 차이점을 보여준다.
 # 선형 분류(왼쪽 그래프)의 경우 두 클래스를 분류하기만 해도 되는 반면에 큰 마진 분류(오른쪽 그래프)의 
