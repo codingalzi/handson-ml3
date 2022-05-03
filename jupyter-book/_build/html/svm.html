@@ -748,7 +748,7 @@ h(\mathbf x) = \mathbf w^T \mathbf x + b = w_1 x_1 + \cdots + w_n x_n + b
 \[\mathbf w^T \mathbf x^{(i)} + b \le -1 + \zeta^{(i)}\]</div>
 </li>
 </ul>
-<p><strong><code class="docutils literal notranslate"><span class="pre">C</span></code> 와 마진 폭의 관계</strong></p>
+<p><strong><span class="math notranslate nohighlight">\(C\)</span> 와 마진 폭의 관계</strong></p>
 <p><span class="math notranslate nohighlight">\(C\)</span> 가 커지면 수식 <span class="math notranslate nohighlight">\((\dagger)\)</span> 의 값을 줄이기 위해 <span class="math notranslate nohighlight">\(\zeta^{(i)}\)</span> 가 작아져야 하며,
 따라서 <span class="math notranslate nohighlight">\(\mathbf w^T \mathbf w\)</span> 값에 여유가 생긴다.
 이는 조건식 <span class="math notranslate nohighlight">\((*)\)</span> 를 만족시키기 위해 결정경계 하이퍼플레인의 기울기, 즉 <span class="math notranslate nohighlight">\(\|\mathbf{w}\|\)</span>의 값을 키울 여력이 생기게 됨을 의미한다.
@@ -759,6 +759,7 @@ h(\mathbf x) = \mathbf w^T \mathbf x + b = w_1 x_1 + \cdots + w_n x_n + b
 즉 결정 경계 하이퍼플레인의 기울기가 최대한 작아지도록 유도된다.</p>
 <div class="math notranslate nohighlight">
 \[t^{(i)} (\mathbf w^T \mathbf x^{(i)} + b) \ge 1\]</div>
+<p>참고로 <span class="math notranslate nohighlight">\(C\)</span> 를 무한으로 두는 경우에도 동일하게 작동한다. 즉, 하드 마진 분류가 이루어진다.</p>
 <div class="info admonition">
 <p class="admonition-title">쌍대 문제</p>
 <p>어떤 문제의 <strong>쌍대 문제</strong><font size='2'>dual problem</font>는 주어진 문제와 동일한 답을 갖는 문제이며,
