@@ -38,9 +38,12 @@
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/togglebutton.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
@@ -284,40 +287,11 @@ const thebe_selector_output = ".output, .cell_output"
   <a class="reference internal nav-link" href="#id8">
    5.3. SVM 회귀
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id9">
-     5.3.1. 선형 SVM 회귀
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id10">
-     5.3.2. 비선형 SVM 회귀
-    </a>
-   </li>
-  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id11">
+  <a class="reference internal nav-link" href="#id9">
    5.4. SVM 이론
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id12">
-     5.4.1. SVM 분류기의 결정 함수, 예측, 결정 경계, 목적함수
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id13">
-     5.4.2. 커널 SVM 작동 원리
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id14">
-     5.4.3. 온라인 SVM
-    </a>
-   </li>
-  </ul>
  </li>
 </ul>
 
@@ -387,40 +361,11 @@ const thebe_selector_output = ".output, .cell_output"
   <a class="reference internal nav-link" href="#id8">
    5.3. SVM 회귀
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id9">
-     5.3.1. 선형 SVM 회귀
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id10">
-     5.3.2. 비선형 SVM 회귀
-    </a>
-   </li>
-  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id11">
+  <a class="reference internal nav-link" href="#id9">
    5.4. SVM 이론
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id12">
-     5.4.1. SVM 분류기의 결정 함수, 예측, 결정 경계, 목적함수
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id13">
-     5.4.2. 커널 SVM 작동 원리
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id14">
-     5.4.3. 온라인 SVM
-    </a>
-   </li>
-  </ul>
  </li>
 </ul>
 
@@ -549,6 +494,9 @@ const thebe_selector_output = ".output, .cell_output"
 <table>
 <tr>
 <td><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch05/svm_01.png" alt=""/></td>
+<td><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch05/svm_01a.png" alt=""/></td>
+</tr>
+<tr>
 <td><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch05/svm_02.png" alt=""/></td>
 <td><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch05/svm_03.png" alt=""/></td>
 </tr>
@@ -556,7 +504,7 @@ const thebe_selector_output = ".output, .cell_output"
 <p>&lt;그림 출처: <a class="reference external" href="https://www.youtube.com/watch?v=OdlNM96sHio">SVM with polynomial kernel visualization(유튜브)</a>&gt;</p>
 <p>참고로 3차원 상에서의 선형 방정식의 그래프는 평면으로 그려진다.
 예를 들어, 방정식 <span class="math notranslate nohighlight">\(3x + y - 5z + 25 = 0\)</span> 의 그래프는 아래와 같다.</p>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch05/homl05-06d.png" width="200"/></div>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch05/homl05-06d.png" width="300"/></div>
 <p>&lt;그림 출처: <a class="reference external" href="https://www.geogebra.org/3d">지오지브라(GeoGebra)</a>&gt;</p>
 </div>
 <div class="proof example admonition" id="exp:moons_dataset">
@@ -666,7 +614,7 @@ const thebe_selector_output = ".output, .cell_output"
 <th class="text-align:left head"><p>시간 복잡도(m 샘플 수, n 특성 수)</p></th>
 <th class="text-align:left head"><p>외부 메모리 학습</p></th>
 <th class="text-align:left head"><p>스케일 조정</p></th>
-<th class="text-align:left head"><p>커널 트릭</p></th>
+<th class="text-align:left head"><p>커널</p></th>
 <th class="text-align:left head"><p>다중 클래스 분류</p></th>
 </tr>
 </thead>
@@ -698,101 +646,53 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <div class="section" id="id8">
 <h2><span class="section-number">5.3. </span>SVM 회귀<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
-<p><strong>SVM 분류 vs. SVM 회귀</strong></p>
+<p>SVM 아이디어를 조금 다르게 적용하면 회귀 모델이 생성된다.</p>
 <ul class="simple">
-<li><p>SVM 분류</p>
-<ul>
-<li><p>목표: 마진 오류 발생 정도를 조절(<code class="docutils literal notranslate"><span class="pre">C</span></code> 이용)하면서 두 클래스 사이의 도로폭을 최대한 넓게 하기</p></li>
-<li><p>마진 오류: 도로 위에 위치한 샘플</p></li>
-</ul>
-</li>
-<li><p>SVM 회귀</p>
-<ul>
 <li><p>목표: 마진 오류 발생 정도를 조절(<code class="docutils literal notranslate"><span class="pre">C</span></code> 이용)하면서 지정된 폭의 도로 안에 가능한 많은 샘플 포함하기</p></li>
 <li><p>마진 오류: 도로 밖에 위치한 샘플</p></li>
-<li><p>참고: <a class="reference external" href="https://kr.mathworks.com/help/stats/understanding-support-vector-machine-regression.html">MathWorks: SVM 회귀 이해하기</a></p></li>
+<li><p>결정 경계 도로의 폭: <code class="docutils literal notranslate"><span class="pre">epsilon</span></code> 하이퍼파라미터로 지정</p></li>
 </ul>
-</li>
-</ul>
-<div class="section" id="id9">
-<h3><span class="section-number">5.3.1. </span>선형 SVM 회귀<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p>보다 자세한 설명은 <a class="reference external" href="https://kr.mathworks.com/help/stats/understanding-support-vector-machine-regression.html">SVM 회귀 이해하기</a>를 참고한다.</p>
+<p>참고로 SVM 분류 모델의 특징은 다음과 같다.</p>
 <ul class="simple">
-<li><p>선형 회귀 모델을 SVM을 이용하여 구현</p></li>
+<li><p>목표: 마진 오류 발생 정도를 조절(<code class="docutils literal notranslate"><span class="pre">C</span></code> 이용)하면서 두 클래스 사이의 도로폭을 최대한 넓게 하기</p></li>
+<li><p>마진 오류: 도로 위 또는 자신의 클래스 반대편에 위치한 샘플</p></li>
 </ul>
-<ul>
-<li><p>예제: LinearSVR 활용. <code class="docutils literal notranslate"><span class="pre">epsilon</span></code>은 도로폭 결정</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">LinearSVR</span>
-<span class="n">svm_reg</span> <span class="o">=</span> <span class="n">LinearSVR</span><span class="p">(</span><span class="n">epsilon</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+<p><strong>선형 SVM 회귀</strong></p>
+<p>아래 그래프는 LinearSVR 클래스를 이용한 결과를 보여준다.
+<code class="docutils literal notranslate"><span class="pre">epsilon</span></code>(<span class="math notranslate nohighlight">\(\varepsilon\)</span>)이 작을 수록(왼쪽 그래프) 도로폭이 좁아진다.
+따라서 보다 많은 서포트 벡터가 지정된다.
+반면에 결정 경계 도로 위에 포함되는 샘플를 추가해도 예측에 영향 주지 않는다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">svm_reg</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span>
+                        <span class="n">LinearSVR</span><span class="p">(</span><span class="n">epsilon</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">))</span>
 </pre></div>
 </div>
-</li>
-</ul>
-<ul class="simple">
-<li><p>마진 안, 즉 결정 경계 도로 위에 포함되는 샘플를 추가해도 예측에 영향 주지 않음. 즉 <code class="docutils literal notranslate"><span class="pre">epsilon</span></code>에 둔감함.</p></li>
-</ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch05/homl05-11.png" width="600"/></div></div>
-<div class="section" id="id10">
-<h3><span class="section-number">5.3.2. </span>비선형 SVM 회귀<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
-<ul>
-<li><p>SVC와 동일한 커널 트릭을 활용하여 비선형 회귀 모델 구현</p></li>
-<li><p>예제: SVR + 다항 커널</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch05/homl05-11.png" width="600"/></div><p><strong>비선형 SVM 회귀</strong></p>
+<p>SVC에 커널 트릭을 적용하는 아이디어를 동일하게 활용하여 비선형 회귀 모델을 구현한다.
+아래 그래프는 SVR 클래스에 2차 다항 커널을 적용한 결과를 보여준다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># SVR + 다항 커널</span>
-<span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVR</span>
-
-<span class="n">svm_poly_reg</span> <span class="o">=</span> <span class="n">SVR</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s2">&quot;poly&quot;</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="s2">&quot;scale&quot;</span><span class="p">)</span>
+<span class="n">svm_poly_reg2</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span>
+                             <span class="n">SVR</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s2">&quot;poly&quot;</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="mi">100</span><span class="p">))</span>
 </pre></div>
 </div>
-</li>
-</ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch05/homl05-12.png" width="800"/></div>
-<table class="colwidths-auto table">
-<thead>
-<tr class="row-odd"><th class="text-align:right head"><p>왼편 그래프(C=100)</p></th>
-<th class="text-align:right head"><p>오른편 그래프(C=0.01)</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td class="text-align:right"><p>규제 보다 약함</p></td>
-<td class="text-align:right"><p>규제 보다 강함</p></td>
-</tr>
-<tr class="row-odd"><td class="text-align:right"><p>샘플에 덜 민감</p></td>
-<td class="text-align:right"><p>샘플에 더 민감</p></td>
-</tr>
-<tr class="row-even"><td class="text-align:right"><p>마진 오류 보다 적게</p></td>
-<td class="text-align:right"><p>마진 오류 보다 많이</p></td>
-</tr>
-</tbody>
-</table>
-<p><strong>회귀 모델 시간 복잡도</strong></p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">LinearSVR</span></code>: <code class="docutils literal notranslate"><span class="pre">LinearSVC</span></code>의 회귀 버전</p>
-<ul>
-<li><p>시간 복잡도가 훈련 세트의 크기에 비례해서 선형적으로 증가</p></li>
-</ul>
-</li>
-<li><p><code class="docutils literal notranslate"><span class="pre">SVR</span></code>: <code class="docutils literal notranslate"><span class="pre">SVC</span></code>의 회귀 버전</p>
-<ul>
-<li><p>훈련 세트가 커지면 매우 느려짐</p></li>
-</ul>
-</li>
-</ul>
+<p><code class="docutils literal notranslate"><span class="pre">C</span></code>와 <code class="docutils literal notranslate"><span class="pre">epsilon</span></code> 두 하이퍼파라미터의 의미는 SVC 모델의 경우와 동일하다.
+즉, <code class="docutils literal notranslate"><span class="pre">C</span></code> 는 클 수록 적은 규제를 가하고 <code class="docutils literal notranslate"><span class="pre">epsilon</span></code>은 도로폭을 결정한다.
+<code class="docutils literal notranslate"><span class="pre">C=100</span></code> 인 경우(오른쪽 그래프)가 <code class="docutils literal notranslate"><span class="pre">C=0.01</span></code> 인 경우(왼쪽 그래프) 보다 마진 오류가 적음을
+볼 수 있다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch05/homl05-12.png" width="800"/></div><p><strong>회귀 모델 시간 복잡도</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">LinearSVR</span></code> 은 <code class="docutils literal notranslate"><span class="pre">LinearSVC</span></code> 의 회귀 버전이며 시간 복잡도 또한 비슷하다.
+또한 훈련 세트의 크기에 비례해서 선형적으로 증가한다.
+<code class="docutils literal notranslate"><span class="pre">SVR</span></code>은 <code class="docutils literal notranslate"><span class="pre">SVC</span></code>의 회귀 버전이며, 훈련 세트가 커지면 매우 느려지는 점 또한 동일하다.</p>
 </div>
-</div>
-<div class="section" id="id11">
-<h2><span class="section-number">5.4. </span>SVM 이론<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id12">
-<h3><span class="section-number">5.4.1. </span>SVM 분류기의 결정 함수, 예측, 결정 경계, 목적함수<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id9">
+<h2><span class="section-number">5.4. </span>SVM 이론<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
 <p><strong>결정 함수와 예측</strong></p>
-<ul class="simple">
-<li><p>결정 함수: 아래 값을 이용하여 클래스 분류</p></li>
-</ul>
+<p>아래 결정 함숫값을 이용하여 클래스를 지정한다.</p>
 <div class="math notranslate nohighlight">
 \[
 h(\mathbf x) = \mathbf w^T \mathbf x + b = w_1 x_1 + \cdots + w_n x_n + b
 \]</div>
-<ul class="simple">
-<li><p>예측값: 결정 함수의 값이 양수이면 양성, 음수이면 음성으로 분류</p></li>
-</ul>
+<p>결정 함숫값이 양수이면 양성, 음수이면 음성으로 분류한다.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \hat y = \begin{cases}
@@ -801,85 +701,31 @@ h(\mathbf x) = \mathbf w^T \mathbf x + b = w_1 x_1 + \cdots + w_n x_n + b
          \end{cases}
 \end{split}\]</div>
 <p><strong>결정 경계</strong></p>
-<ul class="simple">
-<li><p>결정 경계: 결정 함수의 값이 0인 점들의 집합</p></li>
-</ul>
+<p>결정 경계는 결정 함수의 값이 0인 점들의 집합이다.</p>
 <div class="math notranslate nohighlight">
 \[\{\mathbf x \mid h(\mathbf x)=0  \}\]</div>
-<ul class="simple">
-<li><p>결정 경계 도로의 경계: 결정 함수의 값이 1 또는 -1인 샘플들의 집합</p></li>
-</ul>
+<p>결정 경계 도로의 가장자리는 결정 함수의 값이 1 또는 -1인 샘플들의 집합이다.</p>
 <div class="math notranslate nohighlight">
 \[\{\mathbf{x} \mid h(\mathbf x)= \pm 1 \}\]</div>
-<p><strong>예제</strong></p>
-<p>붓꽃 분류. 꽃잎 길이와 너비를 기준으로 버지니카(Iris-Virginica, 초록 삼각형) 품종 여부 판단</p>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch05/homl05-13.png" width="600"/></div><p><strong>결정 함수의 기울기</strong></p>
-<ul class="simple">
-<li><p>결정 경계면(결정 함수의 그래프, 하이퍼플레인)의 기울기가 작아질 수록 도로 경계 폭이 커짐.</p></li>
-<li><p>결정 경계면 기울기가 <span class="math notranslate nohighlight">\(\| \mathbf w \|\)</span>에 비례함.
-따라서 결정 경계 도로의 폭을 크게 하기 위해 <span class="math notranslate nohighlight">\(\| \mathbf w \|\)</span>를 최소화해야 함.</p></li>
-</ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch05/homl05-14.png" width="600"/></div>
-<ul class="simple">
-<li><p>하드 마진 모델 훈련: 모든 양성(음성) 샘플이 결정 경계 도로 밖에 위치하도록 하는 기울기 찾기.</p></li>
-<li><p>소프트 마진 모델 훈련: 결정 경계 도로 위에 위치하는 샘플의 수를 제한하면서 결정 경계 도로의 폭이 최대가 되도록 하는 기울기 찾기.</p></li>
-</ul>
-<p><strong>목적함수</strong></p>
-<ul class="simple">
-<li><p>결정 경계면의 기울기 <span class="math notranslate nohighlight">\(\| \mathbf w \|\)</span>를 최소화하는 것과 아래 식을 최소화하는 것이 동일한 의미임.
-따라서 아래 식을 목적함수로 지정함.</p></li>
-</ul>
+<div class="proof example admonition" id="exp:iris_svm">
+<p class="admonition-title"><span class="caption-number">Example 5.3 </span> (붓꽃 분류)</p>
+<div class="example-content section" id="proof-content">
+<p>꽃잎 길이와 너비를 기준으로 버지니카(Iris-Virginica, 초록 삼각형) 품종 여부를 판단하는 이진 분류
+모델의 결정 함수는 다음과 같다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch05/homl05-13.png" width="600"/></div>
+</div>
+</div><p><strong>결정 함수의 기울기</strong></p>
+<p>결정 경계면(결정 함수의 그래프, 하이퍼플레인)의 기울기가 작을 수록 도로 경계 폭이 커진다.
+그리고 결정 경계면 기울기는 <span class="math notranslate nohighlight">\(\| \mathbf w \|\)</span>(<span class="math notranslate nohighlight">\(W\)</span>의 <span class="math notranslate nohighlight">\(\ell_2\)</span>-노름)에 비례한다.
+따라서 결정 경계 도로의 폭을 크게 하기 위해 <span class="math notranslate nohighlight">\(\| \mathbf w \|\)</span>를 최소화해야 한다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch05/homl05-14.png" width="600"/></div><p><strong>목적 함수</strong></p>
+<p>결정 경계면의 기울기 <span class="math notranslate nohighlight">\(\| \mathbf w \|\)</span>를 최소화하는 것과 아래 식을 최소화하는 것이 동일한 결과를 낳는다.
+따라서 아래 식을 <strong>목적 함수</strong>로 지정한다.</p>
 <div class="math notranslate nohighlight">
 \[\frac 1 2 \| \mathbf w \|^2 = \frac 1 2 \mathbf w^T \mathbf w\]</div>
-<ul class="simple">
-<li><p>이유: 함수의 미분가능성 때문에 수학적으로 다루기가 보다 쉬움. <span class="math notranslate nohighlight">\(1/2\)</span> 또한 계산의 편의를 위해 추가됨.</p></li>
-</ul>
-<p><strong>하드 마진 선형 SVM 분류기의 목적 함수</strong></p>
-<ul class="simple">
-<li><p>목적함수를 최소화하는 파라미터 벡터 <span class="math notranslate nohighlight">\(\mathbf{w}\)</span>를 구하기 위해 다음 __최적화 문제__를 해결해야 함.</p></li>
-</ul>
-<div class="math notranslate nohighlight">
-\[\frac 1 2 \mathbf w^T \mathbf w\]</div>
-<div class="math notranslate nohighlight">
-\[
-\text{(조건)}\quad t^{(i)} (\mathbf w^T \mathbf x^{(i)} + b) \ge 1
-\]</div>
-<ul class="simple">
-<li><p>즉, 모든 샘플 <span class="math notranslate nohighlight">\(\mathbf{x}^{(i)}\)</span>에 대해 만족시켜야 하는 조건이 추가되었음.
-<span class="math notranslate nohighlight">\(t^{(i)}\)</span>는 <span class="math notranslate nohighlight">\(i\)</span> 번째 샘플의 클래스(양성/음성)를 가리킴.</p></li>
-</ul>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-t^{(i)} = 
-\begin{cases}
--1 &amp; \text{$x^{(i)}$가 음성인 경우} \\
-1 &amp; \text{$x^{(i)}$가 양성인 경우} 
-\end{cases}
-\end{split}\]</div>
-<p><strong>조건식의 의미</strong></p>
-<div class="math notranslate nohighlight">
-\[
-\text{(조건)}\quad t^{(i)} (\mathbf w^T \mathbf x^{(i)} + b) \ge 1
-\]</div>
-<p>위 조건식의 의미는 다음과 같다.</p>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\mathbf x^{(i)}\)</span>가 양성인 경우</p>
-<ul>
-<li><p><span class="math notranslate nohighlight">\(t^{(i)} = 1\)</span></p></li>
-<li><p>따라서 <span class="math notranslate nohighlight">\(\mathbf w^T \mathbf x^{(i)} + b \ge 1\)</span>, 즉 양성으로 예측해야 함.</p></li>
-</ul>
-</li>
-<li><p><span class="math notranslate nohighlight">\(\mathbf x^{(i)}\)</span>가 음성인 경우</p>
-<ul>
-<li><p><span class="math notranslate nohighlight">\(t^{(i)} = -1\)</span></p></li>
-<li><p>따라서 <span class="math notranslate nohighlight">\(\mathbf w^T \mathbf x^{(i)} + b \le -1\)</span>, 즉 음성으로 예측해야 함.</p></li>
-</ul>
-</li>
-</ul>
+<p>이유는 함수의 미분가능성 때문에 수학적으로 다루기가 보다 쉽기 때문이다.</p>
 <p><strong>소프트 마진 선형 SVM 분류기의 목적 함수</strong></p>
-<ul class="simple">
-<li><p>목적함수와 조건이 다음과 같음.</p></li>
-</ul>
+<p>최소화해야 하는 목적 함수와 조건은 다음과 같다.</p>
 <div class="math notranslate nohighlight">
 \[\frac 1 2 \mathbf w^T \mathbf w + C \sum_{i=0}^{m-1} \zeta^{(i)}\]</div>
 <div class="math notranslate nohighlight">
@@ -887,112 +733,35 @@ t^{(i)} =
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(\zeta^{(i)}\ge 0\)</span>: <strong>슬랙 변수</strong>. <span class="math notranslate nohighlight">\(i\)</span> 번째 샘플에 대한 마진 오류 허용 정도 지정.
 (<span class="math notranslate nohighlight">\(\zeta\)</span>는 그리스어 알파벳이며 ‘체타(zeta)’라고 발음함.)</p></li>
-<li><p><span class="math notranslate nohighlight">\(C\)</span>: 아래 두 목표 사이의 트레이드오프를 조절하는 하이퍼파라미터</p>
-<ul>
-<li><p>목표 1: 결정 경계 도로의 폭을 가능하면 크게 하기 위해 <span class="math notranslate nohighlight">\(\|\mathbf w\|\)</span> 값을 가능하면 작게 만들기.</p></li>
-<li><p>목표 2: 마진 오류 수를 제한하기, 즉 슬랙 변수의 값을 작게 유지하기.</p></li>
+<li><p><span class="math notranslate nohighlight">\(C\)</span>: 규제 하이퍼파라미터. 클 수록 적은 규제를 의미함.</p></li>
 </ul>
-</li>
-</ul>
-<ul class="simple">
-<li><p><strong>참고:</strong> 결정 경계 도로의 폭, 즉 마진 폭은 결정 경계면(<span class="math notranslate nohighlight">\(\hat y = \mathbf{w}^T \mathbf{x} + b\)</span>)의 기울기 <span class="math notranslate nohighlight">\(\|\mathbf w\|\)</span> 에 의해 결정됨</p></li>
-</ul>
-<p><strong><span class="math notranslate nohighlight">\(\zeta\)</span>의 역할</strong></p>
-<ul>
-<li><p><span class="math notranslate nohighlight">\(\zeta^{(i)} &gt; 0\)</span>이면 해당 샘플 <span class="math notranslate nohighlight">\(\mathbf{x}^{(i)}\)</span>에 대해 다음이 성립하여 마진 오류가 될 수 있음.</p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">C</span></code> 와 마진 폭의 관계</strong></p>
+<p><span class="math notranslate nohighlight">\(C\)</span> 가 커지면 <span class="math notranslate nohighlight">\(\mathbf w^T \mathbf w\)</span> 값이 보다 작아지도록 유도된다.</p>
+<p><strong>조건식의 의미</strong></p>
 <div class="math notranslate nohighlight">
-\[1 - \zeta^{(i)} \le t^{(i)} (\mathbf w^T \mathbf x^{(i)} + b) &lt; 1\]</div>
-</li>
-<li><p>이유: 결정 경계면(하이퍼플레인) 상에서 보면 결정 함숫값이 <span class="math notranslate nohighlight">\(1\)</span>보다 작은 샘플이기에
-실제 데이터셋의 공간에서는 결정 경계 도로 안에 위치하게 됨.
-(결정 경계 도로의 양 경계는 결정 함숫값이 <span class="math notranslate nohighlight">\(1\)</span>인 샘플들로 이루어졌음.)</p></li>
-</ul>
-<p><strong><code class="docutils literal notranslate"><span class="pre">C</span></code>와 마진 폭의 관계</strong></p>
-<div class="math notranslate nohighlight">
-\[\frac 1 2 \mathbf w^T \mathbf w + C \sum_{i=0}^{m-1} \zeta^{(i)}\]</div>
-<div class="math notranslate nohighlight">
-\[\text{(조건)}\quad t^{(i)} (\mathbf w^T \mathbf x^{(i)} + b) \ge 1 - \zeta^{(i)}\]</div>
-<ul class="simple">
-<li><p>가정: 보다 간단한 설명을 위해 편향 <span class="math notranslate nohighlight">\(b\)</span>는 <span class="math notranslate nohighlight">\(0\)</span>이거나 무시될 정도로 작다고 가정. (표준화 전처리를 사용하면 됨.)</p></li>
-<li><p><span class="math notranslate nohighlight">\(C\)</span>가 매우 큰 경우</p>
+\[
+\text{(조건)}\quad t^{(i)} (\mathbf w^T \mathbf x^{(i)} + b) \ge 1 - \zeta^{(i)}
+\]</div>
+<p>위 조건식의 의미는 다음과 같다.</p>
 <ul>
-<li><p><span class="math notranslate nohighlight">\(\zeta\)</span>는 <span class="math notranslate nohighlight">\(0\)</span>에 매우 가까울 정도로 아주 작아짐.</p></li>
-<li><p>예를 들어 양성 샘플 <span class="math notranslate nohighlight">\(\mathbf{x}^{(i)}\)</span>에 대해, 즉 <span class="math notranslate nohighlight">\(t^{(i)} = 1\)</span>,
-<span class="math notranslate nohighlight">\(\mathbf{w}^T \mathbf{x}^{(i)}\)</span> 가 <span class="math notranslate nohighlight">\(1\)</span>보다 크거나 아니면 <span class="math notranslate nohighlight">\(1\)</span>보다 아주 조금만 작아야 함.
-즉, 결정 경계면의 기울기 <span class="math notranslate nohighlight">\(\|w\|\)</span>가 어느 정도 커야 함.</p></li>
-<li><p>결정 경계의 도로폭이 좁아짐.</p></li>
-</ul>
+<li><p><span class="math notranslate nohighlight">\(\mathbf x^{(i)}\)</span> 가 양성, 즉 <span class="math notranslate nohighlight">\(t^{(i)} = 1\)</span> 인 경우:
+아래 식이 성립해야 한다.
+즉, <span class="math notranslate nohighlight">\(\zeta^{(i)}\)</span> 만큼의 오류를 허용하면서 가능한한 양성으로 예측해야 한다.</p>
+<div class="math notranslate nohighlight">
+\[\mathbf w^T \mathbf x^{(i)} + b \ge 1 - \zeta^{(i)}\]</div>
 </li>
-<li><p><span class="math notranslate nohighlight">\(C\)</span>가 매우 작은 경우</p>
-<ul>
-<li><p><span class="math notranslate nohighlight">\(\zeta\)</span>가 어느 정도 커도 됨.</p></li>
-<li><p><span class="math notranslate nohighlight">\(\mathbf{w}^T \mathbf{x}^{(i)}\)</span> 가 1보다 많이 작아도 됨. 즉, <span class="math notranslate nohighlight">\(\|w\|\)</span> 가 작아도 됨.</p></li>
-<li><p>결정 경계의 도로폭이 넓어짐.</p></li>
-</ul>
+<li><p><span class="math notranslate nohighlight">\(\mathbf x^{(i)}\)</span>가 음성, 즉 <span class="math notranslate nohighlight">\(t^{(i)} = -1\)</span> 인 경우:
+아래 식이 성립해야 한다.
+즉, <span class="math notranslate nohighlight">\(\zeta^{(i)}\)</span> 만큼의 오류를 허용하면서 가능한한 음성으로 예측해야 한다.</p>
+<div class="math notranslate nohighlight">
+\[\mathbf w^T \mathbf x^{(i)} + b \le -1 + \zeta^{(i)}\]</div>
 </li>
 </ul>
-</div>
-<div class="section" id="id13">
-<h3><span class="section-number">5.4.2. </span>커널 SVM 작동 원리<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
 <p><strong>쌍대 문제</strong></p>
-<ul class="simple">
-<li><p>쌍대 문제(dual problem): 주어진 문제의 답과 동일한 답을 갖는 문제</p></li>
-<li><p>선형 SVM 목적 함수의 쌍대 문제: 아래 식을 최소화하는 <span class="math notranslate nohighlight">\(\alpha\)</span> 찾기(단, <span class="math notranslate nohighlight">\(\alpha^{(i)} &gt; 0\)</span>).</p></li>
-</ul>
-<div class="math notranslate nohighlight">
-\[
-\frac{1}{2} \sum_{i=1}^{m} \sum_{j=1}^{m} \alpha^{(i)}\alpha^{(j)} t^{(i)} t^{(j)} {\mathbf{x}^{(i)}}^T\mathbf{x}^{(j)} - \sum_{j=1}^{m} \alpha^{(i)}
-\]</div>
-<p><strong>쌍대 문제 활용 예제: 다항 커널</strong></p>
-<ul class="simple">
-<li><p>원래 <span class="math notranslate nohighlight">\(d\)</span>차 다항식 함수 <span class="math notranslate nohighlight">\(\phi()\)</span>를 적용한 후에 쌍대 목적 함수의 최적화 문제를 해결해야 함.
-즉, 아래 문제를 최소화하는 <span class="math notranslate nohighlight">\(\alpha\)</span>를 찾는 게 쌍대문제임.</p></li>
-</ul>
-<div class="math notranslate nohighlight">
-\[
-\frac{1}{2} \sum_{i=1}^{m} \sum_{j=1}^{m} \alpha^{(i)}\alpha^{(j)} t^{(i)} t^{(j)} \phi(\mathbf{x}^{(i)})^T \phi(\mathbf{x}^{(j)}) - \sum_{j=1}^{m} \alpha^{(i)}
-\]</div>
-<ul class="simple">
-<li><p>하지만 다음이 성립함.</p></li>
-</ul>
-<div class="math notranslate nohighlight">
-\[
-\phi(\mathbf a)^T \phi(\mathbf b) = ({\mathbf a}^T \mathbf b)^d
-\]</div>
-<ul class="simple">
-<li><p>따라서 다항식 함수 <span class="math notranslate nohighlight">\(\phi\)</span>를 적용할 필요 없이, 즉 다항 특성을 전혀 추가할 필요 없이
-아래 함수에 대한 최적화 문제를 해결하면 다항 특성을 추가한 효과를 얻게 됨.</p></li>
-</ul>
-<div class="math notranslate nohighlight">
-\[
-\frac{1}{2} \sum_{i=1}^{m} \sum_{j=1}^{m} \alpha^{(i)}\alpha^{(j)} t^{(i)} t^{(j)} \left({\mathbf{x}^{(i)}}^T\mathbf{x}^{(j)}\right)^d - \sum_{j=1}^{m} \alpha^{(i)}
-\]</div>
-<p><strong>예제: 지원되는 커널</strong></p>
-<ul class="simple">
-<li><p>다항식:</p></li>
-</ul>
-<div class="math notranslate nohighlight">
-\[K(\mathbf a, \mathbf b) = \big( \gamma \mathbf a^T  \mathbf b + r \big)^d\]</div>
-<ul class="simple">
-<li><p>가우시안 RBF:</p></li>
-</ul>
-<div class="math notranslate nohighlight">
-\[K(\mathbf a, \mathbf b) = \exp \big( \!-\! \gamma \| \mathbf a -  \mathbf b \|^2 \big )\]</div>
-</div>
-<div class="section" id="id14">
-<h3><span class="section-number">5.4.3. </span>온라인 SVM<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p>경사하강법을 이용하여 선형 SVM 분류기를 직접 구현할 수 있음.</p></li>
-<li><p>비용함수는 아래와 같음.</p></li>
-</ul>
-<div class="math notranslate nohighlight">
-\[
-J(\mathbf{w}, b) = \dfrac{1}{2} \mathbf{w}^T \mathbf{w} \,+\, C {\displaystyle \sum_{i=1}^{m}\max\left(0, 1 - t^{(i)}(\mathbf{w}^T \mathbf{x}^{(i)} + b) \right)}
-\]</div>
-<ul class="simple">
-<li><p>자세한 내용은 주피터 노트북의 부록 B 참조: <a class="reference external" href="https://codingalzi.github.io/handson-ml2/notebooks/handson-ml2-05.html">[html]</a>, <a class="reference external" href="https://colab.research.google.com/github/codingalzi/handson-ml2/blob/master/notebooks/handson-ml2-05.ipynb">[구글 코랩]</a></p></li>
-</ul>
-</div>
+<p>어떤 문제의 <strong>쌍대 문제</strong><font size='2'>dual problem</font>는 주어진 문제와 동일한 답을 갖는 문제이다.
+SVM 모델의 많은 문제가 쌍대 문제를 가지며,
+사이킷런의 <code class="docutils literal notranslate"><span class="pre">LinearSVC</span></code>, <code class="docutils literal notranslate"><span class="pre">SVC</span></code>, <code class="docutils literal notranslate"><span class="pre">SVR</span></code> 등은 <code class="docutils literal notranslate"><span class="pre">dual=True</span></code> 하이퍼파라미터를 이용하여 쌍대 문제를 이용하여
+모델을 훈련시킬지 여부를 지정한다. 기본값은 쌍대 문제를 이용하도록 하는 <code class="docutils literal notranslate"><span class="pre">True</span></code> 이다.</p>
 </div>
 </div>
 
