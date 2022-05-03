@@ -725,7 +725,7 @@ h(\mathbf x) = \mathbf w^T \mathbf x + b = w_1 x_1 + \cdots + w_n x_n + b
 \[\frac 1 2 \| \mathbf w \|^2 = \frac 1 2 \mathbf w^T \mathbf w\]</div>
 <p>이유는 함수의 미분가능성 때문에 수학적으로 다루기가 보다 쉽기 때문이다.</p>
 <p><strong>소프트 마진 선형 SVM 분류기의 목적 함수</strong></p>
-<p>아래 조건을 만족시키면서</p>
+<p>아래 조건식을 만족시키면서</p>
 <div class="math notranslate nohighlight">
 \[t^{(i)} (\mathbf w^T \mathbf x^{(i)} + b) \ge 1 - \zeta^{(i)}\]</div>
 <p>다음 수식을 최소화하는 <span class="math notranslate nohighlight">\(\mathbf{w}\)</span>, <span class="math notranslate nohighlight">\(b\)</span>, <span class="math notranslate nohighlight">\(\zeta^{(i)}\)</span> 를 찾아야 한다.</p>
@@ -734,21 +734,21 @@ h(\mathbf x) = \mathbf w^T \mathbf x + b = w_1 x_1 + \cdots + w_n x_n + b
 <p>단, <span class="math notranslate nohighlight">\(\zeta^{(i)}\ge 0\)</span>는 <strong>슬랙 변수</strong> 변수라 불리며 <span class="math notranslate nohighlight">\(i\)</span> 번째 샘플의 마진 오류를 허용하는 정도를 나타낸다.
 <span class="math notranslate nohighlight">\(\zeta\)</span>는 그리스어 알파벳이며 체타<font size='2'>zeta</font>라고 발음한다.</p>
 <p><strong>조건식의 의미</strong></p>
+<p>아래 조건식의 의미는 다음과 같다.</p>
 <div class="math notranslate nohighlight">
 \[
-\text{(조건)}\quad t^{(i)} (\mathbf w^T \mathbf x^{(i)} + b) \ge 1 - \zeta^{(i)}
+t^{(i)} (\mathbf w^T \mathbf x^{(i)} + b) \ge 1 - \zeta^{(i)}
 \]</div>
-<p>위 조건식의 의미는 다음과 같다.</p>
 <ul>
 <li><p><span class="math notranslate nohighlight">\(\mathbf x^{(i)}\)</span> 가 양성, 즉 <span class="math notranslate nohighlight">\(t^{(i)} = 1\)</span> 인 경우:
 아래 식이 성립해야 한다.
-즉, <span class="math notranslate nohighlight">\(\zeta^{(i)}\)</span> 만큼의 오류를 허용하면서 가능한한 양성으로 예측해야 한다.</p>
+즉, <span class="math notranslate nohighlight">\(1-\zeta^{(i)}\)</span> 만큼의 오류를 허용하면서 가능한한 양성으로 예측해야 한다.</p>
 <div class="math notranslate nohighlight">
 \[\mathbf w^T \mathbf x^{(i)} + b \ge 1 - \zeta^{(i)}\]</div>
 </li>
 <li><p><span class="math notranslate nohighlight">\(\mathbf x^{(i)}\)</span>가 음성, 즉 <span class="math notranslate nohighlight">\(t^{(i)} = -1\)</span> 인 경우:
 아래 식이 성립해야 한다.
-즉, <span class="math notranslate nohighlight">\(\zeta^{(i)}\)</span> 만큼의 오류를 허용하면서 가능한한 음성으로 예측해야 한다.</p>
+즉, <span class="math notranslate nohighlight">\(1-\zeta^{(i)}\)</span> 만큼의 오류를 허용하면서 가능한한 음성으로 예측해야 한다.</p>
 <div class="math notranslate nohighlight">
 \[\mathbf w^T \mathbf x^{(i)} + b \le -1 + \zeta^{(i)}\]</div>
 </li>
