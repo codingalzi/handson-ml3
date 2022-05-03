@@ -38,12 +38,9 @@
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script>let toggleHintShow = 'Click to show';</script>
-    <script>let toggleHintHide = 'Click to hide';</script>
-    <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
@@ -278,7 +275,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id7">
-     5.2.4. 계산 복잡도
+     5.2.4. SVM 클래스의 계산 복잡도
     </a>
    </li>
   </ul>
@@ -381,7 +378,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id7">
-     5.2.4. 계산 복잡도
+     5.2.4. SVM 클래스의 계산 복잡도
     </a>
    </li>
   </ul>
@@ -515,7 +512,6 @@ const thebe_selector_output = ".output, .cell_output"
 </li>
 </ul>
 <p>hinge 손실 함수는 어긋난 예측 정도에 비례하여 손실값이 선형적으로 커진다.</p>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch05/homl05-06c.png" width="400"/></div>
 </div>
 </div>
 </div>
@@ -548,14 +544,19 @@ const thebe_selector_output = ".output, .cell_output"
 비선형 SVM 모델(아래 오른편 그래프)을 얻게 된다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch05/homl05-05.png" width="700"/></div><div class="info admonition">
 <p class="admonition-title">2차 다항 특성 추가 후 선형 SVM 분류 모델 훈련</p>
-<p>아래 동영상은 두 개의 특성을 갖는 데이터셋에 2차 다항 특성을 추가한 후에 선형 SVM 분류 모델을
+<p>아래 사진은 두 개의 특성을 갖는 데이터셋에 2차 다항 특성을 추가한 후에 선형 SVM 분류 모델을
 적용하는 과정을 보여준다.</p>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch05/svm-poly-kernel.gif" width="600"/></div>
-<p>&lt;동영상 출처: <a class="reference external" href="https://www.youtube.com/watch?v=OdlNM96sHio">SVM with polynomial kernel visualization</a>&gt;</p>
-<p>참고로 3차원 상에서의 선형 방정식의 그래프는 평면으로 그려진다.</p>
-<div class="math notranslate nohighlight">
-\[z = \frac{3}{5} x + \frac{1}{5}y + 5 \quad\Longleftrightarrow\quad 3x + y - 5z + 25 = 0\]</div>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch05/homl05-06d.png" width="500"/></div>
+<table>
+<tr>
+<td><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch05/svm_01.png" alt=""/></td>
+<td><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch05/svm_02.png" alt=""/></td>
+<td><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch05/svm_03.png" alt=""/></td>
+</tr>
+</table>
+<p>&lt;그림 출처: <a class="reference external" href="https://www.youtube.com/watch?v=OdlNM96sHio">SVM with polynomial kernel visualization(유튜브)</a>&gt;</p>
+<p>참고로 3차원 상에서의 선형 방정식의 그래프는 평면으로 그려진다.
+예를 들어, 방정식 <span class="math notranslate nohighlight">\(3x + y - 5z + 25 = 0\)</span> 의 그래프는 아래와 같다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch05/homl05-06d.png" width="200"/></div>
 <p>&lt;그림 출처: <a class="reference external" href="https://www.geogebra.org/3d">지오지브라(GeoGebra)</a>&gt;</p>
 </div>
 <div class="proof example admonition" id="exp:moons_dataset">
@@ -601,128 +602,95 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <div class="section" id="id6">
 <h3><span class="section-number">5.2.2. </span>유사도 특성<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
-<p><strong>유사도 함수</strong></p>
-<ul>
-<li><p>유사도 함수: <strong>랜드마크</strong>(landmark)라는 특정 샘플과 각 샘플 사이의 유사도(similarity)를 측정하는 함수</p></li>
-<li><p>유사도 함수 예제: <strong>가우시안 방사 기저 함수</strong>(RBF, radial basis function)</p>
+<p><strong>유사도 특성</strong><font size='2'>similarity feature</font>은
+<strong>랜드마크</strong><font size='2'>landmark</font>로 지정된 특정 샘플과
+각 샘플이 얼마나 유사한가를 나타내는 값이다.</p>
+<p>예를 들어, <strong>가우시안 방사 기저 함수</strong><font size='2'>Gaussian radial basis function</font>(Gaussian RBF)는
+다음과 같이 정의된다.</p>
 <div class="math notranslate nohighlight">
 \[
-    \phi(\mathbf x, \ell) = \exp(-\gamma\, \lVert \mathbf x - \ell \lVert^2)
-    \]</div>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\ell\)</span>: 랜드마크</p></li>
-<li><p><span class="math notranslate nohighlight">\(\gamma\)</span>: 랜드마크에서 멀어질 수록 0에 수렴하는 속도를 조절함</p></li>
-<li><p><span class="math notranslate nohighlight">\(\gamma\)</span> 값이 클수록 가까운 샘플 선호, 즉 샘플들 사이의 영향을 보다 적게 고려하여
-모델의 자유도를 높이게 되어 과대적합 위험 커짐.</p></li>
-</ul>
-</li>
-</ul>
-<ul class="simple">
-<li><p>예제</p></li>
-</ul>
+\phi(\mathbf x, m) = \exp(-\gamma\, \lVert \mathbf x - m \lVert^2)
+\]</div>
+<p>위 식에서 <span class="math notranslate nohighlight">\(m\)</span>은 랜드마크를 나타낸다.
+<span class="math notranslate nohighlight">\(\gamma\)</span>는 랜드마크에서 멀어질 수록 0에 수렴하는 속도를 조절하며,
+<span class="math notranslate nohighlight">\(\gamma\)</span> 값이 클수록 가까운 샘플을 보다 선호하게 된다.</p>
+<p>아래 두 그래프는 <span class="math notranslate nohighlight">\(\gamma\)</span> 에 따른 차이를 잘 보여준다.</p>
 <div class="math notranslate nohighlight">
 \[
-\exp(-5\, \lVert \mathbf x - 1 \lVert^2) \qquad\qquad\qquad \exp(-100\, \lVert \mathbf x - 1 \lVert^2)
+\exp(-5\, \lVert \mathbf x - 1 \lVert^2) \qquad\qquad\qquad\qquad \exp(-100\, \lVert \mathbf x - 1 \lVert^2)
 \]</div>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch05/homl05-08b.png" width="1200"/></div>
 <p>&lt;그림 출처: <a class="reference external" href="https://www.desmos.com/calculator?lang=ko">데스모스(desmos)</a>&gt;</p>
-<p><strong>유사도 특성 추가 + 선형 SVC</strong></p>
-<ul class="simple">
-<li><p>모든 샘플을 랜드마크로 지정 후 각 랜드마크에 대한 유사도를 새로운 특성으로 추가하는 방식이 가장 간단함.</p></li>
-<li><p>(<span class="math notranslate nohighlight">\(n\)</span> 개의 특성을 가진 <span class="math notranslate nohighlight">\(m\)</span> 개의 샘플) <span class="math notranslate nohighlight">\(\Rightarrow\)</span> (<span class="math notranslate nohighlight">\(n + m\)</span> 개의 특성을 가진 <span class="math notranslate nohighlight">\(m\)</span> 개의 샘플)</p></li>
-<li><p>장점: 차원이 커지면서 선형적으로 구분될 가능성이 높아짐.</p></li>
-<li><p>단점: 훈련 세트가 매우 클 경우 동일한 크기의 아주 많은 특성이 생성됨.</p></li>
-<li><p>예제</p>
-<ul>
-<li><p>랜드마크: -2와 1</p></li>
-<li><p><span class="math notranslate nohighlight">\(x_2\)</span>와 <span class="math notranslate nohighlight">\(x_3\)</span>: 각각 -2와 1에 대한 가우시안 RBF 함수로 계산한 유사도 특성</p></li>
-<li><p>화살표가 가리키는 점: <span class="math notranslate nohighlight">\(\mathbf x = -1\)</span></p></li>
-</ul>
-</li>
-</ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch05/homl05-08.png" width="800"/></div></div>
+<div class="proof example admonition" id="exp:sim_features_linearSVC">
+<p class="admonition-title"><span class="caption-number">Example 5.2 </span> (유사도 특성 추가와 선형 SVC)</p>
+<div class="example-content section" id="proof-content">
+<p>아래 왼쪽 그래프는 -2와 1을 두 개의 랜드마크로 지정한 다음에
+가우시안 RBF 함수로 계산한 유사도 특성값을 보여준다.
+<span class="math notranslate nohighlight">\(x_2\)</span>와 <span class="math notranslate nohighlight">\(x_3\)</span>는 각각 -2와 1를 랜드마크로 사용한 유사도이며,
+오른쪽 그래프는 이들을 이용하면 선형 분류가 가능해짐을 보여준다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch05/homl05-08.png" width="800"/></div>
+</div>
+</div></div>
 <div class="section" id="rbf">
 <h3><span class="section-number">5.2.3. </span>가우시안 RBF 커널<a class="headerlink" href="#rbf" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p>SVM 모델을 훈련시킬 때 유사도 특성을 실제로는 추가 하지 않으면서 수학적으로는 추가한 효과를 내는 성질 이용</p></li>
-</ul>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rbf_kernel_svm_clf</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
-        <span class="p">(</span><span class="s2">&quot;scaler&quot;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">()),</span>
-        <span class="p">(</span><span class="s2">&quot;svm_clf&quot;</span><span class="p">,</span> <span class="n">SVC</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s2">&quot;rbf&quot;</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="mf">0.001</span><span class="p">))</span> <span class="p">])</span>
+<p>일반적으로 모든 훈련 샘플을 랜드마크로 지정한 후에
+각 랜드마크에 대한 유사도를 새로운 특성으로 추가하는 방식이 사용된다.
+그런데 그러면 훈련셋의 크기 만큼의 특성이 새로 추가된다.
+따라서 훈련 세트가 매우 크다면 새로운 특성을 계산하는 데에 아주 많은 시간과 비용이 들게 된다.</p>
+<p>다행히도 SVM 모델을 이용하면 유사도 특성을 실제로는 추가 하지 않으면서
+추가한 효과를 내는 결과를 얻도록 훈련을 유도할 수 있다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rbf_kernel_svm_clf</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span>
+                                   <span class="n">SVC</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s2">&quot;rbf&quot;</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="mf">0.001</span><span class="p">))</span>
 </pre></div>
 </div>
-<p><strong>SVC + RBF 커널 예제: moons 데이터셋</strong></p>
+<p>아래 네 개의 그래프는 moons 데이터셋에 가우시안 RBF 커널을 다양한 <code class="docutils literal notranslate"><span class="pre">gamma</span></code> 와 <code class="docutils literal notranslate"><span class="pre">C</span></code> 규제 옵션과
+함께 적용한 결과를 보여준다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch05/homl05-10.png" width="600"/></div>
-<table class="colwidths-auto table">
-<thead>
-<tr class="row-odd"><th class="text-align:left head"><p></p></th>
-<th class="text-align:left head"><p>상단 그래프</p></th>
-<th class="text-align:left head"><p>하단 그래프</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td class="text-align:left"><p>gamma</p></td>
-<td class="text-align:left"><p>랜드마크에 조금 집중</p></td>
-<td class="text-align:left"><p>랜드마크에 많이 집중</p></td>
-</tr>
-</tbody>
-</table>
-<table class="colwidths-auto table">
-<thead>
-<tr class="row-odd"><th class="text-align:left head"><p></p></th>
-<th class="text-align:left head"><p>왼편 그래프                   </p></th>
-<th class="text-align:left head"><p>오른편 그래프</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td class="text-align:left"><p>C</p></td>
-<td class="text-align:left"><p>규제 많이</p></td>
-<td class="text-align:left"><p>규제 적게</p></td>
-</tr>
-</tbody>
-</table>
-<p><strong>추천 커널</strong></p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">SVC</span></code>의 <code class="docutils literal notranslate"><span class="pre">kernel</span></code> 기본값은 <code class="docutils literal notranslate"><span class="pre">&quot;rbf&quot;</span></code> =&gt; 대부분의 경우 이 커널이 잘 맞음</p></li>
-<li><p>선형 모델이 예상되는 경우 <code class="docutils literal notranslate"><span class="pre">SVC</span></code>의 <code class="docutils literal notranslate"><span class="pre">&quot;linear&quot;</span></code> 커널을 사용할 수 있음
-하지만 훈련 세트가 크거나 특성이 아주 많을 경우 <code class="docutils literal notranslate"><span class="pre">LinearSVC</span></code>가 빠름</p></li>
-<li><p>시간과 컴퓨팅 성능이 허락한다면 교차 검증, 그리드 탐색을 이용하여 적절한 커널을 찾아볼 수 있음</p></li>
-<li><p>훈련 세트에 특화된 커널이 알려져 있다면 해당 커널을 사용</p></li>
-</ul>
+<p>위 그래프에 따르면 <code class="docutils literal notranslate"><span class="pre">gamma</span></code> 또한 나름 규제 역할을 수행함을 볼 수 있다.
+<code class="docutils literal notranslate"><span class="pre">gamma</span></code> 값을 키우면 각 샘플의 영향력이 보다 작은 영역으로 제한되어 경계 구분선이 보다 좁고 복잡하게 움직인다.
+반면에 <code class="docutils literal notranslate"><span class="pre">gamma</span></code> 값을 줄이면 각 샘플의 영향력이 보다 넓은 영역까지 전해지게 되어 경계 구분선이 보다 부드러워진다.</p>
+<p><code class="docutils literal notranslate"><span class="pre">SVC</span></code> 클래스의 의 <code class="docutils literal notranslate"><span class="pre">kernel</span></code> 기본값은 <code class="docutils literal notranslate"><span class="pre">&quot;rbf&quot;</span></code>이며 대부분의 경우 이 커널이 잘 맞는다.
+하지만 교차 검증, 그리드 탐색 등을 이용하여 적절한 커널을 찾아볼 수 있다.
+특히 훈련 세트에 특화된 커널이 알려져 있다면 해당 커널을 먼저 사용해봐야 한다.</p>
 </div>
 <div class="section" id="id7">
-<h3><span class="section-number">5.2.4. </span>계산 복잡도<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">5.2.4. </span>SVM 클래스의 계산 복잡도<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">SGDClassifier</span></code> 클래스는 확률적 경사 하강법을 적용하기에 온라인 학습에 활용될 수 있다.
+아래 표에서 ‘외부 메모리 학습’<font size='2'>out-of-core learning</font> 항목이
+온라인 학습 지원 여부를 표시한다.
+또한 <code class="docutils literal notranslate"><span class="pre">LinearSVC</span></code> 클래스와 거의 동일한 결과를 내도록 하이퍼파라미터를 조정할 수 있다.
+하지만 <code class="docutils literal notranslate"><span class="pre">LinearSVC</span></code> 클래스는 배치학습과 다른 옵티마이저 알고리즘을 사용한다.</p>
 <table class="colwidths-auto table">
 <thead>
-<tr class="row-odd"><th class="head"><p>분류기</p></th>
-<th class="head"><p>시간 복잡도(m 샘플 수, n 특성 수)</p></th>
-<th class="head"><p>외부 메모리 학습</p></th>
-<th class="head"><p>스케일 조정</p></th>
-<th class="head"><p>커널 트릭</p></th>
-<th class="head"><p>다중 클래스 분류</p></th>
+<tr class="row-odd"><th class="text-align:left head"><p>클래스</p></th>
+<th class="text-align:left head"><p>시간 복잡도(m 샘플 수, n 특성 수)</p></th>
+<th class="text-align:left head"><p>외부 메모리 학습</p></th>
+<th class="text-align:left head"><p>스케일 조정</p></th>
+<th class="text-align:left head"><p>커널 트릭</p></th>
+<th class="text-align:left head"><p>다중 클래스 분류</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>LinearSVC</p></td>
-<td><p><span class="math notranslate nohighlight">\(O(m \times n)\)</span></p></td>
-<td><p>미지원</p></td>
-<td><p>필요</p></td>
-<td><p>미지원</p></td>
-<td><p>OvR 기본</p></td>
+<tr class="row-even"><td class="text-align:left"><p>LinearSVC</p></td>
+<td class="text-align:left"><p><span class="math notranslate nohighlight">\(O(m \times n)\)</span></p></td>
+<td class="text-align:left"><p>미지원</p></td>
+<td class="text-align:left"><p>필요</p></td>
+<td class="text-align:left"><p>미지원</p></td>
+<td class="text-align:left"><p>OvR</p></td>
 </tr>
-<tr class="row-odd"><td><p>SGDClassifier</p></td>
-<td><p><span class="math notranslate nohighlight">\(O(m \times n)\)</span></p></td>
-<td><p>지원</p></td>
-<td><p>필요</p></td>
-<td><p>미지원</p></td>
-<td><p>지원</p></td>
+<tr class="row-odd"><td class="text-align:left"><p>SVC</p></td>
+<td class="text-align:left"><p><span class="math notranslate nohighlight">\(O(m^2 \times n) \sim O(m^3 \times n)\)</span></p></td>
+<td class="text-align:left"><p>미지원</p></td>
+<td class="text-align:left"><p>필요</p></td>
+<td class="text-align:left"><p>지원</p></td>
+<td class="text-align:left"><p>OvR</p></td>
 </tr>
-<tr class="row-even"><td><p>SVC</p></td>
-<td><p><span class="math notranslate nohighlight">\(O(m^2 \times n) \sim O(m^3 \times n)\)</span></p></td>
-<td><p>미지원</p></td>
-<td><p>필요</p></td>
-<td><p>지원</p></td>
-<td><p>OvR 기본</p></td>
+<tr class="row-even"><td class="text-align:left"><p>SGDClassifier</p></td>
+<td class="text-align:left"><p><span class="math notranslate nohighlight">\(O(m \times n)\)</span></p></td>
+<td class="text-align:left"><p>지원</p></td>
+<td class="text-align:left"><p>필요</p></td>
+<td class="text-align:left"><p>미지원</p></td>
+<td class="text-align:left"><p>지원</p></td>
 </tr>
 </tbody>
 </table>
