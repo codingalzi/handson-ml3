@@ -126,6 +126,10 @@
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch06/homl06-02a.png" width="500"/></div>
 
+# graphviz를 이용한 결과는 다음과 같다.
+
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch06/homl06-02c.png" width="630"/></div>
+
 # ### 클래스 확률 추정
 
 # 주어진 샘플이 어떤 클래스에 속할 확률은 다음과 같이 계산된다.
@@ -182,7 +186,7 @@
 # 하지만 탐욕적 기법은 일반적으로 적절한 성능의 해를 찾아준다. 
 # :::
 
-# ### CART 알고리즘의 계산 복잡도
+# ### CART 알고리즘의 시간복잡도
 
 # 최적의 결정트리를 찾는 문제는 $O(\exp(m))$ 복잡도를 가지면,
 # 이런 문제는 NP-완전<font size='2'>NP-complete</font>이다.

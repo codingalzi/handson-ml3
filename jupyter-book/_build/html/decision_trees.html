@@ -270,7 +270,7 @@ const thebe_selector_output = ".output, .cell_output"
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id7">
-     6.2.1. CART 알고리즘의 계산 복잡도
+     6.2.1. CART 알고리즘의 시간복잡도
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -384,7 +384,7 @@ const thebe_selector_output = ".output, .cell_output"
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id7">
-     6.2.1. CART 알고리즘의 계산 복잡도
+     6.2.1. CART 알고리즘의 시간복잡도
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -555,7 +555,8 @@ const thebe_selector_output = ".output, .cell_output"
 <li><p>2차 분할 기준: 꽃잎 너비 1.75cm</p></li>
 <li><p>3차 분할 기준: 꽃잎 길이 4.85cm와 4.95cm</p></li>
 </ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch06/homl06-02a.png" width="500"/></div></div>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch06/homl06-02a.png" width="500"/></div><p>graphviz를 이용한 결과는 다음과 같다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch06/homl06-02c.png" width="630"/></div></div>
 <div class="section" id="id6">
 <h3><span class="section-number">6.1.4. </span>클래스 확률 추정<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <p>주어진 샘플이 어떤 클래스에 속할 확률은 다음과 같이 계산된다.</p>
@@ -605,7 +606,7 @@ J(k, t_k) = \frac{m_\text{left}}{m}\, G_\text{left} + \frac{m_\text{right}}{m}\,
 하지만 탐욕적 기법은 일반적으로 적절한 성능의 해를 찾아준다.</p>
 </div>
 <div class="section" id="id7">
-<h3><span class="section-number">6.2.1. </span>CART 알고리즘의 계산 복잡도<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">6.2.1. </span>CART 알고리즘의 시간복잡도<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
 <p>최적의 결정트리를 찾는 문제는 <span class="math notranslate nohighlight">\(O(\exp(m))\)</span> 복잡도를 가지면,
 이런 문제는 NP-완전<font size='2'>NP-complete</font>이다.
 따라서 매우 작은 훈련 세트에 대해서도 제대로 적용하기 어렵다.</p>
