@@ -622,79 +622,85 @@ J(k, t_k) = \frac{m_\text{left}}{m}\, G_\text{left} + \frac{m_\text{right}}{m}\,
 </div>
 <div class="section" id="vs">
 <h3><span class="section-number">6.2.2. </span>지니 불순도 vs. 엔트로피<a class="headerlink" href="#vs" title="Permalink to this headline">¶</a></h3>
-<p><strong>엔트로피 정의</strong></p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">DecisionTreeClassifier</span></code>의 <code class="docutils literal notranslate"><span class="pre">criterion=&quot;entropy&quot;</span></code> 옵션 설정:</p>
-<ul>
-<li><p>gini 불순도 대신에 샘플들의 <strong>무질서</strong> 정도를 측정하는 엔트로피 사용</p></li>
-</ul>
-</li>
-</ul>
-<ul class="simple">
-<li><p>특정 노드의 엔트로피(<span class="math notranslate nohighlight">\(H\)</span>) 계산</p></li>
-</ul>
+<p><code class="docutils literal notranslate"><span class="pre">DecisionTreeClassifier</span></code>의 <code class="docutils literal notranslate"><span class="pre">criterion</span></code> 하이퍼파라미터의 값을 <code class="docutils literal notranslate"><span class="pre">'entropy'</span></code> 로 지정하면
+지니 불순도 대신에 샘플들의 <strong>무질서</strong> 정도를 측정하는 엔트로피<font size='2'>entropy</font>가
+노드를 분할하는 기준으로 사용된다.</p>
+<p><span class="math notranslate nohighlight">\(i\)</span>-번째 노드의 엔트로피 <span class="math notranslate nohighlight">\(H_i\)</span> 는 다음과 같이 계산된다.</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}H_i = -\sum_{\substack{k=1\\p_{i,k}\neq 0}}^{K} p_{k}\, \log(p_{i,k})\end{split}\]</div>
-<ul class="simple">
-<li><p>지니 불순도를 사용할 때와 비교해서 큰 차이가 나지 않음.
-다만, 엔트로피 방식이 노드를 보다 균형 잡힌 두 개의 자식 노드로 분할함.
-하지만 지니 불순도 방식이 보다 빠르게 훈련되며 따라서 기본값으로 사용됨.</p></li>
-</ul>
-<p><strong>엔트로피 방식의 장점 발생 이유</strong></p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\begin{align*}
-&amp; \text{특정 $k$에 대해 $p_{i,k}$가 0에 매우 가까운 경우} \\
-&amp;\quad\Rightarrow \text{$-\log(p_{i,k})$가 매우 커짐} \\
-&amp;\quad\Rightarrow \text{엔트로피 증가} \\
-&amp;\quad\Rightarrow \text{비용함수 $J(k, t_k)$ 증가} \\
-&amp;\quad\Rightarrow \text{그런 조합은 피하게 됨} \\
-&amp;\quad\Rightarrow \text{보다 균형 잡힌 두 개의 부분집합으로 분할하는 방향으로 유도}
-\end{align*}
-\end{split}\]</div>
+\[\begin{split}H_i = -\sum_{\substack{k=1\\p_{i,k}\neq 0}}^{K} p_{i,k}\, \log_2(p_{i,k})\end{split}\]</div>
+<p>지니 불순도를 사용할 때와 비교해서 큰 차이가 나지는 않는다.
+만약 차이가 난다면 엔트로피 방식이 결정 트리를 보다 좌우 균형이 잡히도록
+자식 노드로 분할한다.
+하지만 기본적으로 별 차이가 없고 지니 불순도 방식이 보다 빠르게 훈련되기에 기본값으로 지정되었다.</p>
+<div class="info admonition">
+<p class="admonition-title">엔트로피 방식이 보다 균형 잡힌 이진탐색트리를 만드는 이유</p>
+<p>특정 <span class="math notranslate nohighlight">\(k\)</span> 에 대해 <span class="math notranslate nohighlight">\(p_{i,k}\)</span> 가 <span class="math notranslate nohighlight">\(0\)</span> 에 매우 가까우면 <span class="math notranslate nohighlight">\(-\log(p_{i,k})\)</span> 가 매우 커진다.
+이는 엔트로피 증가로 이어지기 때문에 결국 비용함수 <span class="math notranslate nohighlight">\(J(k, t_k)\)</span> 가 증가한다.
+따라서 <span class="math notranslate nohighlight">\(p_{i, k}\)</span> 가 매우 작게되는 경우는 피하도록 학습하게 되고
+결국 보다 균형 잡힌 두 개의 부분집합으로 분할하는 방향으로 유도된다.</p>
+</div>
 </div>
 <div class="section" id="id8">
 <h3><span class="section-number">6.2.3. </span>규제 하이퍼파라미터<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
-<p><strong>비파라미터 모델</strong></p>
-<ul class="simple">
-<li><p>결정트리 모델은 데이터에 대한 어떤 가정도 하지 않음.</p>
-<ul>
-<li><p>예를 들어, 노드를 분할할 수 있는 자유도(degree of freedom)에 대한 제한이 기본적으로 없음.</p></li>
-<li><p>반면에 선형 모델 등은 데이터가 선형 모델을 따른다는 가정 등을 함.</p></li>
-</ul>
-</li>
-<li><p>이런 모델을 비파라미터 모델이라 함.</p></li>
-<li><p>과대적합 위험 높음</p></li>
-</ul>
-<p><strong>사이킷런  <code class="docutils literal notranslate"><span class="pre">DecisionTreeClassifier</span></code> 규제하기</strong></p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">max_depth</span></code>: 결정트리의 최대 높이 제한</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">min_samples_split</span></code>: 노드를 분할하기 위해 필요한 최소 샘플 수</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">min_samples_leaf</span></code>:리프 노드에 포함되어야 하는 최소 샘플 수</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">min_weight_fraction_leaf</span></code>:</p>
-<ul>
-<li><p>샘플 별로 가중치가 설정된 경우: 가중치의 전체 합에서 해당 리프 노드에 포함된 샘플의 가중치의 합이 차지하는 비율</p></li>
-<li><p>샘플 별로 가중치가 없는 경우: <code class="docutils literal notranslate"><span class="pre">min_samples_leaf</span></code>와 동일한 역할 수행</p></li>
-</ul>
-</li>
-<li><p><code class="docutils literal notranslate"><span class="pre">max_leaf_nodes</span></code>: 허용된 리프 노드의 최대 개수</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">max_features</span></code>: 각 노드에서 분할 평가에 사용될 수 있는 최대 특성 수</p></li>
-<li><p>규제를 높이는 방법</p>
-<ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">min_</span></code> 접두사 사용 규제: 값을 키울 것</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">max_</span></code> 접두사 사용 규제: 값을 감소시킬 것</p></li>
-</ul>
-</li>
-</ul>
-<ul class="simple">
-<li><p>예제: <code class="docutils literal notranslate"><span class="pre">moons</span></code> 데이터셋에 대한 결정트리 모델 학습</p>
-<ul>
-<li><p>왼편: 규제 전혀 없음. 보다 정교하며 과대적합됨.</p></li>
-<li><p>오른편: <code class="docutils literal notranslate"><span class="pre">min_samples_leaf=4</span></code>. 일반화 성능이 보다 좋음.</p></li>
-</ul>
-</li>
-</ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch06/homl06-03.png" width="600"/></div></div>
+<p><strong>비파라미터 모델 vs. 파라미터 모델</strong></p>
+<p>결정트리 모델은 데이터에 대한 어떤 가정도 하지 않는다.
+예를 들어, 노드를 분할할 때 어떤 제한도 가해지지 않으며,
+따라서 학습되어야 하는 파라미터의 개수를 미리 알 수 없다.
+이유는 노드를 분할 할 때마다 새로운 파라미터가 학습되기 때문이다.
+이런 모델을 <strong>비파라미터 모델</strong><font size='2'>nonparametric model</font>이라 부른다.
+비파라미터 모델의 자유도가 제한되지 않기에 과대적합될 가능성이 높다.</p>
+<p>반면에 선형 모델 등 지금까지 살펴 본 모든 모델은 학습되는 모델에
+필요한 파라미터 수가 훈련 시작 전에 규정되며, 이런 이유로 과대적합 가능성이 상대적으로 작아진다.
+이런 모델을 <strong>파라미터 모델</strong><font size='2'>parametric model</font>이라 한다.</p>
+<p><strong>사이킷런  <code class="docutils literal notranslate"><span class="pre">DecisionTreeClassifier</span></code> 규제 하이퍼파라미터</strong></p>
+<p>앞서 살펴 본 <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> 이외에 다양한 하이퍼파라미터를 이용해
+모델의 과대적합 위험도를 줄이는 규제로 사용한다.
+가장 많이 사용되는 규제는 다음과 같다.
+<code class="docutils literal notranslate"><span class="pre">min_</span></code> 을 접두사로 갖는 하이퍼파라미터는 값을 키우는 경우,
+<code class="docutils literal notranslate"><span class="pre">max_</span></code> 를 접두사로 갖는 하이퍼파라미터는 값을 감소시키는 경우 규제가 강해진다.</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="text-align:left head"><p>하이퍼파라미터</p></th>
+<th class="text-align:left head"><p>기능</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">max_depth</span></code></p></td>
+<td class="text-align:left"><p>결정트리의 높이 제한</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">min_samples_split</span></code></p></td>
+<td class="text-align:left"><p>노드 분할해 필요한 최소 샘플 개수</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">min_samples_leaf</span></code></p></td>
+<td class="text-align:left"><p>리프에 포함된 최소 샘플 개수</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">min_weight_fraction_leaf</span></code></p></td>
+<td class="text-align:left"><p>샘플 가중치 합의 최솟값</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">max_leaf_nodes</span></code></p></td>
+<td class="text-align:left"><p>최대 리프 개수</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p><code class="docutils literal notranslate"><span class="pre">max_features</span></code></p></td>
+<td class="text-align:left"><p>분할에 사용되는 특성 개수</p></td>
+</tr>
+</tbody>
+</table>
+<div class="note admonition">
+<p class="admonition-title">샘플의 가중치</p>
+<p>샘플의 가중치가 지정되지 않은 경우 모든 샘플의 가중치가 1이라고 가정한다.
+이런 경우 <code class="docutils literal notranslate"><span class="pre">min_weight_fraction_leaf</span></code>는 <code class="docutils literal notranslate"><span class="pre">min_samples_leaf</span></code>와 동일한 역할을 수행한다.</p>
+</div>
+<div class="proof example admonition" id="exp:moons_decision_tree">
+<p class="admonition-title"><span class="caption-number">Example 6.1 </span> (<code class="docutils literal notranslate"><span class="pre">moons</span></code> 데이터셋과 결정트리)</p>
+<div class="example-content section" id="proof-content">
+<p>아래 두 그래프는 moons 데이터셋에 두 개의 결정트리 모델을 적용한 결과를 보여준다.
+왼쪽 그래프가 규제 없이 훈련된 결정트리인데 과대적합되었음을 바로 확인할 수 있다.
+반면에 오른쪽 그래프는 <code class="docutils literal notranslate"><span class="pre">min_samples_leaf=5</span></code> 를 사용하여 모든 리프가 최소 5개 이상의
+데이터를 포함하도록 규제하였다.
+결과적으로 일반화 성능이 보다 좋은 결정트리가 생성되었다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch06/homl06-03.png" width="600"/></div>
+</div>
+</div></div>
 </div>
 <div class="section" id="id9">
 <h2><span class="section-number">6.3. </span>(결정트리) 회귀<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
