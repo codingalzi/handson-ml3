@@ -628,7 +628,7 @@ J(k, t_k) = \frac{m_\text{left}}{m}\, G_\text{left} + \frac{m_\text{right}}{m}\,
 노드를 분할하는 기준으로 사용된다.</p>
 <p><span class="math notranslate nohighlight">\(i\)</span>-번째 노드의 엔트로피 <span class="math notranslate nohighlight">\(H_i\)</span> 는 다음과 같이 계산된다.</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}H_i = -\sum_{\substack{k=1\\p_{i,k}\neq 0}}^{K} p_{i,k}\, \log_2(p_{i,k})\end{split}\]</div>
+\[\begin{split}H_i = -\sum_{\substack{k=1\\p_{i,k}\neq 0}}^{K} p_{i,k} \log_2(p_{i,k})\end{split}\]</div>
 <p>지니 불순도를 사용할 때와 비교해서 큰 차이가 나지는 않는다.
 만약 차이가 난다면 엔트로피 방식이 결정 트리를 보다 좌우 균형이 잡히도록
 자식 노드로 분할한다.
