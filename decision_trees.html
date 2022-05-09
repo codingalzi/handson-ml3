@@ -287,45 +287,22 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id9">
-   6.3. (결정트리) 회귀
+   6.3. 회귀 결정트리
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#decisiontreeregressor">
-     6.3.1. 사이킷런의
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       DecisionTreeRegressor
-      </span>
-     </code>
-     예측기 활용
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id10">
-     6.3.2. 회귀용 CART 알고리즘과 비용함수
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id11">
-     6.3.3. 규제
-    </a>
-   </li>
-  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id12">
-   6.4. (결정트리) 불안정성
+  <a class="reference internal nav-link" href="#id10">
+   6.4. 결정트리의 단점
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id13">
-     6.4.1. 단점 1: 훈련 세트 회전 민감도
+    <a class="reference internal nav-link" href="#id11">
+     6.4.1. 훈련셋  회전 민감도
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id14">
-     6.4.2. 단점 2: 훈련 세트 변화 민감도
+    <a class="reference internal nav-link" href="#id12">
+     6.4.2. 높은 분산
     </a>
    </li>
   </ul>
@@ -401,45 +378,22 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id9">
-   6.3. (결정트리) 회귀
+   6.3. 회귀 결정트리
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#decisiontreeregressor">
-     6.3.1. 사이킷런의
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       DecisionTreeRegressor
-      </span>
-     </code>
-     예측기 활용
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id10">
-     6.3.2. 회귀용 CART 알고리즘과 비용함수
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id11">
-     6.3.3. 규제
-    </a>
-   </li>
-  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id12">
-   6.4. (결정트리) 불안정성
+  <a class="reference internal nav-link" href="#id10">
+   6.4. 결정트리의 단점
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id13">
-     6.4.1. 단점 1: 훈련 세트 회전 민감도
+    <a class="reference internal nav-link" href="#id11">
+     6.4.1. 훈련셋  회전 민감도
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id14">
-     6.4.2. 단점 2: 훈련 세트 변화 민감도
+    <a class="reference internal nav-link" href="#id12">
+     6.4.2. 높은 분산
     </a>
    </li>
   </ul>
@@ -498,8 +452,8 @@ const thebe_selector_output = ".output, .cell_output"
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch06/homl06-01.png" width="400"/></div><p>결정트리의 각 노드에 포함된 속성은 다음과 같다.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">gini</span></code>: 해당 노드의 지니 불순도 측정값.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">samples</span></code>: 해당 노드에 포함된 샘플 수</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">value</span></code>: 해당 노드에 포함된 샘플들의 실제 클래스별 개수. 타깃 정보 활용.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">samples</span></code>: 해당 노드에 속하는 샘플 수</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">value</span></code>: 해당 노드에 속하는 샘플들의 실제 클래스별 개수. 타깃 정보 활용.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">class</span></code>: 각 클래스별 비율을 계산하여 가장 높은 비율에 해당하는 클래스 선정.
 동일한 비율이면 낮은 인덱스 선정</p></li>
 </ul>
@@ -540,6 +494,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li><p>리프<font size='2'>leaf</font>: 더 이상의 가지분할이 발생하지 않는 노드이며, 따라서 자식 노드를 갖지 않는다.</p></li>
 </ul>
 <p><strong>결정트리 예측</strong></p>
+<p>결정트리 모델은 <strong>화이트박스</strong><font size='2'>whitebox</font> 모델이다.
+즉, 예측값의 계산과정을 명확하게 추적할 수 있다.
+반면에 머신러닝, 딥러닝의 대부분의 모델은 예측값의 생성과정을
+추적하기 어려운 <strong>블랙박스</strong><font size='2'>blackbox</font> 모델이다.</p>
 <p>꽃잎 길이와 너비가 각각 5cm, 1.5cm 인 샘플의 클래스는 아래 과정을 거처
 주어진 데이터가 속한 리프 노드의 속성을 확인하여 예측한다.</p>
 <ul class="simple">
@@ -586,7 +544,7 @@ const thebe_selector_output = ".output, .cell_output"
 <div class="section" id="cart">
 <h2><span class="section-number">6.2. </span>CART 훈련 알고리즘<a class="headerlink" href="#cart" title="Permalink to this headline">¶</a></h2>
 <p><strong>CART<font size='2'>Classification and Regression Tree<font> 분류 알고리즘</strong></p>
-<p>각 노드에서 아래 비용함수를 최소화 하는 특성 <span class="math notranslate nohighlight">\(k\)</span>와 해당 특성의 임곗값 <span class="math notranslate nohighlight">\(t_k\)</span>을 사용한다.</p>
+<p>각 노드에서 아래 비용함수를 최소화 하는 특성 <span class="math notranslate nohighlight">\(k\)</span>와 해당 특성의 임곗값 <span class="math notranslate nohighlight">\(t_k\)</span>을 무작위로 선택한 후 결정한다.</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(m\)</span>, <span class="math notranslate nohighlight">\(m_\text{left}\)</span>, <span class="math notranslate nohighlight">\(m_\text{right}\)</span>: 각각 부모와 왼쪽, 오른쪽 자식 노드에 속한 샘플 개수</p></li>
 <li><p><span class="math notranslate nohighlight">\(G_\text{left}\)</span>, <span class="math notranslate nohighlight">\(G_\text{right}\)</span>: 각각 왼쪽, 오른쪽 자식 노드의 지니 불순도</p></li>
@@ -628,7 +586,7 @@ J(k, t_k) = \frac{m_\text{left}}{m}\, G_\text{left} + \frac{m_\text{right}}{m}\,
 노드를 분할하는 기준으로 사용된다.</p>
 <p><span class="math notranslate nohighlight">\(i\)</span>-번째 노드의 엔트로피 <span class="math notranslate nohighlight">\(H_i\)</span> 는 다음과 같이 계산된다.</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}H_i = -\sum_{\substack{k=1\\p_{i,k}\neq 0}}^{K} p_{i,k}\, \log_2(p_{i,k})\end{split}\]</div>
+\[\begin{split}H_i = -\sum_{\substack{k=1\\p_{i,k}\neq 0}}^{K} p_{i,k} \log_2(p_{i,k})\end{split}\]</div>
 <p>지니 불순도를 사용할 때와 비교해서 큰 차이가 나지는 않는다.
 만약 차이가 난다면 엔트로피 방식이 결정 트리를 보다 좌우 균형이 잡히도록
 자식 노드로 분할한다.
@@ -704,108 +662,96 @@ J(k, t_k) = \frac{m_\text{left}}{m}\, G_\text{left} + \frac{m_\text{right}}{m}\,
 </div></div>
 </div>
 <div class="section" id="id9">
-<h2><span class="section-number">6.3. </span>(결정트리) 회귀<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="decisiontreeregressor">
-<h3><span class="section-number">6.3.1. </span>사이킷런의 <code class="docutils literal notranslate"><span class="pre">DecisionTreeRegressor</span></code> 예측기 활용<a class="headerlink" href="#decisiontreeregressor" title="Permalink to this headline">¶</a></h3>
-<ul>
-<li><p>결정트리 알고리즘 아이디어를 거의 그대로 이용하여 회귀 문제에 적용 가능</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tree_reg</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-<span class="n">tree_reg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<h2><span class="section-number">6.3. </span>회귀 결정트리<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+<p>결정트리를 회귀 용도로 사용할 수 있다.
+대표적으로 사이킷런의 <code class="docutils literal notranslate"><span class="pre">DecisionTreeRegressor</span></code> 클래스가 예측기 모델 학습에 사용된다.</p>
+<p>예를 들어, 잡음이 포함된 2차 함수 형태의 데이터셋을 이용하여 결정트리 회귀 모델을 훈련시켜 보자.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch06/homl06-04a.png" width="300"/></div><p><strong>회귀 결정트리 훈련</strong></p>
+<p>아래 코드는 <code class="docutils literal notranslate"><span class="pre">DecisionTreeRegressor</span></code> 회귀 모델을 훈련시킨다.
+<code class="docutils literal notranslate"><span class="pre">max_depth</span></code>의 의미는 <code class="docutils literal notranslate"><span class="pre">DecisionTreeClassifier</span></code>의 경우와 동일하다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tree_reg</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tree_reg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_quad</span><span class="p">,</span> <span class="n">y_quad</span><span class="p">)</span>
 </pre></div>
 </div>
-</li>
-</ul>
+<p>훈련된 결정트리는 다음과 같다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch06/homl06-05.png" width="630"/></div><p>결정트리의 각 노드에 포함된 속성은 다음과 같다.</p>
 <ul class="simple">
-<li><p>예제: 잡음이 포함된 2차 함수 형태의 데이터셋</p>
-<ul>
-<li><p>왼편: <code class="docutils literal notranslate"><span class="pre">max_depth=2</span></code></p></li>
-<li><p>오른편: <code class="docutils literal notranslate"><span class="pre">max_depth=3</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">samples</span></code>: 해당 노드에 속하는 훈련 샘플 수</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">value</span></code>: 해당 노드에 속하는 훈련 샘플의 평균 타깃값</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mse</span></code>: 해당 노드에 속하는 훈련 샘플의 평균제곱오차(MSE)</p></li>
 </ul>
-</li>
-</ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch06/homl06-04.png" width="600"/></div><ul class="simple">
-<li><p>왼편 그림 설명</p></li>
-</ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch06/homl06-05.png" width="600"/></div><ul class="simple">
-<li><p>각 노드에 포함된 속성</p>
-<ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">samples</span></code>: 해당 노드에 속한 훈련 샘플 수</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">value</span></code>: 해당 노드에 속한 훈련 샘플의 평균 타깃값</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">mse</span></code>: 해당 노드에 속한 훈련 샘플의 평균제곱오차(MSE)</p>
-<ul>
-<li><p>오차 기준은 <code class="docutils literal notranslate"><span class="pre">value</span></code> 사용.</p></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</div>
-<div class="section" id="id10">
-<h3><span class="section-number">6.3.2. </span>회귀용 CART 알고리즘과 비용함수<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p><strong>회귀 결정트리 예측</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">x1=0.2</span></code> 인 경우의 예측값은 아래 과정을 거처
+주어진 데이터가 속한 리프 노드의 속성을 확인하여 예측한다.</p>
 <ul class="simple">
-<li><p>분류의 경우처럼 탐욕적으로 아래 비용함수를 최소화 하는 특성 <span class="math notranslate nohighlight">\(k\)</span>와 해당 특성의 임곗값 <span class="math notranslate nohighlight">\(t_k\)</span>을 결정함:</p></li>
+<li><p>루트에서 시작한다.</p></li>
+<li><p>분할 1단계: -0.303 보다 크기에 오른쪽 자식 노드로 이동한다.</p></li>
+<li><p>분할 2단계: 0.272 보다 작기에 왼쪽 자식 노드로 이동한다.
+해당 노드가 리프 노드이고 <code class="docutils literal notranslate"><span class="pre">value=0.028</span></code> 이기에 0.028을 예측값으로 지정한다.</p></li>
+</ul>
+<p>아래 왼쪽 그래프는 <code class="docutils literal notranslate"><span class="pre">max_depth=2</span></code>로, 오른쪽 그래프는 <code class="docutils literal notranslate"><span class="pre">max_depth=3</span></code>로 지정해서 훈련된 회귀 결정트리
+예측 함수의 그래프이다.</p>
+<ul class="simple">
+<li><p>검정 실선(Depth=0): 1차 분할 기준</p></li>
+<li><p>검정 파선(Depth=1): 2차 분할 기준</p></li>
+<li><p>(오른쪽 그래프) 검정 점선(Depth=2): 3차 분할 기준</p></li>
+</ul>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch06/homl06-04.png" width="600"/></div><p><strong>회귀용 CART 알고리즘의 비용함수</strong></p>
+<p>분류의 경우처럼 탐욕적으로 아래 비용함수를 최소화 하는 특성 <span class="math notranslate nohighlight">\(k\)</span>와 해당 특성의 임곗값 <span class="math notranslate nohighlight">\(t_k\)</span>을
+무작위로 선택한 후 결정한다.</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\text{MSE}_\text{node}\)</span>: 해당 노드의 평균제곱오차(MSE).</p></li>
+<li><p><span class="math notranslate nohighlight">\(m_\text{node}\)</span>: 해당 노드에 속하는 샘플 수</p></li>
+<li><p><span class="math notranslate nohighlight">\(y^{(i)}\)</span>: 샘플 <span class="math notranslate nohighlight">\(i\)</span>에 대한 실제 타깃값</p></li>
 </ul>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{align*}
 J(k, t_k) &amp;= \frac{m_\text{left}}{m}\, \text{MSE}_\text{left} + \frac{m_\text{right}}{m}\, \text{MSE}_\text{right} \\[2ex]
-\text{MSE}_\text{node} &amp;= \sum_{i\in \text{node}} (\hat y_{node} - y^{(i)})^2\\[1ex]
+\text{MSE}_\text{node} &amp;= \frac{1}{m_\text{node}} \sum_{i\in \text{node}} (\hat y_{node} - y^{(i)})^2\\[1ex]
 \hat y_\text{node} &amp;= \frac{1}{m_\text{node}} \sum_{i\in\text{node}} y^{(i)}
 \end{align*}
 \end{split}\]</div>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\text{MSE}_\text{left}\)</span>(<span class="math notranslate nohighlight">\(\text{MSE}_\text{right}\)</span>):
-지정된 특성 <span class="math notranslate nohighlight">\(k\)</span>와 특성 임곗값 <span class="math notranslate nohighlight">\(t_k\)</span>로 구분된 왼편(오른편) 부분집합의 평균제곱오차</p>
-<ul>
-<li><p>해당 노드에 속한 샘플들의 평균 타깃값 기준</p></li>
-<li><p><span class="math notranslate nohighlight">\(m_\text{left}\)</span>/<span class="math notranslate nohighlight">\(m_\text{right}\)</span>: 해당 노드에 속하는 샘플 수</p></li>
-<li><p><span class="math notranslate nohighlight">\(y^{(i)}\)</span>: 샘플 <span class="math notranslate nohighlight">\(i\)</span>에 대한 실제 타깃</p></li>
-</ul>
-</li>
-</ul>
-</div>
-<div class="section" id="id11">
-<h3><span class="section-number">6.3.3. </span>규제<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p>분류의 경우처럼 규제가 없으면 과대적합 발생할 수 있음.</p></li>
-<li><p>왼편: 규제가 없는 경우. 과대적합 발생</p></li>
-<li><p>오른편: <code class="docutils literal notranslate"><span class="pre">min_samples_leaf=10</span></code></p></li>
-</ul>
+<p><strong>회귀 결정트리 규제</strong></p>
+<p>분류의 경우처럼 규제가 없으면 과대적합이 발생한다.
+아래 왼쪽 그래프는 규제없이 훈련되어 훈련셋에 과대적합된 결정트리의 예측값을 보여준다.
+반면에 오른쪽 그래프는 <code class="docutils literal notranslate"><span class="pre">min_samples_leaf=10</span></code> 규제를 사용한 결과이며,
+일반화 성능이 훨씬 결정트리의 예측값을 보여준다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch06/homl06-06.png" width="600"/></div></div>
+<div class="section" id="id10">
+<h2><span class="section-number">6.4. </span>결정트리의 단점<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id11">
+<h3><span class="section-number">6.4.1. </span>훈련셋  회전 민감도<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p>결정트리 알고리즘은 단순하지만 매우 뛰어난 성능을 갖지만 몇 가지 단점을 갖는다.</p>
+<p>먼저 결정트리는 항상 축에 수직인 분할을 사용한다.
+따라서 훈련셋에 회전을 조금만 가해도 결정 경계가 많이 달라진다.
+예를 들어 아래 오른쪽 그래프는 왼쪽 데이터셋을 45도 회전시킨 훈련셋으로 학습된 결정트리이며
+쓸데없이 계단 형식의 굴곡이 있는 결정경계를 갖는다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch06/homl06-07.png" width="600"/></div><p>하지만 예를 들어 (<a class="reference internal" href="dimensionality_reduction.html#ch-dimensionalityreduction"><span class="std std-numref">8장</span></a>에서 배울) 주성분 분석(PCA) 기법 등을
+사용하여 훈련 샘플 회전시키는 전처리를 구행한 후에 학습을 시키는 것도 가능하다.</p>
+<p>PCA 기법은 간단하게 말해 데이터셋을 회전시켜서 특성들 사이의 연관성을 약화시키며, 이를 통해
+결정트리의 학습에 도움을 줄 수 있다는 정도만 여기서는 언급한다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pca_pipeline</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">PCA</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X_iris_rotated</span> <span class="o">=</span> <span class="n">pca_pipeline</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_iris</span><span class="p">)</span>
+</pre></div>
 </div>
+<p>PCA 기법으로 회전시킨 붓꽃 데이터셋에 분류 결정트리를 훈련시킨 결과는 다음과 같다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tree_clf_pca</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tree_clf_pca</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_iris_rotated</span><span class="p">,</span> <span class="n">y_iris</span><span class="p">)</span>
+</pre></div>
+</div>
+<img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch06/homl06-08d.png"/></div>
 <div class="section" id="id12">
-<h2><span class="section-number">6.4. </span>(결정트리) 불안정성<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id13">
-<h3><span class="section-number">6.4.1. </span>단점 1: 훈련 세트 회전 민감도<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p>결정트리 알고리즘은 성능이 매우 우수하지만 기본적으로 주어진 훈련 세트에 민감하게 반응함.</p></li>
-</ul>
-<ul class="simple">
-<li><p>결정트리는 항상 축에 수직인 분할을 사용. 따라서 조금만 회전을 가해도 결정 경계가 많이 달라짐</p></li>
-</ul>
-<ul class="simple">
-<li><p>예제: 오른편 그래프: 왼편 그래프를 45도 회전시킨 훈련 세트 학습</p></li>
-</ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch06/homl06-07.png" width="600"/></div><ul class="simple">
-<li><p>PCA 기법 등을 사용하여 훈련 샘플 회전시킨 후 학습 가능. (8장 참조)</p></li>
-</ul>
-</div>
-<div class="section" id="id14">
-<h3><span class="section-number">6.4.2. </span>단점 2: 훈련 세트 변화 민감도<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p>훈련 데이터의 작은 변화에도 매우 민감함.</p></li>
-</ul>
-<ul class="simple">
-<li><p>예제: 붓꽃 데이터에서 하나의 샘플을 제거한 후 학습시킬 때 매우 다르게 학습할 수 있음.</p>
-<ul>
-<li><p>왼편 그래프: 모든 샘플 대상 훈련</p></li>
-<li><p>오른편 그래프: 가장 넓은 버시컬러 샘플 제거 후 훈련</p></li>
-</ul>
-</li>
-</ul>
-<img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch06/homl06-08d.png"/><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch06/homl06-08e.png"/><ul class="simple">
-<li><p>많은 트리에서 만든 예측값의 평균을 활용 추천(7장 램덤포레스트 모델 참조)</p></li>
-</ul>
+<h3><span class="section-number">6.4.2. </span>높은 분산<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<p>결정트리은 꽤 높은 분산을 갖는다.
+즉, 훈련셋이나 하이퍼파라미터가 조금만 달라져도 완전히 다른 결정트리가 훈련될 수 있다.
+심지어 동일한 모델을 훈련시켜도 많이 다른 결정트리가 생성되기도 한다.
+이는 결정트리가 생성될 때 특성과 특성의 임곗값을 무작위로 선택하기 때문이다.
+따라서 <code class="docutils literal notranslate"><span class="pre">random_state</span></code> 를 지정하지 않으면 아래 그래프와 같은 많이 다른 결정트리가 생성되기도 한다.</p>
+<img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch06/homl06-08e.png"/><p><strong>랜덤 포레스트</strong></p>
+<p>높은 분산을 갖는 문제는 여러 개의 결정트리를 동시에 훈련시킨 후 평균값을 랜덤 포레스트 모델을
+이용하여 해결할 수 있다.
+이에 대해서는 <a class="reference internal" href="ensemble_learning_random_forests.html#ch-ensemble"><span class="std std-numref">7장</span></a>에서 자세히 다룬다.</p>
 </div>
 </div>
 </div>
