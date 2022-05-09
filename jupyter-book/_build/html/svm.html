@@ -722,6 +722,13 @@ h(\mathbf x) = \mathbf w^T \mathbf x + b = w_1 x_1 + \cdots + w_n x_n + b
 <div class="math notranslate nohighlight">
 \[\frac 1 2 \| \mathbf w \|^2 = \frac 1 2 \mathbf w^T \mathbf w\]</div>
 <p>이유는 함수의 미분가능성 때문에 수학적으로 보다 다루기 쉽기 때문이다.</p>
+<p><strong>하드 마진 선형 SVM 분류기의 목표</strong></p>
+<p>아래 조건식을 만족시키면서</p>
+<div class="math notranslate nohighlight">
+\[t^{(i)} (\mathbf w^T \mathbf x^{(i)} + b) \ge 1\]</div>
+<p>다음 수식을 최소화하는 <span class="math notranslate nohighlight">\(\mathbf{w}\)</span>, <span class="math notranslate nohighlight">\(b\)</span> 를 찾아야 한다.</p>
+<div class="math notranslate nohighlight">
+\[\frac 1 2 \mathbf w^T \mathbf w\]</div>
 <p><strong>소프트 마진 선형 SVM 분류기의 목표</strong></p>
 <p>아래 조건식 <span class="math notranslate nohighlight">\((*)\)</span> 을 만족시키면서</p>
 <div class="math notranslate nohighlight">
@@ -732,6 +739,11 @@ h(\mathbf x) = \mathbf w^T \mathbf x + b = w_1 x_1 + \cdots + w_n x_n + b
 <p>위 식에서 <span class="math notranslate nohighlight">\(\zeta^{(i)}\ge 0\)</span>는 <strong>슬랙 변수</strong> 변수라 불리며 <span class="math notranslate nohighlight">\(i\)</span> 번째 샘플의
 마진 오류 허용 정도를 나타낸다.
 <span class="math notranslate nohighlight">\(\zeta\)</span>는 그리스어 알파벳이며 체타<font size='2'>zeta</font>라고 발음한다.</p>
+<div class="warning admonition">
+<p class="admonition-title">슬랙 변수</p>
+<p>슬랙 변수가 샘플마다 다름에 주의하라. 만약에 샘플과 무관한 하나의 <span class="math notranslate nohighlight">\(\zeta\)</span> 를 사용하면
+하드 마진 분류와 기본적으로 동일한 문제가 된다.</p>
+</div>
 <p><strong>조건식의 의미</strong></p>
 <p>조건식 <span class="math notranslate nohighlight">\((*)\)</span> 의 의미는 다음과 같다.</p>
 <ul>

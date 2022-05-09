@@ -59,8 +59,8 @@
 # 결정트리의 각 노드에 포함된 속성은 다음과 같다.
 # 
 # * `gini`: 해당 노드의 지니 불순도 측정값.
-# * `samples`: 해당 노드에 포함된 샘플 수
-# * `value`: 해당 노드에 포함된 샘플들의 실제 클래스별 개수. 타깃 정보 활용.
+# * `samples`: 해당 노드에 속하는 샘플 수
+# * `value`: 해당 노드에 속하는 샘플들의 실제 클래스별 개수. 타깃 정보 활용.
 # * `class`: 각 클래스별 비율을 계산하여 가장 높은 비율에 해당하는 클래스 선정. 
 #     동일한 비율이면 낮은 인덱스 선정
 
@@ -105,6 +105,11 @@
 # * 리프<font size='2'>leaf</font>: 더 이상의 가지분할이 발생하지 않는 노드이며, 따라서 자식 노드를 갖지 않는다.
 
 # **결정트리 예측**
+# 
+# 결정트리 모델은 **화이트박스**<font size='2'>whitebox</font> 모델이다. 
+# 즉, 예측값의 계산과정을 명확하게 추적할 수 있다. 
+# 반면에 머신러닝, 딥러닝의 대부분의 모델은 예측값의 생성과정을
+# 추적하기 어려운 **블랙박스**<font size='2'>blackbox</font> 모델이다.
 # 
 # 꽃잎 길이와 너비가 각각 5cm, 1.5cm 인 샘플의 클래스는 아래 과정을 거처 
 # 주어진 데이터가 속한 리프 노드의 속성을 확인하여 예측한다.
@@ -164,7 +169,7 @@
 
 # **CART<font size='2'>Classification and Regression Tree<font> 분류 알고리즘**
 
-# 각 노드에서 아래 비용함수를 최소화 하는 특성 $k$와 해당 특성의 임곗값 $t_k$을 사용한다.
+# 각 노드에서 아래 비용함수를 최소화 하는 특성 $k$와 해당 특성의 임곗값 $t_k$을 무작위로 선택한 후 결정한다.
 # 
 # - $m$, $m_\text{left}$, $m_\text{right}$: 각각 부모와 왼쪽, 오른쪽 자식 노드에 속한 샘플 개수
 # - $G_\text{left}$, $G_\text{right}$: 각각 왼쪽, 오른쪽 자식 노드의 지니 불순도
@@ -278,85 +283,127 @@
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch06/homl06-03.png" width="600"/></div>
 # :::
 
-# ## (결정트리) 회귀
+# ## 회귀 결정트리
 
-# ### 사이킷런의 `DecisionTreeRegressor` 예측기 활용
-
-# * 결정트리 알고리즘 아이디어를 거의 그대로 이용하여 회귀 문제에 적용 가능
+# 결정트리를 회귀 용도로 사용할 수 있다. 
+# 대표적으로 사이킷런의 `DecisionTreeRegressor` 클래스가 예측기 모델 학습에 사용된다.
 # 
-#     ```python
-#     tree_reg = DecisionTreeRegressor(max_depth=2, random_state=42)
-#     tree_reg.fit(X, y)
-#     ```
+# 예를 들어, 잡음이 포함된 2차 함수 형태의 데이터셋을 이용하여 결정트리 회귀 모델을 훈련시켜 보자.
+# 
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch06/homl06-04a.png" width="300"/></div>
 
-# * 예제: 잡음이 포함된 2차 함수 형태의 데이터셋
-#     * 왼편: `max_depth=2`
-#     * 오른편: `max_depth=3`
+# **회귀 결정트리 훈련**
+# 
+# 아래 코드는 `DecisionTreeRegressor` 회귀 모델을 훈련시킨다. 
+# `max_depth`의 의미는 `DecisionTreeClassifier`의 경우와 동일하다. 
+# 
+# ```python
+# >>> tree_reg = DecisionTreeRegressor(max_depth=2, random_state=42)
+# >>> tree_reg.fit(X_quad, y_quad)
+# ```
+# 
+# 훈련된 결정트리는 다음과 같다.
+
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch06/homl06-05.png" width="630"/></div>
+
+# 결정트리의 각 노드에 포함된 속성은 다음과 같다. 
+# 
+# * `samples`: 해당 노드에 속하는 훈련 샘플 수
+# * `value`: 해당 노드에 속하는 훈련 샘플의 평균 타깃값
+# * `mse`: 해당 노드에 속하는 훈련 샘플의 평균제곱오차(MSE)
+
+# **회귀 결정트리 예측**
+# 
+# `x1=0.2` 인 경우의 예측값은 아래 과정을 거처 
+# 주어진 데이터가 속한 리프 노드의 속성을 확인하여 예측한다.
+# 
+# * 루트에서 시작한다.
+# 
+# * 분할 1단계: -0.303 보다 크기에 오른쪽 자식 노드로 이동한다.
+# 
+# * 분할 2단계: 0.272 보다 작기에 왼쪽 자식 노드로 이동한다. 
+#     해당 노드가 리프 노드이고 `value=0.028` 이기에 0.028을 예측값으로 지정한다.
+
+# 아래 왼쪽 그래프는 `max_depth=2`로, 오른쪽 그래프는 `max_depth=3`로 지정해서 훈련된 회귀 결정트리 
+# 예측 함수의 그래프이다.
+# 
+# - 검정 실선(Depth=0): 1차 분할 기준
+# - 검정 파선(Depth=1): 2차 분할 기준
+# - (오른쪽 그래프) 검정 점선(Depth=2): 3차 분할 기준
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch06/homl06-04.png" width="600"/></div>
 
-# * 왼편 그림 설명
+# **회귀용 CART 알고리즘의 비용함수**
 # 
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch06/homl06-05.png" width="600"/></div>
-
-# * 각 노드에 포함된 속성
-#   * `samples`: 해당 노드에 속한 훈련 샘플 수
-#   * `value`: 해당 노드에 속한 훈련 샘플의 평균 타깃값
-#   * `mse`: 해당 노드에 속한 훈련 샘플의 평균제곱오차(MSE)
-#     * 오차 기준은 `value` 사용.
-
-# ### 회귀용 CART 알고리즘과 비용함수
-
-# * 분류의 경우처럼 탐욕적으로 아래 비용함수를 최소화 하는 특성 $k$와 해당 특성의 임곗값 $t_k$을 결정함:
-
+# 분류의 경우처럼 탐욕적으로 아래 비용함수를 최소화 하는 특성 $k$와 해당 특성의 임곗값 $t_k$을 
+# 무작위로 선택한 후 결정한다. 
+# 
+# * $\text{MSE}_\text{node}$: 해당 노드의 평균제곱오차(MSE).
+# * $m_\text{node}$: 해당 노드에 속하는 샘플 수
+# * $y^{(i)}$: 샘플 $i$에 대한 실제 타깃값
+# 
 # $$
 # \begin{align*}
 # J(k, t_k) &= \frac{m_\text{left}}{m}\, \text{MSE}_\text{left} + \frac{m_\text{right}}{m}\, \text{MSE}_\text{right} \\[2ex]
-# \text{MSE}_\text{node} &= \sum_{i\in \text{node}} (\hat y_{node} - y^{(i)})^2\\[1ex]
+# \text{MSE}_\text{node} &= \frac{1}{m_\text{node}} \sum_{i\in \text{node}} (\hat y_{node} - y^{(i)})^2\\[1ex]
 # \hat y_\text{node} &= \frac{1}{m_\text{node}} \sum_{i\in\text{node}} y^{(i)}
 # \end{align*}
 # $$
 
-# * $\text{MSE}_\text{left}$($\text{MSE}_\text{right}$):
-#     지정된 특성 $k$와 특성 임곗값 $t_k$로 구분된 왼편(오른편) 부분집합의 평균제곱오차
-#     * 해당 노드에 속한 샘플들의 평균 타깃값 기준
-#     * $m_\text{left}$/$m_\text{right}$: 해당 노드에 속하는 샘플 수
-#     * $y^{(i)}$: 샘플 $i$에 대한 실제 타깃
-
-# ### 규제
-
-# * 분류의 경우처럼 규제가 없으면 과대적합 발생할 수 있음.
+# **회귀 결정트리 규제**
 # 
-# * 왼편: 규제가 없는 경우. 과대적합 발생
-#     
-# * 오른편: `min_samples_leaf=10`
+# 분류의 경우처럼 규제가 없으면 과대적합이 발생한다.
+# 아래 왼쪽 그래프는 규제없이 훈련되어 훈련셋에 과대적합된 결정트리의 예측값을 보여준다.
+# 반면에 오른쪽 그래프는 `min_samples_leaf=10` 규제를 사용한 결과이며,
+# 일반화 성능이 훨씬 결정트리의 예측값을 보여준다.
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch06/homl06-06.png" width="600"/></div>
 
-# ## (결정트리) 불안정성
+# ## 결정트리의 단점
 
-# ### 단점 1: 훈련 세트 회전 민감도
+# ### 훈련셋  회전 민감도
 
-# * 결정트리 알고리즘은 성능이 매우 우수하지만 기본적으로 주어진 훈련 세트에 민감하게 반응함.
-
-# * 결정트리는 항상 축에 수직인 분할을 사용. 따라서 조금만 회전을 가해도 결정 경계가 많이 달라짐
-
-# * 예제: 오른편 그래프: 왼편 그래프를 45도 회전시킨 훈련 세트 학습
+# 결정트리 알고리즘은 단순하지만 매우 뛰어난 성능을 갖지만 몇 가지 단점을 갖는다.
+# 
+# 먼저 결정트리는 항상 축에 수직인 분할을 사용한다.
+# 따라서 훈련셋에 회전을 조금만 가해도 결정 경계가 많이 달라진다.
+# 예를 들어 아래 오른쪽 그래프는 왼쪽 데이터셋을 45도 회전시킨 훈련셋으로 학습된 결정트리이며
+# 쓸데없이 계단 형식의 굴곡이 있는 결정경계를 갖는다. 
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch06/homl06-07.png" width="600"/></div>
 
-# * PCA 기법 등을 사용하여 훈련 샘플 회전시킨 후 학습 가능. (8장 참조)
+# 하지만 예를 들어 ({numref}`%s장 <ch:dimensionalityReduction>`에서 배울) 주성분 분석(PCA) 기법 등을 
+# 사용하여 훈련 샘플 회전시키는 전처리를 구행한 후에 학습을 시키는 것도 가능하다. 
+# 
+# PCA 기법은 간단하게 말해 데이터셋을 회전시켜서 특성들 사이의 연관성을 약화시키며, 이를 통해
+# 결정트리의 학습에 도움을 줄 수 있다는 정도만 여기서는 언급한다. 
+# 
+# ```python
+# >>> pca_pipeline = make_pipeline(StandardScaler(), PCA())
+# >>> X_iris_rotated = pca_pipeline.fit_transform(X_iris)
+# ```
 
-# ### 단점 2: 훈련 세트 변화 민감도
+# PCA 기법으로 회전시킨 붓꽃 데이터셋에 분류 결정트리를 훈련시킨 결과는 다음과 같다.
 
-# * 훈련 데이터의 작은 변화에도 매우 민감함.
-
-# * 예제: 붓꽃 데이터에서 하나의 샘플을 제거한 후 학습시킬 때 매우 다르게 학습할 수 있음.
-#     * 왼편 그래프: 모든 샘플 대상 훈련
-#     * 오른편 그래프: 가장 넓은 버시컬러 샘플 제거 후 훈련
+# ```python
+# >>> tree_clf_pca = DecisionTreeClassifier(max_depth=2, random_state=42)
+# >>> tree_clf_pca.fit(X_iris_rotated, y_iris)
+# ```
 
 # <img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch06/homl06-08d.png"/>
 
+# ### 높은 분산
+
+# 결정트리은 꽤 높은 분산을 갖는다. 
+# 즉, 훈련셋이나 하이퍼파라미터가 조금만 달라져도 완전히 다른 결정트리가 훈련될 수 있다. 
+# 심지어 동일한 모델을 훈련시켜도 많이 다른 결정트리가 생성되기도 한다.
+# 이는 결정트리가 생성될 때 특성과 특성의 임곗값을 무작위로 선택하기 때문이다. 
+# 따라서 `random_state` 를 지정하지 않으면 아래 그래프와 같은 많이 다른 결정트리가 생성되기도 한다.
+
 # <img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch06/homl06-08e.png"/>
 
-# * 많은 트리에서 만든 예측값의 평균을 활용 추천(7장 램덤포레스트 모델 참조)
+# **랜덤 포레스트**
+# 
+# 높은 분산을 갖는 문제는 여러 개의 결정트리를 동시에 훈련시킨 후 평균값을 랜덤 포레스트 모델을
+# 이용하여 해결할 수 있다. 
+# 이에 대해서는 {numref}`%s장 <ch:ensemble>`에서 자세히 다룬다.
