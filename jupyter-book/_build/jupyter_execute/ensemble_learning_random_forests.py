@@ -14,8 +14,8 @@
 # [(구글코랩) 앙상블 학습과 랜덤 포레스트](https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/notebooks/code_ensemble_learning_random_forests.ipynb)에서 
 # 확인할 수 있다.
 
-# **요약**
-# 
+# **주요 내용**
+
 # (1) 편향과 분산의 트레이드오프
 # 
 # 앙상블 학습의 핵심은 **편향**<font size='2'>bias</font>과 
@@ -31,19 +31,9 @@
 # 
 # 그런데 편향과 분산을 동시에 줄일 수 없다.
 # 이유는 편향과 분산은 서로 트레이드오프 관계를 갖기 때문이다. 
-# 
-# 예를 들어, 
-# 훈련셋을 작게 하면 편향은 커지고, 분산은 작아진다.
-# 반면에 훈련셋을 크게 하면 편향은 작아지고, 분산은 커진다.
-# 그리고 훈련 샘플의 특성 수가 작아지면 편향은 커지고, 분산은 작아지고,
-# 특성 수가 많아지면 편향은 작아지고, 분산은 커진다.
-# 
-# 회귀 모델의 평균 제곱 오차는 편향의 제곱과 분산의 합으로 근사되며,
-# 아래 그래프가 회위 모델의 복잡도, 편향, 분산의 관계를 잘 보여준다.
-# 
-# $$
-# \text{평균제곱오차} \approx \text{편향}^2 + \text{분산}
-# $$
+# 예를 들어 회귀 모델의 평균 제곱 오차(MSE)는 편향의 제곱과 분산의 합으로 근사되는데,
+# 회귀 모델의 복잡도에 따른 편향, 분산, 평균 제곱 오차 사이의 관계를 
+# 그래프로 나타내면 보통 다음과 같다.
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/bagging_boosting02.png" width="600"/></div>
 # 
@@ -53,7 +43,11 @@
 # :class: info
 # 
 # [Bias, Variance, and MSE of Estimators](http://theanalysisofdata.com/notes/estimators1.pdf) 에서
-# 평균 제곱 오차, 분산, 편향의 관계를 수학적으로 잘 설명한다.
+# 평균 제곱 오차, 분산, 편향 사이의 다음 수학적 관계를 잘 설명한다.
+# 
+# $$
+# \text{평균제곱오차} \approx \text{편향}^2 + \text{분산}
+# $$
 # :::
 
 # (2) 앙상블 학습
@@ -75,148 +69,152 @@
 
 # ## 투표식 분류기
 
-# * 동일한 훈련 세트에 대해 여러 종류의 분류기 이용한 앙상블 학습 적용 후 직접 또는 간접 투표를 통해 예측값 결정.
+# 동일한 훈련 세트에 대해 여러 종류의 분류 모델을 이용한 앙상블 학습을 진행한 후에 
+# 직접 또는 간접 투표를 통해 예측값을 결정한다.
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-01.png" width="500"/></div>
 
-# ### 직접투표
-
-# * 앙상블에 포함된 예측기들의 예측값들의 다수로 결정
+# **직접 투표**
+# 
+# 앙상블 학습에 사용된 예측기들의 예측값들 중에서 다수결 방식으로 예측하면
+# 각각의 예측기보다 좋은 성능의 모델을 얻는다.
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-02.png" width="500"/></div>
 
-# ### 간접투표
-
-# * 앙상블에 포함된 예측기들의 예측한 확률값들의 평균값으로 예측값 결정
-# * 전제: 모든 예측기가 `predict_proba()` 메서드와 같은 확률 예측 기능을 지원해야 함.
-# * 높은 확률에 보다 비중을 두기 때문에 직접투표 방식보다 성능 좀 더 좋음.
+# **간접 투표**
+# 
+# 앙상블 학습에 사용된 예측기들의 예측한 확률값들의 평균값으로 예측값 결정한다.
+# 이를 위해서는 모든 예측기가 `predict_proba()` 메서드처럼 확률을 예측하는 기능을 지원해야 한다.
+# 높은 확률에 보다 높은 비중을 두기 때문에 직접 투표 방식보다 성능이 좀 더 좋은 경향이 있다.
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-04.png" width="500"/></div>
 # 
 # <그림출처: [kaggle](https://www.kaggle.com/fengdanye/machine-learning-6-basic-ensemble-learning)>
 
-# ### 투표식 분류기의 확률적 근거
-
-# 이항분포의 누적분포함수를 이용하여 앙상블 학습의 성능이 향상되는 이유를 설명할 수 있음.
+# **사이킷런의 투표식 분류기: `VotingClassifier`, `VotingRegressor`**
 # 
-# - p: 예측기 하나의 성능
-# - n: 예측기 개수
-# - 반환값: 다수결을 따를 때 성공할 확률, 즉 다수결 의견이 보다 정확할 확률. 이항 분포의 누적분포함수 활용.
-
-# In[1]:
-
-
-from scipy.stats import binom
-
-def ensemble_win_proba(n, p):
-    """
-    p: 예측기 하나의 성능
-    n: 앙상블 크기, 즉 예측기 개수
-    반환값: 다수결을 따를 때 성공할 확률. 이항 분포의 누적분포함수 활용.
-    """
-    return 1 - binom.cdf(int(n*0.4999), n, p)
-
-
-# 적중률 51% 모델 1,000개의 다수결을 따르면 74.7% 정도의 적중률 나옴.
-
-# In[2]:
-
-
-ensemble_win_proba(1000, 0.51)
-
-
-# 적중률 51% 모델 10,000개의 다수결을 따르면 97.8% 정도의 적중률 나옴.
-
-# In[3]:
-
-
-ensemble_win_proba(10000, 0.51)
-
-
-# 적중률 80% 모델 10개의 다수결을 따르면 100%에 가까운 성능이 가능함.
-
-# In[4]:
-
-
-ensemble_win_proba(10, 0.8)
-
-
-# * __주의사항:__ 앙상블 학습에 포함된 각각의 모델이 서로 독립인 것을 전제로한 결과임.
-
-# * 동일한 데이터를 사용할 경우 독립성이 보장되지 않으며, 경우에 따라 성능이 하락할 수 있음.
-
-# * 독립성을 높이기 위해 매우 다른 알고리즘을 사용하는 여러 모델을 사용해야 함.
-
-# ### 투표식 분류기 예제
-
-# * 사이킷런의 투표식 분류기
-# * `VotingClassifier`: 투표식 분류기 모델 제공
-#     * `voting='hard'`: 직접 투표 방식 지정 하이퍼 파라미터
-#     * `voting='soft'`: 간접 투표 방식 지정 하이퍼 파라미터
-#     * 주의: `SVC` 모델 지정할 때 `probability=True` 사용해야 `predict_proba()` 메서드 지원됨.
-
+# * `voting='hard'` 또는 `voting='soft'`: 직접 또는 간접 투표 방식 지정 하이퍼파라미터.
+#     기본값은 `'hard'`.
+# * 주의: `SVC` 모델 지정할 때 `probability=True` 사용해야 `predict_proba()` 메서드 지원됨.
+# 
 # ```python
-# log_clf = LogisticRegression(solver="lbfgs", random_state=42)
-# rnd_clf = RandomForestClassifier(n_estimators=100, random_state=42)
-# svm_clf = SVC(gamma="scale", random_state=42)
-# 
-# # 투표식 분류기: 직접 투표
 # voting_clf = VotingClassifier(
-#     estimators=[('lr', log_clf), ('rf', rnd_clf), ('svc', svm_clf)], 
-#     voting='hard')
+#     estimators=[
+#         ('lr', LogisticRegression(random_state=42)),
+#         ('rf', RandomForestClassifier(random_state=42)),
+#         ('svc', SVC(random_state=42))
+#     ]
+# )
 # ```
 
-# ## 7.2 배깅/페이스팅
+# :::{admonition} 투표식 분류 성능 향상의 확률적 근거
+# :class: info
+# 
+# 이항분포의 누적 분포 함수<font size='2'>cumulative distribution function</font>(cdf)를 
+# 이용하여 앙상블 학습의 성능이 향상되는 이유를 설명할 수 있다.
+# 
+# ```python
+# from scipy.stats import binom
+# 
+# def ensemble_win_proba(n, p):
+#     """
+#     p: 예측기 하나의 성능.
+#     n: 앙상블 크기, 즉 예측기 개수.
+#     반환값: 다수결을 따를 때 성공할 확률. 이항 분포의 누적분포함수 활용.
+#     """
+#     return 1 - binom.cdf(int(n*0.4999), n, p)
+# ```
+# 
+# 적중률 51% 모델 1,000개의 다수결을 따르면 74.7% 정도의 적중률 나옴.
+# 
+# ```python
+# >>> ensemble_win_proba(1000, 0.51)
+# 0.7467502275561786
+# ```
+# 
+# 적중률 51% 모델 10,000개의 다수결을 따르면 97.8% 정도의 적중률 나옴.
+# 
+# ```python
+# >>> ensemble_win_proba(10000, 0.51)
+# 0.9777976478701533
+# ```
+# 
+# 적중률 80% 모델 10개의 다수결을 따르면 100%에 가까운 성능이 가능함.
+# 
+# ```python
+# >>> ensemble_win_proba(10, 0.8)
+# 0.9936306176
+# ```
+# 
+# 위 결과는 앙상블 학습에 포함된 각각의 모델이 서로 독립인 것을 전제로한 결과이다.
+# 만약에 훈련에 동일한 데이터를 사용하면 모델 사이의 독립성이 완전히 보장되지 않으며, 
+# 경우에 따라 오히려 성능이 하락할 수 있다.
+# 모델들의 독립성을 높이기 위해 매우 다른 알고리즘을 사용하는 다른 종류의
+# 모델을 사용할 수도 있다.
+# :::
 
-# ### 정의
+# ## 배깅과 페이스팅
 
-# * 여러 개의 동일 모델을 훈련 세트의 다양한 부분집합을 대상으로 학습시키는 방식
+# 배깅 기법은 여러 개의 동일 모델을 훈련 세트의 다양한 부분집합을
+# 대상으로 학습시키는 방식이다. 
+# 부분집합을 임의로 선택할 때의 중복 허용 여부에 따라 앙상블 학습 방식이 달라진다.
+# 
+# - **배깅**<font size='2'>bagging</font>: 중복 허용 샘플링(부분집합 선택)
+# - **페이스팅**<font size='2'>pasting</font>: 중복 미허용 샘플링(부분집합 선택)
 
-# * 부분집합을 임의로 선택할 때 중복 허용 여부에 따라 앙상블 학습 방식이 달라짐
-#     * __배깅__: 중복 허용 샘플링
-#     * __페이스팅__: 중복 미허용 샘플링
+# :::{admonition} 배깅과 부트스트랩
+# :class: info
+# 
+# 배깅은 bootstrap aggregation의 줄임말이며,
+# 부트스트랩<font size='2'>bootstrap</font>은 전문 통계 용어로 중복허용 리샘플링을 가리킨다.
+# :::
 
-# ### 배깅
-
-# * 배깅(bagging): bootstrap aggregation의 줄임말
-# * 통계 분야에서 __부트스트래핑__, 즉, 중복허용 리샘플링으로 불림
+# 아래 그림은 배깅 기법으로 하나의 훈련셋으로 네 개의 동일 예측기를 사용하는 것을 보여준다.
+# 각 예측기의 훈련셋이 다르게, 하지만 중복을 허용하는 방식으로 지정되는 것을 그림에서도 확인할 수 있다.
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-05.png" width="500"/></div>
 
-# ### 배깅/페이스팅 예측 방식
-
-# * 분류 모델: 직접 투표 방식 사용. 즉, 수집된 예측값들 중에서 최빈값(mode) 선택
+# **예측값**
 # 
-# * 회귀 모델: 수집된 예측값들의 평균값 선택
+# 배깅 또는 페이스팅 모델의 예측값은 분류 모델은 예측값의 최빈값을 선택하며,
+# 회귀 모델은 예측값들의 평균값을 사용한다.
 
 # **병렬 훈련 및 예측**
 # 
 # 배깅/페이스팅 모델의 훈련과 예측은 다른 CPU 또는 심지어 다른 컴퓨터 서버를 이용하여 각 모델을 훈련 또는 예측을 하게 만든 후 병합하여 하나의 예측값을 생성하도록 할 수 있다.
 
-# ### 앙상블 학습의 편향과 분산
+# **편향과 분산**
+# 
+# 개별 예측기의 경우에 비해 앙상블 모델의 편향은 조금 커지거나 거의 비슷하지만 분산은 줄어든다.
+# 이유는 배깅이 표본 샘플링의 다양성을 보다 많이 추가하기 때문이다.
+# 배깅 방식이 페이스팅 방식보다 과대적합의 위험성일 줄어주기에 기본으로 사용된다.
+# 보다 자세한 설명은 
+# [Single estimator versus bagging: bias-variance decomposition](https://scikit-learn.org/stable/auto_examples/ensemble/plot_bias_variance.html#sphx-glr-auto-examples-ensemble-plot-bias-variance-py) 을 참고한다.
 
-# * 개별 예측기의 경우에 비해 편향은 조금 커지거나 거의 비슷하지만 분산은 줄어듦.
-#     배깅이 표본 샘플링의 다양성을 보다 많이 추가하기 때문임.
-#     배깅이 과대적합의 위험성일 보다 줄어주며, 따라서 배깅 방식이 기본으로 사용됨.
+# ### 사이킷런의 배깅과 페이스팅
 
-# * 개별 예측기: 배깅/페이스팅 방식으로 학습하면 전체 훈련 세트를 대상으로 학습한 경우에 비해 편향이 커짐.
-#     따라서 과소적합 위험성 커짐.
-
-# * __참고:__ [Single estimator versus bagging: bias-variance decomposition](https://scikit-learn.org/stable/auto_examples/ensemble/plot_bias_variance.html#sphx-glr-auto-examples-ensemble-plot-bias-variance-py)
-
-# ### 예제: 사이킷런의 배깅/페이스팅
-
-# - 훈련세트(`X_train`) 크기: 500
-# - `n_estimators=500`: 결정트리 500개 사용
-# - `max_samples=100`: 각 예측기가 100개 샘플 사용. 기본값은 1.0, 즉 전체 훈련 샘플 선택
-# - `bootstrap=True`: 배깅 방식 사용(기본값). `False`면 페이스팅 방식 사용.
-# - `n_jobs=-1`: 모든 사용가능한 cpu 사용하여 훈련을 __병렬처리__함. 양의 정수일 경우 정해진 수의 cpu 사용.
+# 사이킷런은 `BaggingClassifier` 분류 모델과 `BaggingRegressor` 회귀 모델을 지원하며
+# 사용법은 다음과 같다.
+# 
+# - `n_estimators=500` 개의 `DecisionTreeClassifier` 모델을 이용항 앙상블 학습.
+# - `max_samples=100` 개의 훈련 샘플 사용.
+# - 배깅 방식. 페이스팅 방식을 사용하려면 `bootstrap=False` 로 지정.
+# - `n_jobs=-1` 하이퍼파라미터를 이용하여 사용할 CPU 수 지정. 기본값 -1은 전부 사용을 의미함.
+# - 기본적으로 간전 투표 방식 사용. 하지만 기본 예측기가 `predict_proba()` 메서드를 지원하지 않으면
+#     직접 투표 방식 사용. 결정트리는 `predict_proba()` 메서드를 지원하기에 간접 투표 방식을 사용함.
 
 # ```python
-# bag_clf = BaggingClassifier(DecisionTreeClassifier(random_state=42), 
-#                             n_estimators=500, max_samples=100, 
-#                             bootstrap=True, n_jobs=-1, random_state=42)
+# bag_clf = BaggingClassifier(DecisionTreeClassifier(), n_estimators=500,
+#                             max_samples=100, random_state=42)
 # ```
+
+# 아래 두 이미지는 한 개의 결정트리 모델과 500개의 결정트리 모델의 
+# 반달(moons) 데이터셋에 대한 훈련 결과의 차이를 명확하게 보여준다.
+# 배깅을 사용한 오른쪽 결정트리 모델의 일반화 성능이 훨씬 좋음을 알 수 있다.
+# 왼쪽 하나의 결정트리 모델과 비교해서 편향(오류 숫자)은 좀 더 커졌지만
+# 분산(결정 경계의 불규칙성)은 훨씬 덜하다.
+# 하지만 편향이 커졌다는 의미는 각 결정트리들 사이의 연관성이 약해졌음을 의미한다.
+# 즉, 각 결정트리의 독립성이 커졌고, 따라서 학습 모델의 일반화 성능이 좋아졌다.
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-06.png" width="600"/></div>
 
@@ -228,7 +226,7 @@ ensemble_win_proba(10, 0.8)
 
 # * 앙상블 모델 자체의 성능 검증은 각 예측기의 oob 검증결과의 평균값 활용
 
-# ### 앙상블 모델의 검증과 테스트
+# **앙상블 모델의 검증과 테스트**
 
 # * `BaggingClassifier` 의 `oob_score=True` 옵션
 #     - 훈련 종료 후 oob 평가 자동 실행
@@ -242,7 +240,7 @@ ensemble_win_proba(10, 0.8)
 #                             oob_score=True, random_state=42)
 # ```
 
-# ## 7.3 랜덤 패치와 랜덤 서브스페이스
+# ## 랜덤 패치와 랜덤 서브스페이스
 
 # * `BaggingClassifier`는 특성에 대한 샘플링 기능도 지원: `max_features`와 `bootstrap_features`
 
@@ -250,7 +248,7 @@ ensemble_win_proba(10, 0.8)
 
 # * 더 다양한 예측기를 만들며, 편향이 커지지만 분산은 낮아짐
 
-# ### `max_features`
+# **`max_features`**
 
 # * 학습에 사용할 특성 수 지정
 
@@ -260,7 +258,7 @@ ensemble_win_proba(10, 0.8)
 
 # * max_samples와 유사 기능 수행
 
-# ### `bootstrap_features`
+# **`bootstrap_features`**
 
 # * 학습에 사용할 특성을 선택할 때 중복 허용 여부 지정
 
@@ -268,15 +266,15 @@ ensemble_win_proba(10, 0.8)
 
 # * botostrap과 유사 기능 수행
 
-# ### 랜덤 패치 기법
+# **랜덤 패치 기법**
 
 # * 훈련 샘플과 훈련 특성 모두를 대상으로 중복을 허용하며 임의의 샘플 수와 임의의 특성 수만큼을 샘플링해서 학습하는 기법
 
-# ### 랜덤 서브스페이스 기법
+# **랜덤 서브스페이스 기법**
 
 # * 전체 훈련 세트를 학습 대상으로 삼지만 훈련 특성은 임의의 특성 수만큼 샘플링해서 학습하는 기법
 
-# ## 7.4 랜덤 포레스트
+# ## 랜덤 포레스트
 
 # * 배깅/페이스팅 방법을 적용한 결정트리의 앙상블을 최적화한 모델
 # 
@@ -297,7 +295,7 @@ ensemble_win_proba(10, 0.8)
 #                             bootstrap=True, random_state=42)
 # ```
 
-# ### 랜덤 포레스트 하이퍼파라미터
+# **랜덤 포레스트 하이퍼파라미터**
 
 # - `BaggingClassifier`와 `DecisionTreeClassifier`의 옵션을 거의 모두 가짐. 예외는 다음과 같음.
 #     - `DecisitionClassifier`의 옵션 중: `splitter='random'`, `presort=False`, `max_samples=1.0`
@@ -323,7 +321,7 @@ ensemble_win_proba(10, 0.8)
 
 # * 참고: [ExtraTreeClassifier 클래스 정의](https://github.com/scikit-learn/scikit-learn/blob/15a949460dbf19e5e196b8ef48f9712b72a3b3c3/sklearn/tree/_classes.py#L1285)
 
-# #### 예제
+# **예제**
 
 # ```python
 # extra_clf = ExtraTreesClassifier(n_estimators=500, 
@@ -341,7 +339,7 @@ ensemble_win_proba(10, 0.8)
 #     * 특성별 상대적 중요도를 측정해서 중요도의 전체 합이 1이 되도록 함.
 #     * `feature_importances_` 속성에 저장됨.
 
-# #### 예제: 붓꽃 데이터셋
+# **예제: 붓꽃 데이터셋**
 
 # | 특성 | 중요도(%) |
 # | :---: | ---: |
@@ -350,7 +348,7 @@ ensemble_win_proba(10, 0.8)
 # | 꽃받침 길이 | 11.3 |
 # | 곷받침 너비 | 2.3 |
 
-# #### 예제: MNIST
+# **예제: MNIST**
 
 # 아래 이미지는 각 픽셀의 중요도를 보여준다.
 
