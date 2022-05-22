@@ -577,6 +577,7 @@ J(k, t_k) = \frac{m_\text{left}}{m}\, G_\text{left} + \frac{m_\text{right}}{m}\,
 <li><p>각 노드에서 분류하는 데 걸리는 시간: <span class="math notranslate nohighlight">\(O(n\cdot m\cdot \log_2(m))\)</span></p></li>
 <li><p>결정트리를 완성하는 데 걸리는 시간: <span class="math notranslate nohighlight">\(O(n\cdot m^2\cdot \log_2(m))\)</span></p></li>
 </ul>
+<p>참고: <span class="math notranslate nohighlight">\(m\cdot log_2(m)\)</span> 은 정렬 후에 각 특성값을 임곗값으로 확인하는 데에 걸리는 시간과 연관된다.</p>
 <p>또한 학습된 결정트리가 예측에 필요한 시간은 <span class="math notranslate nohighlight">\(O(\log_2 m)\)</span>으로 매우 빠르다.
 이유는 결정트리 모델은 균형 이진탐색트리<font size='2'>balanced binary search tree</font>에
 가깝고 따라서 가장 깊은 경로가 <span class="math notranslate nohighlight">\(\log_2(m)\)</span> 정도이기 때문이다.
