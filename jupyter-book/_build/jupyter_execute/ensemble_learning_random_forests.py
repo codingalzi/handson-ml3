@@ -386,7 +386,7 @@
 # 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-08.png" width="500"/></div>
 
-# #### 샘플 가중치
+# **샘플 가중치**
 
 # * 훈련중에 특정 샘플을 보다 강조하도록 유도하는 가중치를 가리킴.
 
@@ -400,7 +400,7 @@
 
 # * 참고: [SVC의 `fit()` 메서드 정의](https://github.com/scikit-learn/scikit-learn/blob/15a949460/sklearn/svm/_base.py#L119)
 
-# #### 에이다부스트 알고리즘 작동 과정
+# **에이다부스트 알고리즘 작동 과정**
 
 # * moons 데이터셋에 rbf 커널을 사용하는 SVC 모델을 5번 연속 새로 생성하는 
 #     방식으로 학습한 결과를 보여줌.
@@ -414,12 +414,12 @@
 # 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-09.png" width="600"/></div>
 
-# #### 사이키런의 에이다부스트
+# **사이키런의 에이다부스트**
 
 # * 분류 모델: `AdaBoostClassifier` 
 # * 회귀 모델: `AdaBoostRegressor`
 
-# #### 예제: 에이다부스트 + 결정트리
+# **예제: 에이다부스트 + 결정트리**
 
 # * `AdaBoostClassifier` 의 기본 모델임.
 
@@ -441,7 +441,7 @@
 
 # * 잔차(residual error): 예측값과 실제값 사이의 오차
 
-# #### 사이킷런 그레이디언트 부스팅 모델
+# **사이킷런 그레이디언트 부스팅 모델**
 
 # * 분류 모델: `GradientBoostingClassifier`
 #     * `RandomForestClassifier`와 비슷한 하이퍼파라미터를 제공
@@ -449,7 +449,7 @@
 # * 회귀 모델: `GradientBoostingRegressor`
 #     * `RandomForestRegressor`와 비슷한 하이퍼파라미터를 제공
 
-# #### 그레이디언트 부스티드 회귀 나무(GBRT) 예제: 그레이디언트 부스팅 (회귀)+ 결정트리 
+# **그레이디언트 부스티드 회귀 나무(GBRT) 예제: 그레이디언트 부스팅 (회귀)+ 결정트리**
 # 
 # * 2차 다항식 데이터셋에 결정트리 3개를 적용한 효과와 동일하게 작동
 
@@ -461,7 +461,7 @@
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-11.png" width="500"/></div>
 
-# #### `learning_rate`(학습률)
+# **`learning_rate`(학습률)**
 
 # * `learnign_rate`는 기존에 설명한 학습률과 다른 의미의 학습률. 
 #     * 각 결정트리의 기여도 조절에 사용
@@ -472,13 +472,13 @@
 #     * 1.0이면 그대로 전달
 #     * 1.0보다 작으면 해당 비율 만큼 조금만 전달
 
-# #### 최적의 결정트리 수 확인법
+# **최적의 결정트리 수 확인법**
 
 # * 조기종료 기법 활용
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-12.png" width="500"/></div>
 
-# #### 확률적 그레이디언트 부스팅
+# **확률적 그레이디언트 부스팅**
 
 # * 각 결정트리가 훈련에 사용할 훈련 샘플의 비율을 지정하여 학습: `subsample=0.25` 등 비율 지정
 
@@ -486,7 +486,7 @@
 
 # * 편향 높아지지만, 분산 낮아짐.
 
-# #### XGBoost
+# **XGBoost**
 
 # * Extreme Gradient Boosting의 줄임말.
 
@@ -502,7 +502,7 @@
 #                 early_stopping_rounds=2)
 #     ```
 
-# ## 7.6 스태킹
+# ## 스태킹
 
 # * 배깅방식의 응용으로 볼 수 있는 기법
 
@@ -518,7 +518,7 @@
 
 # - 참조: [Stacked generalization](https://scikit-learn.org/stable/modules/ensemble.html#stacked-generalization)
 
-# #### 1층 훈련
+# **1층 훈련**
 
 # * 먼저 훈련 세트를 훈련세트1과 훈련세트2로 이등분한다.
 
@@ -526,7 +526,7 @@
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-14.png" width="400"/></div>
 
-# #### 2층 훈련
+# **2층 훈련**
 
 # * 훈련세트2의 모든 샘플에 대해 훈련된 예측기별로 예측값을 생성한다.
 
@@ -535,7 +535,7 @@
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-15.png" width="400"/></div>
 
-# #### 사이킷런의 `StackingRegressor` 모델 활용법
+# **사이킷런의 `StackingRegressor` 모델 활용법**
 
 # ```python
 # estimators = [('ridge', RidgeCV()),
@@ -550,7 +550,7 @@
 #                         final_estimator=final_estimator)
 # ```
 
-# #### 사이킷런의 `StackingClassifier` 모델 활용법
+# **사이킷런의 `StackingClassifier` 모델 활용법**
 
 # ```python
 # estimators = [('rf', RandomForestClassifier(n_estimators=10, random_state=42)),
@@ -561,7 +561,7 @@
 #                          final_estimator=LogisticRegression())
 # ```
 
-# #### 스태킹 모델의 예측값
+# **스태킹 모델의 예측값**
 
 # * 레이어를 차례대로 실행해서 믹서기(블렌더)가 예측한 값을 예측값으로 지정한다.
 
@@ -574,7 +574,7 @@
 
 # * 다층 스태킹의 훈련 방식은 2층 스태킹의 훈련 방식을 반복하면 된다.
 
-# #### 예제: 3층 스태킹 모델 훈련과정
+# **예제: 3층 스태킹 모델 훈련과정**
 
 # - 훈련세트를 세 개의 부분 훈련세트로 나눈다.
 # - 훈련세트1은 1층 예측기 훈련에 사용한다.
