@@ -579,9 +579,8 @@
 
 # ## 스태킹
 
-# * 배깅방식의 응용으로 볼 수 있는 기법
-# 
-# * 다수결을 이용하는 대신 여러 예측값을 훈련 데이터로 활용하는 예측기를 훈련시키는 기법
+# 배깅방식의 응용으로 볼 수 있는 기법이다.
+# 다수결을 이용하는 대신 여러 예측값을 훈련 데이터로 활용하는 예측기를 훈련시킨다.
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-13.png" width="400"/></div>
 
@@ -613,8 +612,8 @@
 
 # **스태킹 모델의 예측값**
 # 
-# * 레이어를 차례대로 실행해서 믹서기(블렌더)가 예측한 값을 예측값으로 지정한다.
-# * 훈련된 스태킹 모델의 편향과 분산이 훈련에 사용된 모델들에 비해 모두 감소한다.
+# 레이어를 차례대로 실행해서 믹서기(블렌더)가 예측한 값을 예측값으로 지정한다.
+# 훈련된 스태킹 모델의 편향과 분산이 훈련에 사용된 모델들에 비해 모두 감소한다.
 
 # **다층 스태킹**
 
@@ -628,4 +627,4 @@
 
 # ## 연습문제
 
-# 참고: [(실습) 앙상블 학습과 랜덤 포레스트](https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/notebooks/code_ensemble_learning_random_forests.ipynb)
+# 참고: [(실습) 앙상블 학습과 랜덤 포레스트](https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_ensemble_learning_random_forests.ipynb)

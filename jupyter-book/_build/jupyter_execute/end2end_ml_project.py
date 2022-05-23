@@ -1055,6 +1055,7 @@
 #     final_model_reloaded = joblib.load("my_california_housing_model.pkl")
 #     ```    
 
-# ## 실습 과제
+# ## 연습문제
 
-# 참고: [(실습) 머신러닝 프로젝트 처음부터 끝까지](https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_end2end_ml_project.ipynb)
+# 참고: [(실습) 머신러닝 프로젝트 처음부터 끝까지 1부](https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_end2end_ml_project_1.ipynb) 와
+# [(실습) 머신러닝 프로젝트 처음부터 끝까지 2부](https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_end2end_ml_project_2.ipynb)

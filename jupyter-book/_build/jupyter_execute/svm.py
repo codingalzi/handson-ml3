@@ -494,3 +494,7 @@
 # `dual=True` 가 기본값이지만 훈련 샘플의 수가 특성 수보다 큰 경우 
 # `dual=False` 로 지정하여 원 문제를 이용하는 것을 추천한다.
 # :::
+
+# ## 연습문제
+
+# 참고: [(실습) 서포트 벡터 머신](https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_svm.ipynb)

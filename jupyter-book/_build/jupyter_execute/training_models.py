@@ -985,3 +985,7 @@
 # 다양한 색상의 곡선은 버시컬러 품종에 속할 확률의 영력을 보여준다.
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-16.png" width="700"/></div>
+
+# ## 연습문제
+
+# 참고: [(실습) 모델 훈련](https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_training_models.ipynb)

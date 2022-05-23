@@ -423,3 +423,8 @@
 # 아래 이미지는 분류기가 예측한 이미지다. 즉, 각 픽셀에 대해 0~255 사이에서 예측된 값을 사용하였다.
 # 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-12.png" width="130"/></div>
+
+# ## 연습문제
+
+# 참고: [(실습) 분류 1](https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_classification_1.ipynb) 과
+# [(실습) 분류 2](https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_classification_2.ipynb)

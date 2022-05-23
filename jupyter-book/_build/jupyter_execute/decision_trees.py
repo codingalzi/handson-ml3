@@ -413,3 +413,8 @@
 # 높은 분산을 갖는 문제는 여러 개의 결정트리를 동시에 훈련시킨 후 평균값을 랜덤 포레스트 모델을
 # 이용하여 해결할 수 있다. 
 # 이에 대해서는 {numref}`%s장 <ch:ensemble>`에서 자세히 다룬다.
+
+# ## 연습문제
+
+# 참고: [(실습) 결정트리](https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_decision_trees.ipynb) 와
+# [(실습) 머신러닝 모델 웹앱](https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_webApp_mlModel.ipynb)
