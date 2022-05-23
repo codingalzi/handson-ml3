@@ -887,10 +887,8 @@ oob 평가를 자동으로 실행한다.
 </div>
 <div class="section" id="id13">
 <h2><span class="section-number">7.6. </span>스태킹<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p>배깅방식의 응용으로 볼 수 있는 기법</p></li>
-<li><p>다수결을 이용하는 대신 여러 예측값을 훈련 데이터로 활용하는 예측기를 훈련시키는 기법</p></li>
-</ul>
+<p>배깅방식의 응용으로 볼 수 있는 기법이다.
+다수결을 이용하는 대신 여러 예측값을 훈련 데이터로 활용하는 예측기를 훈련시킨다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-13.png" width="400"/></div><p><strong>사이킷런의 <code class="docutils literal notranslate"><span class="pre">StackingRegressor</span></code> 모델 활용법</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">estimators</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;ridge&#39;</span><span class="p">,</span> <span class="n">RidgeCV</span><span class="p">()),</span>
               <span class="p">(</span><span class="s1">&#39;lasso&#39;</span><span class="p">,</span> <span class="n">LassoCV</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)),</span>
@@ -914,10 +912,8 @@ oob 평가를 자동으로 실행한다.
 </pre></div>
 </div>
 <p><strong>스태킹 모델의 예측값</strong></p>
-<ul class="simple">
-<li><p>레이어를 차례대로 실행해서 믹서기(블렌더)가 예측한 값을 예측값으로 지정한다.</p></li>
-<li><p>훈련된 스태킹 모델의 편향과 분산이 훈련에 사용된 모델들에 비해 모두 감소한다.</p></li>
-</ul>
+<p>레이어를 차례대로 실행해서 믹서기(블렌더)가 예측한 값을 예측값으로 지정한다.
+훈련된 스태킹 모델의 편향과 분산이 훈련에 사용된 모델들에 비해 모두 감소한다.</p>
 <p><strong>다층 스태킹</strong></p>
 <p>2층에서 여러 개의 믹서기(블렌더)를 사용하고,
 그위 3층에 새로운 믹서기를 추가하는 방식으로 다층 스태킹을 훈련시킬 수 있다.
@@ -926,7 +922,7 @@ oob 평가를 자동으로 실행한다.
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-17.png" width="400"/></div></div>
 <div class="section" id="id14">
 <h2><span class="section-number">7.7. </span>연습문제<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h2>
-<p>참고: <a class="reference external" href="https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/notebooks/code_ensemble_learning_random_forests.ipynb">(실습) 앙상블 학습과 랜덤 포레스트</a></p>
+<p>참고: <a class="reference external" href="https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_ensemble_learning_random_forests.ipynb">(실습) 앙상블 학습과 랜덤 포레스트</a></p>
 </div>
 </div>
 
