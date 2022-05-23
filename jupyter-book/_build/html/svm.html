@@ -505,9 +505,9 @@ const thebe_selector_output = ".output, .cell_output"
 <p>&lt;그림 출처: <a class="reference external" href="https://www.geogebra.org/3d">지오지브라(GeoGebra)</a>&gt;</p>
 </div>
 <div class="proof example admonition" id="exp:moons_dataset">
-<p class="admonition-title"><span class="caption-number">Example 5.1 </span> (moons 데이터셋)</p>
+<p class="admonition-title"><span class="caption-number">Example 5.1 </span> (초승달 데이터셋<font size='2'>moons dataset</font>)</p>
 <div class="example-content section" id="proof-content">
-<p>moons 데이터셋은 마주보는 두 개의 반원 모양의 클래스로 구분되는 데이터셋을 가리킨다.</p>
+<p>초승달 데이터셋은 마주보는 두 개의 초승달 모양의 클래스로 구분되는 데이터셋을 가리킨다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch05/homl05-06.png" width="500"/></div>
 <p>위 데이터셋에 선형 SVM 분류 모데를 적용하기 위해 먼저 3차 항에 해당하는 특성을 추가하면
 비선형 분류 모델을 얻게 된다.</p>
@@ -529,7 +529,7 @@ const thebe_selector_output = ".output, .cell_output"
 다항 특성을 실제로는 추가하지 않지만 추가한 경우와 동일한 결과를 만들어 낼 수 있다.
 다만 이것은 SVM을 적용하는 경우에만 해당한다.
 이와 달리 다항 특성을 추가하는 기법은 어떤 모델과도 함께 사용될 수 있다.</p>
-<p>아래 두 그래프는 커널 기법을 사용하는 SVC 모델을 moons 데이터셋에 대해 훈련시킨 결과를 보여준다.</p>
+<p>아래 두 그래프는 커널 기법을 사용하는 SVC 모델을 초승달 데이터셋에 대해 훈련시킨 결과를 보여준다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">poly_kernel_svm_clf</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span>
                                     <span class="n">SVC</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s2">&quot;poly&quot;</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">coef0</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="mi">5</span><span class="p">))</span>
 </pre></div>
@@ -588,7 +588,7 @@ const thebe_selector_output = ".output, .cell_output"
                                    <span class="n">SVC</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s2">&quot;rbf&quot;</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="mf">0.001</span><span class="p">))</span>
 </pre></div>
 </div>
-<p>아래 네 개의 그래프는 moons 데이터셋에 가우시안 RBF 커널을 다양한 <code class="docutils literal notranslate"><span class="pre">gamma</span></code> 와 <code class="docutils literal notranslate"><span class="pre">C</span></code> 규제 옵션과
+<p>아래 네 개의 그래프는 초승달 데이터셋에 가우시안 RBF 커널을 다양한 <code class="docutils literal notranslate"><span class="pre">gamma</span></code> 와 <code class="docutils literal notranslate"><span class="pre">C</span></code> 규제 옵션과
 함께 적용한 결과를 보여준다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch05/homl05-10.png" width="600"/></div>
 <p>위 그래프에 따르면 <code class="docutils literal notranslate"><span class="pre">gamma</span></code> 또한 나름 규제 역할을 수행함을 볼 수 있다.
@@ -600,7 +600,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <div class="section" id="id7">
 <h3><span class="section-number">5.2.4. </span>SVM 클래스의 계산 복잡도<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">SGDClassifier</span></code> 클래스는 확률적 경사 하강법을 적용하기에 온라인 학습에 활용될 수 있다.
+<p><code class="docutils literal notranslate"><span class="pre">SGDClassifier</span></code> 클래스는 확률적 경사하강법을 적용하기에 온라인 학습에 활용될 수 있다.
 아래 표에서 ‘외부 메모리 학습’<font size='2'>out-of-core learning</font> 항목이
 온라인 학습 지원 여부를 표시한다.
 또한 <code class="docutils literal notranslate"><span class="pre">LinearSVC</span></code> 클래스와 거의 동일한 결과를 내도록 하이퍼파라미터를 조정할 수 있다.

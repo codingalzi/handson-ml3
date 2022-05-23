@@ -74,7 +74,7 @@
 # * 0: 숫자 5 이외의 수를 가리키는 이미지 레이블
 
 # 여기서 사용하는 모델은 `SGDClassifier` 클래스를 이용한다.
-# `SGDClassifier` 분류기는 __확률적 경사 하강법__(stochastic gradient descent) 분류기라고 불린다.
+# `SGDClassifier` 분류기는 __확률적 경사하강법__(stochastic gradient descent) 분류기라고 불린다.
 # 한 번에 하나씩 훈련 샘플을 이용하여 훈련한 후 파라미터를 조정하기에
 # 매우 큰 데이터셋 처리에 효율적이며 온라인 학습에도 적합하다.
 # 

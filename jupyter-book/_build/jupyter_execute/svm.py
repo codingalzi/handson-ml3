@@ -170,10 +170,10 @@
 # <그림 출처: [지오지브라(GeoGebra)](https://www.geogebra.org/3d)>
 # :::
 
-# :::{prf:example} moons 데이터셋
+# :::{prf:example} 초승달 데이터셋<font size='2'>moons dataset</font>
 # :label: exp:moons_dataset
 # 
-# moons 데이터셋은 마주보는 두 개의 반원 모양의 클래스로 구분되는 데이터셋을 가리킨다.
+# 초승달 데이터셋은 마주보는 두 개의 초승달 모양의 클래스로 구분되는 데이터셋을 가리킨다.
 # 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch05/homl05-06.png" width="500"/></div>
 # 
@@ -201,7 +201,7 @@
 # 다만 이것은 SVM을 적용하는 경우에만 해당한다.
 # 이와 달리 다항 특성을 추가하는 기법은 어떤 모델과도 함께 사용될 수 있다.
 
-# 아래 두 그래프는 커널 기법을 사용하는 SVC 모델을 moons 데이터셋에 대해 훈련시킨 결과를 보여준다.
+# 아래 두 그래프는 커널 기법을 사용하는 SVC 모델을 초승달 데이터셋에 대해 훈련시킨 결과를 보여준다.
 # 
 # ```python
 # poly_kernel_svm_clf = make_pipeline(StandardScaler(),
@@ -276,7 +276,7 @@
 #                                    SVC(kernel="rbf", gamma=5, C=0.001))
 # ```
 # 
-# 아래 네 개의 그래프는 moons 데이터셋에 가우시안 RBF 커널을 다양한 `gamma` 와 `C` 규제 옵션과
+# 아래 네 개의 그래프는 초승달 데이터셋에 가우시안 RBF 커널을 다양한 `gamma` 와 `C` 규제 옵션과
 # 함께 적용한 결과를 보여준다.
 # 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch05/homl05-10.png" width="600"/></div>
@@ -291,7 +291,7 @@
 
 # ### SVM 클래스의 계산 복잡도
 
-# `SGDClassifier` 클래스는 확률적 경사 하강법을 적용하기에 온라인 학습에 활용될 수 있다.
+# `SGDClassifier` 클래스는 확률적 경사하강법을 적용하기에 온라인 학습에 활용될 수 있다.
 # 아래 표에서 '외부 메모리 학습'<font size='2'>out-of-core learning</font> 항목이 
 # 온라인 학습 지원 여부를 표시한다. 
 # 또한 `LinearSVC` 클래스와 거의 동일한 결과를 내도록 하이퍼파라미터를 조정할 수 있다.

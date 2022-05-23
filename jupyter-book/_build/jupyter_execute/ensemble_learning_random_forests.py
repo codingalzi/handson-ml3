@@ -209,7 +209,7 @@
 # ```
 
 # 아래 두 이미지는 한 개의 결정트리 모델과 500개의 결정트리 모델의 
-# 반달(moons) 데이터셋에 대한 훈련 결과의 차이를 명확하게 보여준다.
+# 초승달 데이터셋<font size='2'>moons dataset</font>에 대한 훈련 결과의 차이를 명확하게 보여준다.
 # 배깅을 사용한 오른쪽 결정트리 모델의 일반화 성능이 훨씬 좋음을 알 수 있다.
 # 왼쪽 하나의 결정트리 모델과 비교해서 편향(오류 숫자)은 좀 더 커졌지만
 # 분산(결정 경계의 불규칙성)은 훨씬 덜하다.
@@ -368,173 +368,222 @@
 
 # 약한 성능의 예측기 여러 개를 이용하여 보다 강한 성능의 예측기를 학습시기는 기법이
 # **부스팅**<font size='2'>boosting</font>이다.
-# 여러 개의 예측기를 선형적으로 훈련시키면서 약점을 보완해 나가는 알고리즘이 일반적으로 
-# 사용되며 대표적으로 다음 두 기법이 사용된다.
+# 일반적으로 여러 개의 예측기를 선형적으로 훈련시키면서 약점을 보완해 나가는 알고리즘을 사용하며
+# 대표적으로 다음 두 기법이 사용된다.
 # 
 # - 에이다부스트<font size='2'>AdaBoost</font>
 # - 그레이디언트 부스팅<font size='2'>Gradient Boosting</font>
 # 
 # 두 기법은 순차적으로 이전 예측기의 결과를 바탕으로 예측 성능을 조금씩 높혀 간다.
-# 예측 모델의 편향을 줄여나간다.
-# 하지만 순차적으로 학습하기에 배깅/페이스팅 방식과는 달리 훈련을 동시에 진행할 수 없다.
-# 따라서 훈련 시간이 훨씬 오래 걸릴 수 있고 따라서 훈련셋 또는 특성 수가 너무 커지면
+# 즉, 예측 모델의 편향을 줄여나간다.
+# 하지만 순차적으로 학습하기에 배깅/페이스팅 방식과는 달리 훈련을 동시에 진행할 수 없다는 단점을 갖는다.
+# 훈련 시간이 훨씬 오래 걸릴 수 있고 따라서 훈련셋 또는 특성 수가 너무 커지면
 # 적용이 어려울 수 있다.
 
-# ### 에이다부스트<font size='2'>AdaBoost</font>
+# ### 에이다부스트
 
-# 하나의 모델을 훈련 시킨 후 틀리계 예측된 샘플을 보다 강조하면서 해당 모델을 다시 훈련시킨다.
-# 아래 그림은 모델이 제대로 학습하지 못한, 즉 과소적합했던 샘플에 대한 가중치를 
+# **에이다부스트**<font size='2'>AdaBoost</font> 기법은 
+# 하나의 모델을 훈련 시킨 후 **잘못 예측된 샘플을 보다 강조**하면서 해당 모델을 다시 훈련시킨다.
+# 아래 그림은 모델이 제대로 학습하지 못한, 즉 과소적합했던 **샘플에 대한 가중치**를 
 # 키우는 방식으로 모델을 다시 훈련시키는 과정을 반복하는 것을 보여준다.
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-08.png" width="500"/></div>
 
 # **샘플 가중치**
 # 
-# 훈련중에 특정 샘플을 보다 강조하도록 유도하는 값을 샘플 가중치라 하며,
+# 훈련중에 특정 샘플을 보다 강조하도록 유도하는 값을 **샘플 가중치**라 하며,
 # 모든 훈련 샘플에 대해 지정할 수 있다.
 # 지정하지 않으며 모든 훈련 샘플에 대한 가중치는 동일한 값으로 처리된다.
+# 특정 훈련 샘플에 대한 샘플 가중치를 크게 주면 해당 샘플이 그만큼 더 훈련셋에 많이 포함된 것처럼
+# 처리되어, 해당 샘플의 중요도를 키우게 된다.
+
+# :::{admonition} `fit()` 메서드와 샘플 가중치
+# :class: info
 # 
 # 사이킷런 모델의 `fit()` 메서드는 `sample_weight` 옵션인자를 이용하여
 # 각 훈련 샘플에 대한 가중치를 지정할 수 있다.
-# 
-# 참고: [SVC의 `fit()` 메서드 정의](https://github.com/scikit-learn/scikit-learn/blob/15a949460/sklearn/svm/_base.py#L119)
+# :::
 
 # **에이다부스트 알고리즘 작동 과정**
 # 
-# * moons 데이터셋에 rbf 커널을 사용하는 SVC 모델을 5번 연속 새로 생성하는 
-#     방식으로 학습한 결과를 보여줌.
+# 아래 두 개의 그래프는 
+# 초승달 데이터셋에 rbf 커널을 사용하는 SVC 모델을 5번 연속 새로 훈련시킨 결과를 보여준다.
+# 새로 훈련시킬 때마다 이전에 제대로 학습하지 못한 샘플에 대한 샘플 가중치를 키워
+# 해당 샘플에 보다 집중하여 훈련하도록 유도된다.
 # 
-# * 새로운 예측기의 `fit()` 메서드는 이전 예측기의 경우와 다른 `sample_weight` 옵션값을 사용함.
+# 왼쪽과 오른쪽은 새 모델을 훈련하기 시작할 때 적용할 샘플 가중치의 적용 정도를 
+# 지정하는 학습률(`learnign_rate`)을 달리한 결과를 보여준다.
 # 
-# * 새로운 예측기는 이전의 예측기의 예측값이 틀린 샘플을 보다 강조하도록 유도됨.
+# - 왼쪽 그래프: 학습률 1
+# - 오른쪽 그래프: 학습률 0.5
 # 
-# * 왼편과 오른편은 학습률만 다름.
-#     * __주의사항:__ `learnign_rate`는 기존에 설명한 학습률과 다른 의미이며, 각 예측기의 기여도 조절에 사용됨.
-# 
+# 왼쪽 그래프는 학습률을 너무 크게 잡으면 각 모델의 변화가 커질 수 있음을 보여준다.
+# 이유는 기존의 모델을 새로운 모델로 업데이트할 때 기존 모델로부터 계산된 샘플 가중치를
+# 계산된 그대로 또는 그 이상으로 각 샘플에 적용하면 그만큼 모델의 변화가 커져서
+# 하나의 좋은 모델로 수렴하지 못할 수 있기 때문이다.
+
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-09.png" width="600"/></div>
 
-# **사이키런의 에이다부스트**
+# :::{admonition} 학습률
+# :class: info
+# 
+# 여기서 말하는 학습률은 {ref}`경사하강법의 학습률 <sec:gradient-descent>`과 
+# 다른 개념이지만 모델을 업데이트할 때 
+# 샘플 가중치의 적용 정도를 조절한다는 의미에서 비슷한 의미로 사용된다.
+# :::
 
+# **사이킷런의 에이다부스트 모델**
+# 
+# 사이키런에서 제공하는 에이다부스트 모델은 두 개다.
+# 
 # * 분류 모델: `AdaBoostClassifier` 
 # * 회귀 모델: `AdaBoostRegressor`
 
-# **예제: 에이다부스트 + 결정트리**
-
-# * `AdaBoostClassifier` 의 기본 모델임.
-
-# ```python
-# ada_clf = AdaBoostClassifier(DecisionTreeClassifier(max_depth=1), 
-#                              n_estimators=200, algorithm="SAMME.R", 
-#                              learning_rate=0.5, random_state=42)
-# ```
-
-# * 훈련 세트: moons 데이터셋
+# 아래 코드는 결정트리 분류 모델에 에이다부스트 기법을 적용한다.
 # 
+# * `n_estimators=30`: 30번 부스팅 반복
+# * `learning_rate=0.5`: 학습률 0.5
+# 
+# ```python
+# ada_clf = AdaBoostClassifier(
+#     DecisionTreeClassifier(max_depth=1), n_estimators=30,
+#     learning_rate=0.5, random_state=42)
+# ```
+# 
+# 초승달 데이터셋을 대상으로 훈련시킨 결과는 다음과 같다.
+
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-10.png" width="400"/></div>
 
 # ### 그레이디언트 부스팅
 
-# * 이전 학습기에 의한 오차를 보정하도록 새로운 예측기를 순차적으로 추가하는 아이디어는 에이다부스트와 동일
+# **그레이디언트 부스팅**<font size='2'>Gradient Boosting</font> 기법 또한 
+# 이전 모델의 예측에 오차가 있다면 그 오차를 보정하는 새로운 예측기를 새롭게 훈련시킨다. 
+# 에이다부스트 기법이 샘플의 가중치를 조정하는 반면에
+# 그레이디언트 부스팅 기법은 이전 예측기에 의해 생성된 **잔차**(residual error)에 대해 
+# 새로운 예측기를 학습시킨다. 
 
-# * 샘플의 가중치를 수정하는 대신 이전 예측기가 만든 __잔차__(residual error)에 대해 새로운 예측기를 학습시킴
-
-# * 잔차(residual error): 예측값과 실제값 사이의 오차
+# :::{admonition} 잔차
+# :class: info
+# 
+# 잔차<font size='2'>residual error</font>는 예측값과 실제값 사이의 오차를 가리킨다.
+# :::
 
 # **사이킷런 그레이디언트 부스팅 모델**
-
-# * 분류 모델: `GradientBoostingClassifier`
-#     * `RandomForestClassifier`와 비슷한 하이퍼파라미터를 제공
-
-# * 회귀 모델: `GradientBoostingRegressor`
-#     * `RandomForestRegressor`와 비슷한 하이퍼파라미터를 제공
-
-# **그레이디언트 부스티드 회귀 나무(GBRT) 예제: 그레이디언트 부스팅 (회귀)+ 결정트리**
 # 
-# * 2차 다항식 데이터셋에 결정트리 3개를 적용한 효과와 동일하게 작동
+# 사이키런에서 제공하는 그레이디언트 부스팅 모델은 두 개다.
+# 
+# * 분류 모델: `GradientBoostingClassifier`
+# * 회귀 모델: `GradientBoostingRegressor`
+# 
+# 두 모델 모두 결정트리 모델을 연속적으로 훈련시킨다.
+
+# **예제: GBRT**
+# 
+# 아래 그래프는 2차 다항식 모양의 훈련 데이터셋에 결정트리 모델을 3번 연속 적용하면서
+# 생성한 예측값의 변화과정을 보여준다.
+
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-11.png" width="700"/></div>
+
+# 위 그래프는 아래 `GradientBoostingRegressor` 모델을 훈련할 때 실제로 학습되는 과정을 잘 보여준다.
 
 # ```python
-# gbrt = GradientBoostingRegressor(max_depth=2, 
-#                                  n_estimators=3, 
-#                                  learning_rate=1.0)
+# gbrt = GradientBoostingRegressor(max_depth=2, n_estimators=3,
+#                                  learning_rate=1.0, random_state=42)
 # ```
 
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-11.png" width="500"/></div>
+# :::{admonition} GBRT
+# :class: info
+# 
+# GBRT는 Gradient Boosted Regression Trees, 즉 '그레이디언트 부스팅 회귀 나무'의 줄임말이다. 
+# :::
 
-# **`learning_rate`(학습률)**
+# **학습률과 축소 규제**
 
-# * `learnign_rate`는 기존에 설명한 학습률과 다른 의미의 학습률. 
-#     * 각 결정트리의 기여도 조절에 사용
+# 학습률(`learnign_rate`)는 그레이디언트 부스팅 기법으로 훈련된 모델의 
+# 예측값을 정할 때 훈련 과정에 사용된 각 모델의 예측값이 기여하는 정도를 결정한다.
+# 
+# 학습률이 0.1 등처럼 작게 잡으면 보다 많은 수의 모델을 훈련시켜야 하지만 
+# 그만큼 일반화 성능이 좋은 모델이 훈련된다.
+# 이런 방식으로 훈련 과정을 규제하는 기법을 **축소 규제**<font size='2'>shrinkage regularization</font>다. 
+# 즉, 훈련에 사용되는 각 모델의 기여도를 어느 정도로 축소할지 결정하는 방식으로
+# 모델의 훈련을 규제한다는 의미다. 
+# 
+# 아래 두 그래프는 학습률이 1인 경우(왼쪽)와 0.05인 경우(오른쪽)의 차이를 보여준다.
+# 학습률이 1인 경우 모델 훈련을 세 번만 반복해서 과소적합이 발생했지만, 
+# 학습률이 0.05인 경우 모델 훈련을 92번 반복해서 적절한 모델을 훈련시켰다.
 
-# * 수축(shrinkage) 규제: 학습률을 낮게 정하면 많은 수의 결정트리 필요하지만 성능 좋아짐.
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-12a.png" width="700"/></div>
 
-# * 이전 결정트리에서 학습된 값을 전달할 때 사용되는 비율
-#     * 1.0이면 그대로 전달
-#     * 1.0보다 작으면 해당 비율 만큼 조금만 전달
+# **조기 종료**
 
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-12a.png" width="500"/></div>
-
-# **최적의 결정트리 수 확인법**
-
-# * 조기종료 기법 활용
-
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-12.png" width="500"/></div>
+# 훈련 모델의 수를 너무 크게 잡으면 과대적합의 위험성은 커지게 된다.
+# 따라서 훈련되는 모델의 적절한 수를 알아내는 일이 중요하다.
+# 이를 위해 그리드 탐색 기법, 랜덤 탐색 기법 등을 사용할 수 있다.
+# 
+# 하지만 `GradientBoostingRegressor` 모델의 `n_iter_no_change` 하이퍼파라미터를 지정하면
+# 간단하게 {ref}`조기 종료 <sec:early-stopping>` 기법을 적용할 수 있다.
+# 
+# 아래 코드는 `n_iter_no_change=10` 을 사용하여 모델이 연속적으로 10번 제대로 개선되지 못하는 경우
+# 훈련을 종료시킨다.
+# 원래 500 번 연속 결정트리를 훈련시켜야 하지만 실제로는 훨씬 일찍 훈련을 종료한다. 
+# 
+# ```python
+# gbrt_best = GradientBoostingRegressor(
+#     max_depth=2, learning_rate=0.05, n_estimators=500,
+#     n_iter_no_change=10, random_state=42)
+# ```
 
 # **확률적 그레이디언트 부스팅**
-
-# * 각 결정트리가 훈련에 사용할 훈련 샘플의 비율을 지정하여 학습: `subsample=0.25` 등 비율 지정
-
-# * 훈련 속도 빨라짐.
-
-# * 편향 높아지지만, 분산 낮아짐.
-
-# **XGBoost**
-
-# * Extreme Gradient Boosting의 줄임말.
-
-# * 빠른 속도, 확장성, 이식성 뛰어남.
-
-# * 조기종료 등 다양한 기능 제공.
 # 
-#     ```python
-#     import xgboost
-#     xgb_reg = xgboost.XGBRegressor(random_state=42)
-#     xgb_reg.fit(X_train, y_train,
-#                 eval_set=[(X_val, y_val)], 
-#                 early_stopping_rounds=2)
-#     ```
+# `subsample` 하이퍼파라리미터를 이용하여 각 결정트리가 훈련에 사용할 훈련 샘플의 비율을 지정한다.
+# 예를 들어 `subsample=0.25` 로 설정하면 각 결정트리 모델은 전체 훈련셋의 25% 정도만
+# 이용해서 훈련한다. 훈련 샘플은 매번 무작위로 선택된다.
+# 이 방식을 사용하면 훈련 속도가 빨라지며, 편향은 높아지지만, 모델의 다양성이 많아지기에 분산은 낮아진다.
+
+# ### 히스토그램 그레이디언트 부스팅
+
+# 대용량 데이터셋을 이용하여 훈련해야 하는 경우 
+# **히스토그램 그레이디언트 부스팅**<font size='2'>Histogram-based Gradient Boosing</font>(HGB)
+# 기법이 추천된다.
+# 이 기법은 훈련 샘플의 특성값을 최대 255개의 구간으로 분류한다.
+# 즉, 샘플의 특성이 최대 255개의 값 중에 하나라는 의미다.
+# 원래는 훈련 샘플 수만큼 다른 특성값이 존재한다.
+# 
+# 이렇게 하면 결정트리의 CART 알고리즘이 적용될 때 최적의 임곗값을 결정할 때
+# 확인해야 하는 경우의 수가 매우 작아지기에 수 백배 이상 빠르게 학습된다.
+# 또한 특성값이 모두 정수이기에 메모리도 보다 효율적으로 사용한다. 
+# 실제로 하나의 결정트리 모델의 훈련 시간 복잡도는 원래 $O(n\times m \times \log(m))$ 이지만
+# 히스토그램 방식을 사용하면 $O(n\times m)$ 로 줄어든다.
+# 이유는 특성값을 정렬할 필요가 없어지기 때문이다.
+# 물론 모델의 정확도는 떨어진다. 하지만 경우에 따라 과대적합을 방지하는 규제 역할도 수행한다.
+
+# **사이킷런의 히스토그램 그레이디언트 부스팅 모델**
+# 
+# * `HistGradientBoostingRegressor`: 회귀 모델
+# * `HistGradientBoostingClassifier`: 분류 모델
+
+# ...
+
+# :::{admonition} 기타 그레이디언트 부스팅 모델
+# :class: tip
+# 
+# 다음 모델들이 제3자 라이브러리로 제공되지만 사이킷런의 모델과 유사하게 작동한다.
+# 
+# - XGBoost
+# - CatBoost
+# - LightGBM
+# 
+# 또한 
+# [텐서플로우<font size='2'>Tensorflow</font>의 랜덤 포레스트와 GBRT 관련 다양한 최신 모델](https://www.tensorflow.org/decision_forests/api_docs/python/tfdf/keras)도 있다.
+# :::
 
 # ## 스태킹
 
 # * 배깅방식의 응용으로 볼 수 있는 기법
-
+# 
 # * 다수결을 이용하는 대신 여러 예측값을 훈련 데이터로 활용하는 예측기를 훈련시키는 기법
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-13.png" width="400"/></div>
-
-# ### 스태킹 모델 훈련법
-
-# - 책에서는 스태킹 기법을 소개만하고 코드 구현은 연습문제 9번에서 설명한다.  
-
-# - 여기서는 사이킷런 0.22부터 지원하는 스태킹 모델을 활용하여 코드구현을 설명한다.
-
-# - 참조: [Stacked generalization](https://scikit-learn.org/stable/modules/ensemble.html#stacked-generalization)
-
-# **1층 훈련**
-
-# * 먼저 훈련 세트를 훈련세트1과 훈련세트2로 이등분한다.
-
-# * 하나의 훈련세트1의 전체 샘플을 이용하여 주어진 예측기들을 각자 독립적으로 훈련시킨다.
-
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-14.png" width="400"/></div>
-
-# **2층 훈련**
-
-# * 훈련세트2의 모든 샘플에 대해 훈련된 예측기별로 예측값을 생성한다.
-
-# * 예측값들로 이루어진 훈련세트를 이용하여 믹서기 모델(블렌더)을 훈련시킨다.
-#     - 2층 훈련에 사용되는 샘플의 차원은 1층에 사용되는 예측기 개수이다. 
-
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-15.png" width="400"/></div>
 
 # **사이킷런의 `StackingRegressor` 모델 활용법**
 
@@ -563,27 +612,20 @@
 # ```
 
 # **스태킹 모델의 예측값**
-
+# 
 # * 레이어를 차례대로 실행해서 믹서기(블렌더)가 예측한 값을 예측값으로 지정한다.
-
 # * 훈련된 스태킹 모델의 편향과 분산이 훈련에 사용된 모델들에 비해 모두 감소한다.
 
-# ### 다층 스태킹
+# **다층 스태킹**
 
-# * 2층에서 여러 개의 믹서기(블렌더)를 사용하고, 
-#     그위 3층에 새로운 믹서기를 추가하는 방식으로 다층 스태킹을 훈련시킬 수 있다.
-
-# * 다층 스태킹의 훈련 방식은 2층 스태킹의 훈련 방식을 반복하면 된다.
+# 2층에서 여러 개의 믹서기(블렌더)를 사용하고, 
+# 그위 3층에 새로운 믹서기를 추가하는 방식으로 다층 스태킹을 훈련시킬 수 있다.
+# 다층 스태킹의 훈련 방식은 2층 스태킹의 훈련 방식을 반복하면 된다.
 
 # **예제: 3층 스태킹 모델 훈련과정**
-
-# - 훈련세트를 세 개의 부분 훈련세트로 나눈다.
-# - 훈련세트1은 1층 예측기 훈련에 사용한다.
-# - 훈련세트2은 2층 믹서기 훈련에 사용한다.
-# - 훈련세트3은 3층 믹서기 훈련에 사용한다.
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-17.png" width="400"/></div>
 
 # ## 연습문제
 
-# 1. [AugoGluon](https://auto.gluon.ai/stable/index.html) 활용하기
+# 참고: [(실습) 앙상블 학습과 랜덤 포레스트](https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/notebooks/code_ensemble_learning_random_forests.ipynb)

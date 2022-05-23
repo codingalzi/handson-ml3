@@ -286,36 +286,26 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#font-size-2-adaboost-font">
+    <a class="reference internal nav-link" href="#id10">
      7.5.1. 에이다부스트
-     <font size="2">
-      AdaBoost
-     </font>
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id10">
+    <a class="reference internal nav-link" href="#id11">
      7.5.2. 그레이디언트 부스팅
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id12">
+     7.5.3. 히스토그램 그레이디언트 부스팅
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id11">
+  <a class="reference internal nav-link" href="#id13">
    7.6. 스태킹
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id12">
-     7.6.1. 스태킹 모델 훈련법
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id13">
-     7.6.2. 다층 스태킹
-    </a>
-   </li>
-  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id14">
@@ -392,36 +382,26 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#font-size-2-adaboost-font">
+    <a class="reference internal nav-link" href="#id10">
      7.5.1. 에이다부스트
-     <font size="2">
-      AdaBoost
-     </font>
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id10">
+    <a class="reference internal nav-link" href="#id11">
      7.5.2. 그레이디언트 부스팅
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id12">
+     7.5.3. 히스토그램 그레이디언트 부스팅
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id11">
+  <a class="reference internal nav-link" href="#id13">
    7.6. 스태킹
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id12">
-     7.6.1. 스태킹 모델 훈련법
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id13">
-     7.6.2. 다층 스태킹
-    </a>
-   </li>
-  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id14">
@@ -595,7 +575,7 @@ const thebe_selector_output = ".output, .cell_output"
 </pre></div>
 </div>
 <p>아래 두 이미지는 한 개의 결정트리 모델과 500개의 결정트리 모델의
-반달(moons) 데이터셋에 대한 훈련 결과의 차이를 명확하게 보여준다.
+초승달 데이터셋<font size='2'>moons dataset</font>에 대한 훈련 결과의 차이를 명확하게 보여준다.
 배깅을 사용한 오른쪽 결정트리 모델의 일반화 성능이 훨씬 좋음을 알 수 있다.
 왼쪽 하나의 결정트리 모델과 비교해서 편향(오류 숫자)은 좀 더 커졌지만
 분산(결정 경계의 불규칙성)은 훨씬 덜하다.
@@ -743,185 +723,175 @@ oob 평가를 자동으로 실행한다.
 <h2><span class="section-number">7.5. </span>부스팅<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
 <p>약한 성능의 예측기 여러 개를 이용하여 보다 강한 성능의 예측기를 학습시기는 기법이
 <strong>부스팅</strong><font size='2'>boosting</font>이다.
-여러 개의 예측기를 선형적으로 훈련시키면서 약점을 보완해 나가는 알고리즘이 일반적으로
-사용되며 대표적으로 다음 두 기법이 사용된다.</p>
+일반적으로 여러 개의 예측기를 선형적으로 훈련시키면서 약점을 보완해 나가는 알고리즘을 사용하며
+대표적으로 다음 두 기법이 사용된다.</p>
 <ul class="simple">
 <li><p>에이다부스트<font size='2'>AdaBoost</font></p></li>
 <li><p>그레이디언트 부스팅<font size='2'>Gradient Boosting</font></p></li>
 </ul>
 <p>두 기법은 순차적으로 이전 예측기의 결과를 바탕으로 예측 성능을 조금씩 높혀 간다.
-예측 모델의 편향을 줄여나간다.
-하지만 순차적으로 학습하기에 배깅/페이스팅 방식과는 달리 훈련을 동시에 진행할 수 없다.
-따라서 훈련 시간이 훨씬 오래 걸릴 수 있고 따라서 훈련셋 또는 특성 수가 너무 커지면
+즉, 예측 모델의 편향을 줄여나간다.
+하지만 순차적으로 학습하기에 배깅/페이스팅 방식과는 달리 훈련을 동시에 진행할 수 없다는 단점을 갖는다.
+훈련 시간이 훨씬 오래 걸릴 수 있고 따라서 훈련셋 또는 특성 수가 너무 커지면
 적용이 어려울 수 있다.</p>
-<div class="section" id="font-size-2-adaboost-font">
-<h3><span class="section-number">7.5.1. </span>에이다부스트<font size='2'>AdaBoost</font><a class="headerlink" href="#font-size-2-adaboost-font" title="Permalink to this headline">¶</a></h3>
-<p>하나의 모델을 훈련 시킨 후 틀리계 예측된 샘플을 보다 강조하면서 해당 모델을 다시 훈련시킨다.
-아래 그림은 모델이 제대로 학습하지 못한, 즉 과소적합했던 샘플에 대한 가중치를
+<div class="section" id="id10">
+<h3><span class="section-number">7.5.1. </span>에이다부스트<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p><strong>에이다부스트</strong><font size='2'>AdaBoost</font> 기법은
+하나의 모델을 훈련 시킨 후 <strong>잘못 예측된 샘플을 보다 강조</strong>하면서 해당 모델을 다시 훈련시킨다.
+아래 그림은 모델이 제대로 학습하지 못한, 즉 과소적합했던 <strong>샘플에 대한 가중치</strong>를
 키우는 방식으로 모델을 다시 훈련시키는 과정을 반복하는 것을 보여준다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-08.png" width="500"/></div><p><strong>샘플 가중치</strong></p>
-<p>훈련중에 특정 샘플을 보다 강조하도록 유도하는 값을 샘플 가중치라 하며,
+<p>훈련중에 특정 샘플을 보다 강조하도록 유도하는 값을 <strong>샘플 가중치</strong>라 하며,
 모든 훈련 샘플에 대해 지정할 수 있다.
-지정하지 않으며 모든 훈련 샘플에 대한 가중치는 동일한 값으로 처리된다.</p>
+지정하지 않으며 모든 훈련 샘플에 대한 가중치는 동일한 값으로 처리된다.
+특정 훈련 샘플에 대한 샘플 가중치를 크게 주면 해당 샘플이 그만큼 더 훈련셋에 많이 포함된 것처럼
+처리되어, 해당 샘플의 중요도를 키우게 된다.</p>
+<div class="info admonition">
+<p class="admonition-title"><code class="docutils literal notranslate"><span class="pre">fit()</span></code> 메서드와 샘플 가중치</p>
 <p>사이킷런 모델의 <code class="docutils literal notranslate"><span class="pre">fit()</span></code> 메서드는 <code class="docutils literal notranslate"><span class="pre">sample_weight</span></code> 옵션인자를 이용하여
 각 훈련 샘플에 대한 가중치를 지정할 수 있다.</p>
-<p>참고: <a class="reference external" href="https://github.com/scikit-learn/scikit-learn/blob/15a949460/sklearn/svm/_base.py#L119">SVC의 <code class="docutils literal notranslate"><span class="pre">fit()</span></code> 메서드 정의</a></p>
+</div>
 <p><strong>에이다부스트 알고리즘 작동 과정</strong></p>
+<p>아래 두 개의 그래프는
+초승달 데이터셋에 rbf 커널을 사용하는 SVC 모델을 5번 연속 새로 훈련시킨 결과를 보여준다.
+새로 훈련시킬 때마다 이전에 제대로 학습하지 못한 샘플에 대한 샘플 가중치를 키워
+해당 샘플에 보다 집중하여 훈련하도록 유도된다.</p>
+<p>왼쪽과 오른쪽은 새 모델을 훈련하기 시작할 때 적용할 샘플 가중치의 적용 정도를
+지정하는 학습률(<code class="docutils literal notranslate"><span class="pre">learnign_rate</span></code>)을 달리한 결과를 보여준다.</p>
 <ul class="simple">
-<li><p>moons 데이터셋에 rbf 커널을 사용하는 SVC 모델을 5번 연속 새로 생성하는
-방식으로 학습한 결과를 보여줌.</p></li>
-<li><p>새로운 예측기의 <code class="docutils literal notranslate"><span class="pre">fit()</span></code> 메서드는 이전 예측기의 경우와 다른 <code class="docutils literal notranslate"><span class="pre">sample_weight</span></code> 옵션값을 사용함.</p></li>
-<li><p>새로운 예측기는 이전의 예측기의 예측값이 틀린 샘플을 보다 강조하도록 유도됨.</p></li>
-<li><p>왼편과 오른편은 학습률만 다름.</p>
-<ul>
-<li><p><strong>주의사항:</strong> <code class="docutils literal notranslate"><span class="pre">learnign_rate</span></code>는 기존에 설명한 학습률과 다른 의미이며, 각 예측기의 기여도 조절에 사용됨.</p></li>
+<li><p>왼쪽 그래프: 학습률 1</p></li>
+<li><p>오른쪽 그래프: 학습률 0.5</p></li>
 </ul>
-</li>
-</ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-09.png" width="600"/></div><p><strong>사이키런의 에이다부스트</strong></p>
+<p>왼쪽 그래프는 학습률을 너무 크게 잡으면 각 모델의 변화가 커질 수 있음을 보여준다.
+이유는 기존의 모델을 새로운 모델로 업데이트할 때 기존 모델로부터 계산된 샘플 가중치를
+계산된 그대로 또는 그 이상으로 각 샘플에 적용하면 그만큼 모델의 변화가 커져서
+하나의 좋은 모델로 수렴하지 못할 수 있기 때문이다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-09.png" width="600"/></div><div class="info admonition">
+<p class="admonition-title">학습률</p>
+<p>여기서 말하는 학습률은 <a class="reference internal" href="training_models.html#sec-gradient-descent"><span class="std std-ref">경사하강법의 학습률</span></a>과
+다른 개념이지만 모델을 업데이트할 때
+샘플 가중치의 적용 정도를 조절한다는 의미에서 비슷한 의미로 사용된다.</p>
+</div>
+<p><strong>사이킷런의 에이다부스트 모델</strong></p>
+<p>사이키런에서 제공하는 에이다부스트 모델은 두 개다.</p>
 <ul class="simple">
 <li><p>분류 모델: <code class="docutils literal notranslate"><span class="pre">AdaBoostClassifier</span></code></p></li>
 <li><p>회귀 모델: <code class="docutils literal notranslate"><span class="pre">AdaBoostRegressor</span></code></p></li>
 </ul>
-<p><strong>예제: 에이다부스트 + 결정트리</strong></p>
+<p>아래 코드는 결정트리 분류 모델에 에이다부스트 기법을 적용한다.</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">AdaBoostClassifier</span></code> 의 기본 모델임.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">n_estimators=30</span></code>: 30번 부스팅 반복</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">learning_rate=0.5</span></code>: 학습률 0.5</p></li>
 </ul>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ada_clf</span> <span class="o">=</span> <span class="n">AdaBoostClassifier</span><span class="p">(</span><span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> 
-                             <span class="n">n_estimators</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;SAMME.R&quot;</span><span class="p">,</span> 
-                             <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ada_clf</span> <span class="o">=</span> <span class="n">AdaBoostClassifier</span><span class="p">(</span>
+    <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">n_estimators</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
+    <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 </pre></div>
 </div>
-<ul class="simple">
-<li><p>훈련 세트: moons 데이터셋</p></li>
-</ul>
+<p>초승달 데이터셋을 대상으로 훈련시킨 결과는 다음과 같다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-10.png" width="400"/></div></div>
-<div class="section" id="id10">
-<h3><span class="section-number">7.5.2. </span>그레이디언트 부스팅<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p>이전 학습기에 의한 오차를 보정하도록 새로운 예측기를 순차적으로 추가하는 아이디어는 에이다부스트와 동일</p></li>
-</ul>
-<ul class="simple">
-<li><p>샘플의 가중치를 수정하는 대신 이전 예측기가 만든 <strong>잔차</strong>(residual error)에 대해 새로운 예측기를 학습시킴</p></li>
-</ul>
-<ul class="simple">
-<li><p>잔차(residual error): 예측값과 실제값 사이의 오차</p></li>
-</ul>
-<p><strong>사이킷런 그레이디언트 부스팅 모델</strong></p>
-<ul class="simple">
-<li><p>분류 모델: <code class="docutils literal notranslate"><span class="pre">GradientBoostingClassifier</span></code></p>
-<ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">RandomForestClassifier</span></code>와 비슷한 하이퍼파라미터를 제공</p></li>
-</ul>
-</li>
-</ul>
-<ul class="simple">
-<li><p>회귀 모델: <code class="docutils literal notranslate"><span class="pre">GradientBoostingRegressor</span></code></p>
-<ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">RandomForestRegressor</span></code>와 비슷한 하이퍼파라미터를 제공</p></li>
-</ul>
-</li>
-</ul>
-<p><strong>그레이디언트 부스티드 회귀 나무(GBRT) 예제: 그레이디언트 부스팅 (회귀)+ 결정트리</strong></p>
-<ul class="simple">
-<li><p>2차 다항식 데이터셋에 결정트리 3개를 적용한 효과와 동일하게 작동</p></li>
-</ul>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">gbrt</span> <span class="o">=</span> <span class="n">GradientBoostingRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> 
-                                 <span class="n">n_estimators</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> 
-                                 <span class="n">learning_rate</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
-</pre></div>
-</div>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-11.png" width="500"/></div><p><strong><code class="docutils literal notranslate"><span class="pre">learning_rate</span></code>(학습률)</strong></p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">learnign_rate</span></code>는 기존에 설명한 학습률과 다른 의미의 학습률.</p>
-<ul>
-<li><p>각 결정트리의 기여도 조절에 사용</p></li>
-</ul>
-</li>
-</ul>
-<ul class="simple">
-<li><p>수축(shrinkage) 규제: 학습률을 낮게 정하면 많은 수의 결정트리 필요하지만 성능 좋아짐.</p></li>
-</ul>
-<ul class="simple">
-<li><p>이전 결정트리에서 학습된 값을 전달할 때 사용되는 비율</p>
-<ul>
-<li><p>1.0이면 그대로 전달</p></li>
-<li><p>1.0보다 작으면 해당 비율 만큼 조금만 전달</p></li>
-</ul>
-</li>
-</ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-12a.png" width="500"/></div><p><strong>최적의 결정트리 수 확인법</strong></p>
-<ul class="simple">
-<li><p>조기종료 기법 활용</p></li>
-</ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-12.png" width="500"/></div><p><strong>확률적 그레이디언트 부스팅</strong></p>
-<ul class="simple">
-<li><p>각 결정트리가 훈련에 사용할 훈련 샘플의 비율을 지정하여 학습: <code class="docutils literal notranslate"><span class="pre">subsample=0.25</span></code> 등 비율 지정</p></li>
-</ul>
-<ul class="simple">
-<li><p>훈련 속도 빨라짐.</p></li>
-</ul>
-<ul class="simple">
-<li><p>편향 높아지지만, 분산 낮아짐.</p></li>
-</ul>
-<p><strong>XGBoost</strong></p>
-<ul class="simple">
-<li><p>Extreme Gradient Boosting의 줄임말.</p></li>
-</ul>
-<ul class="simple">
-<li><p>빠른 속도, 확장성, 이식성 뛰어남.</p></li>
-</ul>
-<ul>
-<li><p>조기종료 등 다양한 기능 제공.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">xgboost</span>
-<span class="n">xgb_reg</span> <span class="o">=</span> <span class="n">xgboost</span><span class="o">.</span><span class="n">XGBRegressor</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-<span class="n">xgb_reg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span>
-            <span class="n">eval_set</span><span class="o">=</span><span class="p">[(</span><span class="n">X_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">)],</span> 
-            <span class="n">early_stopping_rounds</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-</pre></div>
-</div>
-</li>
-</ul>
-</div>
-</div>
 <div class="section" id="id11">
-<h2><span class="section-number">7.6. </span>스태킹<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
+<h3><span class="section-number">7.5.2. </span>그레이디언트 부스팅<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p><strong>그레이디언트 부스팅</strong><font size='2'>Gradient Boosting</font> 기법 또한
+이전 모델의 예측에 오차가 있다면 그 오차를 보정하는 새로운 예측기를 새롭게 훈련시킨다.
+에이다부스트 기법이 샘플의 가중치를 조정하는 반면에
+그레이디언트 부스팅 기법은 이전 예측기에 의해 생성된 <strong>잔차</strong>(residual error)에 대해
+새로운 예측기를 학습시킨다.</p>
+<div class="info admonition">
+<p class="admonition-title">잔차</p>
+<p>잔차<font size='2'>residual error</font>는 예측값과 실제값 사이의 오차를 가리킨다.</p>
+</div>
+<p><strong>사이킷런 그레이디언트 부스팅 모델</strong></p>
+<p>사이키런에서 제공하는 그레이디언트 부스팅 모델은 두 개다.</p>
+<ul class="simple">
+<li><p>분류 모델: <code class="docutils literal notranslate"><span class="pre">GradientBoostingClassifier</span></code></p></li>
+<li><p>회귀 모델: <code class="docutils literal notranslate"><span class="pre">GradientBoostingRegressor</span></code></p></li>
+</ul>
+<p>두 모델 모두 결정트리 모델을 연속적으로 훈련시킨다.</p>
+<p><strong>예제: GBRT</strong></p>
+<p>아래 그래프는 2차 다항식 모양의 훈련 데이터셋에 결정트리 모델을 3번 연속 적용하면서
+생성한 예측값의 변화과정을 보여준다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-11.png" width="700"/></div><p>위 그래프는 아래 <code class="docutils literal notranslate"><span class="pre">GradientBoostingRegressor</span></code> 모델을 훈련할 때 실제로 학습되는 과정을 잘 보여준다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">gbrt</span> <span class="o">=</span> <span class="n">GradientBoostingRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_estimators</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+                                 <span class="n">learning_rate</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="info admonition">
+<p class="admonition-title">GBRT</p>
+<p>GBRT는 Gradient Boosted Regression Trees, 즉 ‘그레이디언트 부스팅 회귀 나무’의 줄임말이다.</p>
+</div>
+<p><strong>학습률과 축소 규제</strong></p>
+<p>학습률(<code class="docutils literal notranslate"><span class="pre">learnign_rate</span></code>)는 그레이디언트 부스팅 기법으로 훈련된 모델의
+예측값을 정할 때 훈련 과정에 사용된 각 모델의 예측값이 기여하는 정도를 결정한다.</p>
+<p>학습률이 0.1 등처럼 작게 잡으면 보다 많은 수의 모델을 훈련시켜야 하지만
+그만큼 일반화 성능이 좋은 모델이 훈련된다.
+이런 방식으로 훈련 과정을 규제하는 기법을 <strong>축소 규제</strong><font size='2'>shrinkage regularization</font>다.
+즉, 훈련에 사용되는 각 모델의 기여도를 어느 정도로 축소할지 결정하는 방식으로
+모델의 훈련을 규제한다는 의미다.</p>
+<p>아래 두 그래프는 학습률이 1인 경우(왼쪽)와 0.05인 경우(오른쪽)의 차이를 보여준다.
+학습률이 1인 경우 모델 훈련을 세 번만 반복해서 과소적합이 발생했지만,
+학습률이 0.05인 경우 모델 훈련을 92번 반복해서 적절한 모델을 훈련시켰다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-12a.png" width="700"/></div><p><strong>조기 종료</strong></p>
+<p>훈련 모델의 수를 너무 크게 잡으면 과대적합의 위험성은 커지게 된다.
+따라서 훈련되는 모델의 적절한 수를 알아내는 일이 중요하다.
+이를 위해 그리드 탐색 기법, 랜덤 탐색 기법 등을 사용할 수 있다.</p>
+<p>하지만 <code class="docutils literal notranslate"><span class="pre">GradientBoostingRegressor</span></code> 모델의 <code class="docutils literal notranslate"><span class="pre">n_iter_no_change</span></code> 하이퍼파라미터를 지정하면
+간단하게 <a class="reference internal" href="training_models.html#sec-early-stopping"><span class="std std-ref">조기 종료</span></a> 기법을 적용할 수 있다.</p>
+<p>아래 코드는 <code class="docutils literal notranslate"><span class="pre">n_iter_no_change=10</span></code> 을 사용하여 모델이 연속적으로 10번 제대로 개선되지 못하는 경우
+훈련을 종료시킨다.
+원래 500 번 연속 결정트리를 훈련시켜야 하지만 실제로는 훨씬 일찍 훈련을 종료한다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">gbrt_best</span> <span class="o">=</span> <span class="n">GradientBoostingRegressor</span><span class="p">(</span>
+    <span class="n">max_depth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">n_estimators</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+    <span class="n">n_iter_no_change</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>확률적 그레이디언트 부스팅</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">subsample</span></code> 하이퍼파라리미터를 이용하여 각 결정트리가 훈련에 사용할 훈련 샘플의 비율을 지정한다.
+예를 들어 <code class="docutils literal notranslate"><span class="pre">subsample=0.25</span></code> 로 설정하면 각 결정트리 모델은 전체 훈련셋의 25% 정도만
+이용해서 훈련한다. 훈련 샘플은 매번 무작위로 선택된다.
+이 방식을 사용하면 훈련 속도가 빨라지며, 편향은 높아지지만, 모델의 다양성이 많아지기에 분산은 낮아진다.</p>
+</div>
+<div class="section" id="id12">
+<h3><span class="section-number">7.5.3. </span>히스토그램 그레이디언트 부스팅<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<p>대용량 데이터셋을 이용하여 훈련해야 하는 경우
+<strong>히스토그램 그레이디언트 부스팅</strong><font size='2'>Histogram-based Gradient Boosing</font>(HGB)
+기법이 추천된다.
+이 기법은 훈련 샘플의 특성값을 최대 255개의 구간으로 분류한다.
+즉, 샘플의 특성이 최대 255개의 값 중에 하나라는 의미다.
+원래는 훈련 샘플 수만큼 다른 특성값이 존재한다.</p>
+<p>이렇게 하면 결정트리의 CART 알고리즘이 적용될 때 최적의 임곗값을 결정할 때
+확인해야 하는 경우의 수가 매우 작아지기에 수 백배 이상 빠르게 학습된다.
+또한 특성값이 모두 정수이기에 메모리도 보다 효율적으로 사용한다.
+실제로 하나의 결정트리 모델의 훈련 시간 복잡도는 원래 <span class="math notranslate nohighlight">\(O(n\times m \times \log(m))\)</span> 이지만
+히스토그램 방식을 사용하면 <span class="math notranslate nohighlight">\(O(n\times m)\)</span> 로 줄어든다.
+이유는 특성값을 정렬할 필요가 없어지기 때문이다.
+물론 모델의 정확도는 떨어진다. 하지만 경우에 따라 과대적합을 방지하는 규제 역할도 수행한다.</p>
+<p><strong>사이킷런의 히스토그램 그레이디언트 부스팅 모델</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">HistGradientBoostingRegressor</span></code>: 회귀 모델</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">HistGradientBoostingClassifier</span></code>: 분류 모델</p></li>
+</ul>
+<p>…</p>
+<div class="tip admonition">
+<p class="admonition-title">기타 그레이디언트 부스팅 모델</p>
+<p>다음 모델들이 제3자 라이브러리로 제공되지만 사이킷런의 모델과 유사하게 작동한다.</p>
+<ul class="simple">
+<li><p>XGBoost</p></li>
+<li><p>CatBoost</p></li>
+<li><p>LightGBM</p></li>
+</ul>
+<p>또한
+<a class="reference external" href="https://www.tensorflow.org/decision_forests/api_docs/python/tfdf/keras">텐서플로우<font size='2'>Tensorflow</font>의 랜덤 포레스트와 GBRT 관련 다양한 최신 모델</a>도 있다.</p>
+</div>
+</div>
+</div>
+<div class="section" id="id13">
+<h2><span class="section-number">7.6. </span>스태킹<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>배깅방식의 응용으로 볼 수 있는 기법</p></li>
-</ul>
-<ul class="simple">
 <li><p>다수결을 이용하는 대신 여러 예측값을 훈련 데이터로 활용하는 예측기를 훈련시키는 기법</p></li>
 </ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-13.png" width="400"/></div><div class="section" id="id12">
-<h3><span class="section-number">7.6.1. </span>스태킹 모델 훈련법<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p>책에서는 스태킹 기법을 소개만하고 코드 구현은 연습문제 9번에서 설명한다.</p></li>
-</ul>
-<ul class="simple">
-<li><p>여기서는 사이킷런 0.22부터 지원하는 스태킹 모델을 활용하여 코드구현을 설명한다.</p></li>
-</ul>
-<ul class="simple">
-<li><p>참조: <a class="reference external" href="https://scikit-learn.org/stable/modules/ensemble.html#stacked-generalization">Stacked generalization</a></p></li>
-</ul>
-<p><strong>1층 훈련</strong></p>
-<ul class="simple">
-<li><p>먼저 훈련 세트를 훈련세트1과 훈련세트2로 이등분한다.</p></li>
-</ul>
-<ul class="simple">
-<li><p>하나의 훈련세트1의 전체 샘플을 이용하여 주어진 예측기들을 각자 독립적으로 훈련시킨다.</p></li>
-</ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-14.png" width="400"/></div><p><strong>2층 훈련</strong></p>
-<ul class="simple">
-<li><p>훈련세트2의 모든 샘플에 대해 훈련된 예측기별로 예측값을 생성한다.</p></li>
-</ul>
-<ul class="simple">
-<li><p>예측값들로 이루어진 훈련세트를 이용하여 믹서기 모델(블렌더)을 훈련시킨다.</p>
-<ul>
-<li><p>2층 훈련에 사용되는 샘플의 차원은 1층에 사용되는 예측기 개수이다.</p></li>
-</ul>
-</li>
-</ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-15.png" width="400"/></div><p><strong>사이킷런의 <code class="docutils literal notranslate"><span class="pre">StackingRegressor</span></code> 모델 활용법</strong></p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-13.png" width="400"/></div><p><strong>사이킷런의 <code class="docutils literal notranslate"><span class="pre">StackingRegressor</span></code> 모델 활용법</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">estimators</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;ridge&#39;</span><span class="p">,</span> <span class="n">RidgeCV</span><span class="p">()),</span>
               <span class="p">(</span><span class="s1">&#39;lasso&#39;</span><span class="p">,</span> <span class="n">LassoCV</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)),</span>
               <span class="p">(</span><span class="s1">&#39;knr&#39;</span><span class="p">,</span> <span class="n">KNeighborsRegressor</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
@@ -946,34 +916,17 @@ oob 평가를 자동으로 실행한다.
 <p><strong>스태킹 모델의 예측값</strong></p>
 <ul class="simple">
 <li><p>레이어를 차례대로 실행해서 믹서기(블렌더)가 예측한 값을 예측값으로 지정한다.</p></li>
-</ul>
-<ul class="simple">
 <li><p>훈련된 스태킹 모델의 편향과 분산이 훈련에 사용된 모델들에 비해 모두 감소한다.</p></li>
 </ul>
-</div>
-<div class="section" id="id13">
-<h3><span class="section-number">7.6.2. </span>다층 스태킹<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p>2층에서 여러 개의 믹서기(블렌더)를 사용하고,
-그위 3층에 새로운 믹서기를 추가하는 방식으로 다층 스태킹을 훈련시킬 수 있다.</p></li>
-</ul>
-<ul class="simple">
-<li><p>다층 스태킹의 훈련 방식은 2층 스태킹의 훈련 방식을 반복하면 된다.</p></li>
-</ul>
+<p><strong>다층 스태킹</strong></p>
+<p>2층에서 여러 개의 믹서기(블렌더)를 사용하고,
+그위 3층에 새로운 믹서기를 추가하는 방식으로 다층 스태킹을 훈련시킬 수 있다.
+다층 스태킹의 훈련 방식은 2층 스태킹의 훈련 방식을 반복하면 된다.</p>
 <p><strong>예제: 3층 스태킹 모델 훈련과정</strong></p>
-<ul class="simple">
-<li><p>훈련세트를 세 개의 부분 훈련세트로 나눈다.</p></li>
-<li><p>훈련세트1은 1층 예측기 훈련에 사용한다.</p></li>
-<li><p>훈련세트2은 2층 믹서기 훈련에 사용한다.</p></li>
-<li><p>훈련세트3은 3층 믹서기 훈련에 사용한다.</p></li>
-</ul>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-17.png" width="400"/></div></div>
-</div>
 <div class="section" id="id14">
 <h2><span class="section-number">7.7. </span>연습문제<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h2>
-<ol class="simple">
-<li><p><a class="reference external" href="https://auto.gluon.ai/stable/index.html">AugoGluon</a> 활용하기</p></li>
-</ol>
+<p>참고: <a class="reference external" href="https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/notebooks/code_ensemble_learning_random_forests.ipynb">(실습) 앙상블 학습과 랜덤 포레스트</a></p>
 </div>
 </div>
 
