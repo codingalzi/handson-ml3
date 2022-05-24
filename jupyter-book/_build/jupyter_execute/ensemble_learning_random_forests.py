@@ -561,8 +561,33 @@
 # 
 # * `HistGradientBoostingRegressor`: 회귀 모델
 # * `HistGradientBoostingClassifier`: 분류 모델
+# 
+# `GradientBoostingRegressor`, `GradientBoostingClassifier` 등과 유사하게 작동한다.
 
-# ...
+# **장점**
+# 
+# 언급된 두 모델은 범주 특성을 다룰 수 있으며, 결측치도 처리할 수 있다.
+# 결측치는 255개의 구간 이외에 특별한 구간에 들어가는 것으로 간주된다.
+
+# **예제**
+
+# 아래 코드는 {ref}`캘리포니아 주택가격 데이터셋 <ch:end2end>`을 이용하여
+# 히스토그램 그레이디언트 부스팅 모델을 적용하는 것을 보여준다.
+# 
+# - `(OrdinalEncoder(), ["ocean_proximity"])` : 해안 근접도 특성값으로 사용된 5개를 0에서 4사이의 정수로 변환하는 변환기 지정.
+# - `categorical_features=[0]` : 범주형 특성의 위치 지정
+# - 캘리포니아 주택가격 데이터셋에 결측치 존재하지만 전처리로 다루지 않음.
+# - 스케일링, 원-핫-인코딩 등도 필요하지 않음.
+
+# ```python
+# hgb_reg = make_pipeline(
+#     make_column_transformer((OrdinalEncoder(), ["ocean_proximity"]),
+#                             remainder="passthrough"),
+#     HistGradientBoostingRegressor(categorical_features=[0], random_state=42)
+# )
+# 
+# hgb_reg.fit(housing, housing_labels)
+# ```
 
 # :::{admonition} 기타 그레이디언트 부스팅 모델
 # :class: tip
