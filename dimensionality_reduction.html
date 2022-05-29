@@ -588,14 +588,11 @@ d \ge \frac{4 \log(m)}{\frac{1}{2} \varepsilon^2 - \frac{1}{3} \varepsilon^3}
 </div>
 <div class="section" id="lle">
 <h2><span class="section-number">8.5. </span>LLE(국소적 선형 임베딩)<a class="headerlink" href="#lle" title="Permalink to this headline">¶</a></h2>
-<p><strong>아이디어</strong></p>
-<ul class="simple">
-<li><p>대표적인 다양체 학습 기법</p></li>
-<li><p>롤케이크 데이터셋의 경우처럼 전체적으론 비선형인 다양체이지만 국소적으로는 데이터가 선형적으로 연관되어 있음.</p></li>
-<li><p>국소적 관계가 가장 잘 보존되는 훈련 세트의 저차원 표현 찾을 수 있음.</p></li>
-<li><p>사영이 아닌 다양체 학습에 의존</p></li>
-</ul>
-<p><strong>예제: 롤케이크</strong></p>
+<p>대표적인 다양체 학습 기법이다.
+롤케이크 데이터셋의 경우처럼 전체적으론 비선형인 다양체이지만 국소적으로는 데이터가 선형적으로 연관되어
+있다는 가설을 이용한다.
+국소적 관계가 가장 잘 보존되는 훈련 세트의 저차원 표현을 찾는다.</p>
+<p>아래 코드는 롤케이크에 대해 LLE 를 적용한 결과를 보여준다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">X_swiss</span><span class="p">,</span> <span class="n">t</span> <span class="o">=</span> <span class="n">make_swiss_roll</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 <span class="n">lle</span> <span class="o">=</span> <span class="n">LocallyLinearEmbedding</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 <span class="n">X_unrolled</span> <span class="o">=</span> <span class="n">lle</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_swiss</span><span class="p">)</span>
