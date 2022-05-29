@@ -38,12 +38,9 @@
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script>let toggleHintShow = 'Click to show';</script>
-    <script>let toggleHintHide = 'Click to hide';</script>
-    <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
@@ -56,7 +53,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="8. 차원 축소" href="dimensionality_reduction.html" />
+    <link rel="next" title="8. 차원축소" href="dimensionality_reduction.html" />
     <link rel="prev" title="6. 결정트리" href="decision_trees.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -127,7 +124,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="dimensionality_reduction.html">
-   8. 차원 축소
+   8. 차원축소
   </a>
  </li>
  <li class="toctree-l1">
@@ -692,7 +689,9 @@ oob 평가를 자동으로 실행한다.
 즉, 모든 특성 중요도의 합은 1이다.
 이렇듯 랜덤 포레스트 모델을 이용하여 특성의 상대적 중요도를 파악한 다음에 보다
 중요한 특성을 선택해서 활용할 수 있다.</p>
-<p><strong>예제: 붓꽃 데이터셋</strong></p>
+<div class="proof example admonition" id="exp-minist-feature-importance">
+<p class="admonition-title"><span class="caption-number">Example 7.1 </span> (붓꽃 데이터셋)</p>
+<div class="example-content section" id="proof-content">
 <p>붓꽃 데이터셋의 경우 특성별 상대적 중요도는 다음과 같이 꽃잎의 길이와 너비가 매우 중요하며,
 꽃받침의 길이와 너비 정보는 상대적으로 훨씬 덜 중요하다.
 지금까지 붓꽃 데이터셋을 사용할 때 꽃잎의 길이와 너비 두 개의 특성만을 사용한 이유가 여기에 있다.</p>
@@ -717,10 +716,15 @@ oob 평가를 자동으로 실행한다.
 </tr>
 </tbody>
 </table>
-<p><strong>예제: MNIST</strong></p>
+</div>
+</div><div class="proof example admonition" id="exp-MNIST-feature-importance">
+<p class="admonition-title"><span class="caption-number">Example 7.2 </span> (MNIST)</p>
+<div class="example-content section" id="proof-content">
 <p>MNIST 데이터셋의 경우 특성으로 사용된 모든 픽셀의 중요도를 그래프로 그리면 다음과 같다.
 숫자가 일반적으로 중앙에 위치하였기에 중앙에 위치한 픽셀의 중요도가 보다 높게 나온다.</p>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-07.png" width="400"/></div></div>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-07.png" width="400"/></div>
+</div>
+</div></div>
 </div>
 <div class="section" id="id9">
 <h2><span class="section-number">7.5. </span>부스팅<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
@@ -985,7 +989,7 @@ oob 평가를 자동으로 실행한다.
     <a class='right-next' id="next-link" href="dimensionality_reduction.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">8. </span>차원 축소</p>
+        <p class="prev-next-title"><span class="section-number">8. </span>차원축소</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
