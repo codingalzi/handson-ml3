@@ -58,31 +58,29 @@
 
 # ### 사영 기법
 
-# * $n$차원 공간에 존재하는 $d$차원 부분공간을 $d$차원 공간으로 사영하기. 단, $d < n$.
-# 
-# * 예제
-#     * 왼쪽 3차원에 존재하는 적절한 2차원 평면으로 사영하면 적절한 2차원 상의 이미지를 얻게됨.
-#     * 오른쪽 2차원 이미지에 사용된 축 $z_1$과 $z_2$를 적절하게 찾는 게 주요 과제임.
+# $n$차원 데이터셋을 $d$($d < n$) 차원 데이터셋으로 사영하는 기법이다.
+# 아래 그림은 
+# 왼쪽 3차원에 존재하는 데이터셋을 적절한 2차원 평면으로 사영한 결과를 보여준다.
+# 이때 오른쪽 이미지에 사용된 축 $z_1$과 $z_2$를 적절하게 찾는 게 주요 과제다.
 
 # <table>
 #     <tr>
-#         <td> <img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch08/homl08-02-1.png" width="400"/> </td>
+#         <td> <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch08/homl08-02-1.png" width="400"/></div> </td>
 #         <td></td>
-#         <td> <img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch08/homl08-02-2.png" width="400"/> </td>
+#         <td> <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch08/homl08-02-2.png" width="400"/></div> </td>
 #     </tr>
 # </table>
 
-# **부적절한 사영**
-# 
-# * 사영이 경우에 따라 보다 복잡한 결과를 낼 수 있음.
-# 
-# * 롤케이크를 $x_1$과 $x_2$ 축으로 사영하면 샘플 구분이 보다 어려워짐.
+# 위의 경우는 사영을 통해 데이터셋 분석이 보다 간단해졌다.
+# 하지만 경우에 따라 보다 복잡한 결과를 낼 수도 있다.
+# 예를 들어 아래 그림은 롤케이크를 $x_1$과 $x_2$ 축으로 
+# 이루어진 평면에 사영하면 샘플 구분이 보다 어려워지는 것을 보여준다.
 
 # <table>
 #     <tr>
-#         <td> <img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch08/homl08-04.png" width="300"/> </td>
+#         <td> <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch08/homl08-04.png" width="350"/></div> </td>
 #         <td></td>
-#         <td> <img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch08/homl08-06.png" width="320"/> </td>
+#         <td> <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch08/homl08-06.png" width="320"/></div> </td>
 #     </tr>
 # </table>
 
@@ -94,98 +92,70 @@
 # **다양체**<font size='2'>manifold</font>라 부른다.
 # 예를 들어, 롤케이크<font size='2'>Swiss roll</font>는 
 # 2차원 평면을 돌돌 말아 3차원 공간상에 존재하는 2D 다양체다. 
-# 실제로 롤케이크을 조심해서 펴면 보다 적절한 2차원 공간으로 변환된다.
+# 실제로 롤케이크을 조심해서 펴면 보다 적절한 2차원 데이터셋으로 변환된다.
 
-# <img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch08/homl08-07.png" width="310"/>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch08/homl08-07.png" width="310"/></div>
 
 # **다양체 가설**
 
 # 롤케이크와 같은 다양체의 경우 사영 보다는 접히거나 비틀어진 것을 잘 펼치면 
-# 보다 적절한 2차원 공간으로 변환된다.
+# 보다 적절한 2차원 데이터셋으로 변환된다.
 # 이처럼 숨겨진 다양체를 찾는 과정이 **다양체 학습**<font size='2'>Manifold Learning</font>이다. 
 # 다양체 학습은 대부분의 고차원 데이터셋이 더 낮은 차원의 다양체에 가깝다는가설에 근거한다.
-# 아래 그램의 위쪽 데이터셋의 경우가 그렇다.
 
 # 다양체 가설은 또한 저차원의 다양체 공간으로 차원축소를 진행하면 보다 간단한 다양체가 된다라는 
 # 가설과 함께 사용된다. 
 # 하지만 이는 경우에 따라 다르다.
-# 아래 그림의 아랫쪽 데이터셋의 경우는 차원축소를 진행하면 데이터셋이 보다 복잡해진다. 
+# 아래 그림의 위쪽 데이터셋의 경우는 보다 간단해지지만,
+# 아랫쪽 데이터셋의 경우는 차원축소를 진행하면 데이터셋이 보다 복잡해진다. 
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch08/homl08-08.png" width="600"/></div>
 
 # ## PCA(주성분 분석)
 
-# * 훈련 데이터에 가장 가까운 초평면(hyperplane)을 정의한 다음, 그 평면에 사영하는 기법
+# 훈련 데이터셋을 특정 초평면(hyperplane)에 사영하는 기법이다.
+# 초평면은 **주성분 분석**<font size='2'>principal component analysis</font>(PCA)을
+# 이용하여 결정한다.
+# 초평면 결정에 **분산 보존** 개념과 **주성분** 개념이 중요하다.
+
+# **분산 보존**
+
+# 저차원으로 사영할 때 훈련셋의 분산이 최대한 유지되도록 축을 지정해야 한다.
+# 아래 그림에서 $c_1$ 벡터가 위치한 실선 축으로 사영하는 경우가 분산을 최대한 보존한다.
+
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch08/homl08-09.png" width="500"/></div>
+
+# **주성분과 특잇값 분해(SVD)**
 # 
-# * **주성분 분석**<font size='2'>principal component analysis</font>(PCA)이 핵심.
+# 주성분은 다음 과정으로 차례대로 찾아야 한다. 
 # 
-# * 분산 보존 개념과 주성분 개념이 중요함.
-
-# ### 분산 보존
-
-# * 분산 보존: 저차원으로 사영할 때 훈련 세트의 분산이 최대한 유지되도록 축을 지정해야 함.
-# 
-# * 예제: 아래 그림에서 $c_1$ 벡터가 위치한 실선 축으로 사영하는 경우가 분산을 최대한 보존함.
-#     그러면 $c_1$에 수직이면서 분산을 최대로 보존하는 축은 $c_2$임.
-
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch08/homl08-09.png" width="600"/></div>
-
-# **주성분**
-
 # * 첫째 주성분: 분산을 최대한 보존하는 축
-# 
 # * 둘째 주성분: 첫째 주성분과 수직을 이루면서 분산을 최대한 보존하는 축
-# 
 # * 셋째 주성분: 첫째, 둘째 주성분과 수직을 이루면서 분산을 최대한 보존하는 축
-# 
 # * ...
-
-# **주성분과 사영**
-
-# * 특잇값 분해(SVD) 기법을 이용하면 쉽게 해결됨.
-
-# * 특잇값 분해: m x n 모양을 가지며, 평균값이 0인 데이터셋 $X$가 주어졌을 때 
-#     아래 조건을 만족시키는 세 개의 행렬 
-#     $U$, $\Sigma$, $V$가 존재.
-#     - $U$: m x m 행렬
-#     - $\Sigma$: m x n 모양의 대각행렬(diagonal matrix). 
-#     - $V$: n x n 행렬. 윗첨자 $T$는 전치행렬을 의미함.
 # 
-#     $$
-#     X = U\, \Sigma \, V^{\!T}
-#     $$
-# 
-# 
-
-# * 주성분 벡터는 행렬 $V$의 열에 해당하며, 따라서
-#     $d$차원으로의 사영은 아래와 같이 계산됨:
-#     
-#     $$
-#     X\, (V\text{[: ,  :d]})
-#     $$
+# 하지만 특잇값 분해(SVD) 기법을 이용하면 쉽게 찾을 수 있으며,
+# 찾아진 초평면으로의 사영 또한 수학적으로 쉽게 계산된다.
 
 # **사이킷런의 `PCA` 모델**
 
-# * 사이킷런의 PCA 모델 제공
-#     * SVD 기법 활용
-
-# * 예제: 데이터셋의 차원을 2로 줄이기
+# 사이킷런의 `PCA` 모델은 SVD 기법을 활용한다.
+# 예를 들어 아래 코드는 데이터셋의 차원을 2로 줄인다.
 # 
-#     ```python
-#     from sklearn.decomposition import PCA
+# ```python
+# pca = PCA(n_components=2)
+# X2D = pca.fit_transform(X)
+# ```
+
+# **설명 분산 비율**
+
+# 훈련된 모델의 `explained_variance_ration_` 속성 변수에 각 주성분에 대한 원 데이터셋의 분산 비율이 저장된다.
+# 예를 들어 아래 사영 그림에서 설명된 3차원 데이터셋의 경우,
+# 새로운 축을 기준으로 원 데이터셋의 분산 비율은 다음과 같다.
 # 
-#     pca = PCA(n_components = 2)
-#     X2D = pca.fit_transform(X)
-#     ```
-
-# ### 설명 분산 비율
-
-# * `explained_variance_ration_` 속성 변수: 각 주성분에 대한 원 데이터셋의 분산 비율 저장
-
-# * 예제: 아래 사영 그림에서 설명된 3차원 데이터셋의 경우.
-#     * $z_1$ 축: 75.8%
-#     * $z_2$ 축: 15.2%
-
+# * $z_1$ 축: 75.8%
+# * $z_2$ 축: 15.2%
+# 
 # ```python
 # >>> pca.explained_variance_ratio_
 # array([0.7578477 , 0.15186921])
@@ -193,98 +163,108 @@
 
 # <table>
 #     <tr>
-#         <td> <img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch08/homl08-02-1.png" width="400"/> </td>
+#         <td> <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch08/homl08-02-1.png" width="400"/></div> </td>
 #         <td></td>
-#         <td> <img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch08/homl08-02-2.png" width="400"/> </td>
+#         <td> <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch08/homl08-02-2.png" width="400"/></div> </td>
 #     </tr>
 # </table>
 
 # **적절한 차원**
-
-# * 적절한 차원: 밝혀진 분산 비율의 합이 95% 정도 되도록 하는 주성분들로 구성
-
-# * 데이터 시각화 목적의 경우: 2개 또는 3개
+# 
+# 밝혀진 분산 비율의 합이 95% 정도 되도록 하는 주성분들로 구성되도록 차원을 정하는 것이 좋다.
+# 반면에 데이터 시각화가 목적인 경우엔 2개 또는 3개의 주성분만을 사용해야 한다.
 
 # **설명 분산 비율 활용**
-
-# * 설명 분산 비율의 합과 차원 사이의 그래프 활용
-
-# * 설명 분산의 비율의 합의 증가가 완만하게 변하는 지점(elbow)에 주시할 것.
-
+# 
+# 적절한 차원을 결정하기 위해 설명 분산 비율의 합과 차원 사이의 그래프를 활용할 수도 있다.
+# 예를 들어 설명 분산의 비율의 합의 증가가 완만하게 변하는 지점(elbow)에 주시하면 좋다.
+# 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch08/homl08-10.png" width="400"/></div>
 
-# **(MNIST 활용 예제) 압축을 위한 PCA**
-
-# * PCA를 MNIST 데이터셋의 차원축소를 위해 사용할 수 있음.
+# 위 그래프를 통해 설명 분산 비율의 합이 95% 정도가 되려면 154개의 차원이 필요함을 확인할 수 있다.
+# 따라서 `n_components = 154` 를 하이퍼파라미터로 지정할 수 있으나
+# 이보다는 `n_components = 0.95` 로 지정하는 것이 보다 편리하다.
 # 
-# * MINST 데이터셋의 주성분 분석을 통해 95% 정도의 분산을 유지하려면 154개 정도의 주성분만 사용해도 됨.
+# ```python
+# pca = PCA(n_components = 0.95)
+# X_reduced = pca.fit_transform(X_train)
+# ```
+
+# **파이프라인과 랜덤 탐색 활용**
 # 
-# * 아래 코드: 154개 주성분 사용하여 차원축소하기
+# 적절한 차원을 찾기 위해 `PCA` 를 전처리로 사용하는 파이프라인을 생성하여
+# 랜덤 탐색을 이용할 수 있다.
+# 예를 들어, 아래 코드는 차원 축소와 랜덤 포레스트 모델을 파이프라인으로 엮어서
+# 랜텀 탐색을 이용하여 적절한 차원을 찾는다.
 # 
-#     ```python
-#     pca = PCA(n_components = 154)
-#     X_reduced = pca.fit_transform(X_train)
-#     ```
+# ```python
+# clf = make_pipeline(PCA(random_state=42),
+#                     RandomForestClassifier(random_state=42))
+# param_distrib = {
+#     "pca__n_components": np.arange(10, 80),
+#     "randomforestclassifier__n_estimators": np.arange(50, 500)
+# }
+# rnd_search = RandomizedSearchCV(clf, param_distrib, n_iter=10, cv=3,
+#                                 random_state=42)
+# rnd_search.fit(X_train[:1000], y_train[:1000])
+# ```
 
-# ### 재구성 오차
+# **파일 압축**
 
-# * 차원축소 결과:
-#     * 784차원을 154 차원으로 줄임.
-#     * 유실된 정보: 5%
-#     * 크기: 원본 데이터셋 크기의 20%
-
-# * 원본과의 비교: 정보손실 크지 않음 확인 가능
+# 파일 압축 용도로 PCA를 활용할 수 있다.
+# MNIST 데이터셋의 경우 784차원을 154 차원으로 줄이면 
+# 데이터셋의 크기가 원래의 20% 수준에 불과해지며]
+# 훈련 속도는 훨씬 빨라진다. 
+# 하지만 정보는 5% 정도만 잃는다.
+# 정보 손실이 크지않음을 아래 두 그림이 확인해준다.
+# 왼쪽이 원본이고 오른쪽이 압축된 데이터들이다.
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch08/homl08-11.png" width="400"/></div>
 
-# ### 랜덤 PCA
+# **랜덤 PCA**
 
-# * 주성분 선택을 위해 사용되는 SVD 알고리즘을 확률적으로 작동하도록 만드는 기법
+# 주성분 선택을 위해 사용되는 SVD 알고리즘을 확률적으로 작동하도록 만드는 기법이다.
+# 보다 빠르게 지정된 개수의 주성분에 대한 근삿값을 찾아준다.
 # 
-# * 보다 빠르게 지정된 개수의 주성분에 대한 근삿값을 찾아줌.
-# 
-# * $d$가 $n$ 보다 많이 작으면 기본 SVD 보다 훨씬 빠름.
-#     - 기존의 특잇값 분해 알고리즘의 시간 복잡도: $O(m \times n^2) + O(n^3)$
-#     - 랜덤 특잇값 분해 알고리즘의 시간 복잡도: $O(m \times d^2) + O(d^3)$
-# 
-# 
-# * 아래 코드: `svd_solver` 옵션을 `"randomized"`로 설정
-# 
-#     ```python
-#     rnd_pca = PCA(n_components = 154, svd_solver="randomized")
-#     X_reduced = rnd_pca.fit_transform(X_train)
-#     ```
+# ```python
+# rnd_pca = PCA(n_components = 154, svd_solver="randomized")
+# X_reduced = rnd_pca.fit_transform(X_train)
+# ```
 
-# ### 점진적 PCA
+# **점진적 PCA**
 
-# * 훈련세트를 미니배치로 나눈 후 IPCA(점진적 PCA)에 하나씩 주입 가능
-
-# * 온라인 학습에 적용 가능
-
-# * `partial_fit()` 활용에 주의할 것.
+# 훈련세트를 미니배치로 나눈 후 IPCA(점진적 PCA)에 하나씩 주입하는 모델이며,
+# 온라인 학습에 활용될 수 있다.
+# 단, 훈련에 `partial_fit()` 을 사용한다.
 # 
-#     ```python
-#     from sklearn.decomposition import IncrementalPCA
+# ```python
+# n_batches = 100
+# inc_pca = IncrementalPCA(n_components=154)
+# for X_batch in np.array_split(X_train, n_batches):
+#     inc_pca.partial_fit(X_batch)
 # 
-#     n_batches = 100
-#     inc_pca = IncrementalPCA(n_components=154)
-#     for X_batch in np.array_split(X_train, n_batches):
-#         inc_pca.partial_fit(X_batch)
+# X_reduced = inc_pca.transform(X_train)
+# ```
+
+# **`memmap` 클래스 활용**
 # 
-#     X_reduced = inc_pca.transform(X_train)
-#     ```
-
-# **넘파이의 `memmap()` 클래스 활용**
-
-# * 바이너리 파일로 저장된 (매우 큰) 데이터셋을 마치 메모리에 들어있는 것처럼 취급할 수 있는 도구 제공
-
-# * 이를 이용하여 미니배치/온라인 학습 가능
+# 넘파이의 `memmap` 클래스는
+# 바이너리 파일로 저장된 (매우 큰) 데이터셋을 마치 메모리에 들어있는 것처럼 취급할 수 있는 도구를
+# 제공한다.
 # 
-#     ```python
-#     X_mm = np.memmap(filename, dtype="float32", mode="readonly", shape=(m, n))
-#     inc_pca = IncrementalPCA(n_components=154, batch_size=batch_size)
-#     inc_pca.fit(X_mm)
-#     ```
+# 이를 이용하여 미니배치/온라인 학습이 가능하다.
+# 
+# ```python
+# filename = "my_mnist.mmap"
+# X_mmap = np.memmap(filename, dtype='float32', mode='write', shape=X_train.shape)
+# X_mmap[:] = X_train  # could be a loop instead, saving the data chunk by chunk
+# X_mmap.flush()
+# 
+# X_mmap = np.memmap(filename, dtype="float32", mode="readonly").reshape(-1, 784)
+# batch_size = X_mmap.shape[0] // n_batches
+# inc_pca = IncrementalPCA(n_components=154, batch_size=batch_size)
+# inc_pca.fit(X_mmap)
+# ```
 
 # ## 임의 사영
 
@@ -355,17 +335,26 @@
 
 # <table>
 #     <tr>
-#         <td> <img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch08/homl08-04.png" width="300"/> </td>
+#         <td> <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch08/homl08-04.png" width="350"/></div> </td>
 #         <td></td>
-#         <td> <img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch08/homl08-14.png" width="370"/> </td>
+#         <td> <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch08/homl08-14.png" width="370"/></div> </td>
 #     </tr>
 # </table>
 
-# ## 부록: 사이킷런의 기타 차원 축소 모델
+# ## 부록: 기타 차원 축소 모델
+
+# 사이킷런에서 제공하는 기타 차원 축소 모델은 다음과 같다.
 # 
 # * 다차원 스케일링<font size='2'>Multidimensional Scaling</font>(MDS)
 # * Isomap
 # * t-SNE(t-Distributed Stochasting Neighbor Embedding)
 # * 선형 판별 분석<font size='2'>Linear Discriminant Analysis</font>(LDA)
+# * 커널 PCA
+
+# 아래 그림은 롤케이크를 각각 MDS, Isomap, t-SNE 방식으로 2차원으로 변환한 결과를 보여준다.
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch08/homl08-15.png" width="700"/></div>
+
+# 아래 그림은 롤케이크를 다양한 커널을 이용하여 커널 PCA로 2차원 데이터셋으로 변환한 결과를 보여준다.
+
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch08/homl08-16.png" width="730"/></div>
