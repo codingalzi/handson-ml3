@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>9. 비지도 학습 &#8212; 핸즈온 머신러닝(3판)</title>
+    <title>9장 비지도학습 &#8212; 핸즈온 머신러닝(3판)</title>
     
   <link href="_static/css/theme.css" rel="stylesheet">
   <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -53,7 +53,6 @@ const thebe_selector_output = ".output, .cell_output"
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="8. 차원 축소" href="dimensionality_reduction.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -85,7 +84,7 @@ const thebe_selector_output = ".output, .cell_output"
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        <ul class="current nav bd-sidenav">
+        <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="ml_landscape.html">
    1. 한눈에 보는 머신러닝
@@ -126,8 +125,8 @@ const thebe_selector_output = ".output, .cell_output"
    8. 차원 축소
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="unsupervised_learning.html">
    9. 비지도 학습
   </a>
  </li>
@@ -172,7 +171,7 @@ const thebe_selector_output = ".output, .cell_output"
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/unsupervised_learning.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="_sources/handson-ml2-09.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -192,7 +191,7 @@ const thebe_selector_output = ".output, .cell_output"
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/codingalzi/handson-ml3/issues/new?title=Issue%20on%20page%20%2Funsupervised_learning.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/codingalzi/handson-ml3/issues/new?title=Issue%20on%20page%20%2Fhandson-ml2-09.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -213,7 +212,7 @@ const thebe_selector_output = ".output, .cell_output"
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/codingalzi/handson-ml3/master?urlpath=tree/jupyter-book/unsupervised_learning.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/codingalzi/handson-ml3/master?urlpath=tree/jupyter-book/handson-ml2-09.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="_static/images/logo_binder.svg"
@@ -235,334 +234,322 @@ const thebe_selector_output = ".output, .cell_output"
             </div>
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   9. 비지도 학습
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   감사의 글
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id2">
-   10. 9장 비지도학습
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   주요 내용
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id3">
-     10.1. 감사의 글
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id4">
-     10.2. 주요 내용
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   비지도 학습이란?
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id5">
-     10.3. 비지도 학습이란?
+     군집화
     </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id6">
-       10.3.1. 군집화
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id7">
-       10.3.2. 이상치 탐지
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id8">
-       10.3.3. 데이터 밀도 추정
-      </a>
-     </li>
-    </ul>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id6">
+     이상치 탐지
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id7">
+     데이터 밀도 추정
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id8">
+   9.1 군집 군집화
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id9">
-     10.4. 9.1 군집 군집화
+     분류 대 군집화
     </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id10">
-       10.4.1. 분류 대 군집화
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id11">
-       10.4.2. 군집의 정의
-      </a>
-     </li>
-    </ul>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#k">
-     10.5. k-평균
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id10">
+     군집의 정의
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#k">
+   k-평균
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id11">
+     결정 경계
     </a>
     <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#id12">
-       10.5.1. 결정 경계
+       보로노이 다이어그램
       </a>
-      <ul class="nav section-nav flex-column">
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id13">
-         10.5.1.1. 보로노이 다이어그램
-        </a>
-       </li>
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id14">
-         10.5.1.2. 하드 군집화 대 소프트 군집화
-        </a>
-       </li>
-      </ul>
      </li>
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id13">
+       하드 군집화 대 소프트 군집화
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id14">
+     k-평균 알고리즘
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#id15">
-       10.5.2. k-평균 알고리즘
-      </a>
-      <ul class="nav section-nav flex-column">
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id16">
-         10.5.2.1. k-평균 알고리즘의 단점
-        </a>
-       </li>
-      </ul>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#inertia">
-       10.5.3. 관성(inertia, 이너셔)
+       k-평균 알고리즘의 단점
       </a>
      </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#kmeans">
-       10.5.4. KMeans 모델의 알고리즘
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#inertia">
+     관성(inertia, 이너셔)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#kmeans">
+     KMeans 모델의 알고리즘
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id16">
+     미니배치 k-평균
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#id17">
-       10.5.5. 미니배치 k-평균
+       큰 데이터셋 다루기
       </a>
-      <ul class="nav section-nav flex-column">
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id18">
-         10.5.5.1. 큰 데이터셋 다루기
-        </a>
-       </li>
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id19">
-         10.5.5.2. 미니배치 k-평균의 특징
-        </a>
-       </li>
-      </ul>
      </li>
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id18">
+       미니배치 k-평균의 특징
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id19">
+     k-평균 모델의 최적의 군집수 찾기
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#id20">
-       10.5.6. k-평균 모델의 최적의 군집수 찾기
+       관성과 군집수
       </a>
-      <ul class="nav section-nav flex-column">
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id21">
-         10.5.6.1. 관성과 군집수
-        </a>
-       </li>
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id22">
-         10.5.6.2. 실루엣 점수와 군집수
-        </a>
-       </li>
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id23">
-         10.5.6.3. 실루엣 다이어그램과 군집수
-        </a>
-       </li>
-      </ul>
      </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id24">
-       10.5.7. k-평균의 한계
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id21">
+       실루엣 점수와 군집수
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id22">
+       실루엣 다이어그램과 군집수
       </a>
      </li>
     </ul>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id23">
+     k-평균의 한계
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id24">
+   군집화 활용
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id25">
-     10.6. 군집화 활용
+     이미지 색상 분할
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id26">
+     차원축소
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id27">
+     준지도 학습
     </a>
     <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id26">
-       10.6.1. 이미지 색상 분할
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id27">
-       10.6.2. 차원축소
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#id28">
-       10.6.3. 준지도 학습
+       레이블 전파
       </a>
-      <ul class="nav section-nav flex-column">
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id29">
-         10.6.3.1. 레이블 전파
-        </a>
-       </li>
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id30">
-         10.6.3.2. 준지도학습과 능동학습
-        </a>
-       </li>
-      </ul>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id29">
+       준지도학습과 능동학습
+      </a>
      </li>
     </ul>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#dbscan">
-     10.7. DBSCAN
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dbscan">
+   DBSCAN
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id30">
+     사이킷런의 DBSCAN 모델
     </a>
     <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#id31">
-       10.7.1. 사이킷런의 DBSCAN 모델
+       핵심샘플과 군집
       </a>
-      <ul class="nav section-nav flex-column">
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id32">
-         10.7.1.1. 핵심샘플과 군집
-        </a>
-       </li>
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id33">
-         10.7.1.2. 이상치
-        </a>
-       </li>
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id34">
-         10.7.1.3. 예제
-        </a>
-       </li>
-      </ul>
      </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id35">
-       10.7.2. DBSCAN과 예측
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id32">
+       이상치
       </a>
-      <ul class="nav section-nav flex-column">
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id36">
-         10.7.2.1. 이상치 판단
-        </a>
-       </li>
-      </ul>
      </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id37">
-       10.7.3. DBSCAN의 장단점
-      </a>
-      <ul class="nav section-nav flex-column">
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id38">
-         10.7.3.1. 계산복잡도
-        </a>
-       </li>
-      </ul>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id39">
-       10.7.4. 기타 군집 알고리즘
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id33">
+       예제
       </a>
      </li>
     </ul>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id40">
-     10.8. 9.2 가우시안 혼합 모델
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id34">
+     DBSCAN과 예측
     </a>
     <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id41">
-       10.8.1. 정규분포 소개
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id42">
-       10.8.2. 군집
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id43">
-       10.8.3. 예제
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#gmm">
-       10.8.4. GMM 활용
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id44">
-       10.8.5. GMM 모델 규제
-      </a>
-      <ul class="nav section-nav flex-column">
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#covariance-type">
-         10.8.5.1. covariance_type 옵션값
-        </a>
-       </li>
-      </ul>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id45">
-       10.8.6. 가우시안 혼합 모델 활용: 이상치 탐지
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id46">
-       10.8.7. 가우션 혼합모델 군집수 지정
-      </a>
-      <ul class="nav section-nav flex-column">
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id47">
-         10.8.7.1. 이론적 정보 기준
-        </a>
-       </li>
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id48">
-         10.8.7.2. 군집수와 정보조건
-        </a>
-       </li>
-      </ul>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id49">
-       10.8.8. 베이즈 가우시안 혼합 모델
-      </a>
-      <ul class="nav section-nav flex-column">
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#bayesiangaussianmixture">
-         10.8.8.1. BayesianGaussianMixture 모델
-        </a>
-       </li>
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id50">
-         10.8.8.2. 사전 믿음
-        </a>
-       </li>
-      </ul>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id51">
-       10.8.9. 가우시안 혼합 모델의 장단점
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id52">
-       10.8.10. 이상치 탐지와 특이치 탐지를 위한 다른 알고리즘
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id35">
+       이상치 판단
       </a>
      </li>
     </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id36">
+     DBSCAN의 장단점
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id37">
+       계산복잡도
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id38">
+     기타 군집 알고리즘
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id39">
+   9.2 가우시안 혼합 모델
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id40">
+     정규분포 소개
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id41">
+     군집
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id42">
+     예제
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#gmm">
+     GMM 활용
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id43">
+     GMM 모델 규제
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#covariance-type">
+       covariance_type 옵션값
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id44">
+     가우시안 혼합 모델 활용: 이상치 탐지
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id45">
+     가우션 혼합모델 군집수 지정
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id46">
+       이론적 정보 기준
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id47">
+       군집수와 정보조건
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id48">
+     베이즈 가우시안 혼합 모델
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#bayesiangaussianmixture">
+       BayesianGaussianMixture 모델
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id49">
+       사전 믿음
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id50">
+     가우시안 혼합 모델의 장단점
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id51">
+     이상치 탐지와 특이치 탐지를 위한 다른 알고리즘
+    </a>
    </li>
   </ul>
  </li>
@@ -576,7 +563,7 @@ const thebe_selector_output = ".output, .cell_output"
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>비지도 학습</h1>
+                <h1>9장 비지도학습</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -586,334 +573,322 @@ const thebe_selector_output = ".output, .cell_output"
                         </div>
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   9. 비지도 학습
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   감사의 글
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id2">
-   10. 9장 비지도학습
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   주요 내용
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id3">
-     10.1. 감사의 글
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id4">
-     10.2. 주요 내용
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   비지도 학습이란?
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id5">
-     10.3. 비지도 학습이란?
+     군집화
     </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id6">
-       10.3.1. 군집화
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id7">
-       10.3.2. 이상치 탐지
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id8">
-       10.3.3. 데이터 밀도 추정
-      </a>
-     </li>
-    </ul>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id6">
+     이상치 탐지
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id7">
+     데이터 밀도 추정
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id8">
+   9.1 군집 군집화
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id9">
-     10.4. 9.1 군집 군집화
+     분류 대 군집화
     </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id10">
-       10.4.1. 분류 대 군집화
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id11">
-       10.4.2. 군집의 정의
-      </a>
-     </li>
-    </ul>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#k">
-     10.5. k-평균
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id10">
+     군집의 정의
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#k">
+   k-평균
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id11">
+     결정 경계
     </a>
     <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#id12">
-       10.5.1. 결정 경계
+       보로노이 다이어그램
       </a>
-      <ul class="nav section-nav flex-column">
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id13">
-         10.5.1.1. 보로노이 다이어그램
-        </a>
-       </li>
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id14">
-         10.5.1.2. 하드 군집화 대 소프트 군집화
-        </a>
-       </li>
-      </ul>
      </li>
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id13">
+       하드 군집화 대 소프트 군집화
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id14">
+     k-평균 알고리즘
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#id15">
-       10.5.2. k-평균 알고리즘
-      </a>
-      <ul class="nav section-nav flex-column">
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id16">
-         10.5.2.1. k-평균 알고리즘의 단점
-        </a>
-       </li>
-      </ul>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#inertia">
-       10.5.3. 관성(inertia, 이너셔)
+       k-평균 알고리즘의 단점
       </a>
      </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#kmeans">
-       10.5.4. KMeans 모델의 알고리즘
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#inertia">
+     관성(inertia, 이너셔)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#kmeans">
+     KMeans 모델의 알고리즘
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id16">
+     미니배치 k-평균
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#id17">
-       10.5.5. 미니배치 k-평균
+       큰 데이터셋 다루기
       </a>
-      <ul class="nav section-nav flex-column">
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id18">
-         10.5.5.1. 큰 데이터셋 다루기
-        </a>
-       </li>
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id19">
-         10.5.5.2. 미니배치 k-평균의 특징
-        </a>
-       </li>
-      </ul>
      </li>
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id18">
+       미니배치 k-평균의 특징
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id19">
+     k-평균 모델의 최적의 군집수 찾기
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#id20">
-       10.5.6. k-평균 모델의 최적의 군집수 찾기
+       관성과 군집수
       </a>
-      <ul class="nav section-nav flex-column">
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id21">
-         10.5.6.1. 관성과 군집수
-        </a>
-       </li>
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id22">
-         10.5.6.2. 실루엣 점수와 군집수
-        </a>
-       </li>
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id23">
-         10.5.6.3. 실루엣 다이어그램과 군집수
-        </a>
-       </li>
-      </ul>
      </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id24">
-       10.5.7. k-평균의 한계
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id21">
+       실루엣 점수와 군집수
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id22">
+       실루엣 다이어그램과 군집수
       </a>
      </li>
     </ul>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id23">
+     k-평균의 한계
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id24">
+   군집화 활용
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id25">
-     10.6. 군집화 활용
+     이미지 색상 분할
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id26">
+     차원축소
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id27">
+     준지도 학습
     </a>
     <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id26">
-       10.6.1. 이미지 색상 분할
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id27">
-       10.6.2. 차원축소
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#id28">
-       10.6.3. 준지도 학습
+       레이블 전파
       </a>
-      <ul class="nav section-nav flex-column">
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id29">
-         10.6.3.1. 레이블 전파
-        </a>
-       </li>
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id30">
-         10.6.3.2. 준지도학습과 능동학습
-        </a>
-       </li>
-      </ul>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id29">
+       준지도학습과 능동학습
+      </a>
      </li>
     </ul>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#dbscan">
-     10.7. DBSCAN
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dbscan">
+   DBSCAN
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id30">
+     사이킷런의 DBSCAN 모델
     </a>
     <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#id31">
-       10.7.1. 사이킷런의 DBSCAN 모델
+       핵심샘플과 군집
       </a>
-      <ul class="nav section-nav flex-column">
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id32">
-         10.7.1.1. 핵심샘플과 군집
-        </a>
-       </li>
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id33">
-         10.7.1.2. 이상치
-        </a>
-       </li>
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id34">
-         10.7.1.3. 예제
-        </a>
-       </li>
-      </ul>
      </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id35">
-       10.7.2. DBSCAN과 예측
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id32">
+       이상치
       </a>
-      <ul class="nav section-nav flex-column">
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id36">
-         10.7.2.1. 이상치 판단
-        </a>
-       </li>
-      </ul>
      </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id37">
-       10.7.3. DBSCAN의 장단점
-      </a>
-      <ul class="nav section-nav flex-column">
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id38">
-         10.7.3.1. 계산복잡도
-        </a>
-       </li>
-      </ul>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id39">
-       10.7.4. 기타 군집 알고리즘
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id33">
+       예제
       </a>
      </li>
     </ul>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id40">
-     10.8. 9.2 가우시안 혼합 모델
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id34">
+     DBSCAN과 예측
     </a>
     <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id41">
-       10.8.1. 정규분포 소개
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id42">
-       10.8.2. 군집
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id43">
-       10.8.3. 예제
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#gmm">
-       10.8.4. GMM 활용
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id44">
-       10.8.5. GMM 모델 규제
-      </a>
-      <ul class="nav section-nav flex-column">
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#covariance-type">
-         10.8.5.1. covariance_type 옵션값
-        </a>
-       </li>
-      </ul>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id45">
-       10.8.6. 가우시안 혼합 모델 활용: 이상치 탐지
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id46">
-       10.8.7. 가우션 혼합모델 군집수 지정
-      </a>
-      <ul class="nav section-nav flex-column">
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id47">
-         10.8.7.1. 이론적 정보 기준
-        </a>
-       </li>
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id48">
-         10.8.7.2. 군집수와 정보조건
-        </a>
-       </li>
-      </ul>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id49">
-       10.8.8. 베이즈 가우시안 혼합 모델
-      </a>
-      <ul class="nav section-nav flex-column">
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#bayesiangaussianmixture">
-         10.8.8.1. BayesianGaussianMixture 모델
-        </a>
-       </li>
-       <li class="toc-h4 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id50">
-         10.8.8.2. 사전 믿음
-        </a>
-       </li>
-      </ul>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id51">
-       10.8.9. 가우시안 혼합 모델의 장단점
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id52">
-       10.8.10. 이상치 탐지와 특이치 탐지를 위한 다른 알고리즘
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id35">
+       이상치 판단
       </a>
      </li>
     </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id36">
+     DBSCAN의 장단점
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id37">
+       계산복잡도
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id38">
+     기타 군집 알고리즘
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id39">
+   9.2 가우시안 혼합 모델
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id40">
+     정규분포 소개
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id41">
+     군집
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id42">
+     예제
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#gmm">
+     GMM 활용
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id43">
+     GMM 모델 규제
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#covariance-type">
+       covariance_type 옵션값
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id44">
+     가우시안 혼합 모델 활용: 이상치 탐지
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id45">
+     가우션 혼합모델 군집수 지정
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id46">
+       이론적 정보 기준
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id47">
+       군집수와 정보조건
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id48">
+     베이즈 가우시안 혼합 모델
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#bayesiangaussianmixture">
+       BayesianGaussianMixture 모델
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id49">
+       사전 믿음
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id50">
+     가우시안 혼합 모델의 장단점
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id51">
+     이상치 탐지와 특이치 탐지를 위한 다른 알고리즘
+    </a>
    </li>
   </ul>
  </li>
@@ -926,17 +901,14 @@ const thebe_selector_output = ".output, .cell_output"
             
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="ch-unsupervisedlearning">
-<span id="id1"></span><h1><span class="section-number">9. </span>비지도 학습<a class="headerlink" href="#ch-unsupervisedlearning" title="Permalink to this headline">¶</a></h1>
-</div>
-<div class="tex2jax_ignore mathjax_ignore section" id="id2">
-<h1><span class="section-number">10. </span>9장 비지도학습<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="id3">
-<h2><span class="section-number">10.1. </span>감사의 글<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+  <div class="tex2jax_ignore mathjax_ignore section" id="id1">
+<h1>9장 비지도학습<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id2">
+<h2>감사의 글<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>자료를 공개한 저자 오렐리앙 제롱과 강의자료를 지원한 한빛아카데미에게 진심어린 감사를 전합니다.</p>
 </div>
-<div class="section" id="id4">
-<h2><span class="section-number">10.2. </span>주요 내용<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h2>주요 내용<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>군집/군집화</p></li>
 </ul>
@@ -950,8 +922,8 @@ const thebe_selector_output = ".output, .cell_output"
 <li><p>가우시안 혼합</p></li>
 </ul>
 </div>
-<div class="section" id="id5">
-<h2><span class="section-number">10.3. </span>비지도 학습이란?<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id4">
+<h2>비지도 학습이란?<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>레이블이 없는 데이터 학습</p>
 <ul>
@@ -968,8 +940,8 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 </li>
 </ul>
-<div class="section" id="id6">
-<h3><span class="section-number">10.3.1. </span>군집화<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id5">
+<h3>군집화<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>비슷한 샘플끼리 군집 형성하기</p></li>
 </ul>
@@ -987,8 +959,8 @@ const thebe_selector_output = ".output, .cell_output"
 </li>
 </ul>
 </div>
-<div class="section" id="id7">
-<h3><span class="section-number">10.3.2. </span>이상치 탐지<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id6">
+<h3>이상치 탐지<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>정상테이터 학습 후 이상치 탐지.</p></li>
 </ul>
@@ -1001,8 +973,8 @@ const thebe_selector_output = ".output, .cell_output"
 </li>
 </ul>
 </div>
-<div class="section" id="id8">
-<h3><span class="section-number">10.3.3. </span>데이터 밀도 추정<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id7">
+<h3>데이터 밀도 추정<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>데이터셋의 확률밀도함수 추정 가능</p></li>
 </ul>
@@ -1017,16 +989,16 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 </div>
 </div>
-<div class="section" id="id9">
-<h2><span class="section-number">10.4. </span>9.1 군집 군집화<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id8">
+<h2>9.1 군집 군집화<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>군집(클러스터, cluster): 유사한 샘플들의 모음(집합, 그룹)</p></li>
 </ul>
 <ul class="simple">
 <li><p>군집화(클러스터링, clustering): 유사한 부류의 대상들로 이루어진 군집 만들기</p></li>
 </ul>
-<div class="section" id="id10">
-<h3><span class="section-number">10.4.1. </span>분류 대 군집화<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id9">
+<h3>분류 대 군집화<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>유사점: 각 샘플에 하나의 그룹 할당</p></li>
 </ul>
@@ -1041,8 +1013,8 @@ const thebe_selector_output = ".output, .cell_output"
 단, 꽃잎의 너비/길이, 꽃받침의 너비/길이 모두 특성으로 사용해야 함.</p></li>
 </ul>
 <div align="center"><img src="images/ch09/homl09-02.png" width="400"/></div></div>
-<div class="section" id="id11">
-<h3><span class="section-number">10.4.2. </span>군집의 정의<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id10">
+<h3>군집의 정의<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>보편적 정의 없음. 사용되는 알고리즘에 따라 다른 형식으로 군집 형성</p></li>
 </ul>
@@ -1058,15 +1030,15 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="section" id="k">
-<h2><span class="section-number">10.5. </span>k-평균<a class="headerlink" href="#k" title="Permalink to this headline">¶</a></h2>
+<h2>k-평균<a class="headerlink" href="#k" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>각 군집의 중심을 찾고 가장 가까운 군집에 샘플 할당</p></li>
 </ul>
 <ul class="simple">
 <li><p>군집수(<code class="docutils literal notranslate"><span class="pre">n_clusters</span></code>) 지정해야 함.</p></li>
 </ul>
-<div class="section" id="id12">
-<h3><span class="section-number">10.5.1. </span>결정 경계<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id11">
+<h3>결정 경계<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>예제: 샘플 덩어리 다섯 개로 이루어진 데이터셋</p></li>
 </ul>
@@ -1077,8 +1049,8 @@ const thebe_selector_output = ".output, .cell_output"
 <span class="n">y_pred</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="section" id="id13">
-<h4><span class="section-number">10.5.1.1. </span>보로노이 다이어그램<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id12">
+<h4>보로노이 다이어그램<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>평면을 특정 점까지의 거리가 가장 가까운 점의 집합으로 분할한 그림</p></li>
 </ul>
@@ -1086,8 +1058,8 @@ const thebe_selector_output = ".output, .cell_output"
 <li><p>경계 부분의 일부 샘플을 제외하고 기본적으로 군집이 잘 구성됨.</p></li>
 </ul>
 <img src="images/ch09/homl09-04.png" width="450"/></div>
-<div class="section" id="id14">
-<h4><span class="section-number">10.5.1.2. </span>하드 군집화 대 소프트 군집화<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id13">
+<h4>하드 군집화 대 소프트 군집화<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>하드 군집화: 각 샘플에 대해 가장 가까운 군집 선택</p></li>
 </ul>
@@ -1096,8 +1068,8 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 </div>
 </div>
-<div class="section" id="id15">
-<h3><span class="section-number">10.5.2. </span>k-평균 알고리즘<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id14">
+<h3>k-평균 알고리즘<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>먼저 <span class="math notranslate nohighlight">\(k\)</span> 개의 센트로이드를 무작위로 선택한 후
 수렴할 때까지 다음 과정 반복</p>
@@ -1107,8 +1079,8 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 </li>
 </ul>
-<div align="center"><img src="images/ch09/homl09-05.png" width="500"/></div><div class="section" id="id16">
-<h4><span class="section-number">10.5.2.1. </span>k-평균 알고리즘의 단점<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h4>
+<div align="center"><img src="images/ch09/homl09-05.png" width="500"/></div><div class="section" id="id15">
+<h4>k-평균 알고리즘의 단점<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>군집의 크기가 서로 많이 다르면 잘 작동하지 않음.
 이유는 샘플과 센트로이드까지의 거리만 고려되기 때문임.</p></li>
@@ -1119,7 +1091,7 @@ const thebe_selector_output = ".output, .cell_output"
 <div align="center"><img src="images/ch09/homl09-06.png" width="700"/></div></div>
 </div>
 <div class="section" id="inertia">
-<h3><span class="section-number">10.5.3. </span>관성(inertia, 이너셔)<a class="headerlink" href="#inertia" title="Permalink to this headline">¶</a></h3>
+<h3>관성(inertia, 이너셔)<a class="headerlink" href="#inertia" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>샘플과 가장 가까운 센트로이드와의 거리의 제곱의 합</p></li>
 </ul>
@@ -1143,7 +1115,7 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 </div>
 <div class="section" id="kmeans">
-<h3><span class="section-number">10.5.4. </span>KMeans 모델의 알고리즘<a class="headerlink" href="#kmeans" title="Permalink to this headline">¶</a></h3>
+<h3>KMeans 모델의 알고리즘<a class="headerlink" href="#kmeans" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>k-평균++ 초기화 알고리즘</p>
 <ul>
@@ -1161,8 +1133,8 @@ const thebe_selector_output = ".output, .cell_output"
 </li>
 </ul>
 </div>
-<div class="section" id="id17">
-<h3><span class="section-number">10.5.5. </span>미니배치 k-평균<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id16">
+<h3>미니배치 k-평균<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>미니배치를 사용해서 센트로이드를 조금씩 이동하는 k-평균 알고리즘</p></li>
 </ul>
@@ -1175,8 +1147,8 @@ const thebe_selector_output = ".output, .cell_output"
 <span class="n">minibatch_kmeans</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="section" id="id18">
-<h4><span class="section-number">10.5.5.1. </span>큰 데이터셋 다루기<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id17">
+<h4>큰 데이터셋 다루기<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">memmap</span></code> 활용</p>
 <ul>
@@ -1194,8 +1166,8 @@ const thebe_selector_output = ".output, .cell_output"
 </li>
 </ul>
 </div>
-<div class="section" id="id19">
-<h4><span class="section-number">10.5.5.2. </span>미니배치 k-평균의 특징<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id18">
+<h4>미니배치 k-평균의 특징<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>군집수가 커질 수록 k-평균보다 훨씬 빠르게 훈련됨.
 하지만 성능 차이는 상대적으로 커짐.</p></li>
@@ -1204,13 +1176,13 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <div align="center"><img src="images/ch09/homl09-07.png" width="700"/></div></div>
 </div>
-<div class="section" id="id20">
-<h3><span class="section-number">10.5.6. </span>k-평균 모델의 최적의 군집수 찾기<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id19">
+<h3>k-평균 모델의 최적의 군집수 찾기<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>군집수가 적절하지 않으면 좋지 않은 모델로 수렴할 수 있음.</p></li>
 </ul>
-<div align="center"><img src="images/ch09/homl09-08.png" width="700"/></div><div class="section" id="id21">
-<h4><span class="section-number">10.5.6.1. </span>관성과 군집수<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h4>
+<div align="center"><img src="images/ch09/homl09-08.png" width="700"/></div><div class="section" id="id20">
+<h4>관성과 군집수<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>군집수 k가 증가할 수록 관성은 기본적으로 줄어듬.
 따라서 관성만으로 모델을 평가할 없음.</p></li>
@@ -1222,8 +1194,8 @@ const thebe_selector_output = ".output, .cell_output"
 <li><p>하지만 아래 그림에서 보듯이 반드시 좋은 모델이라 평가하기 어려움.</p></li>
 </ul>
 <div align="center"><img src="images/ch09/homl09-10.png" width="400"/></div></div>
-<div class="section" id="id22">
-<h4><span class="section-number">10.5.6.2. </span>실루엣 점수와 군집수<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id21">
+<h4>실루엣 점수와 군집수<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h4>
 <ul>
 <li><p>샘플별 실루엣 계수</p>
 <div class="math notranslate nohighlight">
@@ -1251,8 +1223,8 @@ const thebe_selector_output = ".output, .cell_output"
 아래 그림에 의해 <code class="docutils literal notranslate"><span class="pre">k=5</span></code>도 좋은 선택이 될 수 있지만 확실하지는 않음.</p></li>
 </ul>
 <div align="center"><img src="images/ch09/homl09-11.png" width="600"/></div></div>
-<div class="section" id="id23">
-<h4><span class="section-number">10.5.6.3. </span>실루엣 다이어그램과 군집수<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id22">
+<h4>실루엣 다이어그램과 군집수<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>실루엣 다이어그램: 군집별 실루엣 계수들의 모음. 군집별로 칼날 모양 형성.</p>
 <ul>
@@ -1266,8 +1238,8 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <div align="center"><img src="images/ch09/homl09-12.png" width="400"/></div></div>
 </div>
-<div class="section" id="id24">
-<h3><span class="section-number">10.5.7. </span>k-평균의 한계<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id23">
+<h3>k-평균의 한계<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>최적의 모델을 구하기 위해 여러 번 학습해야 함.</p></li>
 <li><p>군집수를 미리 지정해야 함.</p></li>
@@ -1275,10 +1247,10 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <div align="center"><img src="images/ch09/homl09-13.png" width="600"/></div></div>
 </div>
+<div class="section" id="id24">
+<h2>군집화 활용<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id25">
-<h2><span class="section-number">10.6. </span>군집화 활용<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id26">
-<h3><span class="section-number">10.6.1. </span>이미지 색상 분할<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h3>
+<h3>이미지 색상 분할<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>동일한 종류의 물체는 동일한 영역에 할당됨.
 예를 들어, 보행자들을 모두 하나의 영역, 또는 각각의 영역으로 할당 가능.</p></li>
@@ -1293,8 +1265,8 @@ const thebe_selector_output = ".output, .cell_output"
 <li><p>예제: 무당벌레 이미지 색상 분할</p></li>
 </ul>
 <div align="center"><img src="images/ch09/homl09-14.png" width="600"/></div></div>
-<div class="section" id="id27">
-<h3><span class="section-number">10.6.2. </span>차원축소<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id26">
+<h3>차원축소<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">transform()</span></code> 메서드</p>
 <ul>
@@ -1322,8 +1294,8 @@ const thebe_selector_output = ".output, .cell_output"
 </li>
 </ul>
 </div>
-<div class="section" id="id28">
-<h3><span class="section-number">10.6.3. </span>준지도 학습<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id27">
+<h3>준지도 학습<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>레이블이 있는 데이터가 적고, 레이블이 없는 데이터가 많을 때 활용</p></li>
 </ul>
@@ -1336,8 +1308,8 @@ __대표 이미지__로 선정.</p></li>
 </ul>
 </li>
 </ul>
-<div align="center"><img src="images/ch09/homl09-15.png" width="600"/></div><div class="section" id="id29">
-<h4><span class="section-number">10.6.3.1. </span>레이블 전파<a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h4>
+<div align="center"><img src="images/ch09/homl09-15.png" width="600"/></div><div class="section" id="id28">
+<h4>레이블 전파<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>대표이미지의 레이블을 해당 군집의 모든 샘플로 전파 가능.
 하지만 전파된 레이블의 정확도가 낮을 수 있음.</p></li>
@@ -1348,8 +1320,8 @@ __대표 이미지__로 선정.</p></li>
 이런 방식으로 보다 적은 크기의 데이터셋으로 효율적인 모델 훈련이 가능해짐.</p></li>
 </ul>
 </div>
-<div class="section" id="id30">
-<h4><span class="section-number">10.6.3.2. </span>준지도학습과 능동학습<a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id29">
+<h4>준지도학습과 능동학습<a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>분류기 모델이 가장 불확실하기 예측하는 샘플에 레이블 추가하기</p></li>
 </ul>
@@ -1366,12 +1338,12 @@ __대표 이미지__로 선정.</p></li>
 </div>
 </div>
 <div class="section" id="dbscan">
-<h2><span class="section-number">10.7. </span>DBSCAN<a class="headerlink" href="#dbscan" title="Permalink to this headline">¶</a></h2>
+<h2>DBSCAN<a class="headerlink" href="#dbscan" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>연속적인 밀집 지역을 하나의 군집으로 설정.</p></li>
 </ul>
-<div class="section" id="id31">
-<h3><span class="section-number">10.7.1. </span>사이킷런의 DBSCAN 모델<a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id30">
+<h3>사이킷런의 DBSCAN 모델<a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>두 개의 하이퍼파라미터 사용</p>
 <ul>
@@ -1384,8 +1356,8 @@ __대표 이미지__로 선정.</p></li>
 </ul>
 </li>
 </ul>
-<div class="section" id="id32">
-<h4><span class="section-number">10.7.1.1. </span>핵심샘플과 군집<a class="headerlink" href="#id32" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id31">
+<h4>핵심샘플과 군집<a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>핵심샘플: <span class="math notranslate nohighlight">\(\varepsilon\)</span> 반경 내에 자신을 포함해서 <code class="docutils literal notranslate"><span class="pre">min-samples</span></code>개의 이웃을 갖는 샘플</p></li>
 </ul>
@@ -1393,14 +1365,14 @@ __대표 이미지__로 선정.</p></li>
 <li><p>군집: 핵심샘플로 이루어진 이웃들로 구성된 그룹</p></li>
 </ul>
 </div>
-<div class="section" id="id33">
-<h4><span class="section-number">10.7.1.2. </span>이상치<a class="headerlink" href="#id33" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id32">
+<h4>이상치<a class="headerlink" href="#id32" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>핵심샘플이 아니면서 동시에 핵심샘플의 이웃도 아닌 샘플.</p></li>
 </ul>
 </div>
-<div class="section" id="id34">
-<h4><span class="section-number">10.7.1.3. </span>예제<a class="headerlink" href="#id34" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id33">
+<h4>예제<a class="headerlink" href="#id33" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>반달모양 데이터 활용</p></li>
 </ul>
@@ -1414,8 +1386,8 @@ __대표 이미지__로 선정.</p></li>
 <hr class="docutils" />
 <div align="center"><img src="images/ch09/homl09-16.png" width="600"/></div></div>
 </div>
-<div class="section" id="id35">
-<h3><span class="section-number">10.7.2. </span>DBSCAN과 예측<a class="headerlink" href="#id35" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id34">
+<h3>DBSCAN과 예측<a class="headerlink" href="#id34" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">predict()</span></code> 메서드 지원하지 않음.</p></li>
 </ul>
@@ -1437,8 +1409,8 @@ __대표 이미지__로 선정.</p></li>
 <li><p>이후 새로운 샘플에 대한 예측 가능</p></li>
 <li><p>아래 그림은 새로운 4개의 샘플에 대한 예측을 보여줌.</p></li>
 </ul>
-<div align="center"><img src="images/ch09/homl09-17.png" width="450"/></div><div class="section" id="id36">
-<h4><span class="section-number">10.7.2.1. </span>이상치 판단<a class="headerlink" href="#id36" title="Permalink to this headline">¶</a></h4>
+<div align="center"><img src="images/ch09/homl09-17.png" width="450"/></div><div class="section" id="id35">
+<h4>이상치 판단<a class="headerlink" href="#id35" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>위 예제에서, 두 군집으로부터 일정거리 이상 떨어진 샘플을 이상치로 간주 가능.</p></li>
 </ul>
@@ -1447,8 +1419,8 @@ __대표 이미지__로 선정.</p></li>
 </ul>
 <div align="center"><img src="images/ch09/homl09-17a.png" width="450"/></div></div>
 </div>
-<div class="section" id="id37">
-<h3><span class="section-number">10.7.3. </span>DBSCAN의 장단점<a class="headerlink" href="#id37" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id36">
+<h3>DBSCAN의 장단점<a class="headerlink" href="#id36" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>매우 간단하면서 매우 강력한 알고리즘.</p>
 <ul>
@@ -1465,8 +1437,8 @@ __대표 이미지__로 선정.</p></li>
 <ul class="simple">
 <li><p>군깁 간의 밀집도가 크게 다르면 모든 군집 파악 불가능.</p></li>
 </ul>
-<div class="section" id="id38">
-<h4><span class="section-number">10.7.3.1. </span>계산복잡도<a class="headerlink" href="#id38" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id37">
+<h4>계산복잡도<a class="headerlink" href="#id37" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>시간복잡도: 약 <span class="math notranslate nohighlight">\(O(m\, \log m)\)</span>. 단, <span class="math notranslate nohighlight">\(m\)</span>은 샘플 수</p></li>
 </ul>
@@ -1479,8 +1451,8 @@ __대표 이미지__로 선정.</p></li>
 </ul>
 </div>
 </div>
-<div class="section" id="id39">
-<h3><span class="section-number">10.7.4. </span>기타 군집 알고리즘<a class="headerlink" href="#id39" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id38">
+<h3>기타 군집 알고리즘<a class="headerlink" href="#id38" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>응집 군집(병합 군집, agglomerative clustering)</p></li>
 <li><p>BIRCH</p></li>
@@ -1490,36 +1462,36 @@ __대표 이미지__로 선정.</p></li>
 </ul>
 </div>
 </div>
-<div class="section" id="id40">
-<h2><span class="section-number">10.8. </span>9.2 가우시안 혼합 모델<a class="headerlink" href="#id40" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id39">
+<h2>9.2 가우시안 혼합 모델<a class="headerlink" href="#id39" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>데이터셋이 여러 개의 혼합된 가우시안 분포를 따르는 샘플들로 구성되었다고 가정.</p></li>
 </ul>
 <ul class="simple">
 <li><p>가우시안 분포 = 정규분포</p></li>
 </ul>
-<div class="section" id="id41">
-<h3><span class="section-number">10.8.1. </span>정규분포 소개<a class="headerlink" href="#id41" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id40">
+<h3>정규분포 소개<a class="headerlink" href="#id40" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>종 모양의 확률밀도함수를 갖는 확률분포</p></li>
 </ul>
 <div align="center"><img src="images/ch09/homl09-18.png" width="400"/></div></div>
-<div class="section" id="id42">
-<h3><span class="section-number">10.8.2. </span>군집<a class="headerlink" href="#id42" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id41">
+<h3>군집<a class="headerlink" href="#id41" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>하나의 가우시안 분포에서 생생된 모든 샘플들의 그룹</p></li>
 <li><p>일반적으로 타원형 모양.</p></li>
 </ul>
 </div>
-<div class="section" id="id43">
-<h3><span class="section-number">10.8.3. </span>예제<a class="headerlink" href="#id43" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id42">
+<h3>예제<a class="headerlink" href="#id42" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>아래 그림에서처럼 일반적으로 모양, 크기, 밀집도, 방향이 다름.</p></li>
 <li><p>따라서 각 샘플이 어떤 정규분포를 따르는지를 파악하는 게 핵심.</p></li>
 </ul>
 <div align="center"><img src="images/ch09/homl09-13.png" width="600"/></div></div>
 <div class="section" id="gmm">
-<h3><span class="section-number">10.8.4. </span>GMM 활용<a class="headerlink" href="#gmm" title="Permalink to this headline">¶</a></h3>
+<h3>GMM 활용<a class="headerlink" href="#gmm" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>위 데이터셋에 <code class="docutils literal notranslate"><span class="pre">GaussianMixture</span></code> 모델 적용</p></li>
 </ul>
@@ -1549,8 +1521,8 @@ __대표 이미지__로 선정.</p></li>
 </li>
 </ul>
 <div align="center"><img src="images/ch09/homl09-19.png" width="500"/></div></div>
-<div class="section" id="id44">
-<h3><span class="section-number">10.8.5. </span>GMM 모델 규제<a class="headerlink" href="#id44" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id43">
+<h3>GMM 모델 규제<a class="headerlink" href="#id43" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>특성수가 크거나, 군집수가 많거나, 샘플이 적은 경우 최적 모델 학습 어려움.</p></li>
 <li><p>공분산(covariance)에 규제를 가해서 학습을 도와줄 수 있음.</p>
@@ -1560,7 +1532,7 @@ __대표 이미지__로 선정.</p></li>
 </li>
 </ul>
 <div class="section" id="covariance-type">
-<h4><span class="section-number">10.8.5.1. </span>covariance_type 옵션값<a class="headerlink" href="#covariance-type" title="Permalink to this headline">¶</a></h4>
+<h4>covariance_type 옵션값<a class="headerlink" href="#covariance-type" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>full</p>
 <ul>
@@ -1594,14 +1566,14 @@ __대표 이미지__로 선정.</p></li>
 </ul>
 <div align="center"><img src="images/ch09/homl09-20.png" width="600"/></div></div>
 </div>
-<div class="section" id="id45">
-<h3><span class="section-number">10.8.6. </span>가우시안 혼합 모델 활용: 이상치 탐지<a class="headerlink" href="#id45" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id44">
+<h3>가우시안 혼합 모델 활용: 이상치 탐지<a class="headerlink" href="#id44" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>밀도가 임곗값보다 낮은 지역에 있는 샘플을 이상치로 간주 가능.</p></li>
 </ul>
 <div align="center"><img src="images/ch09/homl09-21.png" width="500"/></div></div>
-<div class="section" id="id46">
-<h3><span class="section-number">10.8.7. </span>가우션 혼합모델 군집수 지정<a class="headerlink" href="#id46" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id45">
+<h3>가우션 혼합모델 군집수 지정<a class="headerlink" href="#id45" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>k-평균에서 사용했던 관성 또는 실루엣 점수 사용 불가.</p>
 <ul>
@@ -1612,8 +1584,8 @@ __대표 이미지__로 선정.</p></li>
 <ul class="simple">
 <li><p>대신에 <strong>이론적 정보 기준</strong> 을 최소화 하는 모델 선택 가능.</p></li>
 </ul>
-<div class="section" id="id47">
-<h4><span class="section-number">10.8.7.1. </span>이론적 정보 기준<a class="headerlink" href="#id47" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id46">
+<h4>이론적 정보 기준<a class="headerlink" href="#id46" title="Permalink to this headline">¶</a></h4>
 <ul>
 <li><p>BIC: Bayesian information criterion</p>
 <div class="math notranslate nohighlight">
@@ -1636,21 +1608,21 @@ __대표 이미지__로 선정.</p></li>
 <li><p>데이터에 잘 학습하는 모델일 수록 보상을 더해줌.</p></li>
 </ul>
 </div>
-<div class="section" id="id48">
-<h4><span class="section-number">10.8.7.2. </span>군집수와 정보조건<a class="headerlink" href="#id48" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id47">
+<h4>군집수와 정보조건<a class="headerlink" href="#id47" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>아래 그림은 군집수 <span class="math notranslate nohighlight">\(k\)</span>와 AIC, BIC의 관계를 보여줌.</p></li>
 <li><p><span class="math notranslate nohighlight">\(k=3\)</span>이 최적으로 보임.</p></li>
 </ul>
 <div align="center"><img src="images/ch09/homl09-22.png" width="600"/></div></div>
 </div>
-<div class="section" id="id49">
-<h3><span class="section-number">10.8.8. </span>베이즈 가우시안 혼합 모델<a class="headerlink" href="#id49" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id48">
+<h3>베이즈 가우시안 혼합 모델<a class="headerlink" href="#id48" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>베이즈 확률통계론 활용</p></li>
 </ul>
 <div class="section" id="bayesiangaussianmixture">
-<h4><span class="section-number">10.8.8.1. </span>BayesianGaussianMixture 모델<a class="headerlink" href="#bayesiangaussianmixture" title="Permalink to this headline">¶</a></h4>
+<h4>BayesianGaussianMixture 모델<a class="headerlink" href="#bayesiangaussianmixture" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>최적의 군집수를 자동으로 찾아줌.</p></li>
 <li><p>단, 최적의 군집수보다 큰 수를 <code class="docutils literal notranslate"><span class="pre">n_components</span></code>에 전달해야 함.</p>
@@ -1677,8 +1649,8 @@ __대표 이미지__로 선정.</p></li>
 </pre></div>
 </div>
 </div>
-<div class="section" id="id50">
-<h4><span class="section-number">10.8.8.2. </span>사전 믿음<a class="headerlink" href="#id50" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id49">
+<h4>사전 믿음<a class="headerlink" href="#id49" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>군집수가 어느 정도일까를 나타내는 지수</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">weight_concentration_prior</span></code> 하이퍼파라미터</p>
@@ -1691,8 +1663,8 @@ __대표 이미지__로 선정.</p></li>
 </ul>
 <div align="center"><img src="images/ch09/homl09-24.png" width="600"/></div></div>
 </div>
-<div class="section" id="id51">
-<h3><span class="section-number">10.8.9. </span>가우시안 혼합 모델의 장단점<a class="headerlink" href="#id51" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id50">
+<h3>가우시안 혼합 모델의 장단점<a class="headerlink" href="#id50" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>타원형 군집에 잘 작동.</p></li>
 </ul>
@@ -1707,8 +1679,8 @@ __대표 이미지__로 선정.</p></li>
 </li>
 </ul>
 <div align="center"><img src="images/ch09/homl09-23.png" width="700"/></div></div>
-<div class="section" id="id52">
-<h3><span class="section-number">10.8.10. </span>이상치 탐지와 특이치 탐지를 위한 다른 알고리즘<a class="headerlink" href="#id52" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id51">
+<h3>이상치 탐지와 특이치 탐지를 위한 다른 알고리즘<a class="headerlink" href="#id51" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>PCA</p></li>
 <li><p>Fast-MCD</p></li>
@@ -1744,14 +1716,7 @@ __대표 이미지__로 선정.</p></li>
               
             
                 <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
-    <a class='left-prev' id="prev-link" href="dimensionality_reduction.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title"><span class="section-number">8. </span>차원 축소</p>
-        </div>
-    </a>
+<div class='prev-next-area'>
 </div>
             
         </div>

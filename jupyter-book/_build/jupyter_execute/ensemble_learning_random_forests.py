@@ -344,25 +344,29 @@
 # 이렇듯 랜덤 포레스트 모델을 이용하여 특성의 상대적 중요도를 파악한 다음에 보다 
 # 중요한 특성을 선택해서 활용할 수 있다.
 
-# **예제: 붓꽃 데이터셋**
-
+# :::{prf:example} 붓꽃 데이터셋
+# :label: exp-minist-feature-importance
+# 
 # 붓꽃 데이터셋의 경우 특성별 상대적 중요도는 다음과 같이 꽃잎의 길이와 너비가 매우 중요하며,
 # 꽃받침의 길이와 너비 정보는 상대적으로 훨씬 덜 중요하다.
 # 지금까지 붓꽃 데이터셋을 사용할 때 꽃잎의 길이와 너비 두 개의 특성만을 사용한 이유가 여기에 있다.
-
+# 
 # | 특성 | 상대적 중요도 |
 # | :--- | ---: |
 # | 꽃받침 길이 | 0.11 |
 # | 곷받침 너비 | 0.02 |
 # | 꽃잎 길이 | 0.44 |
 # | 곷잎 너비 | 0.42 |
+# :::
 
-# **예제: MNIST**
-
+# :::{prf:example} MNIST
+# :label: exp-MNIST-feature-importance
+# 
 # MNIST 데이터셋의 경우 특성으로 사용된 모든 픽셀의 중요도를 그래프로 그리면 다음과 같다.
 # 숫자가 일반적으로 중앙에 위치하였기에 중앙에 위치한 픽셀의 중요도가 보다 높게 나온다.
-
+# 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-07.png" width="400"/></div>
+# :::
 
 # ## 부스팅
 

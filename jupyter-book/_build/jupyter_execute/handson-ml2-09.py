@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# (ch:unsupervisedLearning)=
-# # 비지도 학습
-
 # # 9장 비지도학습
 
 # #### 감사의 글
@@ -588,9 +585,3 @@
 # * 아이솔레이션 포레스트
 # * LOF
 # * one-class SVM
-
-# In[ ]:
-
-
-
-
