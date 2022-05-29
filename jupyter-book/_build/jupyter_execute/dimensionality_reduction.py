@@ -38,27 +38,23 @@
 
 # ## 차원의 저주
 
-# **고차원 공간**
-# 
-# * 3차원을 초과하는 고차원의 공간을 상상하기 매우 어려움.
+# 3차원을 초과하는 고차원의 공간을 상상하는 하는 일은 매우 어렵다.
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch08/homl08-01.png" width="500"/></div>
 
-# **차원의 저주**
+# 차원의 커질 수록 두 지점 사이의 거리가 매우 멀어진다.
+# 이는 특성 수가 아주 많은 경우, 훈련 샘플 사이의 거리가 매우 커서 과대적합 위험도가 커짐을 의미한다.
+# 이유는 두 샘플 사이의 거리가 멀어서 기존 값들을 이용한 추정이 여러 과정을 거쳐야 하기 때문에
+# 훈련셋에 과학게 의존하게 되기 때문이다.
 # 
-# * 차원의 커질 수록 두 지점 사이의 거리가 매우 커짐.
-# 
-# * 즉, 특성 수가 아주 많은 경우, 훈련 샘플 사이의 거리가 매우 커서 과대적합 위험도가 커짐.
-# 
-# * 이유: 두 샘플 사이의 거리가 멀어서 기존 값들을 이용한 추정(예측)이 여러 과정을 거쳐야 하기 때문임.
-# 
-# * 해결책: 샘플 수 늘리기. 하지만 고차원의 경우 충분히 많은 샘플 수를 준비하는 일은 사실상 불가능.
+# 훈련셋의 크기를 키워야 하지만 고차원의 경우 충분히 많은 샘플 수를 준비하는 일은 사실상 불가능하다는 것이
+# **차원의 저주**라는 표현의 핵심이다.
 
 # ## 차원축소 기법
 
-# **기본 아이디어**
-# 
-# * 모든 훈련 샘플이 고차원 공간의 일부인 저차원 부분공간에 가깝게 놓여 있는 경우가 일반적으로 발생
+# 훈련 샘플이 고차원 공간의 일부인 저차원 부분공간에 가깝게 놓여 있는 경우가 일반적으로 발생한다.
+# 이런 경우 고차원의 데이터셋을 저차원의 데이터셋으로 변환시켜도 정보의 손실이 크지 않게 유지할 수 있다.
+# 이것이 차원축소 기법이며 크게 사영 기법과 다양체 학습 기법으로 나뉜다.
 
 # ### 사영 기법
 
@@ -90,7 +86,7 @@
 #     </tr>
 # </table>
 
-# ### 다양체 학습
+# ### 다양체 학습 기법
 
 # **다양체**
 # 
@@ -365,8 +361,11 @@
 #     </tr>
 # </table>
 
-# **예제: MNIST 데이터셋 시각화**
-
-# * 다양한 차원축소 기법을 이용한 MNIST 데이터셋 시각화 가능
+# ## 부록: 사이킷런의 기타 차원 축소 모델
 # 
-# * 참조: [사이킷런 활용 손글씨 데이터셋 시각화](https://scikit-learn.org/stable/auto_examples/manifold/plot_lle_digits.html#sphx-glr-auto-examples-manifold-plot-lle-digits-py)
+# * 다차원 스케일링<font size='2'>Multidimensional Scaling</font>(MDS)
+# * Isomap
+# * t-SNE(t-Distributed Stochasting Neighbor Embedding)
+# * 선형 판별 분석<font size='2'>Linear Discriminant Analysis</font>(LDA)
+
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch08/homl08-15.png" width="700"/></div>
