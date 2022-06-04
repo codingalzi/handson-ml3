@@ -383,3 +383,7 @@
 # 아래 그림은 롤케이크를 다양한 커널을 이용하여 커널 PCA로 2차원 데이터셋으로 변환한 결과를 보여준다.
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch08/homl08-16.png" width="730"/></div>
+
+# ## 연습문제
+
+# 참고: [(실습) 차원축소](https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_dimensionality_reduction.ipynb)
