@@ -42,21 +42,16 @@
 # **주요 내용**
 # 
 # 머신러닝의 주요 개념과 알고리즘을 소개한다.
-# 여기서 소개하는 내용은 오렐리앙 제롱의 핸즈온 머신러닝 (3판)의 1부 내용을 기본으로 참고한다.
+# 여기서 소개하는 내용은 오렐리앙 제롱의 핸즈온 머신러닝 (3판)의 1부 내용을 기본 참고서로 사용한다.
 
 # **목차**
 # 
 # 1. {ref}`ch:ml_landscape`
 # 1. {ref}`ch:end2end`
-# 1. 머신러닝 프로젝트 처음부터 끝까지
-# 1. 분류
-# 1. 모델 훈련
-# 1. 서포트 벡터 머신
-# 1. 결정 트리
-# 1. 앙상블 학습과 랜덤 포레스트
-# 1. 차원 축소
-# 1. 비지도 학습
-
-# **참고**
-# 
-# 딥러닝에 대한 강의는 [Deep Learning with Python](https://codingalzi.github.io/dlp/)를 참고할 수 있다.
+# 1. {ref}`ch:classification`
+# 1. {ref}`ch:trainingModels`
+# 1. {ref}`ch:svm`
+# 1. {ref}`ch:decisionTrees`
+# 1. {ref}`ch:ensemble`
+# 1. {ref}`ch:dimensionalityReduction`
+# 1. {ref}`ch:unsupervisedLearning`
