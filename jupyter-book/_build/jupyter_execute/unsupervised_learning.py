@@ -35,211 +35,185 @@
 
 # **주요 내용**
 # 
-# * 군집/군집화
-# 
+# * 군집화
 # * k-평균
-# 
 # * DBSCAN
-# 
 # * 가우시안 혼합
 
 # ## 군집화
 
-# * 군집(클러스터, cluster): 유사한 샘플들의 모음(집합, 그룹)
+# **군집과 군집화**
 # 
-# * 군집화(클러스터링, clustering): 유사한 부류의 대상들로 이루어진 군집 만들기
+# **군집**<font size='2'>cluster</font>은 유사한 대상들의 모음을 가리킨다.
+# 예를 들어, 산이나 공원에서 볼 수 있는 이름은 모르지만 동일 품종의 꽃으로 이루어진 군집 등을
+# 생각하면 된다.
+# **군집화**<font size='2'>clustering</font>은 대상들을 나누어 군집을 
+# 형성하는 것을 말한다. 
 
 # **분류 대 군집화**
 # 
-# * 유사점: 각 샘플에 하나의 그룹 할당
+# 각 샘플에 하나의 그룹을 할당한다는 점에서 유사하다.
+# 하지만 군집화는 군집이 미리 레이블(타깃)로 지정되지 않고 예측기 스스로 적절한 군집을
+# 찾아내야 한다는 점에서 다르다.
 # 
-# * 차이점: 군집화는 군집이 미리 레이블(타깃)로 지정되지 않고 예측기 스스로 적절한 군집을 찾아내야 함.
-# 
-# * 예제: 분류(왼편)와 군집화(오른편)
+# 아래 왼쪽 그림은 붓꽃의 꽃잎 길이와 너비를 특성으로 사용해서 품종을 분류한 결과를
+# 보여주지만, 왼쪽 그림은 군집화의 결과를 보여준다. 
+# 분류는 세 개의 품종을 매우 잘 분류하지만 군집은 세토사 군집과 나머지 군집으로 구분할 뿐이다.
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-01.png" width="600"/></div>
 
-# * 가우시안 혼합 모델을 적용하면 매우 정확한 군집화 가능.
-#     단, 꽃잎의 너비/길이, 꽃받침의 너비/길이 모두 특성으로 사용해야 함.
+# 반면에 **가우시안 혼합 모델**<font size='2'>Gaussian Mixture Model</font>(GMM)을 
+# 꽃잎의 길이와 너비 뿐만 아니라
+# 꽃받침의 길이와 너비 특성까지 적용항 붓꽃 데이터셋에 대해 적용하면
+# 세 개의 군집을 매우 정확하게 생성한다.
 
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-02.png" width="400"/></div>
+# <div align="center"><img src="https://scikit-learn.org/stable/_images/sphx_glr_plot_gmm_covariances_001.png" width="500"/></div>
+# 
+# <그림 출처: [사이킷런의 가우시안 혼합 모델](https://scikit-learn.org/stable/modules/mixture.html#gmm)>
 
-# **군집의 정의**
+# 군집에 대한 보편적 정의는 없다. 사용되는 알고리즘에 따라 다른 형식의 군집을 생성한다.
 # 
-# * 보편적 정의 없음. 사용되는 알고리즘에 따라 다른 형식으로 군집 형성
-# 
-# * k-평균: 센트로이드(중심)라는 특정 샘플을 중심으로 모인 샘플들의 집합
-# 
+# * K-평균: 센트로이드(중심)라는 특정 샘플을 중심으로 모인 샘플들의 집합
 # * DBSCAN: 밀집된 샘플들의 연속으로 이루어진 집합
-# 
 # * 가우시안 혼합: 특정 가우시안 분포를 따르는 샘플들의 집합
 
-# ### k-평균
+# ## K-평균
 
-# * 각 군집의 중심을 찾고 가장 가까운 군집에 샘플 할당
-# 
-# * 군집수(`n_clusters`) 지정해야 함.
+# 각 군집의 중심인 센트로이드<font size='2'>centroid</font>을 찾고 
+# 각 샘플에 대해 가장 가까운 센트로이드를 중심으로 군집을 형성하는 기법이다.
 
-# **결정 경계**
+# **예제: 사이킷런의 `KMeans` 모델** 
 # 
-# * 예제: 샘플 덩어리 다섯 개로 이루어진 데이터셋
+# 아래 그림은 다섯 개의 샘플 덩어리로 이루어진 데이터셋을 보여준다.
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-03.png" width="450"/></div>
 
+# 위 데이터셋에 대해 다섯 개의 군집을 형성하는 K-평균 알고리즘은 다음과 같이 적용한다.
+# 군집 수를 몇 개로 지정하는가는 미리 알 수 없다. 
+# 나중에 몇 개의 군집이 적절한가를 판단하는 여러 방식을 살펴볼 것이다. 
+
 # ```python
-# from sklearn.cluster import KMeans
-# 
 # k = 5
 # kmeans = KMeans(n_clusters=k, random_state=42)
 # y_pred = kmeans.fit_predict(X)
 # ```
 
+# `predict()` 함수의 반환값은 0, 1, 2, 3, 4 등의 인덱스이다.
+# 하지만 이는 임의로 지정된 군집의 인덱스를 가리키며, 클래스 분류와는 아무 상관이 없다.
+
 # **보로노이 다이어그램**
 
-# * 평면을 특정 점까지의 거리가 가장 가까운 점의 집합으로 분할한 그림
-# 
-# * 경계 부분의 일부 샘플을 제외하고 기본적으로 군집이 잘 구성됨.
+# 평면을 특정 점(센트로이드)까지의 거리가 가장 가까운 점의 집합으로 분할한 그림이다. 
+# 경계 부분의 일부 샘플을 제외하고 기본적으로 군집을 잘 구성한다.
 
 # <img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-04.png" width="450"/>
 
-# **하드 군집화 대 소프트 군집화**
+# ### K-평균 알고리즘
+
+# 먼저 k 개의 센트로이드를 무작위로 선택한 후 수렴할 때까지 다음 과정 반복한다.
 # 
-# * 하드 군집화: 각 샘플에 대해 가장 가까운 군집 선택
+# * 각 샘플을 가장 가까운 센트로이드에 할당
+# * 군집별로 샘플의 평균을 계산하여 새로운 센트로이드 지정
+
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-05.png" width="700"/></div>
+
+# **K-평균 알고리즘의 단점**
 # 
-# * 소프트 군집화: 샘플별로 각 군집 센트로이드와의 거리 측정
+# 군집의 크기가 서로 많이 다르면 잘 작동하지 않는다.
+# 이유는 샘플과 센트로이드까지의 거리만 고려되기 때문이다.
+# 또한 임의로 선택된 초기 센트로이드에 따라 매우 다른 군집이 생성될 수 있다.
 
-# **k-평균 알고리즘**
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-06.png" width="750"/></div>
 
-# * 먼저 $k$ 개의 센트로이드를 무작위로 선택한 후 
-#     수렴할 때까지 다음 과정 반복
-#     * 각 샘플을 가장 가까운 센트로이드에 할당
-#     * 군집별로 샘플의 평균을 계산하여 새로운 센트로이드 지정
+# **K-평균 모델 평가 기준: 관성**
 
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-05.png" width="500"/></div>
-
-# **k-평균 알고리즘의 단점**
+# **관성**<font size='2'>intertia</font>은 각 샘플과 가장 가까운 센트로이드와의 거리의 제곱의 합이며,
+# 각 군집이 센트로이드에 얼마나 가까이 모여있는가를 측정한다.
+# 따라서 관성이 작을 수록 군집이 잘 구성되었다고 평가한다.
 # 
-# * 군집의 크기가 서로 많이 다르면 잘 작동하지 않음. 
-#     이유는 샘플과 센트로이드까지의 거리만 고려되기 때문임.
-# 
-# * 초기 센트로이드에 따라 매우 다른 군집화 발생 가능
+# 훈련된 KMeans 모델의 경우 `inertia_` 속성에 관성 값이 저징되며,
+# `score()` 메서드가 관성의 음숫값을 반환한다. 
+# 이유는 점수(score)는 높을 수록 좋은 모델을 나타내도록 해야 하기 때문이다. 
+# KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고 그 중에 가장 
+# 좋은 군집 모델을 선택한다. 
 
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-06.png" width="700"/></div>
+# **K-평균++ 초기화 알고리즘**
 
-# **관성(inertia, 이너셔)**
+# 센트로이드를 무작위로 초기화하는 대신 특정 확률분포를 이용하여 선택하여
+# 센트로이드들 사이의 거리를 가능한 크게 선택하는 알고리즘이며,
+# KMeans 모델의 기본 알고리즘으로 사용된다.
 
-# * 샘플과 가장 가까운 센트로이드와의 거리의 제곱의 합
-# 
-# * 각 군집이 센트로이드에 얼마나 가까이 모여있는가를 측정
-# 
-# * k-평균 모델의 성능 평가 방법
-# 
-# * `KMeans` 모델의 `score()` 메서드가 관성의 음숫값을 계산함. 
-#     - 점수(score)는 높을 수록 좋은 모델을 나타내도록 해야 하는데, 
-#         관성은 높을 수록 좋은 모델과 거리가 멀어지기 때문임.
-#     * 다양한 초기화 과정을 실험한 후에 가장 좋은 것 선택
-#         `n_init = 10`이 기본값으로 사용됨. 즉, 10번 학습 후 가장 낮은 관성을 갖는 모델 선택.
+# **미니배치 k-평균**
 
-# **KMeans 모델의 알고리즘**
-
-# * k-평균++ 초기화 알고리즘
-# 
-#     * 센트로이드를 무작위로 초기화하는 대신 특정 확률분포를 이용하여 선택하여
-#         센트로이드들 사이의 거리를 크게할 가능성이 높아짐.
-# 
-#     * 기본 아이디어: 주피터 노트북 참조 
-
-# * Elkan 알고리즘
-# 
-#     * 각 훈련 샘플과 센트로이드 사이의 거리 계산을 획기적으로 개선한 알고리즘
-
-# ### 미니배치 k-평균
-
-# * 미니배치를 사용해서 센트로이드를 조금씩 이동하는 k-평균 알고리즘
-# 
-# * 사이킷런의 `MiniBatchMeans` 모델이 지원.
+# 미니배치를 사용해서 센트로이드를 조금씩 이동하는 k-평균 알고리즘이다. 
+# 사이킷런의 `MiniBatchMeans` 모델이 지원한다. 
 # 
 # ```python
-# from sklearn.cluster import MiniBatchKMeans
-# 
-# minibatch_kmeans = MiniBatchKMeans(n_clusters=5, random_state=42)
-# minibatch_kmeans.fit(X)
+# minibatch_kmeans = MiniBatchKMeans(n_clusters=10, batch_size=10,
+#                                    random_state=42)
+# minibatch_kmeans.fit(X_memmap)
 # ```
 
-# **큰 데이터셋 다루기**
-
-# * `memmap` 활용
-#     * 대용량 훈련 세트 활용하고자 할 경우
-#     * 8장 PCA에서 사용했던 기법과 동일
-
-# * `memmap` 활용이 불가능할 정도로 큰 데이터셋인 경우
-#     * 미니배치로 쪼개어 학습
-#     * `MiniBatchKMeans`의 `partial_fit()` 메서드 활용
-
-# **미니배치 k-평균의 특징**
-
-# * 군집수가 커질 수록 k-평균보다 훨씬 빠르게 훈련됨.
-#     하지만 성능 차이는 상대적으로 커짐.
-#     
-# * 아래 왼편 그림에서 보면 군집수 $k$가 커져도 성능 차이가 유지됨.
-#     하지만 성능 자체가 좋아지므로 두 모델의 상대적 성능 차이는 점점 벌어짐을 의미함.
+# 군집수가 많아질 수록 k-평균보다 서너 배 정도 빠르게 훈련되지만, 성능은 조금 낮다.
+# 하지만 아래 왼쪽 그림에서 보면 군집수 k 가 커져도 성능 차이가 유지되지만
+# 성능 자체가 좋아지므로 두 모델의 상대적 성능 차이는 점점 벌어짐을 의미한다.
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-07.png" width="700"/></div>
 
-# **k-평균 모델의 최적의 군집수 찾기**
-# 
-# * 군집수가 적절하지 않으면 좋지 않은 모델로 수렴할 수 있음.
+# ### 최적의 군집수 찾기
+
+# 군집수가 적절하지 않으면 좋지 않은 모델로 수렴할 수 있다.
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-08.png" width="700"/></div>
 
-# **관성과 군집수**
-# 
-# * 군집수 k가 증가할 수록 관성은 기본적으로 줄어듬. 
-#     따라서 관성만으로 모델을 평가할 없음.
-# 
-# * 관성이 더 이상 획기적으로 줄어들지 않는 지점을 선택할 수 있음.
+# **방법 1: 관성과 군집수**
+
+# 군집수 k가 증가할 수록 관성은 기본적으로 줄어들기에 관성만으로 모델을 평가할 수는 없다.
+# 예를 들어 관성이 더 이상 획기적으로 줄어들지 않는 지점을 선택할 수는 있다.
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-09.png" width="600"/></div>
 
-# * 하지만 아래 그림에서 보듯이 반드시 좋은 모델이라 평가하기 어려움.
+# 하지만 아래 그림에서 보듯이 반드시 좋은 모델을 보장하지는 않는다.
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-10.png" width="400"/></div>
 
-# **실루엣 점수와 군집수**
+# **방법 2: 실루엣 점수와 군집수**
 
-# * 샘플별 실루엣 계수
+# **실루엣 점수**<font size='2'>silhouette score</font> 샘플별 실루엣 계수의 평균값이다. 
+# 샘플의 **실루엣 계수**<font size='2'>silhouette coefficient</font>는 
+# 다음 식으로 계산된다.
 # 
-#     $$\frac{b - a}{\max(a, b)}$$
+# $$\frac{b - a}{\max(a, b)}$$
 # 
-#     * $a$: 동일 군집 내의 다른 샘플과의 거리의 평균값
-#     * $b$: 가장 가까운 타 군집 샘플과의 거리의 평균값
+# $a$는 동일 군집 내의 다른 샘플과의 거리의 평균값이며,
+# $b$ 가장 가까운 타 군집에 속하는 샘플들과의 거리의 평균값이다.
+# 실루엣 계수는 -1과 1사이의 값이며, 다음 특성을 보여준다.
 # 
-# 
+# * 1에 가까운 값: 적절한 군집에 포함됨.
+# * 0에 가까운 값: 군집 경계에 위치
+# * -1에 가까운 값: 잘못된 군집에 포함됨
 
-# * 실루엣 계수는 -1과 1사이의 값임.
-#     * 1에 가까운 값: 적절한 군집에 포함됨.
-#     * 0에 가까운 값: 군집 경계에 위치
-#     * -1에 가까운 값: 잘못된 군집에 포함됨
-
-# * 실루엣 점수: 실루엣 계수의 평균값.
-
-# * 실루엣 점수가 높은 모델을 선택할 수 있음.
-#     아래 그림에 의해 `k=5`도 좋은 선택이 될 수 있지만 확실하지는 않음.
+# 실루엣 점수가 높은 모델을 선택할 수 있다.
+# 아래 그림에 따르면 `k=4`도 좋은 선택이 될 수 있다.
+# 하지만 여기서는 `k=5` 가 가장 좋은 선택이다. 
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-11.png" width="600"/></div>
 
-# **실루엣 다이어그램과 군집수**
+# **방법 3: 실루엣 다이어그램과 군집수**
 
-# * 실루엣 다이어그램: 군집별 실루엣 계수들의 모음. 군집별로 칼날 모양 형성.
-#     * 칼날 두께: 군집에 포함된 샘플 수
-#     * 칼날 길이: 군집에 포함된 각 샘플의 실루엣 계수
+# **실루엣 다이어그램**은 군집별로 실루엣 계수들의 모아 놓은 그래프다.
+# 군집별로 실루엣 계수를 내림차순으로 정렬하면 칼날 모양이 형성된다.
 # 
-# * 빨간 파선: 군집별 실루엣 점수. 대부분의 칼날이 빨간 파선보다 길어야 함.
+# * 칼날 두께: 군집에 포함된 샘플 수
+# * 칼날 길이: 군집에 포함된 각 샘플의 실루엣 계수
+# * 빨강 파선: 실루엣 점수, 즉 실루엣 계수의 평균값이다. 
 # 
-# * 칼날의 두께가 서로 비슷해야, 즉, 군집별 크기가 비슷해야 좋은 모델임.
-#     따라서 `k=5` 가 보다 좋은 모델임.
+# 좋은 군집 모델은 대부분의 칼날이 빨간 파선보다 길어야 하며,
+# 칼날의 두께가 서로 비슷해야 한다. 
+# 즉, 군집별 크기가 비슷해야 좋은 모델이다.
+# 이런 기준으로 볼 때 `k=5` 가 가장 좋은 모델이다.
 
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-12.png" width="400"/></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-12.png" width="700"/></div>
 
 # ### k-평균의 한계
 
@@ -249,68 +223,57 @@
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-13.png" width="600"/></div>
 
-# ### 군집화 활용: 이미지 색상 분할
+# ### 군집화 활용
 
-# * 동일한 종류의 물체는 동일한 영역에 할당됨.
-#     예를 들어, 보행자들을 모두 하나의 영역, 또는 각각의 영역으로 할당 가능.
-# 
-# * 합성곱 신경망이 가장 좋은 성능 발휘
-# 
-# * 색상 분할: 유사 색상으로 이루어진 군집으로 분할.
-# 
-# * 예제: 무당벌레 이미지 색상 분할
+# **활용 예제 1: 이미지 색상 분할**
+
+# **색상 분할**은 유사 색상으로 이루어진 군집으로 분할하는 것을 의미한다.
+# 아래 그림은 무당벌레가 포함된 이미지를 대상으로 색상 수를 다르게 하면서
+# 색상 분할을 시도한 결과를 보여준다.
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-14.png" width="600"/></div>
 
-# ### 군집화 활용: 차원축소
+# **활용 예제 2: 차원축소**
 
-# * `transform()` 메서드
-#     * 데이터 샘플에 대해 각 센트로이드부터의 거리로 이루어진 어레이 생성.
-#     * `n` 차원의 데이터셋을 `k` 차원의 데이터셋으로 변환함. 
+# 샘플에 대해 각 센트로이드부터의 거리로 이루어진 어레이를 생성하면
+# `n` 차원의 데이터셋을 `k` 차원의 데이터셋으로 변환한다. 
 # 
-# * 예제: 미니 MNIST 데이터셋 전처리. $k=50$.
-# 
-# ```python
-# pipeline = Pipeline([
-#     ("kmeans", KMeans(n_clusters=50, random_state=42)),
-#     ("log_reg", LogisticRegression(multi_class="ovr", solver="lbfgs", max_iter=5000)),
-#     ])
-# pipeline.fit(X_train, y_train)
-# ```
-# 
-# * 전처리 단계로 k-평균을 활용하기에 그리드 탐색 등을 이용하여 최적의 군집수 확인 가능.
-#     * 최적 군집수: 99
-#     * 모델 정확도: 98.22%
+# 이렇게 새로운 특성을 생성하여 다른 목적의 모델 훈련에 활용한다.
+# 예를 들어, {ref}`ch:end2end` 에서 다룬 캘리포니아 주택 데이터셋의
+# 위도, 경도 정보를 이용하여 가까운 구역으로 이루어진 군집을 생성하는 모델
+# `ClusterSimilarity` 에 KMeans 모델이 활용되었다.
 
-# ### 군집화 활용: 준지도 학습
+# **활용 예제 3: 준지도 학습**
 
-# * 레이블이 있는 데이터가 적고, 레이블이 없는 데이터가 많을 때 활용
+# 레이블이 있는 데이터가 적고, 레이블이 없는 데이터가 많을 때 활용한다.
+
+# :::{prf:example} 미니 MNIST 데이터셋
 # 
-# * 예제: 미니 MNist (계속)
-#     * 예를 들어, 50개의 군집으로 나눈 후 50개 군집별로 센트로이드에 가장 가까운 샘플을
-#         __대표 이미지__로 선정.
-#     * 선정된 50개 샘플만을 이용하여 훈련해도 92.22%의 정확도가 달성됨.
+# 미니 MNist 데이터셋은 1,797 개의 8x8 크기의 손글씨 이미지로 구성된다.
+# :::
+
+# 예를 들어, 미니 MNIST 데이터셋을 50개의 군집으로 나눈 후 각 군집에서 
+# 센트로이드에 가장 가까운 샘플 50개를 대표 이미지로 선정한다.
+# 선정된 50개 샘플만을 이용하여 분류 모델을 훈련해도 84.9%의 정확도가 달성된다.
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-15.png" width="600"/></div>
 
-# **레이블 전파**
-# 
-# * 대표이미지의 레이블을 해당 군집의 모든 샘플로 전파 가능.
-#     하지만 전파된 레이블의 정확도가 낮을 수 있음.
-# 
-# * 센트로이드에 가까운 20% 정도에게만 레이블 전파하는 것 추천.
-#     이유는 센트로이드에 가깝기 떼문에 레이블의 정확도가 매우 높음.
-#     이런 방식으로 보다 적은 크기의 데이터셋으로 효율적인 모델 훈련이 가능해짐.
+# **활용 예제 4: 레이블 전파**
 
-# **준지도학습과 능동학습**
+# 대표 이미지의 레이블을 해당 군집의 모든 샘플로 전파한다.
+# 하지만 동일한 군집에 속하지만 
+# 센트로이드에서 샘플에 동일한 레이블을 전파하면 
+# 전파된 레이블의 정확도가 매우 낮을 수 있다.
 # 
-# * 분류기 모델이 가장 불확실하기 예측하는 샘플에 레이블 추가하기
+# 따라서 센트로이드에 가장 멀리 떨어진 1%의 데이터를 이상치로 취급하여
+# 제외시킨 다음에 레이블 전파를 진행하면
+# 보다 좋은 성능이 분류 모델을 얻게 된다.
 # 
-# * 가능하면 서로 다른 군집에서 선택.
+# `sklearn.semi_supervised` 패키지는 다양한 레이블 전파 모델을 제공한다. 
 # 
-# * 새 모델 학습
-# 
-# * 위 과정을 성능향상이 약해질 때까지 반복.
+# - `LabelSpreading`
+# - `LabelPropagation`
+# - `SelfTrainingClassifier`
 
 # ## DBSCAN
 
