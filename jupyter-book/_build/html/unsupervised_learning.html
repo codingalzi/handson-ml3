@@ -43,15 +43,14 @@
     <script src="_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-    <script>
-        const thebe_selector = ".thebe"
-        const thebe_selector_input = "pre"
-        const thebe_selector_output = ".output"
-    </script>
-    <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="8. 차원축소" href="dimensionality_reduction.html" />
@@ -238,319 +237,69 @@
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id2">
-   9.1. 감사의 글
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id3">
-   9.2. 주요 내용
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id4">
-   9.3. 비지도 학습이란?
+   9.1. 군집화
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#k">
+     9.1.1. k-평균
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     9.1.2. 미니배치 k-평균
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id4">
+     9.1.3. k-평균의 한계
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id5">
-     9.3.1. 군집화
+     9.1.4. 군집화 활용: 이미지 색상 분할
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id6">
-     9.3.2. 이상치 탐지
+     9.1.5. 군집화 활용: 차원축소
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id7">
-     9.3.3. 데이터 밀도 추정
+     9.1.6. 군집화 활용: 준지도 학습
     </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id8">
-   9.4. 9.1 군집 군집화
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id9">
-     9.4.1. 분류 대 군집화
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id10">
-     9.4.2. 군집의 정의
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#k">
-   9.5. k-평균
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id11">
-     9.5.1. 결정 경계
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id12">
-       9.5.1.1. 보로노이 다이어그램
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id13">
-       9.5.1.2. 하드 군집화 대 소프트 군집화
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id14">
-     9.5.2. k-평균 알고리즘
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id15">
-       9.5.2.1. k-평균 알고리즘의 단점
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#inertia">
-     9.5.3. 관성(inertia, 이너셔)
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#kmeans">
-     9.5.4. KMeans 모델의 알고리즘
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id16">
-     9.5.5. 미니배치 k-평균
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id17">
-       9.5.5.1. 큰 데이터셋 다루기
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id18">
-       9.5.5.2. 미니배치 k-평균의 특징
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id19">
-     9.5.6. k-평균 모델의 최적의 군집수 찾기
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id20">
-       9.5.6.1. 관성과 군집수
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id21">
-       9.5.6.2. 실루엣 점수와 군집수
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id22">
-       9.5.6.3. 실루엣 다이어그램과 군집수
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id23">
-     9.5.7. k-평균의 한계
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id24">
-   9.6. 군집화 활용
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id25">
-     9.6.1. 이미지 색상 분할
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id26">
-     9.6.2. 차원축소
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id27">
-     9.6.3. 준지도 학습
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id28">
-       9.6.3.1. 레이블 전파
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id29">
-       9.6.3.2. 준지도학습과 능동학습
-      </a>
-     </li>
-    </ul>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#dbscan">
-   9.7. DBSCAN
+   9.2. DBSCAN
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id30">
-     9.7.1. 사이킷런의 DBSCAN 모델
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id31">
-       9.7.1.1. 핵심샘플과 군집
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id32">
-       9.7.1.2. 이상치
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id33">
-       9.7.1.3. 예제
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id34">
-     9.7.2. DBSCAN과 예측
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id35">
-       9.7.2.1. 이상치 판단
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id36">
-     9.7.3. DBSCAN의 장단점
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id37">
-       9.7.3.1. 계산복잡도
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id38">
-     9.7.4. 기타 군집 알고리즘
-    </a>
-   </li>
-  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id39">
-   9.8. 9.2 가우시안 혼합 모델
+  <a class="reference internal nav-link" href="#id8">
+   9.3. 가우시안 혼합 모델
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id40">
-     9.8.1. 정규분포 소개
+    <a class="reference internal nav-link" href="#id9">
+     9.3.1. 가우시안 혼합 모델 활용: 이상치 탐지
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id41">
-     9.8.2. 군집
+    <a class="reference internal nav-link" href="#id10">
+     9.3.2. 가우션 혼합모델 군집수 지정
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id42">
-     9.8.3. 예제
+    <a class="reference internal nav-link" href="#id11">
+     9.3.3. 베이즈 가우시안 혼합 모델
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#gmm">
-     9.8.4. GMM 활용
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id43">
-     9.8.5. GMM 모델 규제
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#covariance-type">
-       9.8.5.1. covariance_type 옵션값
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id44">
-     9.8.6. 가우시안 혼합 모델 활용: 이상치 탐지
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id45">
-     9.8.7. 가우션 혼합모델 군집수 지정
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id46">
-       9.8.7.1. 이론적 정보 기준
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id47">
-       9.8.7.2. 군집수와 정보조건
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id48">
-     9.8.8. 베이즈 가우시안 혼합 모델
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#bayesiangaussianmixture">
-       9.8.8.1. BayesianGaussianMixture 모델
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id49">
-       9.8.8.2. 사전 믿음
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id50">
-     9.8.9. 가우시안 혼합 모델의 장단점
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id51">
-     9.8.10. 이상치 탐지와 특이치 탐지를 위한 다른 알고리즘
+    <a class="reference internal nav-link" href="#id12">
+     9.3.4. 이상치 탐지와 특이치 탐지를 위한 다른 알고리즘
     </a>
    </li>
   </ul>
@@ -577,319 +326,69 @@
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id2">
-   9.1. 감사의 글
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id3">
-   9.2. 주요 내용
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id4">
-   9.3. 비지도 학습이란?
+   9.1. 군집화
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#k">
+     9.1.1. k-평균
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     9.1.2. 미니배치 k-평균
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id4">
+     9.1.3. k-평균의 한계
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id5">
-     9.3.1. 군집화
+     9.1.4. 군집화 활용: 이미지 색상 분할
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id6">
-     9.3.2. 이상치 탐지
+     9.1.5. 군집화 활용: 차원축소
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id7">
-     9.3.3. 데이터 밀도 추정
+     9.1.6. 군집화 활용: 준지도 학습
     </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id8">
-   9.4. 9.1 군집 군집화
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id9">
-     9.4.1. 분류 대 군집화
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id10">
-     9.4.2. 군집의 정의
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#k">
-   9.5. k-평균
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id11">
-     9.5.1. 결정 경계
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id12">
-       9.5.1.1. 보로노이 다이어그램
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id13">
-       9.5.1.2. 하드 군집화 대 소프트 군집화
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id14">
-     9.5.2. k-평균 알고리즘
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id15">
-       9.5.2.1. k-평균 알고리즘의 단점
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#inertia">
-     9.5.3. 관성(inertia, 이너셔)
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#kmeans">
-     9.5.4. KMeans 모델의 알고리즘
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id16">
-     9.5.5. 미니배치 k-평균
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id17">
-       9.5.5.1. 큰 데이터셋 다루기
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id18">
-       9.5.5.2. 미니배치 k-평균의 특징
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id19">
-     9.5.6. k-평균 모델의 최적의 군집수 찾기
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id20">
-       9.5.6.1. 관성과 군집수
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id21">
-       9.5.6.2. 실루엣 점수와 군집수
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id22">
-       9.5.6.3. 실루엣 다이어그램과 군집수
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id23">
-     9.5.7. k-평균의 한계
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id24">
-   9.6. 군집화 활용
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id25">
-     9.6.1. 이미지 색상 분할
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id26">
-     9.6.2. 차원축소
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id27">
-     9.6.3. 준지도 학습
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id28">
-       9.6.3.1. 레이블 전파
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id29">
-       9.6.3.2. 준지도학습과 능동학습
-      </a>
-     </li>
-    </ul>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#dbscan">
-   9.7. DBSCAN
+   9.2. DBSCAN
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id30">
-     9.7.1. 사이킷런의 DBSCAN 모델
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id31">
-       9.7.1.1. 핵심샘플과 군집
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id32">
-       9.7.1.2. 이상치
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id33">
-       9.7.1.3. 예제
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id34">
-     9.7.2. DBSCAN과 예측
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id35">
-       9.7.2.1. 이상치 판단
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id36">
-     9.7.3. DBSCAN의 장단점
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id37">
-       9.7.3.1. 계산복잡도
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id38">
-     9.7.4. 기타 군집 알고리즘
-    </a>
-   </li>
-  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id39">
-   9.8. 9.2 가우시안 혼합 모델
+  <a class="reference internal nav-link" href="#id8">
+   9.3. 가우시안 혼합 모델
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id40">
-     9.8.1. 정규분포 소개
+    <a class="reference internal nav-link" href="#id9">
+     9.3.1. 가우시안 혼합 모델 활용: 이상치 탐지
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id41">
-     9.8.2. 군집
+    <a class="reference internal nav-link" href="#id10">
+     9.3.2. 가우션 혼합모델 군집수 지정
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id42">
-     9.8.3. 예제
+    <a class="reference internal nav-link" href="#id11">
+     9.3.3. 베이즈 가우시안 혼합 모델
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#gmm">
-     9.8.4. GMM 활용
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id43">
-     9.8.5. GMM 모델 규제
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#covariance-type">
-       9.8.5.1. covariance_type 옵션값
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id44">
-     9.8.6. 가우시안 혼합 모델 활용: 이상치 탐지
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id45">
-     9.8.7. 가우션 혼합모델 군집수 지정
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id46">
-       9.8.7.1. 이론적 정보 기준
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id47">
-       9.8.7.2. 군집수와 정보조건
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id48">
-     9.8.8. 베이즈 가우시안 혼합 모델
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#bayesiangaussianmixture">
-       9.8.8.1. BayesianGaussianMixture 모델
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id49">
-       9.8.8.2. 사전 믿음
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id50">
-     9.8.9. 가우시안 혼합 모델의 장단점
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id51">
-     9.8.10. 이상치 탐지와 특이치 탐지를 위한 다른 알고리즘
+    <a class="reference internal nav-link" href="#id12">
+     9.3.4. 이상치 탐지와 특이치 탐지를 위한 다른 알고리즘
     </a>
    </li>
   </ul>
@@ -905,50 +404,13 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="ch-unsupervisedlearning">
 <span id="id1"></span><h1><span class="section-number">9. </span>비지도 학습<a class="headerlink" href="#ch-unsupervisedlearning" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="id2">
-<h2><span class="section-number">9.1. </span>감사의 글<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p><strong>감사의 글</strong></p>
 <p>자료를 공개한 저자 오렐리앙 제롱과 강의자료를 지원한 한빛아카데미에게 진심어린 감사를 전합니다.</p>
-</div>
-<div class="section" id="id3">
-<h2><span class="section-number">9.2. </span>주요 내용<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>비지도 학습은 레이블이 없는 데이터를 학습하는 기법이며,
+주로 아래 분야에서 활용된다.</p>
 <ul class="simple">
-<li><p>군집/군집화</p></li>
-</ul>
-<ul class="simple">
-<li><p>k-평균</p></li>
-</ul>
-<ul class="simple">
-<li><p>DBSCAN</p></li>
-</ul>
-<ul class="simple">
-<li><p>가우시안 혼합</p></li>
-</ul>
-</div>
-<div class="section" id="id4">
-<h2><span class="section-number">9.3. </span>비지도 학습이란?<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p>레이블이 없는 데이터 학습</p>
-<ul>
-<li><p>예제: 사진에 포함된 사람들 분류하기</p></li>
-</ul>
-</li>
-</ul>
-<ul class="simple">
-<li><p>용도</p>
-<ul>
-<li><p>군집화(clustering)</p></li>
-<li><p>이상치 탐지</p></li>
-<li><p>데이터 밀도 추정</p></li>
-</ul>
-</li>
-</ul>
-<div class="section" id="id5">
-<h3><span class="section-number">9.3.1. </span>군집화<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p>비슷한 샘플끼리 군집 형성하기</p></li>
-</ul>
-<ul class="simple">
-<li><p>활용 예제</p>
+<li><p>군집화: 비슷한 샘플끼리의 군집을 형성하는 것이며,
+아래 용도에 활용된다.</p>
 <ul>
 <li><p>데이터 분석</p></li>
 <li><p>고객분류</p></li>
@@ -959,119 +421,78 @@
 <li><p>준지도 학습</p></li>
 </ul>
 </li>
-</ul>
-</div>
-<div class="section" id="id6">
-<h3><span class="section-number">9.3.2. </span>이상치 탐지<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p>정상테이터 학습 후 이상치 탐지.</p></li>
-</ul>
-<ul class="simple">
-<li><p>활용 예제</p>
+<li><p>이상치 탐지: 정상 테이터와 이상치를 구분하는 데에 활용된다.</p>
 <ul>
-<li><p>제조라인에서 결함제품 탐지</p></li>
-<li><p>시계열데이터에서 새로운 트렌드 찾기</p></li>
+<li><p>생산라인에서 결함제품 탐지</p></li>
+<li><p>새로운 트렌드 찾기</p></li>
 </ul>
 </li>
-</ul>
-</div>
-<div class="section" id="id7">
-<h3><span class="section-number">9.3.3. </span>데이터 밀도 추정<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p>데이터셋의 확률밀도함수 추정 가능</p></li>
-</ul>
-<ul class="simple">
-<li><p>활용 예제:</p>
+<li><p>데이터 밀도 추정: 데이터셋의 확률밀도를 추정한다.</p>
 <ul>
 <li><p>이상치 분류: 밀도가 낮은 지역에 위치한 샘플</p></li>
-<li><p>데이터분석</p></li>
-<li><p>시각화</p></li>
+<li><p>데이터 분석</p></li>
+<li><p>데이터 시각화</p></li>
 </ul>
 </li>
 </ul>
-</div>
-</div>
-<div class="section" id="id8">
-<h2><span class="section-number">9.4. </span>9.1 군집 군집화<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<p><strong>주요 내용</strong></p>
+<ul class="simple">
+<li><p>군집/군집화</p></li>
+<li><p>k-평균</p></li>
+<li><p>DBSCAN</p></li>
+<li><p>가우시안 혼합</p></li>
+</ul>
+<div class="section" id="id2">
+<h2><span class="section-number">9.1. </span>군집화<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>군집(클러스터, cluster): 유사한 샘플들의 모음(집합, 그룹)</p></li>
-</ul>
-<ul class="simple">
 <li><p>군집화(클러스터링, clustering): 유사한 부류의 대상들로 이루어진 군집 만들기</p></li>
 </ul>
-<div class="section" id="id9">
-<h3><span class="section-number">9.4.1. </span>분류 대 군집화<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p><strong>분류 대 군집화</strong></p>
 <ul class="simple">
 <li><p>유사점: 각 샘플에 하나의 그룹 할당</p></li>
-</ul>
-<ul class="simple">
 <li><p>차이점: 군집화는 군집이 미리 레이블(타깃)로 지정되지 않고 예측기 스스로 적절한 군집을 찾아내야 함.</p></li>
-</ul>
-<ul class="simple">
 <li><p>예제: 분류(왼편)와 군집화(오른편)</p></li>
 </ul>
-<div align="center"><img src="images/ch09/homl09-01.png" width="600"/></div><ul class="simple">
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-01.png" width="600"/></div><ul class="simple">
 <li><p>가우시안 혼합 모델을 적용하면 매우 정확한 군집화 가능.
 단, 꽃잎의 너비/길이, 꽃받침의 너비/길이 모두 특성으로 사용해야 함.</p></li>
 </ul>
-<div align="center"><img src="images/ch09/homl09-02.png" width="400"/></div></div>
-<div class="section" id="id10">
-<h3><span class="section-number">9.4.2. </span>군집의 정의<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-02.png" width="400"/></div><p><strong>군집의 정의</strong></p>
 <ul class="simple">
 <li><p>보편적 정의 없음. 사용되는 알고리즘에 따라 다른 형식으로 군집 형성</p></li>
-</ul>
-<ul class="simple">
 <li><p>k-평균: 센트로이드(중심)라는 특정 샘플을 중심으로 모인 샘플들의 집합</p></li>
-</ul>
-<ul class="simple">
 <li><p>DBSCAN: 밀집된 샘플들의 연속으로 이루어진 집합</p></li>
-</ul>
-<ul class="simple">
 <li><p>가우시안 혼합: 특정 가우시안 분포를 따르는 샘플들의 집합</p></li>
 </ul>
-</div>
-</div>
 <div class="section" id="k">
-<h2><span class="section-number">9.5. </span>k-평균<a class="headerlink" href="#k" title="Permalink to this headline">¶</a></h2>
+<h3><span class="section-number">9.1.1. </span>k-평균<a class="headerlink" href="#k" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>각 군집의 중심을 찾고 가장 가까운 군집에 샘플 할당</p></li>
-</ul>
-<ul class="simple">
 <li><p>군집수(<code class="docutils literal notranslate"><span class="pre">n_clusters</span></code>) 지정해야 함.</p></li>
 </ul>
-<div class="section" id="id11">
-<h3><span class="section-number">9.5.1. </span>결정 경계<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p><strong>결정 경계</strong></p>
 <ul class="simple">
 <li><p>예제: 샘플 덩어리 다섯 개로 이루어진 데이터셋</p></li>
 </ul>
-<div align="center"><img src="images/ch09/homl09-03.png" width="450"/></div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-03.png" width="450"/></div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
 
 <span class="n">k</span> <span class="o">=</span> <span class="mi">5</span>
 <span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 <span class="n">y_pred</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="section" id="id12">
-<h4><span class="section-number">9.5.1.1. </span>보로노이 다이어그램<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h4>
+<p><strong>보로노이 다이어그램</strong></p>
 <ul class="simple">
 <li><p>평면을 특정 점까지의 거리가 가장 가까운 점의 집합으로 분할한 그림</p></li>
-</ul>
-<ul class="simple">
 <li><p>경계 부분의 일부 샘플을 제외하고 기본적으로 군집이 잘 구성됨.</p></li>
 </ul>
-<img src="images/ch09/homl09-04.png" width="450"/></div>
-<div class="section" id="id13">
-<h4><span class="section-number">9.5.1.2. </span>하드 군집화 대 소프트 군집화<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h4>
+<img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-04.png" width="450"/><p><strong>하드 군집화 대 소프트 군집화</strong></p>
 <ul class="simple">
 <li><p>하드 군집화: 각 샘플에 대해 가장 가까운 군집 선택</p></li>
-</ul>
-<ul class="simple">
 <li><p>소프트 군집화: 샘플별로 각 군집 센트로이드와의 거리 측정</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="id14">
-<h3><span class="section-number">9.5.2. </span>k-평균 알고리즘<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<p><strong>k-평균 알고리즘</strong></p>
 <ul class="simple">
 <li><p>먼저 <span class="math notranslate nohighlight">\(k\)</span> 개의 센트로이드를 무작위로 선택한 후
 수렴할 때까지 다음 과정 반복</p>
@@ -1081,29 +502,17 @@
 </ul>
 </li>
 </ul>
-<div align="center"><img src="images/ch09/homl09-05.png" width="500"/></div><div class="section" id="id15">
-<h4><span class="section-number">9.5.2.1. </span>k-평균 알고리즘의 단점<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h4>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-05.png" width="500"/></div><p><strong>k-평균 알고리즘의 단점</strong></p>
 <ul class="simple">
 <li><p>군집의 크기가 서로 많이 다르면 잘 작동하지 않음.
 이유는 샘플과 센트로이드까지의 거리만 고려되기 때문임.</p></li>
-</ul>
-<ul class="simple">
 <li><p>초기 센트로이드에 따라 매우 다른 군집화 발생 가능</p></li>
 </ul>
-<div align="center"><img src="images/ch09/homl09-06.png" width="700"/></div></div>
-</div>
-<div class="section" id="inertia">
-<h3><span class="section-number">9.5.3. </span>관성(inertia, 이너셔)<a class="headerlink" href="#inertia" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p>샘플과 가장 가까운 센트로이드와의 거리의 제곱의 합</p></li>
-</ul>
-<ul class="simple">
-<li><p>각 군집이 센트로이드에 얼마나 가까이 모여있는가를 측정</p></li>
-</ul>
-<ul class="simple">
-<li><p>k-평균 모델의 성능 평가 방법</p></li>
-</ul>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-06.png" width="700"/></div><p><strong>관성(inertia, 이너셔)</strong></p>
 <ul>
+<li><p>샘플과 가장 가까운 센트로이드와의 거리의 제곱의 합</p></li>
+<li><p>각 군집이 센트로이드에 얼마나 가까이 모여있는가를 측정</p></li>
+<li><p>k-평균 모델의 성능 평가 방법</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">KMeans</span></code> 모델의 <code class="docutils literal notranslate"><span class="pre">score()</span></code> 메서드가 관성의 음숫값을 계산함.</p>
 <ul class="simple">
 <li><p>점수(score)는 높을 수록 좋은 모델을 나타내도록 해야 하는데,
@@ -1115,9 +524,7 @@
 </ul>
 </li>
 </ul>
-</div>
-<div class="section" id="kmeans">
-<h3><span class="section-number">9.5.4. </span>KMeans 모델의 알고리즘<a class="headerlink" href="#kmeans" title="Permalink to this headline">¶</a></h3>
+<p><strong>KMeans 모델의 알고리즘</strong></p>
 <ul class="simple">
 <li><p>k-평균++ 초기화 알고리즘</p>
 <ul>
@@ -1135,12 +542,10 @@
 </li>
 </ul>
 </div>
-<div class="section" id="id16">
-<h3><span class="section-number">9.5.5. </span>미니배치 k-평균<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id3">
+<h3><span class="section-number">9.1.2. </span>미니배치 k-평균<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>미니배치를 사용해서 센트로이드를 조금씩 이동하는 k-평균 알고리즘</p></li>
-</ul>
-<ul class="simple">
 <li><p>사이킷런의 <code class="docutils literal notranslate"><span class="pre">MiniBatchMeans</span></code> 모델이 지원.</p></li>
 </ul>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">MiniBatchKMeans</span>
@@ -1149,8 +554,7 @@
 <span class="n">minibatch_kmeans</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="section" id="id17">
-<h4><span class="section-number">9.5.5.1. </span>큰 데이터셋 다루기<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h4>
+<p><strong>큰 데이터셋 다루기</strong></p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">memmap</span></code> 활용</p>
 <ul>
@@ -1167,37 +571,27 @@
 </ul>
 </li>
 </ul>
-</div>
-<div class="section" id="id18">
-<h4><span class="section-number">9.5.5.2. </span>미니배치 k-평균의 특징<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h4>
+<p><strong>미니배치 k-평균의 특징</strong></p>
 <ul class="simple">
 <li><p>군집수가 커질 수록 k-평균보다 훨씬 빠르게 훈련됨.
 하지만 성능 차이는 상대적으로 커짐.</p></li>
 <li><p>아래 왼편 그림에서 보면 군집수 <span class="math notranslate nohighlight">\(k\)</span>가 커져도 성능 차이가 유지됨.
 하지만 성능 자체가 좋아지므로 두 모델의 상대적 성능 차이는 점점 벌어짐을 의미함.</p></li>
 </ul>
-<div align="center"><img src="images/ch09/homl09-07.png" width="700"/></div></div>
-</div>
-<div class="section" id="id19">
-<h3><span class="section-number">9.5.6. </span>k-평균 모델의 최적의 군집수 찾기<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-07.png" width="700"/></div><p><strong>k-평균 모델의 최적의 군집수 찾기</strong></p>
 <ul class="simple">
 <li><p>군집수가 적절하지 않으면 좋지 않은 모델로 수렴할 수 있음.</p></li>
 </ul>
-<div align="center"><img src="images/ch09/homl09-08.png" width="700"/></div><div class="section" id="id20">
-<h4><span class="section-number">9.5.6.1. </span>관성과 군집수<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h4>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-08.png" width="700"/></div><p><strong>관성과 군집수</strong></p>
 <ul class="simple">
 <li><p>군집수 k가 증가할 수록 관성은 기본적으로 줄어듬.
 따라서 관성만으로 모델을 평가할 없음.</p></li>
-</ul>
-<ul class="simple">
 <li><p>관성이 더 이상 획기적으로 줄어들지 않는 지점을 선택할 수 있음.</p></li>
 </ul>
-<div align="center"><img src="images/ch09/homl09-09.png" width="600"/></div><ul class="simple">
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-09.png" width="600"/></div><ul class="simple">
 <li><p>하지만 아래 그림에서 보듯이 반드시 좋은 모델이라 평가하기 어려움.</p></li>
 </ul>
-<div align="center"><img src="images/ch09/homl09-10.png" width="400"/></div></div>
-<div class="section" id="id21">
-<h4><span class="section-number">9.5.6.2. </span>실루엣 점수와 군집수<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h4>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-10.png" width="400"/></div><p><strong>실루엣 점수와 군집수</strong></p>
 <ul>
 <li><p>샘플별 실루엣 계수</p>
 <div class="math notranslate nohighlight">
@@ -1224,9 +618,7 @@
 <li><p>실루엣 점수가 높은 모델을 선택할 수 있음.
 아래 그림에 의해 <code class="docutils literal notranslate"><span class="pre">k=5</span></code>도 좋은 선택이 될 수 있지만 확실하지는 않음.</p></li>
 </ul>
-<div align="center"><img src="images/ch09/homl09-11.png" width="600"/></div></div>
-<div class="section" id="id22">
-<h4><span class="section-number">9.5.6.3. </span>실루엣 다이어그램과 군집수<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h4>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-11.png" width="600"/></div><p><strong>실루엣 다이어그램과 군집수</strong></p>
 <ul class="simple">
 <li><p>실루엣 다이어그램: 군집별 실루엣 계수들의 모음. 군집별로 칼날 모양 형성.</p>
 <ul>
@@ -1238,37 +630,27 @@
 <li><p>칼날의 두께가 서로 비슷해야, 즉, 군집별 크기가 비슷해야 좋은 모델임.
 따라서 <code class="docutils literal notranslate"><span class="pre">k=5</span></code> 가 보다 좋은 모델임.</p></li>
 </ul>
-<div align="center"><img src="images/ch09/homl09-12.png" width="400"/></div></div>
-</div>
-<div class="section" id="id23">
-<h3><span class="section-number">9.5.7. </span>k-평균의 한계<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h3>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-12.png" width="400"/></div></div>
+<div class="section" id="id4">
+<h3><span class="section-number">9.1.3. </span>k-평균의 한계<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>최적의 모델을 구하기 위해 여러 번 학습해야 함.</p></li>
 <li><p>군집수를 미리 지정해야 함.</p></li>
 <li><p>군집의 크기나 밀집도가 다르거나, 원형이 아닐 경우 잘 작동하지 않음.</p></li>
 </ul>
-<div align="center"><img src="images/ch09/homl09-13.png" width="600"/></div></div>
-</div>
-<div class="section" id="id24">
-<h2><span class="section-number">9.6. </span>군집화 활용<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id25">
-<h3><span class="section-number">9.6.1. </span>이미지 색상 분할<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h3>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-13.png" width="600"/></div></div>
+<div class="section" id="id5">
+<h3><span class="section-number">9.1.4. </span>군집화 활용: 이미지 색상 분할<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>동일한 종류의 물체는 동일한 영역에 할당됨.
 예를 들어, 보행자들을 모두 하나의 영역, 또는 각각의 영역으로 할당 가능.</p></li>
-</ul>
-<ul class="simple">
 <li><p>합성곱 신경망이 가장 좋은 성능 발휘</p></li>
-</ul>
-<ul class="simple">
 <li><p>색상 분할: 유사 색상으로 이루어진 군집으로 분할.</p></li>
-</ul>
-<ul class="simple">
 <li><p>예제: 무당벌레 이미지 색상 분할</p></li>
 </ul>
-<div align="center"><img src="images/ch09/homl09-14.png" width="600"/></div></div>
-<div class="section" id="id26">
-<h3><span class="section-number">9.6.2. </span>차원축소<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h3>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-14.png" width="600"/></div></div>
+<div class="section" id="id6">
+<h3><span class="section-number">9.1.5. </span>군집화 활용: 차원축소<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">transform()</span></code> 메서드</p>
 <ul>
@@ -1276,8 +658,6 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">n</span></code> 차원의 데이터셋을 <code class="docutils literal notranslate"><span class="pre">k</span></code> 차원의 데이터셋으로 변환함.</p></li>
 </ul>
 </li>
-</ul>
-<ul class="simple">
 <li><p>예제: 미니 MNIST 데이터셋 전처리. <span class="math notranslate nohighlight">\(k=50\)</span>.</p></li>
 </ul>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
@@ -1296,12 +676,10 @@
 </li>
 </ul>
 </div>
-<div class="section" id="id27">
-<h3><span class="section-number">9.6.3. </span>준지도 학습<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id7">
+<h3><span class="section-number">9.1.6. </span>군집화 활용: 준지도 학습<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>레이블이 있는 데이터가 적고, 레이블이 없는 데이터가 많을 때 활용</p></li>
-</ul>
-<ul class="simple">
 <li><p>예제: 미니 MNist (계속)</p>
 <ul>
 <li><p>예를 들어, 50개의 군집으로 나눈 후 50개 군집별로 센트로이드에 가장 가까운 샘플을
@@ -1310,42 +688,29 @@ __대표 이미지__로 선정.</p></li>
 </ul>
 </li>
 </ul>
-<div align="center"><img src="images/ch09/homl09-15.png" width="600"/></div><div class="section" id="id28">
-<h4><span class="section-number">9.6.3.1. </span>레이블 전파<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h4>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-15.png" width="600"/></div><p><strong>레이블 전파</strong></p>
 <ul class="simple">
 <li><p>대표이미지의 레이블을 해당 군집의 모든 샘플로 전파 가능.
 하지만 전파된 레이블의 정확도가 낮을 수 있음.</p></li>
-</ul>
-<ul class="simple">
 <li><p>센트로이드에 가까운 20% 정도에게만 레이블 전파하는 것 추천.
 이유는 센트로이드에 가깝기 떼문에 레이블의 정확도가 매우 높음.
 이런 방식으로 보다 적은 크기의 데이터셋으로 효율적인 모델 훈련이 가능해짐.</p></li>
 </ul>
-</div>
-<div class="section" id="id29">
-<h4><span class="section-number">9.6.3.2. </span>준지도학습과 능동학습<a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h4>
+<p><strong>준지도학습과 능동학습</strong></p>
 <ul class="simple">
 <li><p>분류기 모델이 가장 불확실하기 예측하는 샘플에 레이블 추가하기</p></li>
-</ul>
-<ul class="simple">
 <li><p>가능하면 서로 다른 군집에서 선택.</p></li>
-</ul>
-<ul class="simple">
 <li><p>새 모델 학습</p></li>
-</ul>
-<ul class="simple">
 <li><p>위 과정을 성능향상이 약해질 때까지 반복.</p></li>
 </ul>
 </div>
 </div>
-</div>
 <div class="section" id="dbscan">
-<h2><span class="section-number">9.7. </span>DBSCAN<a class="headerlink" href="#dbscan" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">9.2. </span>DBSCAN<a class="headerlink" href="#dbscan" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>연속적인 밀집 지역을 하나의 군집으로 설정.</p></li>
 </ul>
-<div class="section" id="id30">
-<h3><span class="section-number">9.7.1. </span>사이킷런의 DBSCAN 모델<a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h3>
+<p><strong>사이킷런의 DBSCAN 모델</strong></p>
 <ul class="simple">
 <li><p>두 개의 하이퍼파라미터 사용</p>
 <ul>
@@ -1358,26 +723,16 @@ __대표 이미지__로 선정.</p></li>
 </ul>
 </li>
 </ul>
-<div class="section" id="id31">
-<h4><span class="section-number">9.7.1.1. </span>핵심샘플과 군집<a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h4>
+<p><strong>핵심샘플과 군집</strong></p>
 <ul class="simple">
 <li><p>핵심샘플: <span class="math notranslate nohighlight">\(\varepsilon\)</span> 반경 내에 자신을 포함해서 <code class="docutils literal notranslate"><span class="pre">min-samples</span></code>개의 이웃을 갖는 샘플</p></li>
-</ul>
-<ul class="simple">
 <li><p>군집: 핵심샘플로 이루어진 이웃들로 구성된 그룹</p></li>
 </ul>
-</div>
-<div class="section" id="id32">
-<h4><span class="section-number">9.7.1.2. </span>이상치<a class="headerlink" href="#id32" title="Permalink to this headline">¶</a></h4>
+<p><strong>이상치</strong></p>
 <ul class="simple">
 <li><p>핵심샘플이 아니면서 동시에 핵심샘플의 이웃도 아닌 샘플.</p></li>
 </ul>
-</div>
-<div class="section" id="id33">
-<h4><span class="section-number">9.7.1.3. </span>예제<a class="headerlink" href="#id33" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li><p>반달모양 데이터 활용</p></li>
-</ul>
+<p><strong>예제:</strong> 반달모양 데이터 활용</p>
 <hr class="docutils" />
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">DBSCAN</span>
 
@@ -1386,17 +741,10 @@ __대표 이미지__로 선정.</p></li>
 </pre></div>
 </div>
 <hr class="docutils" />
-<div align="center"><img src="images/ch09/homl09-16.png" width="600"/></div></div>
-</div>
-<div class="section" id="id34">
-<h3><span class="section-number">9.7.2. </span>DBSCAN과 예측<a class="headerlink" href="#id34" title="Permalink to this headline">¶</a></h3>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-16.png" width="600"/></div><p><strong>DBSCAN과 예측</strong></p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">predict()</span></code> 메서드 지원하지 않음.</p></li>
-</ul>
-<ul class="simple">
 <li><p>이유: <code class="docutils literal notranslate"><span class="pre">KNeighborsClassifier</span></code> 등 보다 좋은 성능의 분류 알고리즘 활용 가능.</p></li>
-</ul>
-<ul class="simple">
 <li><p>아래 코드: 핵심샘플 대상 훈련.</p></li>
 </ul>
 <hr class="docutils" />
@@ -1411,50 +759,32 @@ __대표 이미지__로 선정.</p></li>
 <li><p>이후 새로운 샘플에 대한 예측 가능</p></li>
 <li><p>아래 그림은 새로운 4개의 샘플에 대한 예측을 보여줌.</p></li>
 </ul>
-<div align="center"><img src="images/ch09/homl09-17.png" width="450"/></div><div class="section" id="id35">
-<h4><span class="section-number">9.7.2.1. </span>이상치 판단<a class="headerlink" href="#id35" title="Permalink to this headline">¶</a></h4>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-17.png" width="450"/></div><p><strong>이상치 판단</strong></p>
 <ul class="simple">
 <li><p>위 예제에서, 두 군집으로부터 일정거리 이상 떨어진 샘플을 이상치로 간주 가능.</p></li>
-</ul>
-<ul class="simple">
 <li><p>예를 들어, 양편 끝쪽에 위치한 두 개의 샘플이 이상치로 간주될 수 있음.</p></li>
 </ul>
-<div align="center"><img src="images/ch09/homl09-17a.png" width="450"/></div></div>
-</div>
-<div class="section" id="id36">
-<h3><span class="section-number">9.7.3. </span>DBSCAN의 장단점<a class="headerlink" href="#id36" title="Permalink to this headline">¶</a></h3>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-17a.png" width="450"/></div><p><strong>DBSCAN의 장단점</strong></p>
 <ul class="simple">
 <li><p>매우 간단하면서 매우 강력한 알고리즘.</p>
 <ul>
 <li><p>하이퍼파라미터: 단 2개</p></li>
 </ul>
 </li>
-</ul>
-<ul class="simple">
 <li><p>군집의 모양과 개수에 상관없음.</p></li>
-</ul>
-<ul class="simple">
 <li><p>이상치에 안정적임.</p></li>
-</ul>
-<ul class="simple">
 <li><p>군깁 간의 밀집도가 크게 다르면 모든 군집 파악 불가능.</p></li>
 </ul>
-<div class="section" id="id37">
-<h4><span class="section-number">9.7.3.1. </span>계산복잡도<a class="headerlink" href="#id37" title="Permalink to this headline">¶</a></h4>
+<p><strong>계산복잡도</strong></p>
 <ul class="simple">
 <li><p>시간복잡도: 약 <span class="math notranslate nohighlight">\(O(m\, \log m)\)</span>. 단, <span class="math notranslate nohighlight">\(m\)</span>은 샘플 수</p></li>
-</ul>
-<ul class="simple">
 <li><p>공간복잡도: 사이킷런의 DBSCAN 모델은 <span class="math notranslate nohighlight">\(O(m^2)\)</span>의 메모리 요구.</p>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">eps</span></code>가 커질 경우.</p></li>
 </ul>
 </li>
 </ul>
-</div>
-</div>
-<div class="section" id="id38">
-<h3><span class="section-number">9.7.4. </span>기타 군집 알고리즘<a class="headerlink" href="#id38" title="Permalink to this headline">¶</a></h3>
+<p><strong>기타 군집 알고리즘</strong></p>
 <ul class="simple">
 <li><p>응집 군집(병합 군집, agglomerative clustering)</p></li>
 <li><p>BIRCH</p></li>
@@ -1463,44 +793,30 @@ __대표 이미지__로 선정.</p></li>
 <li><p>스펙트럼 군집</p></li>
 </ul>
 </div>
-</div>
-<div class="section" id="id39">
-<h2><span class="section-number">9.8. </span>9.2 가우시안 혼합 모델<a class="headerlink" href="#id39" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id8">
+<h2><span class="section-number">9.3. </span>가우시안 혼합 모델<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>데이터셋이 여러 개의 혼합된 가우시안 분포를 따르는 샘플들로 구성되었다고 가정.</p></li>
-</ul>
-<ul class="simple">
 <li><p>가우시안 분포 = 정규분포</p></li>
 </ul>
-<div class="section" id="id40">
-<h3><span class="section-number">9.8.1. </span>정규분포 소개<a class="headerlink" href="#id40" title="Permalink to this headline">¶</a></h3>
+<p><strong>정규분포 소개</strong></p>
 <ul class="simple">
 <li><p>종 모양의 확률밀도함수를 갖는 확률분포</p></li>
 </ul>
-<div align="center"><img src="images/ch09/homl09-18.png" width="400"/></div></div>
-<div class="section" id="id41">
-<h3><span class="section-number">9.8.2. </span>군집<a class="headerlink" href="#id41" title="Permalink to this headline">¶</a></h3>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-18.png" width="400"/></div><p><strong>군집</strong></p>
 <ul class="simple">
 <li><p>하나의 가우시안 분포에서 생생된 모든 샘플들의 그룹</p></li>
 <li><p>일반적으로 타원형 모양.</p></li>
 </ul>
-</div>
-<div class="section" id="id42">
-<h3><span class="section-number">9.8.3. </span>예제<a class="headerlink" href="#id42" title="Permalink to this headline">¶</a></h3>
+<p><strong>예제</strong></p>
 <ul class="simple">
 <li><p>아래 그림에서처럼 일반적으로 모양, 크기, 밀집도, 방향이 다름.</p></li>
 <li><p>따라서 각 샘플이 어떤 정규분포를 따르는지를 파악하는 게 핵심.</p></li>
 </ul>
-<div align="center"><img src="images/ch09/homl09-13.png" width="600"/></div></div>
-<div class="section" id="gmm">
-<h3><span class="section-number">9.8.4. </span>GMM 활용<a class="headerlink" href="#gmm" title="Permalink to this headline">¶</a></h3>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-13.png" width="600"/></div><p><strong>GMM 활용</strong></p>
 <ul class="simple">
 <li><p>위 데이터셋에 <code class="docutils literal notranslate"><span class="pre">GaussianMixture</span></code> 모델 적용</p></li>
-</ul>
-<ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">n_components</span></code>: 군집수 지정</p></li>
-</ul>
-<ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">n_init</span></code>: 모델 학습 반복 횟수.</p>
 <ul>
 <li><p>파라미터(평균값, 공분산 등)를 무작위로 추정한 후 수렴할 때까지 학습시킴.</p></li>
@@ -1522,9 +838,7 @@ __대표 이미지__로 선정.</p></li>
 </ul>
 </li>
 </ul>
-<div align="center"><img src="images/ch09/homl09-19.png" width="500"/></div></div>
-<div class="section" id="id43">
-<h3><span class="section-number">9.8.5. </span>GMM 모델 규제<a class="headerlink" href="#id43" title="Permalink to this headline">¶</a></h3>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-19.png" width="500"/></div><p><strong>GMM 모델 규제</strong></p>
 <ul class="simple">
 <li><p>특성수가 크거나, 군집수가 많거나, 샘플이 적은 경우 최적 모델 학습 어려움.</p></li>
 <li><p>공분산(covariance)에 규제를 가해서 학습을 도와줄 수 있음.</p>
@@ -1533,8 +847,7 @@ __대표 이미지__로 선정.</p></li>
 </ul>
 </li>
 </ul>
-<div class="section" id="covariance-type">
-<h4><span class="section-number">9.8.5.1. </span>covariance_type 옵션값<a class="headerlink" href="#covariance-type" title="Permalink to this headline">¶</a></h4>
+<p><strong>covariance_type 옵션값</strong></p>
 <ul class="simple">
 <li><p>full</p>
 <ul>
@@ -1566,16 +879,14 @@ __대표 이미지__로 선정.</p></li>
 </ul>
 </li>
 </ul>
-<div align="center"><img src="images/ch09/homl09-20.png" width="600"/></div></div>
-</div>
-<div class="section" id="id44">
-<h3><span class="section-number">9.8.6. </span>가우시안 혼합 모델 활용: 이상치 탐지<a class="headerlink" href="#id44" title="Permalink to this headline">¶</a></h3>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-20.png" width="600"/></div><div class="section" id="id9">
+<h3><span class="section-number">9.3.1. </span>가우시안 혼합 모델 활용: 이상치 탐지<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>밀도가 임곗값보다 낮은 지역에 있는 샘플을 이상치로 간주 가능.</p></li>
 </ul>
-<div align="center"><img src="images/ch09/homl09-21.png" width="500"/></div></div>
-<div class="section" id="id45">
-<h3><span class="section-number">9.8.7. </span>가우션 혼합모델 군집수 지정<a class="headerlink" href="#id45" title="Permalink to this headline">¶</a></h3>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-21.png" width="500"/></div></div>
+<div class="section" id="id10">
+<h3><span class="section-number">9.3.2. </span>가우션 혼합모델 군집수 지정<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>k-평균에서 사용했던 관성 또는 실루엣 점수 사용 불가.</p>
 <ul>
@@ -1586,8 +897,7 @@ __대표 이미지__로 선정.</p></li>
 <ul class="simple">
 <li><p>대신에 <strong>이론적 정보 기준</strong> 을 최소화 하는 모델 선택 가능.</p></li>
 </ul>
-<div class="section" id="id46">
-<h4><span class="section-number">9.8.7.1. </span>이론적 정보 기준<a class="headerlink" href="#id46" title="Permalink to this headline">¶</a></h4>
+<p><strong>이론적 정보 기준</strong></p>
 <ul>
 <li><p>BIC: Bayesian information criterion</p>
 <div class="math notranslate nohighlight">
@@ -1609,22 +919,18 @@ __대표 이미지__로 선정.</p></li>
 <li><p>학습해야 할 파라미터가 많을 수록 벌칙이 가해짐.</p></li>
 <li><p>데이터에 잘 학습하는 모델일 수록 보상을 더해줌.</p></li>
 </ul>
-</div>
-<div class="section" id="id47">
-<h4><span class="section-number">9.8.7.2. </span>군집수와 정보조건<a class="headerlink" href="#id47" title="Permalink to this headline">¶</a></h4>
+<p><strong>군집수와 정보조건</strong></p>
 <ul class="simple">
 <li><p>아래 그림은 군집수 <span class="math notranslate nohighlight">\(k\)</span>와 AIC, BIC의 관계를 보여줌.</p></li>
 <li><p><span class="math notranslate nohighlight">\(k=3\)</span>이 최적으로 보임.</p></li>
 </ul>
-<div align="center"><img src="images/ch09/homl09-22.png" width="600"/></div></div>
-</div>
-<div class="section" id="id48">
-<h3><span class="section-number">9.8.8. </span>베이즈 가우시안 혼합 모델<a class="headerlink" href="#id48" title="Permalink to this headline">¶</a></h3>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-22.png" width="600"/></div></div>
+<div class="section" id="id11">
+<h3><span class="section-number">9.3.3. </span>베이즈 가우시안 혼합 모델<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>베이즈 확률통계론 활용</p></li>
 </ul>
-<div class="section" id="bayesiangaussianmixture">
-<h4><span class="section-number">9.8.8.1. </span>BayesianGaussianMixture 모델<a class="headerlink" href="#bayesiangaussianmixture" title="Permalink to this headline">¶</a></h4>
+<p><strong>BayesianGaussianMixture 모델</strong></p>
 <ul class="simple">
 <li><p>최적의 군집수를 자동으로 찾아줌.</p></li>
 <li><p>단, 최적의 군집수보다 큰 수를 <code class="docutils literal notranslate"><span class="pre">n_components</span></code>에 전달해야 함.</p>
@@ -1650,9 +956,7 @@ __대표 이미지__로 선정.</p></li>
 <span class="go">array([0.4 , 0.21, 0.4 , 0.  , 0.  , 0.  , 0.  , 0.  , 0.  , 0.  ])</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="id49">
-<h4><span class="section-number">9.8.8.2. </span>사전 믿음<a class="headerlink" href="#id49" title="Permalink to this headline">¶</a></h4>
+<p><strong>사전 믿음</strong></p>
 <ul class="simple">
 <li><p>군집수가 어느 정도일까를 나타내는 지수</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">weight_concentration_prior</span></code> 하이퍼파라미터</p>
@@ -1663,26 +967,19 @@ __대표 이미지__로 선정.</p></li>
 </ul>
 </li>
 </ul>
-<div align="center"><img src="images/ch09/homl09-24.png" width="600"/></div></div>
-</div>
-<div class="section" id="id50">
-<h3><span class="section-number">9.8.9. </span>가우시안 혼합 모델의 장단점<a class="headerlink" href="#id50" title="Permalink to this headline">¶</a></h3>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-24.png" width="600"/></div><p><strong>가우시안 혼합 모델의 장단점</strong></p>
 <ul class="simple">
 <li><p>타원형 군집에 잘 작동.</p></li>
-</ul>
-<ul class="simple">
 <li><p>하지만 다른 모양을 가진 데이터셋에서는 성능 좋지 않음.</p></li>
-</ul>
-<ul class="simple">
 <li><p>예제: 달모양 데이터에 적용하는 경우</p>
 <ul>
 <li><p>억지로 타원을 찾으려 시도함.</p></li>
 </ul>
 </li>
 </ul>
-<div align="center"><img src="images/ch09/homl09-23.png" width="700"/></div></div>
-<div class="section" id="id51">
-<h3><span class="section-number">9.8.10. </span>이상치 탐지와 특이치 탐지를 위한 다른 알고리즘<a class="headerlink" href="#id51" title="Permalink to this headline">¶</a></h3>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-23.png" width="700"/></div></div>
+<div class="section" id="id12">
+<h3><span class="section-number">9.3.4. </span>이상치 탐지와 특이치 탐지를 위한 다른 알고리즘<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>PCA</p></li>
 <li><p>Fast-MCD</p></li>
