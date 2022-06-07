@@ -215,7 +215,7 @@
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-12.png" width="700"/></div>
 
-# ### k-평균의 한계
+# ### K-평균의 한계
 
 # * 최적의 모델을 구하기 위해 여러 번 학습해야 함.
 # * 군집수를 미리 지정해야 함.
