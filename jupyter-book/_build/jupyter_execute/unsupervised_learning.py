@@ -11,7 +11,7 @@
 # **소스코드**
 # 
 # 본문 내용의 일부를 파이썬으로 구현한 내용은 
-# [(구글코랩) 차원축소](https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/notebooks/code_dimensionality_reduction.ipynb)에서 확인할 수 있다.
+# [(구글코랩) 비지도 학브](https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/notebooks/code_unsupervised_learning.ipynb)에서 확인할 수 있다.
 
 # **주요 내용**
 # 
@@ -54,7 +54,7 @@
 # **군집**<font size='2'>cluster</font>은 유사한 대상들의 모음을 가리킨다.
 # 예를 들어, 산이나 공원에서 볼 수 있는 이름은 모르지만 동일 품종의 꽃으로 이루어진 군집 등을
 # 생각하면 된다.
-# **군집화**<font size='2'>clustering</font>은 대상들을 나누어 군집을 
+# **군집화**<font size='2'>clustering</font>는 대상들을 나누어 군집을 
 # 형성하는 것을 말한다. 
 
 # **분류 대 군집화**
@@ -74,9 +74,7 @@
 # 꽃받침의 길이와 너비 특성까지 적용항 붓꽃 데이터셋에 대해 적용하면
 # 세 개의 군집을 매우 정확하게 생성한다.
 
-# <div align="center"><img src="https://scikit-learn.org/stable/_images/sphx_glr_plot_gmm_covariances_001.png" width="500"/></div>
-# 
-# <그림 출처: [사이킷런의 가우시안 혼합 모델](https://scikit-learn.org/stable/modules/mixture.html#gmm)>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-02.png" width="450"/></div>
 
 # 군집에 대한 보편적 정의는 없다. 사용되는 알고리즘에 따라 다른 형식의 군집을 생성한다.
 # 
@@ -263,7 +261,7 @@
 # 센트로이드에 가장 가까운 샘플 50개를 대표 이미지로 선정한다.
 # 선정된 50개 샘플만을 이용하여 분류 모델을 훈련해도 84.9%의 정확도가 달성된다.
 
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-15.png" width="600"/></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-15.png" width="500"/></div>
 
 # **활용 예제 4: 레이블 전파**
 
