@@ -43,14 +43,15 @@
     <script src="_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="_static/sphinx-thebe.js"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="7. 앙상블 학습과 랜덤 포레스트" href="ensemble_learning_random_forests.html" />
@@ -760,7 +761,7 @@ J(k, t_k) &amp;= \frac{m_\text{left}}{m}\, \text{MSE}_\text{left} + \frac{m_\tex
 <p>결정트리은 꽤 높은 분산을 갖는다.
 즉, 훈련셋이나 하이퍼파라미터가 조금만 달라져도 완전히 다른 결정트리가 훈련될 수 있다.
 심지어 동일한 모델을 훈련시켜도 많이 다른 결정트리가 생성되기도 한다.
-이는 결정트리가 생성될 때 특성과 특성의 임곗값을 무작위로 선택하기 때문이다.
+이는 결정트리가 생성될 때 특성을 무작위로 선택하기 때문이다.
 따라서 <code class="docutils literal notranslate"><span class="pre">random_state</span></code> 를 지정하지 않으면 아래 그래프와 같은 많이 다른 결정트리가 생성되기도 한다.</p>
 <img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch06/homl06-08e.png"/><p><strong>랜덤 포레스트</strong></p>
 <p>높은 분산을 갖는 문제는 여러 개의 결정트리를 동시에 훈련시킨 후 평균값을 랜덤 포레스트 모델을
