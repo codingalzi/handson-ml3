@@ -43,14 +43,15 @@
     <script src="_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="_static/sphinx-thebe.js"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="5. 서포트 벡터 머신" href="svm.html" />
@@ -1391,7 +1392,10 @@ J(\Theta) =
 <p>위 식에서 <span class="math notranslate nohighlight">\(y^{(i)}_k\)</span> 는 타깃 확률값을 가리키며, 0 또는 1 중에 하나의 값을 갖는다.
 <span class="math notranslate nohighlight">\(K=2\)</span>이면 로지스틱 회귀의 로그 손실 함수와 정확하게 일치한다.</p>
 <p>크로스 엔트로피는 주어진 샘플의 타깃 클래스를 제대로 예측하지 못하는 경우 높은 값을 갖는다.
-크로스 엔트로피 개념은 정보 이론에서 유래하며, 여기서는 더 이상 설명하지 않는다.</p>
+크로스 엔트로피 개념은 정보 이론에서 유래하며,
+자세한 설명은 오렐리앙 제롱의 동영상
+<a class="reference external" href="https://www.youtube.com/watch?v=ErfnhcEV1O8">“A Short Introduction to Entropy, Cross-Entropy and KL-Divergence”</a>를
+참고하기 바란다.</p>
 <p><strong>붓꽃 데이터 다중 클래스 분류</strong></p>
 <p>사이킷런의 <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> 예측기를 활용한다.
 기본값 <code class="docutils literal notranslate"><span class="pre">solver=lbfgs</span></code> 사용하면 모델이 알아서 다중 클래스 분류를 훈련한다.
