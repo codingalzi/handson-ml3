@@ -167,7 +167,7 @@
 
 # ## CART 훈련 알고리즘
 
-# **CART<font size='2'>Classification and Regression Tree<font> 분류 알고리즘**
+# **CART<font size='2'>Classification and Regression Tree</font> 분류 알고리즘**
 
 # 각 노드에서 아래 비용함수를 최소화 하는 특성 $k$와 해당 특성의 임곗값 $t_k$를 결정해서 분할하는 과정을 
 # 반복한다.
