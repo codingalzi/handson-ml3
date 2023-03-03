@@ -38,11 +38,6 @@ sphinx:
   extra_extensions:
     - sphinx_proof
 
-# To parse raw HTML image
-# WARNING: this extension is not compatible with "sphinx_proof"
-#
-# parse:
-#   myst_enable_extensions:
-# don't forget to list any other extensions you want enabled,
-# including those that are enabled by default!
-#     - html_image
+# Add a launch on Google Colab button
+launch_buttons:
+  colab_url: "https://colab.research.google.com"
