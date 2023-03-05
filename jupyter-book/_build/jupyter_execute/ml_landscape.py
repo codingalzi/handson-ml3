@@ -14,6 +14,12 @@
 # [(구글코랩) 한눈에 보는 머신러닝](https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/notebooks/code_ml_landscape.ipynb)에서 
 # 확인할 수 있다.
 
+# **슬라이드**
+# 
+# 본문 내용을 요악한
+# [슬라이드](https://codingalzi.github.io/handson-ml3/slides/slides-ml_landscape.pdf)에서 
+# 확인할 수 있다.
+
 # ## 머신러닝이란?
 
 # **아서 새뮤얼<font size="2">Artuhr Samuel</font> (1959)**
