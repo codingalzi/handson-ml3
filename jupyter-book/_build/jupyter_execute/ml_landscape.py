@@ -16,9 +16,9 @@
 
 # **슬라이드**
 # 
-# 본문 내용을 요악한
-# [슬라이드](https://codingalzi.github.io/handson-ml3/slides/slides-ml_landscape.pdf)에서 
-# 확인할 수 있다.
+# 본문 내용을 요약한
+# [슬라이드](https://github.com/codingalzi/handson-ml3/raw/master/slides/slides-ml_landscape.pdf)를
+# 다운로드할 수 있다.
 
 # ## 머신러닝이란?
 
