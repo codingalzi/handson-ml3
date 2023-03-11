@@ -1186,16 +1186,16 @@ title="Print to PDF"
 </section>
 <section id="id14">
 <h3><span class="section-number">2.5.2. </span>데이터 정제<a class="headerlink" href="#id14" title="Permalink to this headline">#</a></h3>
-<p>입력 데이터셋의 <code class="docutils literal notranslate"><span class="pre">total_bedrooms</span></code> 특성에 207개 구역이 null 값으로 채워져 있다.
+<p>입력 데이터셋의 <code class="docutils literal notranslate"><span class="pre">total_bedrooms</span></code> 특성에 168개 구역이 null 값으로 채워져 있다.
 즉, 일부 구역에 대한 방의 총 개수 정보가 누락되었다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/null-value01.png" width="800"></div><p>머신러닝 모델은 결측치가 있는 데이터셋을 잘 활용하지 못한다.
-따라서 아래 옵션 중 하나를 선택해서 데이터를 정제해야 한다.</p>
+따라서 아래 방법 중 하나를 선택해서 데이터를 정제해야 한다.</p>
 <ul class="simple">
-<li><p>옵션 1: 해당 구역 제거</p></li>
-<li><p>옵션 2: 해당 특성 삭제</p></li>
-<li><p>옵션 3: 평균값, 중앙값, 0, 주변에 위치한 값 등 특정 값으로 채우기.</p></li>
+<li><p>방법 1: 해당 구역 제거</p></li>
+<li><p>방법 2: 해당 특성 삭제</p></li>
+<li><p>방법 3: 평균값, 중앙값, 0, 주변에 위치한 값 등 특정 값으로 채우기.</p></li>
 </ul>
-<p>여기서는 중앙값으로 채우는 옵션 3 방식을 사이킷런의 <code class="docutils literal notranslate"><span class="pre">SimpleImputer</span></code> 변환기를 이용하여 적용한다.</p>
+<p>여기서는 중앙값으로 채우는 방법 3을 사이킷런의 <code class="docutils literal notranslate"><span class="pre">SimpleImputer</span></code> 변환기를 이용하여 적용한다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/null-value02.png" width="800"></div></section>
 <section id="id15">
 <h3><span class="section-number">2.5.3. </span>범주형 특성 다루기: 원-핫 인코딩<a class="headerlink" href="#id15" title="Permalink to this headline">#</a></h3>

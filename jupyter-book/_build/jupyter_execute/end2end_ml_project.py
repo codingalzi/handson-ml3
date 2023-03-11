@@ -435,19 +435,19 @@
 
 # ### 데이터 정제
 
-# 입력 데이터셋의 `total_bedrooms` 특성에 207개 구역이 null 값으로 채워져 있다.
+# 입력 데이터셋의 `total_bedrooms` 특성에 168개 구역이 null 값으로 채워져 있다.
 # 즉, 일부 구역에 대한 방의 총 개수 정보가 누락되었다.
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/null-value01.png" width="800"></div>
 
 # 머신러닝 모델은 결측치가 있는 데이터셋을 잘 활용하지 못한다.
-# 따라서 아래 옵션 중 하나를 선택해서 데이터를 정제해야 한다.
+# 따라서 아래 방법 중 하나를 선택해서 데이터를 정제해야 한다.
 # 
-# * 옵션 1: 해당 구역 제거
-# * 옵션 2: 해당 특성 삭제
-# * 옵션 3: 평균값, 중앙값, 0, 주변에 위치한 값 등 특정 값으로 채우기. 
+# * 방법 1: 해당 구역 제거
+# * 방법 2: 해당 특성 삭제
+# * 방법 3: 평균값, 중앙값, 0, 주변에 위치한 값 등 특정 값으로 채우기. 
 
-# 여기서는 중앙값으로 채우는 옵션 3 방식을 사이킷런의 `SimpleImputer` 변환기를 이용하여 적용한다.
+# 여기서는 중앙값으로 채우는 방법 3을 사이킷런의 `SimpleImputer` 변환기를 이용하여 적용한다.
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/null-value02.png" width="800"></div>
 
