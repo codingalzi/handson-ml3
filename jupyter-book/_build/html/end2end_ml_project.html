@@ -496,7 +496,7 @@ title="Print to PDF"
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id22">
-     2.6.1. 훈련셋 대상 훈련 및 평가
+     2.6.1. 모델 훈련과 평가
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -508,7 +508,7 @@ title="Print to PDF"
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id24">
-   2.7. 모델 튜닝
+   2.7. 모델 미세 조정
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
@@ -685,7 +685,7 @@ title="Print to PDF"
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id22">
-     2.6.1. 훈련셋 대상 훈련 및 평가
+     2.6.1. 모델 훈련과 평가
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -697,7 +697,7 @@ title="Print to PDF"
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id24">
-   2.7. 모델 튜닝
+   2.7. 모델 미세 조정
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
@@ -1511,10 +1511,10 @@ title="Print to PDF"
 <div class="info admonition">
 <p class="admonition-title">전처리 포함 파이프라인 모델</p>
 <p>소개되는 모든 모델은 앞서 설명한 전처리 과정과 함께 하나의 파이프라인으로 묶여서 정의된다.
-이는 테스트셋과 미래의 모든 입력 데이터셋에 대해서도 전처리를 별도로 신경쓸 필요가 없게 해준다.</p>
+따라서 테스트셋과 미래의 새로운 입력 데이터에 대해서도 전처리를 별도로 신경쓸 필요가 없다.</p>
 </div>
 <section id="id22">
-<h3><span class="section-number">2.6.1. </span>훈련셋 대상 훈련 및 평가<a class="headerlink" href="#id22" title="Permalink to this headline">#</a></h3>
+<h3><span class="section-number">2.6.1. </span>모델 훈련과 평가<a class="headerlink" href="#id22" title="Permalink to this headline">#</a></h3>
 <p><strong>선형 회귀 모델 (<a class="reference internal" href="training_models.html#ch-trainingmodels"><span class="std std-numref">4장</span></a>)</strong></p>
 <ul>
 <li><p>훈련 및 예측</p>
@@ -1619,11 +1619,13 @@ title="Print to PDF"
 </section>
 </section>
 <section id="id24">
-<h2><span class="section-number">2.7. </span>모델 튜닝<a class="headerlink" href="#id24" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">2.7. </span>모델 미세 조정<a class="headerlink" href="#id24" title="Permalink to this headline">#</a></h2>
 <p>지금까지 살펴 본 모델 중에서 랜덤 포레스트 회귀 모델의 성능이 가장 좋았다.
 이렇게 가능성이 높은 모델을 찾은 다음엔 모델의 세부 설정(하이퍼파라미터)을 조정하거나
-성능이 좋은 모델 여러 개를 이용하여 모델의 성능을 최대한 끌어올릴 수 있다.</p>
-<p>모델 튜닝은 보통 다음 두 가지 방식을 사용한다.</p>
+성능이 좋은 모델 여러 개를 이용하여 모델의 성능을 최대한 끌어올릴 수 있다.
+이렇게 하이퍼파라미터를 조정하면서 최적의 모델을 훈련시키는 방법을
+모델 <strong>미세 조정</strong><font size='2'>fine tuning</font>이라 한다.</p>
+<p>모델 미세 조정은 보통 다음 두 가지 방식을 사용한다.</p>
 <ul class="simple">
 <li><p>그리드 탐색</p></li>
 <li><p>랜덤 탐색</p></li>
@@ -1676,6 +1678,39 @@ title="Print to PDF"
 
 <span class="n">rnd_search</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">housing</span><span class="p">,</span> <span class="n">housing_labels</span><span class="p">)</span>
 </pre></div>
+</div>
+<div class="info admonition">
+<p class="admonition-title">확률 분포 함수</p>
+<p>랜덤 탐색을 하려면 특정 옵션 변수갈들을 무작위로 선택해주는 확률분포 함수를 지정해야 한다.
+앞서 랜덤 탐색에서 사용한 옵션 변수와 확률분포는 다음과 같이
+이산 균등 분포를 사용하는 <code class="docutils literal notranslate"><span class="pre">randint()</span></code> 함수를 이용하였다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;preprocessing__geo__n_clusters&#39;</span><span class="p">:</span> <span class="n">randint</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="s1">&#39;random_forest__max_features&#39;</span><span class="p">:</span> <span class="n">randint</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>scipy는 이외에 다른 종류의 분포 함수를 지원한다.
+많이 사용되는 분포는 다음과 같다.</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="text-align:center head"><p>확률 분포 함수</p></th>
+<th class="text-align:center head"><p>확률 분포 종류</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:center"><p><code class="docutils literal notranslate"><span class="pre">scipy.stats.randint(a,</span> <span class="pre">b+1)</span></code></p></td>
+<td class="text-align:center"><p>이산 균등 분포</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p><code class="docutils literal notranslate"><span class="pre">scipy.stats.uniform(a,</span> <span class="pre">b)</span></code></p></td>
+<td class="text-align:center"><p>연속 균등 분포</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:center"><p><code class="docutils literal notranslate"><span class="pre">scipy.stats.geom(1</span> <span class="pre">/</span> <span class="pre">scale)</span></code></p></td>
+<td class="text-align:center"><p>기하 분포 (이산)</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p><code class="docutils literal notranslate"><span class="pre">scipy.stats.expon(scale)</span></code></p></td>
+<td class="text-align:center"><p>지수 분포 (연속)</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </section>
 <section id="id27">
