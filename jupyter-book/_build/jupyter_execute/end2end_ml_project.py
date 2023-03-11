@@ -22,7 +22,7 @@
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-01d.png" width="600"></div>
 
 # 특히 데이터 정제 및 전처리 과정으로 구성된 데이터 준비와
-# 최선의 모델을 찾는 과정을 상세히 소개한다. 
+# 최적의 모델을 찾는 과정을 상세히 소개한다. 
 
 # ## 실전 데이터 활용
 
@@ -869,6 +869,20 @@
 #     - 실전 상황에서 RMSE가 0이 되는 것은 불가능하다.
 #     - 테스트셋에 대한 RMSE는 매우 높게 나온다.
 
+# **랜덤 포레스트 회귀 모델 ({numref}`%s장 <ch:ensemble>`)**
+# 
+# **랜덤 포레스트**<font size="2">random forest</font> 회귀 모델은 
+# 여러 개의 결정트리를 동시에 훈련시킨 후 
+# 각 모델의 예측값의 평균값 등을 이용하는 모델이다.
+# 각 모델은 교차 검증처럼 서로 다른 훈련셋을 대상으로 학습한다.
+# 
+# 사이킷런의 `RandomForestRegressor` 모델은 기본값으로 100개의 결정트리를 동시에 훈련시킨다.
+# 
+# ```python
+# forest_reg = make_pipeline(preprocessing,
+#                            RandomForestRegressor(n_estimators=100, random_state=42))
+# ```
+
 # ### 교차 검증
 
 # __교차 검증__<font size="2">cross validation</font>을 이용하여 
@@ -911,20 +925,6 @@
 # 확인할 수 있다.
 # :::
 
-# **랜덤 포레스트 회귀 모델 ({numref}`%s장 <ch:ensemble>`)**
-# 
-# **랜덤 포레스트**<font size="2">random forest</font> 회귀 모델은 
-# 여러 개의 결정트리를 동시에 훈련시킨 후 
-# 각 모델의 예측값의 평균값 등을 이용하는 모델이다.
-# 각 모델은 교차 검증처럼 서로 다른 훈련셋을 대상으로 학습한다.
-# 
-# 사이킷런의 `RandomForestRegressor` 모델은 기본값으로 100개의 결정트리를 동시에 훈련시킨다.
-# 
-# ```python
-# forest_reg = make_pipeline(preprocessing,
-#                            RandomForestRegressor(n_estimators=100, random_state=42))
-# ```
-# 
 # 래덤 포레스트 모델에 대한 교차 검증을 적용하면 폴드 수에 비례하여 훈련 시간이 더 오래 걸린다.
 # 
 # ```python
@@ -947,7 +947,7 @@
 
 # ### 그리드 탐색
 
-# 지정된 하이퍼파라미터의 모든 조합에 대해 교차 검증을 진행하여 최선의 하이퍼파라미터 조합을 찾는다. 
+# 지정된 하이퍼파라미터의 모든 조합에 대해 교차 검증을 진행하여 최적의 하이퍼파라미터 조합을 찾는다. 
 
 # **`GridSearchCV` 클래스**
 # 
@@ -1001,7 +1001,7 @@
 # rnd_search.fit(housing, housing_labels)
 # ```
 
-# :::{admonition} 확률 분포 함수
+# :::{admonition} 하이퍼파라리미터 무작위 선택
 # :class: info
 # 
 # 랜덤 탐색을 하려면 특정 옵션 변수갈들을 무작위로 선택해주는 확률분포 함수를 지정해야 한다. 
@@ -1013,7 +1013,7 @@
 # 'random_forest__max_features': randint(low=2, high=20)
 # ```
 # 
-# scipy는 이외에 다른 종류의 분포 함수를 지원한다.
+# scipy는 이외에 다른 종류의 확률 분포 함수를 지원한다.
 # 많이 사용되는 분포는 다음과 같다.
 # 
 # | 확률 분포 함수| 확률 분포 종류 |
@@ -1022,31 +1022,26 @@
 # | `scipy.stats.uniform(a, b)` | 연속 균등 분포 |
 # | `scipy.stats.geom(1 / scale)` | 기하 분포 (이산) |
 # | `scipy.stats.expon(scale)` | 지수 분포 (연속) |
+# 
+# <br>
+# <br>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/random_distribution1.png" width="550"></div>
 # :::
 
-# ### 앙상블 기법
+# ### 최적 모델 활용
 
-# 결정트리 모델 하나보다 랜덤 포레스트처럼 여러 모델을 활용하는 모델이
-# 일반적으로 보다 좋은 성능을 낸다.
-# 이처럼 좋은 성능을 내는 여러 모델을 **함께**<font size="2">ensemble</font> 
-# 학습시킨 후 평균값을 사용하면 보다 좋은 성능을 내는 모델을 얻게 된다. 
-# 앙상블 기법에 대해서는 {numref}`%s장 <ch:ensemble>`에서 자세히 다룬다.
-
-# ### 훈련된 최선의 모델 활용
-
-# 그리드 탐색 또는 랜덤 탐색을 통해 얻어진 최선의 모델을 분석해서 문제에 대한 통찰을 얻을 수 있다.
-# 
-# 예를 들어, 최선의 랜덤 포레스트 모델로부터 타깃 예측에 사용된 특성들의 상대적 중요도를 확인하여
+# 그리드 탐색 또는 랜덤 탐색을 통해 얻어진 최적의 모델을 분석해서 문제에 대한 통찰을 얻을 수 있다.
+# 예를 들어, 최적의 랜덤 포레스트 모델로부터 타깃 예측에 사용된 특성들의 상대적 중요도를 확인하여
 # 중요하지 않은 특성을 제외할 수 있다.
 # 
-# 캘리포니아 주택 가격 예측 모델의 경우 랜덤 탐색을 통해 찾아낸 최선의 모델에서 
+# 캘리포니아 주택 가격 예측 모델의 경우 랜덤 탐색을 통해 찾아낸 최적의 모델에서 
 # `feature_importances_`를 확인하면 다음 정보를 얻는다.
 # 
 # - `log__median_income` 특성이 가장 중요하다.
 # - 해안 근접도 특성 중에서 `INLAND` 특성만 중요하다.
 
 # ```python
-# final_model = rnd_search.best_estimator_                                 # 최선 모델
+# final_model = rnd_search.best_estimator_                                 # 최적 모델
 # feature_importances = final_model["random_forest"].feature_importances_  # 특성뱔 상대적 중요도
 # 
 # # 중요도 내림차순 정렬
@@ -1065,7 +1060,7 @@
 #  (7.301686597099842e-05, 'cat__ocean_proximity_ISLAND')]
 # ```
 
-# ## 최선 모델 저장 및 활용
+# ## 최적 모델 저장 및 활용
 
 # 완성된 모델은 항상 저장해두어야 한다.
 # 업데이트된 모델이 적절하지 않은 경우 이전 모델로 되돌려야 할 수도 있기 때문이다.

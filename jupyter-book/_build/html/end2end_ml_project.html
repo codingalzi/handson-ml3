@@ -523,23 +523,18 @@ title="Print to PDF"
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id27">
-     2.7.3. 앙상블 기법
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id28">
-     2.7.4. 훈련된 최선의 모델 활용
+     2.7.3. 최적 모델 활용
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id29">
-   2.8. 최선 모델 저장 및 활용
+  <a class="reference internal nav-link" href="#id28">
+   2.8. 최적 모델 저장 및 활용
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id30">
+  <a class="reference internal nav-link" href="#id29">
    2.9. 연습문제
   </a>
  </li>
@@ -712,23 +707,18 @@ title="Print to PDF"
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id27">
-     2.7.3. 앙상블 기법
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id28">
-     2.7.4. 훈련된 최선의 모델 활용
+     2.7.3. 최적 모델 활용
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id29">
-   2.8. 최선 모델 저장 및 활용
+  <a class="reference internal nav-link" href="#id28">
+   2.8. 최적 모델 저장 및 활용
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id30">
+  <a class="reference internal nav-link" href="#id29">
    2.9. 연습문제
   </a>
  </li>
@@ -754,7 +744,7 @@ title="Print to PDF"
 <p>주택 가격을 예측하는 다양한 <strong>회귀 모델</strong><font size="2">regression model</font>의
 훈련 과정을 이용하여 머신러닝 시스템의 전체 훈련 과정을 살펴본다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-01d.png" width="600"></div><p>특히 데이터 정제 및 전처리 과정으로 구성된 데이터 준비와
-최선의 모델을 찾는 과정을 상세히 소개한다.</p>
+최적의 모델을 찾는 과정을 상세히 소개한다.</p>
 <section id="id2">
 <h2><span class="section-number">2.1. </span>실전 데이터 활용<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
 <p>다양한 실전 데이터를 모아놓은 데이터 저장소를
@@ -1565,6 +1555,16 @@ title="Print to PDF"
 </ul>
 </li>
 </ul>
+<p><strong>랜덤 포레스트 회귀 모델 (<a class="reference internal" href="ensemble_learning_random_forests.html#ch-ensemble"><span class="std std-numref">7장</span></a>)</strong></p>
+<p><strong>랜덤 포레스트</strong><font size="2">random forest</font> 회귀 모델은
+여러 개의 결정트리를 동시에 훈련시킨 후
+각 모델의 예측값의 평균값 등을 이용하는 모델이다.
+각 모델은 교차 검증처럼 서로 다른 훈련셋을 대상으로 학습한다.</p>
+<p>사이킷런의 <code class="docutils literal notranslate"><span class="pre">RandomForestRegressor</span></code> 모델은 기본값으로 100개의 결정트리를 동시에 훈련시킨다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">forest_reg</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">preprocessing</span><span class="p">,</span>
+                           <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">))</span>
+</pre></div>
+</div>
 </section>
 <section id="id23">
 <h3><span class="section-number">2.6.2. </span>교차 검증<a class="headerlink" href="#id23" title="Permalink to this headline">#</a></h3>
@@ -1601,16 +1601,6 @@ title="Print to PDF"
 현재 사용 가능한 옵션값은 <a class="reference external" href="https://scikit-learn.org/stable/modules/model_evaluation.html">사이킷런의 Metrics and Scoring 문서</a>에서
 확인할 수 있다.</p>
 </div>
-<p><strong>랜덤 포레스트 회귀 모델 (<a class="reference internal" href="ensemble_learning_random_forests.html#ch-ensemble"><span class="std std-numref">7장</span></a>)</strong></p>
-<p><strong>랜덤 포레스트</strong><font size="2">random forest</font> 회귀 모델은
-여러 개의 결정트리를 동시에 훈련시킨 후
-각 모델의 예측값의 평균값 등을 이용하는 모델이다.
-각 모델은 교차 검증처럼 서로 다른 훈련셋을 대상으로 학습한다.</p>
-<p>사이킷런의 <code class="docutils literal notranslate"><span class="pre">RandomForestRegressor</span></code> 모델은 기본값으로 100개의 결정트리를 동시에 훈련시킨다.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">forest_reg</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">preprocessing</span><span class="p">,</span>
-                           <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">))</span>
-</pre></div>
-</div>
 <p>래덤 포레스트 모델에 대한 교차 검증을 적용하면 폴드 수에 비례하여 훈련 시간이 더 오래 걸린다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">forest_rmses</span> <span class="o">=</span> <span class="o">-</span><span class="n">cross_val_score</span><span class="p">(</span><span class="n">forest_reg</span><span class="p">,</span> <span class="n">housing</span><span class="p">,</span> <span class="n">housing_labels</span><span class="p">,</span>
                                 <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_root_mean_squared_error&quot;</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
@@ -1632,7 +1622,7 @@ title="Print to PDF"
 </ul>
 <section id="id25">
 <h3><span class="section-number">2.7.1. </span>그리드 탐색<a class="headerlink" href="#id25" title="Permalink to this headline">#</a></h3>
-<p>지정된 하이퍼파라미터의 모든 조합에 대해 교차 검증을 진행하여 최선의 하이퍼파라미터 조합을 찾는다.</p>
+<p>지정된 하이퍼파라미터의 모든 조합에 대해 교차 검증을 진행하여 최적의 하이퍼파라미터 조합을 찾는다.</p>
 <p><strong><code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code> 클래스</strong></p>
 <p>랜덤 포레스트 모델을 대상으로 그리드 탐색을 다음과 같이 실행하면
 총 (3x3 + 2x3 = 15) 가지의 모델의 성능을 확인한다.
@@ -1680,7 +1670,7 @@ title="Print to PDF"
 </pre></div>
 </div>
 <div class="info admonition">
-<p class="admonition-title">확률 분포 함수</p>
+<p class="admonition-title">하이퍼파라리미터 무작위 선택</p>
 <p>랜덤 탐색을 하려면 특정 옵션 변수갈들을 무작위로 선택해주는 확률분포 함수를 지정해야 한다.
 앞서 랜덤 탐색에서 사용한 옵션 변수와 확률분포는 다음과 같이
 이산 균등 분포를 사용하는 <code class="docutils literal notranslate"><span class="pre">randint()</span></code> 함수를 이용하였다.</p>
@@ -1688,7 +1678,7 @@ title="Print to PDF"
 <span class="s1">&#39;random_forest__max_features&#39;</span><span class="p">:</span> <span class="n">randint</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>scipy는 이외에 다른 종류의 분포 함수를 지원한다.
+<p>scipy는 이외에 다른 종류의 확률 분포 함수를 지원한다.
 많이 사용되는 분포는 다음과 같다.</p>
 <table class="colwidths-auto table">
 <thead>
@@ -1711,28 +1701,23 @@ title="Print to PDF"
 </tr>
 </tbody>
 </table>
+<br>
+<br>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/random_distribution1.png" width="550"></div>
 </div>
 </section>
 <section id="id27">
-<h3><span class="section-number">2.7.3. </span>앙상블 기법<a class="headerlink" href="#id27" title="Permalink to this headline">#</a></h3>
-<p>결정트리 모델 하나보다 랜덤 포레스트처럼 여러 모델을 활용하는 모델이
-일반적으로 보다 좋은 성능을 낸다.
-이처럼 좋은 성능을 내는 여러 모델을 <strong>함께</strong><font size="2">ensemble</font>
-학습시킨 후 평균값을 사용하면 보다 좋은 성능을 내는 모델을 얻게 된다.
-앙상블 기법에 대해서는 <a class="reference internal" href="ensemble_learning_random_forests.html#ch-ensemble"><span class="std std-numref">7장</span></a>에서 자세히 다룬다.</p>
-</section>
-<section id="id28">
-<h3><span class="section-number">2.7.4. </span>훈련된 최선의 모델 활용<a class="headerlink" href="#id28" title="Permalink to this headline">#</a></h3>
-<p>그리드 탐색 또는 랜덤 탐색을 통해 얻어진 최선의 모델을 분석해서 문제에 대한 통찰을 얻을 수 있다.</p>
-<p>예를 들어, 최선의 랜덤 포레스트 모델로부터 타깃 예측에 사용된 특성들의 상대적 중요도를 확인하여
+<h3><span class="section-number">2.7.3. </span>최적 모델 활용<a class="headerlink" href="#id27" title="Permalink to this headline">#</a></h3>
+<p>그리드 탐색 또는 랜덤 탐색을 통해 얻어진 최적의 모델을 분석해서 문제에 대한 통찰을 얻을 수 있다.
+예를 들어, 최적의 랜덤 포레스트 모델로부터 타깃 예측에 사용된 특성들의 상대적 중요도를 확인하여
 중요하지 않은 특성을 제외할 수 있다.</p>
-<p>캘리포니아 주택 가격 예측 모델의 경우 랜덤 탐색을 통해 찾아낸 최선의 모델에서
+<p>캘리포니아 주택 가격 예측 모델의 경우 랜덤 탐색을 통해 찾아낸 최적의 모델에서
 <code class="docutils literal notranslate"><span class="pre">feature_importances_</span></code>를 확인하면 다음 정보를 얻는다.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">log__median_income</span></code> 특성이 가장 중요하다.</p></li>
 <li><p>해안 근접도 특성 중에서 <code class="docutils literal notranslate"><span class="pre">INLAND</span></code> 특성만 중요하다.</p></li>
 </ul>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">final_model</span> <span class="o">=</span> <span class="n">rnd_search</span><span class="o">.</span><span class="n">best_estimator_</span>                                 <span class="c1"># 최선 모델</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">final_model</span> <span class="o">=</span> <span class="n">rnd_search</span><span class="o">.</span><span class="n">best_estimator_</span>                                 <span class="c1"># 최적 모델</span>
 <span class="n">feature_importances</span> <span class="o">=</span> <span class="n">final_model</span><span class="p">[</span><span class="s2">&quot;random_forest&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">feature_importances_</span>  <span class="c1"># 특성뱔 상대적 중요도</span>
 
 <span class="c1"># 중요도 내림차순 정렬</span>
@@ -1753,8 +1738,8 @@ title="Print to PDF"
 </div>
 </section>
 </section>
-<section id="id29">
-<h2><span class="section-number">2.8. </span>최선 모델 저장 및 활용<a class="headerlink" href="#id29" title="Permalink to this headline">#</a></h2>
+<section id="id28">
+<h2><span class="section-number">2.8. </span>최적 모델 저장 및 활용<a class="headerlink" href="#id28" title="Permalink to this headline">#</a></h2>
 <p>완성된 모델은 항상 저장해두어야 한다.
 업데이트된 모델이 적절하지 않은 경우 이전 모델로 되돌려야 할 수도 있기 때문이다.
 모델의 저장과 불러오기는 <code class="docutils literal notranslate"><span class="pre">joblib</span></code> 모듈을 활용한다.</p>
@@ -1771,8 +1756,8 @@ title="Print to PDF"
 </li>
 </ul>
 </section>
-<section id="id30">
-<h2><span class="section-number">2.9. </span>연습문제<a class="headerlink" href="#id30" title="Permalink to this headline">#</a></h2>
+<section id="id29">
+<h2><span class="section-number">2.9. </span>연습문제<a class="headerlink" href="#id29" title="Permalink to this headline">#</a></h2>
 <p>참고: <a class="reference external" href="https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_end2end_ml_project_1.ipynb">(실습) 머신러닝 프로젝트 처음부터 끝까지 1부</a> 와
 <a class="reference external" href="https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_end2end_ml_project_2.ipynb">(실습) 머신러닝 프로젝트 처음부터 끝까지 2부</a></p>
 </section>
