@@ -489,7 +489,7 @@
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/one_hot01.png" width="800"></div>
 
-# ### 수치형 특성 전처리: 특성 크기 조정
+# ### 수치형 특성 전처리: 크기 조정
 
 # 머신러닝 알고리즘은 입력 데이터셋의 특성값들의 
 # **크기**<font size="2">scale</font>가 다르면 제대로 작동하지 않는다.
@@ -580,7 +580,7 @@
 # - 방 하나당 침실 개수(bedrooms for room)
 # - 가구당 인원(population per household)
 
-# #### 사용자 정의 변환 클래스
+# #### 사용자 정의 변환 클래스 선언
 
 # `SimpleImputer` 변환기의 경우처럼 
 # 먼저 `fit()` 메서드를 이용하여 평균값, 중앙값 등을 확인한 다음에
@@ -642,7 +642,7 @@
 # 아래 그림과 같은 결과를 얻을 수 있다.
 # 
 # - 모든 구역을 10개의 군집으로 나눈다.
-# -  &#9587; 는 각 군집의 중심 구역을 나타낸다.
+# - &#128473;는 각 군집의 중심 구역을 나타낸다.
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-cluster.jpg" width="550"></div>
 
@@ -652,7 +652,7 @@
 # 이를 위해 사이킷런의 `Pipeline` 클래스를 이용하여 여러 변환기를 순서대로 
 # 실행하는 파이프라인 변환기를 활용한다.
 
-# **`Pipeline` 클래스** 
+# **`Pipeline` 클래스 활용** 
 # 
 # 예를 들어, 수치형 특성을 대상으로 결측치를 중앙값으로 채우는 정제와
 # 표준화를 연속적으로 실행하는 파이프라인은 다음과 같이 정의한다.
@@ -675,7 +675,7 @@
 # * 파이프라인으로 정의된 추정기의 유형은 마지막 추정기의 유형과 동일하다.
 #     따라서 `num_pipeline` 은 변환기다.
 
-# **`make_pipeline()` 함수**
+# **`make_pipeline()` 함수 활용**
 # 
 # 파이프라인에 포함되는 변환기의 이름이 중요하지 않다면 `make_pipeline()` 함수를 이용하여
 # `Pipeline` 객체를 생성할 수 있다. 이름은 자동으로 지정된다.
@@ -687,7 +687,7 @@
 #               StandardScaler())
 # ```
 
-# **`ColumnTransformer` 클래스**
+# **`ColumnTransformer` 클래스 활용**
 # 
 # `ColumnTransformer` 클래스는 특성별로 전처리를 지정할 수 있다.
 # 이 기능을 이용하여 수치형 특성과 범주형 특성을 구분해서 
@@ -711,7 +711,7 @@
 # ])
 # ```
 
-# **`make_column_selector()` 함수**
+# **`make_column_selector()` 함수 활용**
 # 
 # 파이프라인에 포함되는 각 변환기를 적용할 특성을 일일이 나열하는 일이 어려울 수 있다.
 # 이때 지정된 자료형을 사용하는 특성들만을 뽑아주는 `make_column_selector()` 함수를 
@@ -726,7 +726,7 @@
 # ])
 # ```
 
-# **`make_column_transformer()` 함수**
+# **`make_column_transformer()` 함수 활용**
 # 
 # `ColumnTransformer` 파이프라인에 포함되는 변환기의 이름이 중요하지 않다면 
 # `make_column_transformer()` 함수를 이용할 수 있으며,
@@ -745,34 +745,37 @@
 
 # 다음 변환기를 모아 캘리포니아 데이터셋 전용 변환 파이프라인을 생성할 수 있다.
 
-# **(1) 비율 변환기**
+# (1) 비율 변환기
 # 
 # 가구당 방 개수, 방 하나당 침실 개수, 가구당 인원 등 
 # 비율을 사용하는 특성을 새로 추가할 때 사용되는 변화기를 생성하는 함수를 정의한다.
 
 # ```python
 # def column_ratio(X):
-#     return X[:, [0]] / X[:, [1]]
+#     return X[:, [0]] / X[:, [1]] # 1번 특성에 대한 0번 특성의 비율율
 # 
-# def ratio_pipeline(name=None):
+# def ratio_name(function_transformer, feature_names_in):
+#     return ["ratio"]  # feature names out
+# 
+# def ratio_pipeline():
 #     return make_pipeline(
 #         SimpleImputer(strategy="median"),
-#         FunctionTransformer(column_ratio,
-#                             feature_names_out=[name]),
+#         FunctionTransformer(column_ratio, feature_names_out=ratio_name),
 #         StandardScaler())
 # ```
 
-# **(2) 로그 변환기**
+# (2) 로그 변환기
 # 
 # 데이터 분포가 두터운 꼬리를 갖는 특성을 대상으로 로그 함수를 적용하는 변환기를 지정한다.
 
 # ```python
-# log_pipeline = make_pipeline(SimpleImputer(strategy="median"),
-#                              FunctionTransformer(np.log),
-#                              StandardScaler())
+# log_pipeline = make_pipeline(
+#     SimpleImputer(strategy="median"),
+#     FunctionTransformer(np.log, feature_names_out="one-to-one"),
+#     StandardScaler())
 # ```
 
-# **(3) 군집 변환기**
+# (3) 군집 변환기
 # 
 # 구역의 위도와 경도를 이용하여 구역들의 군집 정보를 새로운 특성으로 추가하는 변환기를 지정한다.
 
@@ -780,7 +783,7 @@
 # cluster_simil = ClusterSimilarity(n_clusters=10, gamma=1., random_state=42)
 # ```
 
-# **(4) 기타**
+# (4) 기타
 # 
 # 특별한 변환이 필요 없는 경우에도 기본적으로 결측치 문제 해결과 스케일을 조정하는 변환기를 사용한다.
 
@@ -789,24 +792,24 @@
 #                                      StandardScaler())
 # ```
 
+# **종합**
+
 # 앞서 언급된 모든 변환기를 특성별로 알아서 처리하는 변환기는 다음과 같다.
-# `remainder=default_num_pipeline`: 언급되지 않은 특성을 처리하는 변환기를 지정한다.
-# 삭제를 의미하는 `drop` 이 기본값이며 이외에 `passthrough` 는 변환하지 않는 것을 의미한다.
+# 
+# - `remainder=default_num_pipeline`: 언급되지 않은 특성을 처리하는 변환기를 지정한다.
+#     삭제를 의미하는 `drop` 이 기본값이며 이외에 `passthrough` 는 변환하지 않는 것을 의미한다.
 
 # ```python
 # preprocessing = ColumnTransformer([
-#         ("bedrooms_ratio", ratio_pipeline("bedrooms_ratio"),                   # 방당 침실 수
-#                            ["total_bedrooms", "total_rooms"]),
-#         ("rooms_per_house", ratio_pipeline("rooms_per_house"),                 # 가구당 방 수
-#                             ["total_rooms", "households"]),
-#         ("people_per_house", ratio_pipeline("people_per_house"),               # 가구당 인원
-#                              ["population", "households"]),
-#         ("log", log_pipeline, ["total_bedrooms", "total_rooms",                # 로그 변환
-#                                "population", "households", "median_income"]),
-#         ("geo", cluster_simil, ["latitude", "longitude"]),                     # 구역별 군집 정보
-#         ("cat", cat_pipeline, make_column_selector(dtype_include=object)),     # 범주형 특성 전처리
+#         ("bedrooms", ratio_pipeline(), ["total_bedrooms", "total_rooms"]),    # 방당 침실 수
+#         ("rooms_per_house", ratio_pipeline(), ["total_rooms", "households"]), # 가구당 침실 수
+#         ("people_per_house", ratio_pipeline(), ["population", "households"]), # 가구당 인원
+#         ("log", log_pipeline, ["total_bedrooms", "total_rooms", "population", # 로그 변환
+#                                "households", "median_income"]),
+#         ("geo", cluster_simil, ["latitude", "longitude"]),                    # 구역별 군집 정보
+#         ("cat", cat_pipeline, make_column_selector(dtype_include=object)),    # 범주형 특성 전처리
 #     ],
-#     remainder=default_num_pipeline)                                            # 중간 주택 년수(housing_median_age) 대상
+#     remainder=default_num_pipeline)                                           # 중간 주택 년수(housing_median_age) 대상
 # ```
 
 # ## 모델 선택과 훈련
@@ -916,6 +919,13 @@
 #                               scoring="neg_root_mean_squared_error", cv=10)
 # ```
 
+# 래덤 포레스트 모델에 대한 교차 검증을 적용하면 폴드 수에 비례하여 훈련 시간이 더 오래 걸린다.
+# 
+# ```python
+# forest_rmses = -cross_val_score(forest_reg, housing, housing_labels,
+#                                 scoring="neg_root_mean_squared_error", cv=10)
+# ```
+
 # :::{admonition} `scoring` 키워드 인자
 # :class: info
 # 
@@ -924,13 +934,6 @@
 # 현재 사용 가능한 옵션값은 [사이킷런의 Metrics and Scoring 문서](https://scikit-learn.org/stable/modules/model_evaluation.html)에서
 # 확인할 수 있다.
 # :::
-
-# 래덤 포레스트 모델에 대한 교차 검증을 적용하면 폴드 수에 비례하여 훈련 시간이 더 오래 걸린다.
-# 
-# ```python
-# forest_rmses = -cross_val_score(forest_reg, housing, housing_labels,
-#                                 scoring="neg_root_mean_squared_error", cv=10)
-# ```
 
 # ## 모델 미세 조정
 
@@ -1014,18 +1017,15 @@
 # ```
 # 
 # scipy는 이외에 다른 종류의 확률 분포 함수를 지원한다.
-# 많이 사용되는 분포는 다음과 같다.
+# 예를 들어, 지정된 구간에서의 부동소수점을 선택해야 한다면 
+# 연속 균등 분포 함수인 `scipy.stats.uniform(a, b)`를 이용할 수 있다.
+# :::
+
+# :::{admonition} 기타 모델 미세 조정 도구
+# :class: info
 # 
-# | 확률 분포 함수| 확률 분포 종류 |
-# | :---: | :---: |
-# | `scipy.stats.randint(a, b+1)` | 이산 균등 분포 |
-# | `scipy.stats.uniform(a, b)` | 연속 균등 분포 |
-# | `scipy.stats.geom(1 / scale)` | 기하 분포 (이산) |
-# | `scipy.stats.expon(scale)` | 지수 분포 (연속) |
-# 
-# <br>
-# <br>
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/random_distribution1.png" width="550"></div>
+# 다양한 방식의 모델 미세 조정에 대한 보다 자세한 정보는
+# [Best Tools for Model Tuning and Hyperparameter Optimization](https://neptune.ai/blog/best-tools-for-model-tuning-and-hyperparameter-optimization)을 참고할 수 있다.
 # :::
 
 # ### 최적 모델 활용
