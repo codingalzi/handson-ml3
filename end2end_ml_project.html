@@ -446,12 +446,12 @@ title="Print to PDF"
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id15">
-     2.5.3. 범주형 특성 다루기: 원-핫 인코딩
+     2.5.3. 범주형 특성 전처리: 원-핫 인코딩
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id16">
-     2.5.4. 특성 스케일링
+     2.5.4. 수치형 특성 전처리: 크기 조정
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -472,7 +472,7 @@ title="Print to PDF"
      </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#id18">
-       2.5.5.2. 사용자 정의 변환 클래스
+       2.5.5.2. 사용자 정의 변환 클래스 선언
       </a>
      </li>
     </ul>
@@ -496,7 +496,7 @@ title="Print to PDF"
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id22">
-     2.6.1. 훈련셋 대상 훈련 및 평가
+     2.6.1. 모델 훈련과 평가
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -508,7 +508,7 @@ title="Print to PDF"
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id24">
-   2.7. 모델 튜닝
+   2.7. 모델 미세 조정
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
@@ -523,23 +523,18 @@ title="Print to PDF"
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id27">
-     2.7.3. 앙상블 기법
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id28">
-     2.7.4. 훈련된 최선의 모델 활용
+     2.7.3. 최적 모델 활용
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id29">
-   2.8. 최선 모델 저장 및 활용
+  <a class="reference internal nav-link" href="#id28">
+   2.8. 최적 모델 저장 및 활용
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id30">
+  <a class="reference internal nav-link" href="#id29">
    2.9. 연습문제
   </a>
  </li>
@@ -635,12 +630,12 @@ title="Print to PDF"
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id15">
-     2.5.3. 범주형 특성 다루기: 원-핫 인코딩
+     2.5.3. 범주형 특성 전처리: 원-핫 인코딩
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id16">
-     2.5.4. 특성 스케일링
+     2.5.4. 수치형 특성 전처리: 크기 조정
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -661,7 +656,7 @@ title="Print to PDF"
      </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#id18">
-       2.5.5.2. 사용자 정의 변환 클래스
+       2.5.5.2. 사용자 정의 변환 클래스 선언
       </a>
      </li>
     </ul>
@@ -685,7 +680,7 @@ title="Print to PDF"
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id22">
-     2.6.1. 훈련셋 대상 훈련 및 평가
+     2.6.1. 모델 훈련과 평가
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -697,7 +692,7 @@ title="Print to PDF"
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id24">
-   2.7. 모델 튜닝
+   2.7. 모델 미세 조정
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
@@ -712,23 +707,18 @@ title="Print to PDF"
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id27">
-     2.7.3. 앙상블 기법
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id28">
-     2.7.4. 훈련된 최선의 모델 활용
+     2.7.3. 최적 모델 활용
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id29">
-   2.8. 최선 모델 저장 및 활용
+  <a class="reference internal nav-link" href="#id28">
+   2.8. 최적 모델 저장 및 활용
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id30">
+  <a class="reference internal nav-link" href="#id29">
    2.9. 연습문제
   </a>
  </li>
@@ -754,7 +744,7 @@ title="Print to PDF"
 <p>주택 가격을 예측하는 다양한 <strong>회귀 모델</strong><font size="2">regression model</font>의
 훈련 과정을 이용하여 머신러닝 시스템의 전체 훈련 과정을 살펴본다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-01d.png" width="600"></div><p>특히 데이터 정제 및 전처리 과정으로 구성된 데이터 준비와
-최선의 모델을 찾는 과정을 상세히 소개한다.</p>
+최적의 모델을 찾는 과정을 상세히 소개한다.</p>
 <section id="id2">
 <h2><span class="section-number">2.1. </span>실전 데이터 활용<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
 <p>다양한 실전 데이터를 모아놓은 데이터 저장소를
@@ -1121,26 +1111,26 @@ title="Print to PDF"
 결측치가 일부 포함되어 있지만 이상치 또는 노이즈 데이터는 없다.</p>
 <p>데이터 전처리는 수치형 특성과 범주형 특성을 구분하여 수행한다.</p>
 <ul class="simple">
-<li><p>수치형 특성에 대한 전처리</p>
-<ul>
-<li><p>특성 스케일링</p></li>
-<li><p>특성 조합</p></li>
-</ul>
-</li>
 <li><p>범주형 특성 전처리 과정</p>
 <ul>
 <li><p>원-핫-인코딩</p></li>
+</ul>
+</li>
+<li><p>수치형 특성에 대한 전처리</p>
+<ul>
+<li><p>특성 크기 조정</p></li>
+<li><p>특성 조합</p></li>
 </ul>
 </li>
 </ul>
 <p>데이터 정제와 전처리의 모든 과정은 데이터셋에 포함된 샘플을 한꺼번에 변환한다.
 따라서 모든 변환 과정을 자동화는
 <strong>파이프라인</strong><font size="2">pipeline</font> 기법을 활용할 수 있어야 한다.</p>
-<p><strong>사이킷런 API 활용</strong></p>
+<p><strong>사이킷런 클래스 활용</strong></p>
 <p>사이킷런<font size="2">Scikit-Learn</font>이 제공하는
 모든 클래스는 간단하게 합성할 수 있다.
-이점을 이해하려면 먼저 사이킷런이 제공하는 API의 유형을 구분해야 한다.
-사이킷런의 API는 크게 세 종류의 클래스로 나뉜다.</p>
+이점을 이해하려면 먼저 사이킷런이 제공하는 클래스의 유형을 구분해야 한다.
+사이킷런의 클래스는 크게 세 종류의 클래스로 나뉜다.</p>
 <ul class="simple">
 <li><p>추정기<font size="2">estimator</font>: <code class="docutils literal notranslate"><span class="pre">fit()</span></code> 메서드를 제공하는 클래스</p>
 <ul>
@@ -1178,9 +1168,7 @@ title="Print to PDF"
 <div class="info admonition">
 <p class="admonition-title">하이퍼파라미터 vs. 파라미터</p>
 <p>사이킷런 클래스의 하이퍼파라미터는 해당 클래스의 객체를 생성할 때 사용되는 값을 가리킨다.
-즉, API 객체를 생성하기 위해 해당 API 클래스의 생성자인
-<code class="docutils literal notranslate"><span class="pre">__init__()</span></code> 메서드를 호출할 때 사용되는 인자를 가리킨다.</p>
-<p>반면에 파라미터는 <code class="docutils literal notranslate"><span class="pre">fit()</span></code> 메서드가 데이터를 이용하여 계산하는 값을 가리킨다.
+반면에 파라미터는 <code class="docutils literal notranslate"><span class="pre">fit()</span></code> 메서드가 데이터를 이용하여 계산하는 값을 가리킨다.
 추정기, 변환기, 예측기는 각각의 역할에 맞는 파라미터를 계산한다.</p>
 </div>
 </section>
@@ -1198,7 +1186,7 @@ title="Print to PDF"
 <p>여기서는 중앙값으로 채우는 방법 3을 사이킷런의 <code class="docutils literal notranslate"><span class="pre">SimpleImputer</span></code> 변환기를 이용하여 적용한다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/null-value02.png" width="800"></div></section>
 <section id="id15">
-<h3><span class="section-number">2.5.3. </span>범주형 특성 다루기: 원-핫 인코딩<a class="headerlink" href="#id15" title="Permalink to this headline">#</a></h3>
+<h3><span class="section-number">2.5.3. </span>범주형 특성 전처리: 원-핫 인코딩<a class="headerlink" href="#id15" title="Permalink to this headline">#</a></h3>
 <p>해안 근접도(<code class="docutils literal notranslate"><span class="pre">ocean_proximity</span></code>)는 수가 아닌 5 개의 범주를 나타내는 문자열, 즉 텍스트 데이터를 값으로 사용한다.
 그런데 머신러닝 모델은 일반적으로 텍스트 데이터를 처리하지 못한다.</p>
 <p>가장 단순한 해결책으로 5 개의 범주를 정수로 변환할 수 있다.</p>
@@ -1248,27 +1236,27 @@ title="Print to PDF"
 해안 근접도를 변환한 결과는 아래 모양을 갖는다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/one_hot01.png" width="800"></div></section>
 <section id="id16">
-<h3><span class="section-number">2.5.4. </span>특성 스케일링<a class="headerlink" href="#id16" title="Permalink to this headline">#</a></h3>
+<h3><span class="section-number">2.5.4. </span>수치형 특성 전처리: 크기 조정<a class="headerlink" href="#id16" title="Permalink to this headline">#</a></h3>
 <p>머신러닝 알고리즘은 입력 데이터셋의 특성값들의
-<strong>스케일</strong><font size="2">scale</font>(척도)이 다르면 제대로 작동하지 않는다.
-따라서 모든 특성의 척도를 통일하는 <strong>스케일링</strong><font size="2">scaling</font>이 요구된다.</p>
-<p>스케일링은 보통 아래 두 가지 방식을 사용한다.</p>
+<strong>크기</strong><font size="2">scale</font>가 다르면 제대로 작동하지 않는다.
+따라서 모든 특성의 크기를 통일하는 <strong>크기 조정</strong><font size="2">scaling</font>이 요구된다.</p>
+<p>크기 조정은 보통 아래 두 가지 방식을 사용한다.</p>
 <ul class="simple">
-<li><p>min-max 스케일링</p></li>
+<li><p>min-max 크기 조정(정규화)</p></li>
 <li><p>표준화</p></li>
 </ul>
-<p><strong>min-max 스케일링</strong></p>
-<p><strong>정규화</strong>(normalization)라고도 불리며
+<p><strong>min-max 크기 조정(정규화)</strong></p>
+<p><strong>정규화</strong><font size='2'>normalization</font>라고도 불리는 min-max 크기 조정은
 아래 식을 이용하여 모든 특성값을 0에서 1 사이의 값으로 변환한다.
 단, <span class="math notranslate nohighlight">\(max\)</span> 와 <span class="math notranslate nohighlight">\(min\)</span> 은 각각 특성값들의 최댓값과 최솟값을 가리킨다.</p>
 <div class="math notranslate nohighlight">
 \[
 \frac{x-min}{max-min}
 \]</div>
-<p>min-max 스케일링은 이상치에 매우 민감하다.
+<p>min-max 크기 조정은 이상치에 매우 민감하다.
 예를 들어 이상치가 매우 크면 분모가 분자에 비해 훨씬 크게 되어 변환된 값이 0 근처에 몰리게 된다.
-사이킷런의 <code class="docutils literal notranslate"><span class="pre">MinMaxScaler</span></code> 변환기가 min-max 스케일링을 지원한다.</p>
-<p><strong>표준화(standardization)</strong></p>
+사이킷런의 <code class="docutils literal notranslate"><span class="pre">MinMaxScaler</span></code> 변환기가 min-max 크기 조정을 지원한다.</p>
+<p><strong>표준화<font size='2'>standardization</font></strong></p>
 <p>아래식을 이용하여 특성값을 변환한다.
 단, <span class="math notranslate nohighlight">\(\mu\)</span> 와 <span class="math notranslate nohighlight">\(\sigma\)</span> 는 각각 특성값들의 평균값과 표준편차를 가리킨다.</p>
 <div class="math notranslate nohighlight">
@@ -1282,8 +1270,8 @@ title="Print to PDF"
 <p>데이터 준비는 기본적으로 입력 데이터셋만을 대상으로 <strong>정제</strong><font size="2">cleaning</font>와
 <strong>전처리</strong><font size="2">preprocessing</font> 단계로 실행된다.
 타깃 데이터셋은 결측치가 없는 경우라면 일반적으로 정제와 전처리 대상이 아니지만
-경우에 따라 변환이 요구될 수 있다.
-예를 들어, 타깃 데이터셋의 두터운 꼬리 분포를 따르는 경우
+경우에 따라 변환이 요구될 수 있다.</p>
+<p>예를 들어, 타깃 데이터셋의 두터운 꼬리 분포를 따르는 경우
 로그 함수를 적용하여 데이터의 분포가 보다 균형잡히도록 하는 것이 권장된다.
 하지만 이런 경우 예측값을 계산할 때 원래의 척도로 되돌려야 하며
 이를 위해 대부분의 사이킷런 변환기가 지원하는 <code class="docutils literal notranslate"><span class="pre">inverse_transorm()</span></code> 메서드를 활용할 수 있다.</p>
@@ -1299,7 +1287,7 @@ title="Print to PDF"
 <p><strong>로그 함수 적용 변환기</strong></p>
 <p>데이터셋이 두터운 꼬리 분포를 따르는 경우,
 즉 히스토그램이 지나치게 한쪽으로 편향된 경우
-스케일링을 적용하기 전에 먼저
+크기 조정을 적용하기 전에 먼저
 로그 함수를 적용하여 어느 정도 좌우 균형이 잡힌 분포로 변환하는 게 좋다.
 아래 그림은 인구에 로그함수를 적용할 때 분포가 보다 균형잡히는 것을 잘 보여준다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-log_app.jpg" width="600"></div><p>두터운 꼬리 분포를 갖는 데이터셋에 로그 함수를 적용하고자 하면 아래 변환기를 사용하면 된다.</p>
@@ -1320,7 +1308,7 @@ title="Print to PDF"
 </ul>
 </section>
 <section id="id18">
-<h4><span class="section-number">2.5.5.2. </span>사용자 정의 변환 클래스<a class="headerlink" href="#id18" title="Permalink to this headline">#</a></h4>
+<h4><span class="section-number">2.5.5.2. </span>사용자 정의 변환 클래스 선언<a class="headerlink" href="#id18" title="Permalink to this headline">#</a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">SimpleImputer</span></code> 변환기의 경우처럼
 먼저 <code class="docutils literal notranslate"><span class="pre">fit()</span></code> 메서드를 이용하여 평균값, 중앙값 등을 확인한 다음에
 <code class="docutils literal notranslate"><span class="pre">transform()</span></code> 메서드를 적용할 수 있는 변환기는 클래스를 직접 선언해야 한다.
@@ -1369,7 +1357,7 @@ title="Print to PDF"
 아래 그림과 같은 결과를 얻을 수 있다.</p>
 <ul class="simple">
 <li><p>모든 구역을 10개의 군집으로 나눈다.</p></li>
-<li><p>╳ 는 각 군집의 중심 구역을 나타낸다.</p></li>
+<li><p>🗙는 각 군집의 중심 구역을 나타낸다.</p></li>
 </ul>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-cluster.jpg" width="550"></div></section>
 </section>
@@ -1378,9 +1366,9 @@ title="Print to PDF"
 <p>모든 전처리 단계가 정확한 순서대로 진행되어야 한다.
 이를 위해 사이킷런의 <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> 클래스를 이용하여 여러 변환기를 순서대로
 실행하는 파이프라인 변환기를 활용한다.</p>
-<p><strong><code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> 클래스</strong></p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> 클래스 활용</strong></p>
 <p>예를 들어, 수치형 특성을 대상으로 결측치를 중앙값으로 채우는 정제와
-표준화 스케일링을 연속적으로 실행하는 파이프라인은 다음과 같이 정의한다.</p>
+표준화를 연속적으로 실행하는 파이프라인은 다음과 같이 정의한다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">num_pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([(</span><span class="s2">&quot;impute&quot;</span><span class="p">,</span> <span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;median&quot;</span><span class="p">)),</span>
                          <span class="p">(</span><span class="s2">&quot;standardize&quot;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">())])</span>
 </pre></div>
@@ -1396,7 +1384,7 @@ title="Print to PDF"
 <li><p>파이프라인으로 정의된 추정기의 유형은 마지막 추정기의 유형과 동일하다.
 따라서 <code class="docutils literal notranslate"><span class="pre">num_pipeline</span></code> 은 변환기다.</p></li>
 </ul>
-<p><strong><code class="docutils literal notranslate"><span class="pre">make_pipeline()</span></code> 함수</strong></p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">make_pipeline()</span></code> 함수 활용</strong></p>
 <p>파이프라인에 포함되는 변환기의 이름이 중요하지 않다면 <code class="docutils literal notranslate"><span class="pre">make_pipeline()</span></code> 함수를 이용하여
 <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> 객체를 생성할 수 있다. 이름은 자동으로 지정된다.</p>
 <p>위 파이프라인과 동일한 파이프라인 객체를 다음과 같이 생성할 수 있다.</p>
@@ -1404,7 +1392,7 @@ title="Print to PDF"
               <span class="n">StandardScaler</span><span class="p">())</span>
 </pre></div>
 </div>
-<p><strong><code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> 클래스</strong></p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> 클래스 활용</strong></p>
 <p><code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> 클래스는 특성별로 전처리를 지정할 수 있다.
 이 기능을 이용하여 수치형 특성과 범주형 특성을 구분해서
 전처리하는 통합 파이프라인을 다음과 같이 구성할 수 있다.</p>
@@ -1426,7 +1414,7 @@ title="Print to PDF"
 <span class="p">])</span>
 </pre></div>
 </div>
-<p><strong><code class="docutils literal notranslate"><span class="pre">make_column_selector()</span></code> 함수</strong></p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">make_column_selector()</span></code> 함수 활용</strong></p>
 <p>파이프라인에 포함되는 각 변환기를 적용할 특성을 일일이 나열하는 일이 어려울 수 있다.
 이때 지정된 자료형을 사용하는 특성들만을 뽑아주는 <code class="docutils literal notranslate"><span class="pre">make_column_selector()</span></code> 함수를
 유용하게 활용할 수 있다.</p>
@@ -1437,7 +1425,7 @@ title="Print to PDF"
 <span class="p">])</span>
 </pre></div>
 </div>
-<p><strong><code class="docutils literal notranslate"><span class="pre">make_column_transformer()</span></code> 함수</strong></p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">make_column_transformer()</span></code> 함수 활용</strong></p>
 <p><code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> 파이프라인에 포함되는 변환기의 이름이 중요하지 않다면
 <code class="docutils literal notranslate"><span class="pre">make_column_transformer()</span></code> 함수를 이용할 수 있으며,
 <code class="docutils literal notranslate"><span class="pre">make_pipeline()</span></code> 함수와 유사하게 작동한다.</p>
@@ -1452,54 +1440,57 @@ title="Print to PDF"
 <section id="id20">
 <h3><span class="section-number">2.5.7. </span>캘리포니아 데이터셋 변환 파이프라인<a class="headerlink" href="#id20" title="Permalink to this headline">#</a></h3>
 <p>다음 변환기를 모아 캘리포니아 데이터셋 전용 변환 파이프라인을 생성할 수 있다.</p>
-<p><strong>(1) 비율 변환기</strong></p>
+<p>(1) 비율 변환기</p>
 <p>가구당 방 개수, 방 하나당 침실 개수, 가구당 인원 등
 비율을 사용하는 특성을 새로 추가할 때 사용되는 변화기를 생성하는 함수를 정의한다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">column_ratio</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">X</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">/</span> <span class="n">X</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+    <span class="k">return</span> <span class="n">X</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">/</span> <span class="n">X</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="c1"># 1번 특성에 대한 0번 특성의 비율율</span>
 
-<span class="k">def</span> <span class="nf">ratio_pipeline</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">ratio_name</span><span class="p">(</span><span class="n">function_transformer</span><span class="p">,</span> <span class="n">feature_names_in</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;ratio&quot;</span><span class="p">]</span>  <span class="c1"># feature names out</span>
+
+<span class="k">def</span> <span class="nf">ratio_pipeline</span><span class="p">():</span>
     <span class="k">return</span> <span class="n">make_pipeline</span><span class="p">(</span>
         <span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;median&quot;</span><span class="p">),</span>
-        <span class="n">FunctionTransformer</span><span class="p">(</span><span class="n">column_ratio</span><span class="p">,</span>
-                            <span class="n">feature_names_out</span><span class="o">=</span><span class="p">[</span><span class="n">name</span><span class="p">]),</span>
+        <span class="n">FunctionTransformer</span><span class="p">(</span><span class="n">column_ratio</span><span class="p">,</span> <span class="n">feature_names_out</span><span class="o">=</span><span class="n">ratio_name</span><span class="p">),</span>
         <span class="n">StandardScaler</span><span class="p">())</span>
 </pre></div>
 </div>
-<p><strong>(2) 로그 변환기</strong></p>
+<p>(2) 로그 변환기</p>
 <p>데이터 분포가 두터운 꼬리를 갖는 특성을 대상으로 로그 함수를 적용하는 변환기를 지정한다.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">log_pipeline</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;median&quot;</span><span class="p">),</span>
-                             <span class="n">FunctionTransformer</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">),</span>
-                             <span class="n">StandardScaler</span><span class="p">())</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">log_pipeline</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
+    <span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;median&quot;</span><span class="p">),</span>
+    <span class="n">FunctionTransformer</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">,</span> <span class="n">feature_names_out</span><span class="o">=</span><span class="s2">&quot;one-to-one&quot;</span><span class="p">),</span>
+    <span class="n">StandardScaler</span><span class="p">())</span>
 </pre></div>
 </div>
-<p><strong>(3) 군집 변환기</strong></p>
+<p>(3) 군집 변환기</p>
 <p>구역의 위도와 경도를 이용하여 구역들의 군집 정보를 새로운 특성으로 추가하는 변환기를 지정한다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cluster_simil</span> <span class="o">=</span> <span class="n">ClusterSimilarity</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><strong>(4) 기타</strong></p>
+<p>(4) 기타</p>
 <p>특별한 변환이 필요 없는 경우에도 기본적으로 결측치 문제 해결과 스케일을 조정하는 변환기를 사용한다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">default_num_pipeline</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;median&quot;</span><span class="p">),</span>
                                      <span class="n">StandardScaler</span><span class="p">())</span>
 </pre></div>
 </div>
-<p>앞서 언급된 모든 변환기를 특성별로 알아서 처리하는 변환기는 다음과 같다.
-<code class="docutils literal notranslate"><span class="pre">remainder=default_num_pipeline</span></code>: 언급되지 않은 특성을 처리하는 변환기를 지정한다.
-삭제를 의미하는 <code class="docutils literal notranslate"><span class="pre">drop</span></code> 이 기본값이며 이외에 <code class="docutils literal notranslate"><span class="pre">passthrough</span></code> 는 변환하지 않는 것을 의미한다.</p>
+<p><strong>종합</strong></p>
+<p>앞서 언급된 모든 변환기를 특성별로 알아서 처리하는 변환기는 다음과 같다.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">remainder=default_num_pipeline</span></code>: 언급되지 않은 특성을 처리하는 변환기를 지정한다.
+삭제를 의미하는 <code class="docutils literal notranslate"><span class="pre">drop</span></code> 이 기본값이며 이외에 <code class="docutils literal notranslate"><span class="pre">passthrough</span></code> 는 변환하지 않는 것을 의미한다.</p></li>
+</ul>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">preprocessing</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">([</span>
-        <span class="p">(</span><span class="s2">&quot;bedrooms_ratio&quot;</span><span class="p">,</span> <span class="n">ratio_pipeline</span><span class="p">(</span><span class="s2">&quot;bedrooms_ratio&quot;</span><span class="p">),</span>                   <span class="c1"># 방당 침실 수</span>
-                           <span class="p">[</span><span class="s2">&quot;total_bedrooms&quot;</span><span class="p">,</span> <span class="s2">&quot;total_rooms&quot;</span><span class="p">]),</span>
-        <span class="p">(</span><span class="s2">&quot;rooms_per_house&quot;</span><span class="p">,</span> <span class="n">ratio_pipeline</span><span class="p">(</span><span class="s2">&quot;rooms_per_house&quot;</span><span class="p">),</span>                 <span class="c1"># 가구당 방 수</span>
-                            <span class="p">[</span><span class="s2">&quot;total_rooms&quot;</span><span class="p">,</span> <span class="s2">&quot;households&quot;</span><span class="p">]),</span>
-        <span class="p">(</span><span class="s2">&quot;people_per_house&quot;</span><span class="p">,</span> <span class="n">ratio_pipeline</span><span class="p">(</span><span class="s2">&quot;people_per_house&quot;</span><span class="p">),</span>               <span class="c1"># 가구당 인원</span>
-                             <span class="p">[</span><span class="s2">&quot;population&quot;</span><span class="p">,</span> <span class="s2">&quot;households&quot;</span><span class="p">]),</span>
-        <span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">,</span> <span class="n">log_pipeline</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;total_bedrooms&quot;</span><span class="p">,</span> <span class="s2">&quot;total_rooms&quot;</span><span class="p">,</span>                <span class="c1"># 로그 변환</span>
-                               <span class="s2">&quot;population&quot;</span><span class="p">,</span> <span class="s2">&quot;households&quot;</span><span class="p">,</span> <span class="s2">&quot;median_income&quot;</span><span class="p">]),</span>
-        <span class="p">(</span><span class="s2">&quot;geo&quot;</span><span class="p">,</span> <span class="n">cluster_simil</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;latitude&quot;</span><span class="p">,</span> <span class="s2">&quot;longitude&quot;</span><span class="p">]),</span>                     <span class="c1"># 구역별 군집 정보</span>
-        <span class="p">(</span><span class="s2">&quot;cat&quot;</span><span class="p">,</span> <span class="n">cat_pipeline</span><span class="p">,</span> <span class="n">make_column_selector</span><span class="p">(</span><span class="n">dtype_include</span><span class="o">=</span><span class="nb">object</span><span class="p">)),</span>     <span class="c1"># 범주형 특성 전처리</span>
+        <span class="p">(</span><span class="s2">&quot;bedrooms&quot;</span><span class="p">,</span> <span class="n">ratio_pipeline</span><span class="p">(),</span> <span class="p">[</span><span class="s2">&quot;total_bedrooms&quot;</span><span class="p">,</span> <span class="s2">&quot;total_rooms&quot;</span><span class="p">]),</span>    <span class="c1"># 방당 침실 수</span>
+        <span class="p">(</span><span class="s2">&quot;rooms_per_house&quot;</span><span class="p">,</span> <span class="n">ratio_pipeline</span><span class="p">(),</span> <span class="p">[</span><span class="s2">&quot;total_rooms&quot;</span><span class="p">,</span> <span class="s2">&quot;households&quot;</span><span class="p">]),</span> <span class="c1"># 가구당 침실 수</span>
+        <span class="p">(</span><span class="s2">&quot;people_per_house&quot;</span><span class="p">,</span> <span class="n">ratio_pipeline</span><span class="p">(),</span> <span class="p">[</span><span class="s2">&quot;population&quot;</span><span class="p">,</span> <span class="s2">&quot;households&quot;</span><span class="p">]),</span> <span class="c1"># 가구당 인원</span>
+        <span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">,</span> <span class="n">log_pipeline</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;total_bedrooms&quot;</span><span class="p">,</span> <span class="s2">&quot;total_rooms&quot;</span><span class="p">,</span> <span class="s2">&quot;population&quot;</span><span class="p">,</span> <span class="c1"># 로그 변환</span>
+                               <span class="s2">&quot;households&quot;</span><span class="p">,</span> <span class="s2">&quot;median_income&quot;</span><span class="p">]),</span>
+        <span class="p">(</span><span class="s2">&quot;geo&quot;</span><span class="p">,</span> <span class="n">cluster_simil</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;latitude&quot;</span><span class="p">,</span> <span class="s2">&quot;longitude&quot;</span><span class="p">]),</span>                    <span class="c1"># 구역별 군집 정보</span>
+        <span class="p">(</span><span class="s2">&quot;cat&quot;</span><span class="p">,</span> <span class="n">cat_pipeline</span><span class="p">,</span> <span class="n">make_column_selector</span><span class="p">(</span><span class="n">dtype_include</span><span class="o">=</span><span class="nb">object</span><span class="p">)),</span>    <span class="c1"># 범주형 특성 전처리</span>
     <span class="p">],</span>
-    <span class="n">remainder</span><span class="o">=</span><span class="n">default_num_pipeline</span><span class="p">)</span>                                            <span class="c1"># 중간 주택 년수(housing_median_age) 대상</span>
+    <span class="n">remainder</span><span class="o">=</span><span class="n">default_num_pipeline</span><span class="p">)</span>                                           <span class="c1"># 중간 주택 년수(housing_median_age) 대상</span>
 </pre></div>
 </div>
 </section>
@@ -1513,10 +1504,10 @@ title="Print to PDF"
 <div class="info admonition">
 <p class="admonition-title">전처리 포함 파이프라인 모델</p>
 <p>소개되는 모든 모델은 앞서 설명한 전처리 과정과 함께 하나의 파이프라인으로 묶여서 정의된다.
-이는 테스트셋과 미래의 모든 입력 데이터셋에 대해서도 전처리를 별도로 신경쓸 필요가 없게 해준다.</p>
+따라서 테스트셋과 미래의 새로운 입력 데이터에 대해서도 전처리를 별도로 신경쓸 필요가 없다.</p>
 </div>
 <section id="id22">
-<h3><span class="section-number">2.6.1. </span>훈련셋 대상 훈련 및 평가<a class="headerlink" href="#id22" title="Permalink to this headline">#</a></h3>
+<h3><span class="section-number">2.6.1. </span>모델 훈련과 평가<a class="headerlink" href="#id22" title="Permalink to this headline">#</a></h3>
 <p><strong>선형 회귀 모델 (<a class="reference internal" href="training_models.html#ch-trainingmodels"><span class="std std-numref">4장</span></a>)</strong></p>
 <ul>
 <li><p>훈련 및 예측</p>
@@ -1567,6 +1558,16 @@ title="Print to PDF"
 </ul>
 </li>
 </ul>
+<p><strong>랜덤 포레스트 회귀 모델 (<a class="reference internal" href="ensemble_learning_random_forests.html#ch-ensemble"><span class="std std-numref">7장</span></a>)</strong></p>
+<p><strong>랜덤 포레스트</strong><font size="2">random forest</font> 회귀 모델은
+여러 개의 결정트리를 동시에 훈련시킨 후
+각 모델의 예측값의 평균값 등을 이용하는 모델이다.
+각 모델은 교차 검증처럼 서로 다른 훈련셋을 대상으로 학습한다.</p>
+<p>사이킷런의 <code class="docutils literal notranslate"><span class="pre">RandomForestRegressor</span></code> 모델은 기본값으로 100개의 결정트리를 동시에 훈련시킨다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">forest_reg</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">preprocessing</span><span class="p">,</span>
+                           <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">))</span>
+</pre></div>
+</div>
 </section>
 <section id="id23">
 <h3><span class="section-number">2.6.2. </span>교차 검증<a class="headerlink" href="#id23" title="Permalink to this headline">#</a></h3>
@@ -1596,6 +1597,11 @@ title="Print to PDF"
                               <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_root_mean_squared_error&quot;</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>래덤 포레스트 모델에 대한 교차 검증을 적용하면 폴드 수에 비례하여 훈련 시간이 더 오래 걸린다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">forest_rmses</span> <span class="o">=</span> <span class="o">-</span><span class="n">cross_val_score</span><span class="p">(</span><span class="n">forest_reg</span><span class="p">,</span> <span class="n">housing</span><span class="p">,</span> <span class="n">housing_labels</span><span class="p">,</span>
+                                <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_root_mean_squared_error&quot;</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
 <div class="info admonition">
 <p class="admonition-title"><code class="docutils literal notranslate"><span class="pre">scoring</span></code> 키워드 인자</p>
 <p>교차 검증에 사용되는 모델의 종류에 따라 다양한 방식으로 모델의 성능을 측정할 수 있으며
@@ -1603,36 +1609,23 @@ title="Print to PDF"
 현재 사용 가능한 옵션값은 <a class="reference external" href="https://scikit-learn.org/stable/modules/model_evaluation.html">사이킷런의 Metrics and Scoring 문서</a>에서
 확인할 수 있다.</p>
 </div>
-<p><strong>랜덤 포레스트 회귀 모델 (<a class="reference internal" href="ensemble_learning_random_forests.html#ch-ensemble"><span class="std std-numref">7장</span></a>)</strong></p>
-<p><strong>랜덤 포레스트</strong><font size="2">random forest</font> 회귀 모델은
-여러 개의 결정트리를 동시에 훈련시킨 후
-각 모델의 예측값의 평균값 등을 이용하는 모델이다.
-각 모델은 교차 검증처럼 서로 다른 훈련셋을 대상으로 학습한다.</p>
-<p>사이킷런의 <code class="docutils literal notranslate"><span class="pre">RandomForestRegressor</span></code> 모델은 기본값으로 100개의 결정트리를 동시에 훈련시킨다.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">forest_reg</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">preprocessing</span><span class="p">,</span>
-                           <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">))</span>
-</pre></div>
-</div>
-<p>래덤 포레스트 모델에 대한 교차 검증을 적용하면 폴드 수에 비례하여 훈련 시간이 더 오래 걸린다.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">forest_rmses</span> <span class="o">=</span> <span class="o">-</span><span class="n">cross_val_score</span><span class="p">(</span><span class="n">forest_reg</span><span class="p">,</span> <span class="n">housing</span><span class="p">,</span> <span class="n">housing_labels</span><span class="p">,</span>
-                                <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_root_mean_squared_error&quot;</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-</pre></div>
-</div>
 </section>
 </section>
 <section id="id24">
-<h2><span class="section-number">2.7. </span>모델 튜닝<a class="headerlink" href="#id24" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">2.7. </span>모델 미세 조정<a class="headerlink" href="#id24" title="Permalink to this headline">#</a></h2>
 <p>지금까지 살펴 본 모델 중에서 랜덤 포레스트 회귀 모델의 성능이 가장 좋았다.
 이렇게 가능성이 높은 모델을 찾은 다음엔 모델의 세부 설정(하이퍼파라미터)을 조정하거나
-성능이 좋은 모델 여러 개를 이용하여 모델의 성능을 최대한 끌어올릴 수 있다.</p>
-<p>모델 튜닝은 보통 다음 두 가지 방식을 사용한다.</p>
+성능이 좋은 모델 여러 개를 이용하여 모델의 성능을 최대한 끌어올릴 수 있다.
+이렇게 하이퍼파라미터를 조정하면서 최적의 모델을 훈련시키는 방법을
+모델 <strong>미세 조정</strong><font size='2'>fine tuning</font>이라 한다.</p>
+<p>모델 미세 조정은 보통 다음 두 가지 방식을 사용한다.</p>
 <ul class="simple">
 <li><p>그리드 탐색</p></li>
 <li><p>랜덤 탐색</p></li>
 </ul>
 <section id="id25">
 <h3><span class="section-number">2.7.1. </span>그리드 탐색<a class="headerlink" href="#id25" title="Permalink to this headline">#</a></h3>
-<p>지정된 하이퍼파라미터의 모든 조합에 대해 교차 검증을 진행하여 최선의 하이퍼파라미터 조합을 찾는다.</p>
+<p>지정된 하이퍼파라미터의 모든 조합에 대해 교차 검증을 진행하여 최적의 하이퍼파라미터 조합을 찾는다.</p>
 <p><strong><code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code> 클래스</strong></p>
 <p>랜덤 포레스트 모델을 대상으로 그리드 탐색을 다음과 같이 실행하면
 총 (3x3 + 2x3 = 15) 가지의 모델의 성능을 확인한다.
@@ -1679,27 +1672,37 @@ title="Print to PDF"
 <span class="n">rnd_search</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">housing</span><span class="p">,</span> <span class="n">housing_labels</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="info admonition">
+<p class="admonition-title">하이퍼파라리미터 무작위 선택</p>
+<p>랜덤 탐색을 하려면 특정 옵션 변수갈들을 무작위로 선택해주는 확률분포 함수를 지정해야 한다.
+앞서 랜덤 탐색에서 사용한 옵션 변수와 확률분포는 다음과 같이
+이산 균등 분포를 사용하는 <code class="docutils literal notranslate"><span class="pre">randint()</span></code> 함수를 이용하였다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;preprocessing__geo__n_clusters&#39;</span><span class="p">:</span> <span class="n">randint</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="s1">&#39;random_forest__max_features&#39;</span><span class="p">:</span> <span class="n">randint</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>scipy는 이외에 다른 종류의 확률 분포 함수를 지원한다.
+예를 들어, 지정된 구간에서의 부동소수점을 선택해야 한다면
+연속 균등 분포 함수인 <code class="docutils literal notranslate"><span class="pre">scipy.stats.uniform(a,</span> <span class="pre">b)</span></code>를 이용할 수 있다.</p>
+</div>
+<div class="info admonition">
+<p class="admonition-title">기타 모델 미세 조정 도구</p>
+<p>다양한 방식의 모델 미세 조정에 대한 보다 자세한 정보는
+<a class="reference external" href="https://neptune.ai/blog/best-tools-for-model-tuning-and-hyperparameter-optimization">Best Tools for Model Tuning and Hyperparameter Optimization</a>을 참고할 수 있다.</p>
+</div>
 </section>
 <section id="id27">
-<h3><span class="section-number">2.7.3. </span>앙상블 기법<a class="headerlink" href="#id27" title="Permalink to this headline">#</a></h3>
-<p>결정트리 모델 하나보다 랜덤 포레스트처럼 여러 모델을 활용하는 모델이
-일반적으로 보다 좋은 성능을 낸다.
-이처럼 좋은 성능을 내는 여러 모델을 <strong>함께</strong><font size="2">ensemble</font>
-학습시킨 후 평균값을 사용하면 보다 좋은 성능을 내는 모델을 얻게 된다.
-앙상블 기법에 대해서는 <a class="reference internal" href="ensemble_learning_random_forests.html#ch-ensemble"><span class="std std-numref">7장</span></a>에서 자세히 다룬다.</p>
-</section>
-<section id="id28">
-<h3><span class="section-number">2.7.4. </span>훈련된 최선의 모델 활용<a class="headerlink" href="#id28" title="Permalink to this headline">#</a></h3>
-<p>그리드 탐색 또는 랜덤 탐색을 통해 얻어진 최선의 모델을 분석해서 문제에 대한 통찰을 얻을 수 있다.</p>
-<p>예를 들어, 최선의 랜덤 포레스트 모델로부터 타깃 예측에 사용된 특성들의 상대적 중요도를 확인하여
+<h3><span class="section-number">2.7.3. </span>최적 모델 활용<a class="headerlink" href="#id27" title="Permalink to this headline">#</a></h3>
+<p>그리드 탐색 또는 랜덤 탐색을 통해 얻어진 최적의 모델을 분석해서 문제에 대한 통찰을 얻을 수 있다.
+예를 들어, 최적의 랜덤 포레스트 모델로부터 타깃 예측에 사용된 특성들의 상대적 중요도를 확인하여
 중요하지 않은 특성을 제외할 수 있다.</p>
-<p>캘리포니아 주택 가격 예측 모델의 경우 랜덤 탐색을 통해 찾아낸 최선의 모델에서
+<p>캘리포니아 주택 가격 예측 모델의 경우 랜덤 탐색을 통해 찾아낸 최적의 모델에서
 <code class="docutils literal notranslate"><span class="pre">feature_importances_</span></code>를 확인하면 다음 정보를 얻는다.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">log__median_income</span></code> 특성이 가장 중요하다.</p></li>
 <li><p>해안 근접도 특성 중에서 <code class="docutils literal notranslate"><span class="pre">INLAND</span></code> 특성만 중요하다.</p></li>
 </ul>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">final_model</span> <span class="o">=</span> <span class="n">rnd_search</span><span class="o">.</span><span class="n">best_estimator_</span>                                 <span class="c1"># 최선 모델</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">final_model</span> <span class="o">=</span> <span class="n">rnd_search</span><span class="o">.</span><span class="n">best_estimator_</span>                                 <span class="c1"># 최적 모델</span>
 <span class="n">feature_importances</span> <span class="o">=</span> <span class="n">final_model</span><span class="p">[</span><span class="s2">&quot;random_forest&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">feature_importances_</span>  <span class="c1"># 특성뱔 상대적 중요도</span>
 
 <span class="c1"># 중요도 내림차순 정렬</span>
@@ -1720,8 +1723,8 @@ title="Print to PDF"
 </div>
 </section>
 </section>
-<section id="id29">
-<h2><span class="section-number">2.8. </span>최선 모델 저장 및 활용<a class="headerlink" href="#id29" title="Permalink to this headline">#</a></h2>
+<section id="id28">
+<h2><span class="section-number">2.8. </span>최적 모델 저장 및 활용<a class="headerlink" href="#id28" title="Permalink to this headline">#</a></h2>
 <p>완성된 모델은 항상 저장해두어야 한다.
 업데이트된 모델이 적절하지 않은 경우 이전 모델로 되돌려야 할 수도 있기 때문이다.
 모델의 저장과 불러오기는 <code class="docutils literal notranslate"><span class="pre">joblib</span></code> 모듈을 활용한다.</p>
@@ -1738,8 +1741,8 @@ title="Print to PDF"
 </li>
 </ul>
 </section>
-<section id="id30">
-<h2><span class="section-number">2.9. </span>연습문제<a class="headerlink" href="#id30" title="Permalink to this headline">#</a></h2>
+<section id="id29">
+<h2><span class="section-number">2.9. </span>연습문제<a class="headerlink" href="#id29" title="Permalink to this headline">#</a></h2>
 <p>참고: <a class="reference external" href="https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_end2end_ml_project_1.ipynb">(실습) 머신러닝 프로젝트 처음부터 끝까지 1부</a> 와
 <a class="reference external" href="https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_end2end_ml_project_2.ipynb">(실습) 머신러닝 프로젝트 처음부터 끝까지 2부</a></p>
 </section>
