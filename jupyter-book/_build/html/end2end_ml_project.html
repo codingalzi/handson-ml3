@@ -1119,7 +1119,7 @@ title="Print to PDF"
 <p>데이터 정제는 결측치 처리, 이상치 및 노이즈 데이터 제거 등을 의미한다.
 캘리포니아 주택 가격 데이터셋은 구역별 방 총 개수(<code class="docutils literal notranslate"><span class="pre">total_rooms</span></code>) 특성에서
 결측치가 일부 포함되어 있지만 이상치 또는 노이즈 데이터는 없다.</p>
-<p>전처리는 수치형 특성과 범주형 특성을 구분하여 수행한다.</p>
+<p>데이터 전처리는 수치형 특성과 범주형 특성을 구분하여 수행한다.</p>
 <ul class="simple">
 <li><p>수치형 특성에 대한 전처리</p>
 <ul>
@@ -1199,35 +1199,36 @@ title="Print to PDF"
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/null-value02.png" width="800"></div></section>
 <section id="id15">
 <h3><span class="section-number">2.5.3. </span>범주형 특성 다루기: 원-핫 인코딩<a class="headerlink" href="#id15" title="Permalink to this headline">#</a></h3>
-<p>해안 근접도(<code class="docutils literal notranslate"><span class="pre">ocean_proximity</span></code>)는 수가 아닌 5 개의 범주를 나타내는 텍스트를 값으로 사용한다.
+<p>해안 근접도(<code class="docutils literal notranslate"><span class="pre">ocean_proximity</span></code>)는 수가 아닌 5 개의 범주를 나타내는 문자열, 즉 텍스트 데이터를 값으로 사용한다.
 그런데 머신러닝 모델은 일반적으로 텍스트 데이터를 처리하지 못한다.</p>
 <p>가장 단순한 해결책으로 5 개의 범주를 정수로 변환할 수 있다.</p>
 <table class="colwidths-auto table">
 <thead>
-<tr class="row-odd"><th class="head"><p>범주</p></th>
-<th class="head"><p>숫자</p></th>
+<tr class="row-odd"><th class="text-align:center head"><p>범주</p></th>
+<th class="text-align:center head"><p>숫자</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>&lt;1H OCEAN</p></td>
-<td><p>0</p></td>
+<tr class="row-even"><td class="text-align:center"><p>&lt;1H OCEAN</p></td>
+<td class="text-align:center"><p>0</p></td>
 </tr>
-<tr class="row-odd"><td><p>INLAND</p></td>
-<td><p>1</p></td>
+<tr class="row-odd"><td class="text-align:center"><p>INLAND</p></td>
+<td class="text-align:center"><p>1</p></td>
 </tr>
-<tr class="row-even"><td><p>ISLAND</p></td>
-<td><p>2</p></td>
+<tr class="row-even"><td class="text-align:center"><p>ISLAND</p></td>
+<td class="text-align:center"><p>2</p></td>
 </tr>
-<tr class="row-odd"><td><p>NEAR BAY</p></td>
-<td><p>3</p></td>
+<tr class="row-odd"><td class="text-align:center"><p>NEAR BAY</p></td>
+<td class="text-align:center"><p>3</p></td>
 </tr>
-<tr class="row-even"><td><p>NEAR OCEAN</p></td>
-<td><p>4</p></td>
+<tr class="row-even"><td class="text-align:center"><p>NEAR OCEAN</p></td>
+<td class="text-align:center"><p>4</p></td>
 </tr>
 </tbody>
 </table>
 <p>하지만 이 방식은 수의 크기 특성을 모델이 활용할 수 있기에 위험하다.
-예를 들어 바닷가 근처(<code class="docutils literal notranslate"><span class="pre">NEAR</span> <span class="pre">OCEAN</span></code>)에 위치한 주택이 가장 비쌀 것으로 모델이 학습할 수 있다.</p>
+예를 들어 4에 해당하는 바닷가 근처(<code class="docutils literal notranslate"><span class="pre">NEAR</span> <span class="pre">OCEAN</span></code>)에 위치한 주택이 가장 비쌀 것으로
+모델이 훈련될 가능성이 높다.</p>
 <p>범주형 특성을 수치화하는 가장 일반적인 방식은
 <strong>원-핫 인코딩</strong><font size="2">one-hot encoding</font>이다.
 원-핫 인코딩은 수치화된 범주들 사이의 크기 비교를 피하기 위해
@@ -1245,16 +1246,7 @@ title="Print to PDF"
 </div>
 <p>사이킷런의 <code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code> 변환기가 원-핫-인코딩을 지원하며
 해안 근접도를 변환한 결과는 아래 모양을 갖는다.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span>
-       <span class="p">[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span>
-       <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span>
-       <span class="o">...</span><span class="p">,</span>
-       <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">],</span>
-       <span class="p">[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span>
-       <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">]])</span>
-</pre></div>
-</div>
-</section>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/one_hot01.png" width="800"></div></section>
 <section id="id16">
 <h3><span class="section-number">2.5.4. </span>특성 스케일링<a class="headerlink" href="#id16" title="Permalink to this headline">#</a></h3>
 <p>머신러닝 알고리즘은 입력 데이터셋의 특성값들의
