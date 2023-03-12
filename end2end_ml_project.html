@@ -397,12 +397,12 @@ title="Print to PDF"
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id6">
-   2.3. 데이터 다운로드와 적재
+   2.3. 데이터 훑어보기
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id7">
-     2.3.1. 데이터셋 훑어보기
+     2.3.1. 데이터 기본 정보 확인
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -581,12 +581,12 @@ title="Print to PDF"
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id6">
-   2.3. 데이터 다운로드와 적재
+   2.3. 데이터 훑어보기
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id7">
-     2.3.1. 데이터셋 훑어보기
+     2.3.1. 데이터 기본 정보 확인
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -745,6 +745,10 @@ title="Print to PDF"
 훈련 과정을 이용하여 머신러닝 시스템의 전체 훈련 과정을 살펴본다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-01d.png" width="600"></div><p>특히 데이터 정제 및 전처리 과정으로 구성된 데이터 준비와
 최적의 모델을 찾는 과정을 상세히 소개한다.</p>
+<p><strong>슬라이드</strong></p>
+<p>본문 내용을 요약한
+<a class="reference external" href="https://github.com/codingalzi/handson-ml3/raw/master/slides/slides-end2end_ml_project-1.pdf">슬라이드 1</a>를
+다운로드할 수 있다.</p>
 <section id="id2">
 <h2><span class="section-number">2.1. </span>실전 데이터 활용<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
 <p>다양한 실전 데이터를 모아놓은 데이터 저장소를
@@ -779,7 +783,7 @@ title="Print to PDF"
 <strong>회귀 모델</strong>을 훈련시키고자 한다.
 훈련시킬 모델의 특성은 다음과 같다.</p>
 <ul class="simple">
-<li><p>지도 학습: 구역별 ‘중간 주택 가격’을 레이블(타깃)로 지정한다.</p></li>
+<li><p>지도 학습: 구역별 ‘중간 주택 가격’을 타깃<font size='2'>target</font>으로 지정한다.</p></li>
 <li><p>회귀: 가격을 예측한다. 보다 세분화하면 다중 회귀이자 단변량 회귀 모델이다.</p>
 <ul>
 <li><p>다중 회귀<font size="2">multiple regression</font>: 구역별로 여러 특성을 주택 가격 예측에 사용한다.</p></li>
@@ -806,10 +810,10 @@ title="Print to PDF"
 \[\text{RMSE}(\mathbf X, h) = \sqrt{\frac 1 m \sum_{i=1}^{m} (h(\mathbf x^{(i)}) - y^{(i)})^2}\]</div>
 <p>위 수식에 사용된 기호의 의미는 다음과 같다.</p>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\mathbf X\)</span>: 훈련셋 전체 샘플들의 특성값들로 구성된 행렬, 레이블(타깃) 제외.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf X\)</span>: 훈련용 입력 데이터셋 전체 샘플들의 특성값으로 구성된 행렬, 타깃 제외.</p></li>
 <li><p><span class="math notranslate nohighlight">\(m\)</span>: <span class="math notranslate nohighlight">\(\mathbf X\)</span>의 행의 수. 즉, 훈련셋 크기.</p></li>
-<li><p><span class="math notranslate nohighlight">\(\mathbf x^{(i)}\)</span>: <span class="math notranslate nohighlight">\(i\)</span> 번째 샘플의 특성값 벡터. 레이블(타깃) 제외.</p></li>
-<li><p><span class="math notranslate nohighlight">\(y^{(i)}\)</span>: <span class="math notranslate nohighlight">\(i\)</span> 번째 샘플의 레이블(타깃)</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf x^{(i)}\)</span>: <span class="math notranslate nohighlight">\(i\)</span> 번째 샘플의 특성값 벡터.</p></li>
+<li><p><span class="math notranslate nohighlight">\(y^{(i)}\)</span>: <span class="math notranslate nohighlight">\(i\)</span> 번째 샘플의 타깃</p></li>
 <li><p><span class="math notranslate nohighlight">\(h\)</span>: 예측 함수</p></li>
 <li><p><span class="math notranslate nohighlight">\(h(\mathbf x^{(i)})\)</span>: <span class="math notranslate nohighlight">\(i\)</span>번째 샘플에 대한 예측 값. <span class="math notranslate nohighlight">\(\hat y^{(i)}\)</span> 로 표기되기도 함.</p></li>
 </ul>
@@ -847,7 +851,7 @@ title="Print to PDF"
 </section>
 </section>
 <section id="id6">
-<h2><span class="section-number">2.3. </span>데이터 다운로드와 적재<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">2.3. </span>데이터 훑어보기<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h2>
 <p>캘리포니아 주택가격 데이터셋은 매우 유명하여 많은 공개 저장소에서 다운로드할 수 있다.
 여기서는 깃허브 리포지토리에 압축파일로 저장한 파일을 다운로드해서 사용하며
 <code class="docutils literal notranslate"><span class="pre">housing</span></code> 변수가 가리키도록 적재되었다고 가정한다.</p>
@@ -855,7 +859,7 @@ title="Print to PDF"
 <li><p><code class="docutils literal notranslate"><span class="pre">housing</span></code> 변수: 캘리포티아 주택 가격 데이터를 담은 데이터 프레임 할당</p></li>
 </ul>
 <section id="id7">
-<h3><span class="section-number">2.3.1. </span>데이터셋 훑어보기<a class="headerlink" href="#id7" title="Permalink to this headline">#</a></h3>
+<h3><span class="section-number">2.3.1. </span>데이터 기본 정보 확인<a class="headerlink" href="#id7" title="Permalink to this headline">#</a></h3>
 <p>pandas의 데이터프레임으로 데이터셋을 적재하여 기본적인 데이터 구조를 훑어볼 수 있다.</p>
 <p><strong><code class="docutils literal notranslate"><span class="pre">head()</span></code> 메서드 활용</strong></p>
 <p>데이터프레임 객체의 처음 5개 샘플을 보여준다.</p>
@@ -907,7 +911,8 @@ title="Print to PDF"
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">housing</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
 </pre></div>
 </div>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/housing-describe.png"></div><p><strong>수치형 특성별 히스토그램</strong></p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/housing-describe.png"></div>
+<br><p><strong>수치형 특성별 히스토그램</strong></p>
 <p><code class="docutils literal notranslate"><span class="pre">hist()</span></code> 메서드는 수치형 특성별 히스토그램을 그린다.
 히스토그램을 통해 각 특성별 데이터셋의 다양한 정보를 확인할 수 있다.</p>
 <ul class="simple">
@@ -935,7 +940,7 @@ title="Print to PDF"
 예를 들어, 특정 소득 구간에 포함된 샘플이 과하게 적거나 많으면 해당 계층의 중요도가
 과소 혹은 과대 평가될 수 있다.</p>
 <p>캘리포니아 데이터셋의 중간 소득을 대상으로하는 히스토그램을 보면
-대부분 구역의 중간 소득이 1.5~6.0, 즉 15,000 달러에서 60,000 달러 사이인 것을 알 수 있다.</p>
+대부분 구역의 중간 소득이 1.5~6.0, 즉 15,000에서 60,000 달러 사이인 것을 알 수 있다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-08.png" width="400"></div><p>소득 구간을 아래 숫자들을 기준으로 5개로 구분한 다음에 계층 샘플링을 이용하여
 훈련셋과 테스트셋을 구분할 수 있다.</p>
 <table class="colwidths-auto table">
@@ -1016,7 +1021,9 @@ title="Print to PDF"
 </section>
 <section id="id9">
 <h2><span class="section-number">2.4. </span>데이터 탐색과 시각화<a class="headerlink" href="#id9" title="Permalink to this headline">#</a></h2>
-<p>테스트셋을 제외한 훈련셋에 대해서 시각화를 이용하여 데이터셋을 탐색한다.</p>
+<p>테스트셋을 제외한 훈련셋에 대해서 시각화를 이용하여 데이터셋을 탐색한다.
+테스트셋을 함께 탐색하면 미래의 데이터 특징을 미리 가정하는 데이터 스누핑 편향 오류를
+범할 가능성이 높아진다.</p>
 <section id="id10">
 <h3><span class="section-number">2.4.1. </span>지리적 데이터 시각화<a class="headerlink" href="#id10" title="Permalink to this headline">#</a></h3>
 <p>경도와 위도 정보를 이용하여 구역을 산포도로 나타내면 인구의 밀집 정도를 확인할 수 있다.
@@ -1031,16 +1038,13 @@ title="Print to PDF"
 <p>중간 주택 가격 특성과 다른 특성 사이의 선형 상관관계를 나타내는 상관계수는 다음과 같다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">median_house_value</span>    <span class="mf">1.000000</span>
 <span class="n">median_income</span>         <span class="mf">0.688380</span>
-<span class="n">rooms_per_house</span>       <span class="mf">0.143663</span>
 <span class="n">total_rooms</span>           <span class="mf">0.137455</span>
 <span class="n">housing_median_age</span>    <span class="mf">0.102175</span>
 <span class="n">households</span>            <span class="mf">0.071426</span>
 <span class="n">total_bedrooms</span>        <span class="mf">0.054635</span>
 <span class="n">population</span>           <span class="o">-</span><span class="mf">0.020153</span>
-<span class="n">people_per_house</span>     <span class="o">-</span><span class="mf">0.038224</span>
 <span class="n">longitude</span>            <span class="o">-</span><span class="mf">0.050859</span>
 <span class="n">latitude</span>             <span class="o">-</span><span class="mf">0.139584</span>
-<span class="n">bedrooms_ratio</span>       <span class="o">-</span><span class="mf">0.256397</span>
 </pre></div>
 </div>
 <p><strong>상관계수의 특징</strong></p>
