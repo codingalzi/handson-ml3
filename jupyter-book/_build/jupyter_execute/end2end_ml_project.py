@@ -535,20 +535,6 @@
 # 변환된 데이터셋은 평균값은 0, 표준편차는 1인 분포를 따르며, 이상치에 상대적으로 덜 영향을 받는다.
 # 여기서는 사이킷런의 `StandardScaler` 변환기를 이용하여 표준화를 적용한다.
 
-# :::{admonition} 타깃 데이터셋과 전처리
-# :class: info
-# 
-# 데이터 준비는 기본적으로 입력 데이터셋만을 대상으로 **정제**<font size="2">cleaning</font>와 
-# **전처리**<font size="2">preprocessing</font> 단계로 실행된다. 
-# 타깃 데이터셋은 결측치가 없는 경우라면 일반적으로 정제와 전처리 대상이 아니지만
-# 경우에 따라 변환이 요구될 수 있다.
-# 
-# 예를 들어, 타깃 데이터셋의 두터운 꼬리 분포를 따르는 경우
-# 로그 함수를 적용하여 데이터의 분포가 보다 균형잡히도록 하는 것이 권장된다.
-# 하지만 이런 경우 예측값을 계산할 때 원래의 척도로 되돌려야 하며
-# 이를 위해 대부분의 사이킷런 변환기가 지원하는 `inverse_transorm()` 메서드를 활용할 수 있다.
-# :::
-
 # ### 사용자 정의 변환기
 
 # 데이터 준비 과정에서 경우에 따라 사용자가 직접 변환기를 구현해야할 필요가 있다.
@@ -589,7 +575,7 @@
 # - 방 하나당 침실 개수(bedrooms for room)
 # - 가구당 인원(population per household)
 
-# #### 사용자 정의 변환기 클래스 선언
+# #### 사용자 정의 변환기 클래스 선언: 군집 변환기
 
 # `SimpleImputer` 변환기의 경우처럼 
 # 먼저 `fit()` 메서드를 이용하여 평균값, 중앙값 등을 확인한 다음에
@@ -597,10 +583,8 @@
 # 이때 사이킷런의 다른 변환기와 호환이 되도록 하기 위해
 # `fit()` 과 `transform()` 등 다양한 메서드를 모두 구현해야 한다. 
 # 
-# 예를 들어, 캘리포니아 주 2만 여개의 구역을 서로 가깝게 위치한 구역들의 군집으로 구분하는 변환기는
-# 다음과 같다. 단, 아래 코드를 지금 이해할 필요는 없다.
-# 다만 `BaseEstimator`와 `TransformerMixin` 두 개의 클래스를 변환기를 선언할 때 
-# 상속하도록 해야한다는 점은 기억한다.
+# 예를 들어, 캘리포니아 주 2만 여개의 구역을 서로 가깝게 위치한 구역들로 묶어
+# 총 10개의 군집으로 구분하는 변환기 클래스를 선언한다.
 
 # ```python
 # class ClusterSimilarity(BaseEstimator, TransformerMixin):
@@ -620,6 +604,12 @@
 #     def get_feature_names_out(self, names=None):
 #         return [f"Cluster {i} similarity" for i in range(self.n_clusters)]
 # ```
+
+# 위 코드를 지금 이해할 필요는 없다.
+# 다만 `BaseEstimator`와 `TransformerMixin` 두 개의 클래스를 변환기를 선언할 때 
+# 상속하도록 해야한다는 점은 기억한다.
+
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/custom-transformer.png" width="350"></div>
 
 # :::{admonition} `KMeans` 모델과 `rbf_kernel()` 함수
 # :class: info
@@ -673,7 +663,7 @@
 # `ClusterSimilarity` 변환기를 이용하여 얻어진 군집 특성을 이용하면
 # 아래 그림과 같은 결과를 얻을 수 있다.
 # 
-# - 모든 구역을 10개의 군집으로 나눈다.
+# - 모든 구역을 10개의 군집으로 분류한다.
 # - &#128473;는 각 군집의 중심 구역을 나타낸다.
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-cluster.jpg" width="550"></div>
@@ -682,7 +672,7 @@
 
 # 모든 전처리 단계가 정확한 순서대로 진행되어야 한다.
 # 이를 위해 사이킷런의 `Pipeline` 클래스를 이용하여 여러 변환기를 순서대로 
-# 실행하는 파이프라인 변환기를 활용한다.
+# 실행하는 변환기 파이프라인을 활용한다.
 
 # **`Pipeline` 클래스 활용** 
 # 
@@ -787,7 +777,7 @@
 #     return X[:, [0]] / X[:, [1]] # 1번 특성에 대한 0번 특성의 비율율
 # 
 # def ratio_name(function_transformer, feature_names_in):
-#     return ["ratio"]  # feature names out
+#     return ["ratio"]  # 새로 생성되는 특성 이름에 추가
 # 
 # def ratio_pipeline():
 #     return make_pipeline(
@@ -815,7 +805,7 @@
 # cluster_simil = ClusterSimilarity(n_clusters=10, gamma=1., random_state=42)
 # ```
 
-# (4) 기타
+# (4) 기본 변환기
 # 
 # 특별한 변환이 필요 없는 경우에도 기본적으로 결측치 문제 해결과 스케일을 조정하는 변환기를 사용한다.
 
@@ -841,8 +831,22 @@
 #         ("geo", cluster_simil, ["latitude", "longitude"]),                    # 구역별 군집 정보
 #         ("cat", cat_pipeline, make_column_selector(dtype_include=object)),    # 범주형 특성 전처리
 #     ],
-#     remainder=default_num_pipeline)                                           # 중간 주택 년수(housing_median_age) 대상
+#     remainder=default_num_pipeline)          # 남은 특성인 중간 주택 년수(housing_median_age) 대상
 # ```
+
+# :::{admonition} 타깃 데이터셋과 전처리
+# :class: info
+# 
+# 데이터 준비는 기본적으로 입력 데이터셋만을 대상으로 **정제**<font size="2">cleaning</font>와 
+# **전처리**<font size="2">preprocessing</font> 단계로 실행된다. 
+# 타깃 데이터셋은 결측치가 없는 경우라면 일반적으로 정제와 전처리 대상이 아니지만
+# 경우에 따라 변환이 요구될 수 있다.
+# 
+# 예를 들어, 타깃 데이터셋의 두터운 꼬리 분포를 따르는 경우
+# 로그 함수를 적용하여 데이터의 분포가 보다 균형잡히도록 하는 것이 권장된다.
+# 하지만 이런 경우 예측값을 계산할 때 원래의 척도로 되돌려야 하며
+# 이를 위해 대부분의 사이킷런 변환기가 지원하는 `inverse_transorm()` 메서드를 활용할 수 있다.
+# :::
 
 # ## 모델 선택과 훈련
 
