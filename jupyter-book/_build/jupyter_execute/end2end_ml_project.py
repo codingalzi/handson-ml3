@@ -589,7 +589,7 @@
 # - 방 하나당 침실 개수(bedrooms for room)
 # - 가구당 인원(population per household)
 
-# #### 사용자 정의 변환 클래스 선언
+# #### 사용자 정의 변환기 클래스 선언
 
 # `SimpleImputer` 변환기의 경우처럼 
 # 먼저 `fit()` 메서드를 이용하여 평균값, 중앙값 등을 확인한 다음에
@@ -599,6 +599,8 @@
 # 
 # 예를 들어, 캘리포니아 주 2만 여개의 구역을 서로 가깝게 위치한 구역들의 군집으로 구분하는 변환기는
 # 다음과 같다. 단, 아래 코드를 지금 이해할 필요는 없다.
+# 다만 `BaseEstimator`와 `TransformerMixin` 두 개의 클래스를 변환기를 선언할 때 
+# 상속하도록 해야한다는 점은 기억한다.
 
 # ```python
 # class ClusterSimilarity(BaseEstimator, TransformerMixin):
@@ -647,16 +649,25 @@
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-rbf_kernel.jpg" width="400"></div>
 # :::
 
-# :::{admonition} 하이퍼파라미터 vs. 파라미터
+# :::{admonition} 하이퍼파라미터와 변환기 클래스 상속
 # :class: info
 # 
-# 사이킷런 클래스의 하이퍼파라미터는 해당 클래스의 객체를 생성할 때 사용되는 값을 가리킨다.
-# 반면에 파라미터는 `fit()` 메서드가 데이터를 이용하여 계산하는 값을 가리킨다.
+# 사이킷런 클래스의 **하이퍼파라미터**<font size='2'>hyperparameter</font>는 
+# 해당 클래스의 객체를 생성할 때 사용되는 값을 가리킨다.
+# 반면에 **파라미터**<font size='2'>parameter</font>는 
+# `fit()` 메서드가 데이터를 이용하여 계산하는 값을 가리킨다.
 # 추정기, 변환기, 예측기는 각각의 역할에 맞는 파라미터를 계산한다.
 # 
 # 사이킷런의 모든 클래스는 적절한 
 # **하이퍼파라미터**<font size="2">hyperparameter</font>로 초기화되어 있으며
 # 데이터 변환과 값 예측에 필요한 모든 파라미터를 효율적으로 관리한다.
+# 
+# 변환기 클래스를 선언할 때 `BaseEstimator` 클래스를 상속하면
+# 하이퍼파라미터를 조정을 자동화할 때 필요한 `get_params()`, `set_params()` 두 메서드를
+# 함께 상속한다.
+# 
+# 반면에 `TransformerMixin` 클래스를 상속하는 이유 `fit_transform()`
+# 메서드가 자동으로 상속되기 때문이다.
 # :::
 
 # `ClusterSimilarity` 변환기를 이용하여 얻어진 군집 특성을 이용하면
