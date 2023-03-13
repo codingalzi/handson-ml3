@@ -27,7 +27,9 @@
 # **슬라이드**
 # 
 # 본문 내용을 요약한
-# [슬라이드 1](https://github.com/codingalzi/handson-ml3/raw/master/slides/slides-end2end_ml_project-1.pdf)를
+# [슬라이드 1부](https://github.com/codingalzi/handson-ml3/raw/master/slides/slides-end2end_ml_project-1.pdf),
+# [슬라이드 2부](https://github.com/codingalzi/handson-ml3/raw/master/slides/slides-end2end_ml_project-2.pdf),
+# [슬라이드 3부](https://github.com/codingalzi/handson-ml3/raw/master/slides/slides-end2end_ml_project-3.pdf)를
 # 다운로드할 수 있다.
 
 # ## 실전 데이터 활용
@@ -383,7 +385,7 @@
 # 캘리포니아 주택 가격 데이터셋은 구역별 방 총 개수(`total_rooms`) 특성에서 
 # 결측치가 일부 포함되어 있지만 이상치 또는 노이즈 데이터는 없다.
 
-# 데이터 전처리는 수치형 특성과 범주형 특성을 구분하여 수행한다. 
+# 데이터 전처리<font size='2'>preprocessing</font>는 수치형 특성과 범주형 특성을 구분하여 수행한다. 
 # 
 # * 범주형 특성 전처리 과정
 #     * 원-핫-인코딩
@@ -395,17 +397,22 @@
 # 따라서 모든 변환 과정을 자동화는
 # __파이프라인__<font size="2">pipeline</font> 기법을 활용할 수 있어야 한다.
 
-# **사이킷런 클래스 활용**
+# **파이프라인**
+# 
+# - 여러 사이킷런 API를 묶어 순차적으로 처리하는 사이킷런 API
+# - 여러 과정을 한 번에 엮어서 수행하도록 하는 도구
+
+# **사이킷런 API 활용**
 
 # 사이킷런<font size="2">Scikit-Learn</font>이 제공하는
-# 모든 클래스는 간단하게 합성할 수 있다.
-# 이점을 이해하려면 먼저 사이킷런이 제공하는 클래스의 유형을 구분해야 한다.
-# 사이킷런의 클래스는 크게 세 종류의 클래스로 나뉜다.
+# 모든 API는 간단하게 합성할 수 있다.
+# 이점을 이해하려면 먼저 사이킷런이 제공하는 API의 유형을 구분해야 한다.
+# 사이킷런의 API는 크게 세 종류의 API로 나뉜다.
 
-# * 추정기<font size="2">estimator</font>: `fit()` 메서드를 제공하는 클래스
-#     * 주어진 데이터로부터 필요한 정보인 파라미터<font size='2'>parameter</font> 계산. 
-#     * 계산된 파라미터를 클래스 내부의 속성<font size='2'>attribute</font>으로 저장
-#     * 반환값: 계산된 파라미터를 속성으로 갖는 동일한 클래스
+# * 추정기<font size="2">estimator</font>: `fit()` 메서드를 제공하는 클래스의 객체
+#     * 주어진 데이터로부터 필요한 정보인 파라미터<font size='2'>parameter</font> 계산
+#     * 계산된 파라미터를 객체 내부의 속성<font size='2'>attribute</font>으로 저장
+#     * 반환값: 계산된 파라미터를 속성으로 갖는 객체
 
 # * 변환기<font size="2">transformer</font>
 #     * `fit()` 가 계산한 값을 이용하여 데이터셋을 변환하는 `transform()` 메서드 지원.
@@ -423,21 +430,9 @@
 # 반면에 테스트셋, 검증셋, 새로운 데이터 등에 대해서는 `transform()` 메서드만 적용한다. 
 # :::
 
-# 사이킷런의 모든 클래스는 적절한 
-# **하이퍼파라미터**<font size="2">hyperparameter</font>로 초기화되어 있으며
-# 데이터 변환 및 값 예측에 필요한 모든 파라미터를 효율적으로 관리한다.
-
-# :::{admonition} 하이퍼파라미터 vs. 파라미터
-# :class: info
-# 
-# 사이킷런 클래스의 하이퍼파라미터는 해당 클래스의 객체를 생성할 때 사용되는 값을 가리킨다.
-# 반면에 파라미터는 `fit()` 메서드가 데이터를 이용하여 계산하는 값을 가리킨다.
-# 추정기, 변환기, 예측기는 각각의 역할에 맞는 파라미터를 계산한다.
-# :::
-
 # ### 데이터 정제
 
-# 입력 데이터셋의 `total_bedrooms` 특성에 168개 구역이 null 값으로 채워져 있다.
+# 입력 데이터셋의 `total_bedrooms` 특성에 168개 구역의 값이 `NaN`(Not a Number)로 표시되어 있다.
 # 즉, 일부 구역에 대한 방의 총 개수 정보가 누락되었다.
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/null-value01.png" width="800"></div>
@@ -445,7 +440,7 @@
 # 머신러닝 모델은 결측치가 있는 데이터셋을 잘 활용하지 못한다.
 # 따라서 아래 방법 중 하나를 선택해서 데이터를 정제해야 한다.
 # 
-# * 방법 1: 해당 구역 제거
+# * 방법 1: 해당 샘플(구역) 제거
 # * 방법 2: 해당 특성 삭제
 # * 방법 3: 평균값, 중앙값, 0, 주변에 위치한 값 등 특정 값으로 채우기. 
 
@@ -476,7 +471,15 @@
 # **원-핫 인코딩**<font size="2">one-hot encoding</font>이다.
 # 원-핫 인코딩은 수치화된 범주들 사이의 크기 비교를 피하기 위해
 # 더미<font size="2">dummy</font> 특성을 활용한다.
+
+# :::{admonition} 더미 특성
+# :class: info
 # 
+# 컴퓨터 분야에서 더미, 영어로 dummy는 의미없는 변수, 특성, 영역, 회로 등을 가리킨다.
+# 여기서는 한 구역의 해안 근접도를 지정할 때 굳이 필요 없는 다른 값도 함께 고려한다는 의미로
+# 더미 특성을 사용한다.
+# :::
+
 # 원-핫 인코딩을 적용하면 해안 근접도 특성을 삭제하고 대신 다섯 개의 범주 전부를 
 # 새로운 특성으로 추가한다.
 # 또한 다섯 개의 특성에 사용되는 값은 다음 방식으로 지정된다.
@@ -532,7 +535,7 @@
 # 변환된 데이터셋은 평균값은 0, 표준편차는 1인 분포를 따르며, 이상치에 상대적으로 덜 영향을 받는다.
 # 여기서는 사이킷런의 `StandardScaler` 변환기를 이용하여 표준화를 적용한다.
 
-# :::{admonition} 타깃 데이터셋 전처리
+# :::{admonition} 타깃 데이터셋과 전처리
 # :class: info
 # 
 # 데이터 준비는 기본적으로 입력 데이터셋만을 대상으로 **정제**<font size="2">cleaning</font>와 
@@ -642,6 +645,18 @@
 # 즉, 감마 값이 클 수록 보다 좁은 종 모양의 그래프가 그려진다.
 # 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-rbf_kernel.jpg" width="400"></div>
+# :::
+
+# :::{admonition} 하이퍼파라미터 vs. 파라미터
+# :class: info
+# 
+# 사이킷런 클래스의 하이퍼파라미터는 해당 클래스의 객체를 생성할 때 사용되는 값을 가리킨다.
+# 반면에 파라미터는 `fit()` 메서드가 데이터를 이용하여 계산하는 값을 가리킨다.
+# 추정기, 변환기, 예측기는 각각의 역할에 맞는 파라미터를 계산한다.
+# 
+# 사이킷런의 모든 클래스는 적절한 
+# **하이퍼파라미터**<font size="2">hyperparameter</font>로 초기화되어 있으며
+# 데이터 변환과 값 예측에 필요한 모든 파라미터를 효율적으로 관리한다.
 # :::
 
 # `ClusterSimilarity` 변환기를 이용하여 얻어진 군집 특성을 이용하면
@@ -1066,7 +1081,7 @@
 #  (7.301686597099842e-05, 'cat__ocean_proximity_ISLAND')]
 # ```
 
-# ## 최적 모델 저장 및 활용
+# ## 최적 모델 저장과 활용
 
 # 완성된 모델은 항상 저장해두어야 한다.
 # 업데이트된 모델이 적절하지 않은 경우 이전 모델로 되돌려야 할 수도 있기 때문이다.
