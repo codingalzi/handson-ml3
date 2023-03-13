@@ -1115,7 +1115,7 @@ title="Print to PDF"
 <p>데이터 정제는 결측치 처리, 이상치 및 노이즈 데이터 제거 등을 의미한다.
 캘리포니아 주택 가격 데이터셋은 구역별 방 총 개수(<code class="docutils literal notranslate"><span class="pre">total_rooms</span></code>) 특성에서
 결측치가 일부 포함되어 있지만 이상치 또는 노이즈 데이터는 없다.</p>
-<p>데이터 전처리는 수치형 특성과 범주형 특성을 구분하여 수행한다.</p>
+<p>데이터 전처리<font size='2'>preprocessing</font>는 수치형 특성과 범주형 특성을 구분하여 수행한다.</p>
 <ul class="simple">
 <li><p>범주형 특성 전처리 과정</p>
 <ul>
@@ -1132,17 +1132,22 @@ title="Print to PDF"
 <p>데이터 정제와 전처리의 모든 과정은 데이터셋에 포함된 샘플을 한꺼번에 변환한다.
 따라서 모든 변환 과정을 자동화는
 <strong>파이프라인</strong><font size="2">pipeline</font> 기법을 활용할 수 있어야 한다.</p>
-<p><strong>사이킷런 클래스 활용</strong></p>
-<p>사이킷런<font size="2">Scikit-Learn</font>이 제공하는
-모든 클래스는 간단하게 합성할 수 있다.
-이점을 이해하려면 먼저 사이킷런이 제공하는 클래스의 유형을 구분해야 한다.
-사이킷런의 클래스는 크게 세 종류의 클래스로 나뉜다.</p>
+<p><strong>파이프라인</strong></p>
 <ul class="simple">
-<li><p>추정기<font size="2">estimator</font>: <code class="docutils literal notranslate"><span class="pre">fit()</span></code> 메서드를 제공하는 클래스</p>
+<li><p>여러 사이킷런 API를 묶어 순차적으로 처리하는 사이킷런 API</p></li>
+<li><p>여러 과정을 한 번에 엮어서 수행하도록 하는 도구</p></li>
+</ul>
+<p><strong>사이킷런 API 활용</strong></p>
+<p>사이킷런<font size="2">Scikit-Learn</font>이 제공하는
+모든 API는 간단하게 합성할 수 있다.
+이점을 이해하려면 먼저 사이킷런이 제공하는 API의 유형을 구분해야 한다.
+사이킷런의 API는 크게 세 종류의 API로 나뉜다.</p>
+<ul class="simple">
+<li><p>추정기<font size="2">estimator</font>: <code class="docutils literal notranslate"><span class="pre">fit()</span></code> 메서드를 제공하는 클래스의 객체</p>
 <ul>
-<li><p>주어진 데이터로부터 필요한 정보인 파라미터<font size='2'>parameter</font> 계산.</p></li>
-<li><p>계산된 파라미터를 클래스 내부의 속성<font size='2'>attribute</font>으로 저장</p></li>
-<li><p>반환값: 계산된 파라미터를 속성으로 갖는 동일한 클래스</p></li>
+<li><p>주어진 데이터로부터 필요한 정보인 파라미터<font size='2'>parameter</font> 계산</p></li>
+<li><p>계산된 파라미터를 객체 내부의 속성<font size='2'>attribute</font>으로 저장</p></li>
+<li><p>반환값: 계산된 파라미터를 속성으로 갖는 객체</p></li>
 </ul>
 </li>
 </ul>
@@ -1168,24 +1173,15 @@ title="Print to PDF"
 <p><code class="docutils literal notranslate"><span class="pre">fit()</span></code> 과 <code class="docutils literal notranslate"><span class="pre">fit_transform()</span></code> 두 메서드는 훈련셋에 대해서만 적용한다.
 반면에 테스트셋, 검증셋, 새로운 데이터 등에 대해서는 <code class="docutils literal notranslate"><span class="pre">transform()</span></code> 메서드만 적용한다.</p>
 </div>
-<p>사이킷런의 모든 클래스는 적절한
-<strong>하이퍼파라미터</strong><font size="2">hyperparameter</font>로 초기화되어 있으며
-데이터 변환 및 값 예측에 필요한 모든 파라미터를 효율적으로 관리한다.</p>
-<div class="info admonition">
-<p class="admonition-title">하이퍼파라미터 vs. 파라미터</p>
-<p>사이킷런 클래스의 하이퍼파라미터는 해당 클래스의 객체를 생성할 때 사용되는 값을 가리킨다.
-반면에 파라미터는 <code class="docutils literal notranslate"><span class="pre">fit()</span></code> 메서드가 데이터를 이용하여 계산하는 값을 가리킨다.
-추정기, 변환기, 예측기는 각각의 역할에 맞는 파라미터를 계산한다.</p>
-</div>
 </section>
 <section id="id14">
 <h3><span class="section-number">2.5.2. </span>데이터 정제<a class="headerlink" href="#id14" title="Permalink to this headline">#</a></h3>
-<p>입력 데이터셋의 <code class="docutils literal notranslate"><span class="pre">total_bedrooms</span></code> 특성에 168개 구역이 null 값으로 채워져 있다.
+<p>입력 데이터셋의 <code class="docutils literal notranslate"><span class="pre">total_bedrooms</span></code> 특성에 168개 구역의 값이 <code class="docutils literal notranslate"><span class="pre">NaN</span></code>(Not a Number)로 표시되어 있다.
 즉, 일부 구역에 대한 방의 총 개수 정보가 누락되었다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/null-value01.png" width="800"></div><p>머신러닝 모델은 결측치가 있는 데이터셋을 잘 활용하지 못한다.
 따라서 아래 방법 중 하나를 선택해서 데이터를 정제해야 한다.</p>
 <ul class="simple">
-<li><p>방법 1: 해당 구역 제거</p></li>
+<li><p>방법 1: 해당 샘플(구역) 제거</p></li>
 <li><p>방법 2: 해당 특성 삭제</p></li>
 <li><p>방법 3: 평균값, 중앙값, 0, 주변에 위치한 값 등 특정 값으로 채우기.</p></li>
 </ul>
@@ -1227,6 +1223,12 @@ title="Print to PDF"
 <strong>원-핫 인코딩</strong><font size="2">one-hot encoding</font>이다.
 원-핫 인코딩은 수치화된 범주들 사이의 크기 비교를 피하기 위해
 더미<font size="2">dummy</font> 특성을 활용한다.</p>
+<div class="info admonition">
+<p class="admonition-title">더미 특성</p>
+<p>컴퓨터 분야에서 더미, 영어로 dummy는 의미없는 변수, 특성, 영역, 회로 등을 가리킨다.
+여기서는 한 구역의 해안 근접도를 지정할 때 굳이 필요 없는 다른 값도 함께 고려한다는 의미로
+더미 특성을 사용한다.</p>
+</div>
 <p>원-핫 인코딩을 적용하면 해안 근접도 특성을 삭제하고 대신 다섯 개의 범주 전부를
 새로운 특성으로 추가한다.
 또한 다섯 개의 특성에 사용되는 값은 다음 방식으로 지정된다.</p>
@@ -1272,7 +1274,7 @@ title="Print to PDF"
 <p>변환된 데이터셋은 평균값은 0, 표준편차는 1인 분포를 따르며, 이상치에 상대적으로 덜 영향을 받는다.
 여기서는 사이킷런의 <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code> 변환기를 이용하여 표준화를 적용한다.</p>
 <div class="info admonition">
-<p class="admonition-title">타깃 데이터셋 전처리</p>
+<p class="admonition-title">타깃 데이터셋과 전처리</p>
 <p>데이터 준비는 기본적으로 입력 데이터셋만을 대상으로 <strong>정제</strong><font size="2">cleaning</font>와
 <strong>전처리</strong><font size="2">preprocessing</font> 단계로 실행된다.
 타깃 데이터셋은 결측치가 없는 경우라면 일반적으로 정제와 전처리 대상이 아니지만
@@ -1358,6 +1360,15 @@ title="Print to PDF"
 하이퍼파라미터인 <strong>감마</strong>(<span class="math notranslate nohighlight">\(\gamma\)</span>, gamma)는 얼마나 빠르게 감소하도록 하는가를 결정한다.
 즉, 감마 값이 클 수록 보다 좁은 종 모양의 그래프가 그려진다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-rbf_kernel.jpg" width="400"></div>
+</div>
+<div class="info admonition">
+<p class="admonition-title">하이퍼파라미터 vs. 파라미터</p>
+<p>사이킷런 클래스의 하이퍼파라미터는 해당 클래스의 객체를 생성할 때 사용되는 값을 가리킨다.
+반면에 파라미터는 <code class="docutils literal notranslate"><span class="pre">fit()</span></code> 메서드가 데이터를 이용하여 계산하는 값을 가리킨다.
+추정기, 변환기, 예측기는 각각의 역할에 맞는 파라미터를 계산한다.</p>
+<p>사이킷런의 모든 클래스는 적절한
+<strong>하이퍼파라미터</strong><font size="2">hyperparameter</font>로 초기화되어 있으며
+데이터 변환과 값 예측에 필요한 모든 파라미터를 효율적으로 관리한다.</p>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">ClusterSimilarity</span></code> 변환기를 이용하여 얻어진 군집 특성을 이용하면
 아래 그림과 같은 결과를 얻을 수 있다.</p>
