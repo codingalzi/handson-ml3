@@ -47,6 +47,9 @@
 # 
 # 여기서는 1990년 미국 캘리포니아 주에서 수집한 인구조사 데이터를 사용하며,
 # 데이터의 원본은 다양한 공개 저장소에서 다운로드할 수 있다.
+# 아래 그림은 원본 csv 파일의 일부 내용을 보여준다.
+
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/housing-data.png" width="800"></div>
 
 # ## 큰 그림 그리기
 
@@ -152,7 +155,7 @@
 # 여기서는 깃허브 리포지토리에 압축파일로 저장한 파일을 다운로드해서 사용하며
 # `housing` 변수가 가리키도록 적재되었다고 가정한다.
 # 
-# - `housing` 변수: 캘리포티아 주택 가격 데이터를 담은 데이터 프레임 할당
+# - `housing` 변수: 캘리포티아 주택 가격 데이터를 담고 있는 csv 파일을 적재하여 생성된 데이터 프레임 할당
 # 
 
 # ### 데이터 기본 정보 확인
@@ -167,7 +170,7 @@
 # housing.head()
 # ```
 
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-05.png" width="600"></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-05.png" width="800"></div>
 
 # **`info()` 메서드 활용**
 # 
