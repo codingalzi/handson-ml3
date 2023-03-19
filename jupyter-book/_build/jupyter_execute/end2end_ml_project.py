@@ -866,6 +866,8 @@
 # * 훈련 및 예측
 # 
 #     ```python
+#     from sklearn.linear_model import LinearRegression
+#     
 #     lin_reg = make_pipeline(preprocessing, LinearRegression())
 #     lin_reg.fit(housing, housing_labels)
 #     lin_reg.predict(housing)
@@ -890,6 +892,8 @@
 # * 훈련 및 예측
 # 
 # ```python
+# from sklearn.tree import DecisionTreeRegressor
+# 
 # tree_reg = make_pipeline(preprocessing, DecisionTreeRegressor(random_state=42))
 # tree_reg.fit(housing, housing_labels)
 # housing_predictions = tree_reg.predict(housing)
@@ -914,6 +918,8 @@
 # 사이킷런의 `RandomForestRegressor` 모델은 기본값으로 100개의 결정트리를 동시에 훈련시킨다.
 # 
 # ```python
+# from sklearn.ensemble import RandomForestRegressor
+# 
 # forest_reg = make_pipeline(preprocessing,
 #                            RandomForestRegressor(n_estimators=100, random_state=42))
 # ```
@@ -925,15 +931,15 @@
 
 # **k-겹 교차 검증**
 # 
-# * 훈련셋을 __폴드__(fold)라 불리는 k-개의 부분 집합으로 무작위로 분할한다.
+# * 훈련셋을 **폴드**<font size='2'>fold</font>라 불리는 k-개의 부분 집합으로 무작위로 분할한다.
 # * 모델을 총 k 번 훈련한다.
-#     * 매 훈련마나다 하나의 폴드를 선택하여 검증 데이터셋 지정.
+#     * 매 훈련마나다 하나의 폴드를 선택하여 검증 데이터셋으로 지정.
 #     * 나머지 (k-1) 개의 폴드를 대상으로 훈련
 #     * 매 훈련이 끝날 때마다 선택된 검증 데이터셋을 이용하여 모델 평가
 #     * 매번 다른 폴드 활용
 # * 최종평가는 k-번 평가 결과의 평균값을 활용한다.
 # 
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/cross-val10a.png" width="550"></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/cross-val10.png" width="500"></div>
 
 # **사이킷런의 `cross_val_score()` 함수**
 # 
@@ -947,6 +953,8 @@
 # 아래 코드는 10 개의 폴드를 사용(`cv=10`)하여 결정트리 회귀 모델에 대한 교차 검증을 진행하고 평가한다. 
 # 
 # ```python
+# from sklearn.model_selection import cross_val_score
+# 
 # tree_rmses = -cross_val_score(tree_reg, housing, housing_labels,
 #                               scoring="neg_root_mean_squared_error", cv=10)
 # ```
@@ -970,15 +978,17 @@
 # ## 모델 미세 조정
 
 # 지금까지 살펴 본 모델 중에서 랜덤 포레스트 회귀 모델의 성능이 가장 좋았다.
-# 이렇게 가능성이 높은 모델을 찾은 다음엔 모델의 세부 설정(하이퍼파라미터)을 조정하거나
-# 성능이 좋은 모델 여러 개를 이용하여 모델의 성능을 최대한 끌어올릴 수 있다.
-# 이렇게 하이퍼파라미터를 조정하면서 최적의 모델을 훈련시키는 방법을
+# 이렇게 가능성이 높은 모델을 찾은 다음엔 
+# 모델의 세부 설정(하이퍼파라미터)을 조정하거나
+# 성능이 좋은 모델 여러 개를 이용하여 모델의 성능을 최대한 끌어올린다.
+# 
+# 이런 방식으로 잘 훈련된 모델의 성능을 좀 더 끌어 올리는 방법을
 # 모델 **미세 조정**<font size='2'>fine tuning</font>이라 한다.
+# 모델 미세 조정은 보통 다음 세 가지 방식을 많이 사용한다.
 # 
-# 모델 미세 조정은 보통 다음 두 가지 방식을 사용한다.
-# 
-# * 그리드 탐색
-# * 랜덤 탐색
+# - 그리드 탐색
+# - 랜덤 탐색
+# - 앙상블 학습
 
 # ### 그리드 탐색
 
@@ -1059,6 +1069,13 @@
 # 다양한 방식의 모델 미세 조정에 대한 보다 자세한 정보는
 # [Best Tools for Model Tuning and Hyperparameter Optimization](https://neptune.ai/blog/best-tools-for-model-tuning-and-hyperparameter-optimization)을 참고할 수 있다.
 # :::
+
+# **앙상블 학습**
+
+# 결정 트리 모델 하나보다 랜덤 포레스트처럼 여러 모델로 이루어진 모델이 보다 좋은 성능을 낼 수 있다. 
+# 또한 최고 성능을 보이는 서로 다른 개별 모델을 조합하면 보다 좋은 성능을 얻을 수 있다. 
+# 이렇게 성능이 좋은 여러 개의 모델을 함께 학습하여 예측값을 지정하는 방식을 앙상블 학습이라 하며, 
+# {numref}`%s장 <ch:ensemble>`에서 자세히 다룬다.
 
 # ### 최적 모델 활용
 
