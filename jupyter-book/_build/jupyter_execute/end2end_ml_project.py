@@ -1036,6 +1036,9 @@
 # 또한 3-겹 교차검증(`cv=3`)을 진행하기에 모델 훈련을 총 30(=10x30)번 진행한다.
 # 
 # ```python
+# from sklearn.model_selection import RandomizedSearchCV
+# from scipy.stats import randint
+# 
 # param_distribs = {'preprocessing__geo__n_clusters': randint(low=3, high=50),
 #                   'random_forest__max_features': randint(low=2, high=20)}
 # 
@@ -1109,6 +1112,19 @@
 #  (7.301686597099842e-05, 'cat__ocean_proximity_ISLAND')]
 # ```
 
+# **테스트셋 활용 최종 평가**
+
+# 최고 성능 모델을 테스트셋에 적용하여 훈련된 모델의 성능을 최종 평가한다.
+
+# ```python
+# X_test = strat_test_set.drop("median_house_value", axis=1)
+# y_test = strat_test_set["median_house_value"].copy()
+# 
+# final_predictions = final_model.predict(X_test)
+# 
+# final_rmse = mean_squared_error(y_test, final_predictions, squared=False)
+# ```
+
 # ## 최적 모델 저장과 활용
 
 # 완성된 모델은 항상 저장해두어야 한다.
@@ -1124,6 +1140,7 @@
 # 
 #     ```python
 #     final_model_reloaded = joblib.load("my_california_housing_model.pkl")
+#     final_model_reloaded.predict(X_test)
 #     ```    
 
 # ## 연습문제
