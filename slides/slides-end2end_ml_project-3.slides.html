@@ -15153,11 +15153,9 @@ div.jp-OutputPrompt {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
-<li>k-겹 교차 검증의 모델 학습 과정에서 성능을 측정할 때 
-  높을 값일수록 좋은 <strong>효용함수</strong> 활용<ul>
+<li><code>scoring</code> 키워드 인자: k-겹 교차 검증의 모델 학습 과정에서 훈련 중인 모델의 성능 평가용 <strong>효용함수</strong> 지정<ul>
+<li>문제는 RMSE는 낮을 수록 좋은 모델을 의미함. 따라서 효용함수로 RMSE의 음숫값을 사용.</li>
 <li><code>scoring="neg_mean_squared_error"</code></li>
-<li>RMSE의 음숫값 사용.</li>
-<li>이유는 RMSE는 낮을 수록 좋기 때문임.</li>
 </ul>
 </li>
 </ul>
@@ -15607,13 +15605,13 @@ div.jp-OutputPrompt {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
-<li>그리드 탐색과 랜덤 탐색 등을 통해 얻어진 최적의 모델을 분석해서 문제에 대한 좋은 통창을 얻을 수 있음</li>
+<li>그리드 탐색과 랜덤 탐색 등을 통해 얻어진 최적의 모델을 분석해서 문제에 대한 좋은 통찰을 얻을 수 있음</li>
 </ul>
 
 </div>
 </div>
 </div>
-</div><div class="fragment">
+</div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
@@ -15631,7 +15629,7 @@ div.jp-OutputPrompt {
 </div>
 </div>
 </div>
-</div></div></section></section><section><section>
+</div></section></section><section><section>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
@@ -15736,6 +15734,20 @@ div.jp-OutputPrompt {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h2 id="2.8.-%EC%B5%9C%EC%A0%81-%EB%AA%A8%EB%8D%B8-%EC%A0%80%EC%9E%A5-%EB%B0%8F-%ED%99%9C%EC%9A%A9">2.8. &#52572;&#51201; &#47784;&#45944; &#51200;&#51109; &#48143; &#54876;&#50857;<a class="anchor-link" href="#2.8.-%EC%B5%9C%EC%A0%81-%EB%AA%A8%EB%8D%B8-%EC%A0%80%EC%9E%A5-%EB%B0%8F-%ED%99%9C%EC%9A%A9">&#182;</a></h2>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ul>
+<li>긴 훈련으로 찾은 최고 성능의 모델을 저장하면 언제든 재 활용 가능</li>
+</ul>
+
 </div>
 </div>
 </div>
