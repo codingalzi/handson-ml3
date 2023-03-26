@@ -296,7 +296,7 @@
 # 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/ovo_ova.png" width="400"/></div>
 # 
-# <그림 출처: [SVM with the mlr package](https://www.r-bloggers.com/2019/10/support-vector-machines-with-the-mlr-package/)>
+# <p><div style="text-align: center">&lt;그림 출처: <a href="https://www.r-bloggers.com/2019/10/support-vector-machines-with-the-mlr-package/">SVM with the mlr package</a>&gt;</div></p>
 
 # **일대다 방식 활용**
 # 
@@ -332,6 +332,8 @@
 # * `OneVsOneClassifier` 클래스: 일대일 전략 지원
 # * `OneVsRestClassifier` 클래스: 일대다 전략 지원
 # 
+# 아래 코드는 SVC 모델을 일대다(OvR) 전략으로 훈련시키는 과정을 보여준다.
+# 
 # ```python
 # from sklearn.multiclass import OneVsRestClassifier
 # 
@@ -344,8 +346,9 @@
 # MNIST의 경우 0부터 9까지 숫자가 균형 있게 분포되어 있어서 
 # 정확도를 기준으로 교차 검증을 진행할 수 있다.
 # 
-# 예를 들어, `SGDClassifier` 모델은 기본적으로 OvR(일대다) 방식을 사용하여 다중 클래스 분류를 진행하며,
-# 다음과 같이 교차 검증을 진행할 수 있다.
+# 예를 들어, 기본적으로 일대다(OvR) 전략을 사용해서 
+# 다중 클래스 분류를 진행하는 `SGDClassifier` 모델에
+# 다음과 같이 교차 검증을 적용할 수 있다.
 # 
 # ```python
 # cross_val_score(sgd_clf, X_train, y_train, cv=3, scoring="accuracy")
@@ -365,7 +368,7 @@
 # 반면에 아래 오른쪽 이미지는 숫자별 비율로 변환하였다. 
 # 즉, 행별로 퍼센티지의 합이 100이 되도록 정규화<font size="2">normalization</font> 하였다.
 
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-08.png" width="700"/></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-08.png" width="100%"/></div>
 
 # **오차율 활용**
 # 
@@ -377,17 +380,18 @@
 # 아래 오른쪽 이미지는 칸 별 정규화 결과를 보여준다. 
 # 예를 들어, 7로 오인된 이미지 중에 숫자 9 이미지의 비율이 56%임을 알 수 있다.
 
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-09.png" width="700"/></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-09.png" width="100%"/></div>
 
 # **개별 오류 확인**
 # 
-# 위 오른쪽 이미지에 의하면 5로 오인된 이미지 중에서 숫자 3 이미지의 비율이 38%로 가장 높다.
+# 위 오른쪽 이미지에 의하면 5로 오인된 이미지 중에서 숫자 3 이미지의 비율이
+# 34%로 가장 높다.
 # 실제로 오차 행렬과 유사한 행렬을 3과 5에 대해 나타내면 다음과 같다.
 # 
 # * 음성: 3으로 판정
 # * 양성: 5로 판정
 
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-10.png" width="400"/></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-10.png" width="500"/></div>
 
 # **데이터 증식**
 # 
@@ -395,40 +399,31 @@
 # 여기서 사용한 SGD 분류 모델은 선형 회귀를 사용하기에 특히나 성능이 좋지 않다.
 # 따라서 보다 좋은 성능의 모델을 사용할 수도 있지만
 # 기본적으로 보다 많은 훈련 이미지가 필요하다.
-# 새로운 이미지를 구할 수 있으면 좋지만 일반적으로 매우 어렵다.
+# 새로운 이미지를 구할 수 있으면 좋겠지만 일반적으로 매우 어렵다.
 # 반면에 기존의 이미지를 조금씩 회전하거나, 뒤집거나, 이동하는 방식 등으로
 # 보다 많은 이미지를 훈련셋에 포함시킬 수 있다.
 # 이런 방식을 **데이터 증식**<font size="2">data augmentation</font>이라 부른다.
 
 # ## 다중 클래스 분류 일반화
 
-# * 다중 레이블 분류(multilabel classification)
-# 
-# * 다중 출력 분류(multioutput classification)
-
-# 사이킷런의 다중 클래스와 다중 출력 알고리즘
-
-# <div align="center"><img src="https://github.com/codingalzi/handson-ml/blob/master/slides/images/ch03/multi_org_chart.png?raw=true" width="800"/></div>
-# 
-# <이미지 출처: [사이킷런: 다중 클래스와 다중 출력 알고리즘](https://scikit-learn.org/stable/modules/multiclass.html)>
-
 # ### 다중 레이블 분류
 
-# 다중 레이블 분류는 각 훈련 샘플에 대해 여러 개의 클래스를 예측한다.
-# 
-# 예를 들어, 얼굴 인식 분류기는 한 사진에 포함된 여러 사람의 존재 여부를 판단할 수 있다.
-# 만약에 각 사진에 대해 앨리스, 밥, 찰리의 포함 여부를 물었을 때
-# 예측값이 `[True, False, True]` 라면, 이는 밥이 사진에 없음을 의미한다. 
+# 다중 레이블 분류<font size='2'>multilabel classification</font>는 
+# 각 훈련 샘플에 대해 여러 종류의 레이블 클래스와 관련된 분류 예측을 진행한다.
+# 예를 들어, 영훈, 지영, 상우 세 사람의 얼굴이 사진에 있는지 여부를 판별하는 모델의 예측값이 `[True, False, True]`일 때, 이는 영훈과 상우는 사진에 있지만
+# 지영은 사진에 없음을 의미한다. 
 
 # ### 다중 출력 분류
 
-# 다중 출력 다중 클래스 분류라고도 불리며, 다중 레이블 분류를 일반화한 개념이다.
-# 즉, 여러 개의 클래스에 대한 예측값을 만들어 내지만 하나의 클래스에 대해 3개 이상의 값이 사용될 수 있다.
+# 앞서 사진에서 여러 사람의 얼굴 포함 여부는 각 사람에 대해 이진 분류를 진행한다.  
+# 반면에 **다중 출력 다중 클래스 분류**라고도 불리는 
+# 다중 출력 분류<font size='2'>multioutput classification</font>는
+# 레이블 클래스 별로 3개 이상의 범주를 예측할 수도 있다.
 # 
 # 예를 들어, 이미지에서 잡음을 제거하는 모델이 다중 출력 다중 클래스 분류기이다.
 # 
-# * 다중 클래스: 입력된 사진의 각 픽셀 수만큼 클래스 존재.
-# * 다중 출력: 각각의 픽셀에 대해 0부터 255 중에 하나를 예측.
+# * 다중 클래스: 입력된 사진의 각 픽셀 수만큼의 여러 레이블 클래스 존재.
+# * 다중 출력: 각각의 픽셀에 대해 0부터 255 중에 하나의 정수를 예측.
 # 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-11.png" width="400"/></div>
 # 
