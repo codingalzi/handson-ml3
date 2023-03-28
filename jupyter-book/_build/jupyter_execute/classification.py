@@ -24,6 +24,13 @@
 # * 다중 레이블 분류
 # * 다중 출력 분류
 
+# **슬라이드**
+# 
+# 본문 내용을 요약한
+# [슬라이드 1부](https://github.com/codingalzi/handson-ml3/raw/master/slides/slides-classification-1.pdf),
+# [슬라이드 2부](https://github.com/codingalzi/handson-ml3/raw/master/slides/slides-classification-2.pdf),
+# 다운로드할 수 있다.
+
 # ## MNIST 데이터셋
 
 # 미국 고등학생과 인구조사국 직원들이 손으로 쓴 70,000개의 숫자 이미지로 구성된 데이터셋이다.
@@ -50,7 +57,7 @@
 #   * **확률적 경사하강법**<font size='2'>stochastic gradient descent</font>(SGD):  배치와 온라인 학습 모두 지원
 #   * 랜덤 포레스트 분류기: 배치 학습
 
-# **훈련 셋과 데이터 셋 나누기**
+# **훈련셋과 데이터셋**
 # 
 # 이미 6:1 의 비율로 훈련셋과 데이터셋으로 분류되어 있다.
 # 모든 샘플은 무작위로 잘 섞여 있어서 교차 검증에 문제없이 사용될 수 있다.
@@ -222,7 +229,7 @@
 # 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-04.png" width="500"/></div>
 
-# **재현율 대 정밀도**
+# **재현율 vs. 정밀도**
 # 
 # 위 그래프를 재현율 대 정밀도 그래프로 변환하면 다음과 같다.
 # 
