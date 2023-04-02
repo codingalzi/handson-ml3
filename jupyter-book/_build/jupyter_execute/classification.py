@@ -20,7 +20,7 @@
 # * 이진 분류기 훈련
 # * 분류기 성능 측정
 # * 다중 클래스 분류
-# * 에러 분석
+# * 오류 분석
 # * 다중 레이블 분류
 # * 다중 출력 분류
 
@@ -265,13 +265,11 @@
 # :::{prf:example} SGD vs. 랜덤 포레스트
 # :label: exp_SGD_RandomForest
 # 
-# MNIST 훈련 데이터셋으로 훈련된 `SGDClassifier` 와 `RandomForestClassifier`를 
-# PR(정밀도 대 재현율) 그래프로 비교해보면
-# `RandomForestClassifier` 가 훨씬 좋은 성능을 보임을 확인할 수 있다.
-# F<sub>1</sub> 점수와 ROC의 AUC 또한 동일한 결과를 보인다.
+# MNIST 훈련 데이터셋으로 훈련된 `SGDClassifier` 와 `RandomForestClassifier`의 
+# ROC 곡선을 함께 그리면 다음과 같이 랜덤 포레스트 모델의 AUC가 보다 1에 가깝다.
+# 즉, 보다 성능이 좋다. 
 # 
-# 
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-07.png" width="400"/></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-07a.png" width="400"/></div>
 # :::
 
 # ## 다중 클래스 분류
@@ -300,28 +298,25 @@
 # 
 # * 일대다: OvR(one-versus-the rest) 또는 OvA(one-versus-all)
 # * 일대일: OvO(one-versus-one)
-# 
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/ovo_ova.png" width="400"/></div>
-# 
-# <p><div style="text-align: center">&lt;그림 출처: <a href="https://www.r-bloggers.com/2019/10/support-vector-machines-with-the-mlr-package/">SVM with the mlr package</a>&gt;</div></p>
 
 # **일대다 방식 활용**
 # 
 # "숫자-5 감지기" 모델에 적용했던 이진 분류 방식을 0부터 9까지 각 숫자에 대해 동일하게 적용한다.
-# 즉, 각 훈련 샘플에 대해 총 10번 각기 다른 이진 분류기를 실행한다.
-# 이후 10개의 이진 분류기가 학습한 결정 점수 중에서 가장 높은 점수를 받은 클래스를 해당 훈련 샘플의 
-# 클래스로 선택한다.
+# 즉, "숫자-0 감지지", "숫자-1 감지기" 등 총 10개의 이진 분류기를 훈련시킨다.
+# 이후 10개의 이진 분류기가 각 샘플에 대해 계산한 결정 점수 중에서 가장 높은 점수를 주는
+# 이진 분류기에 해당하는 클래스를 해당 훈련 샘플의 클래스로 결정한다.
 
 # **일대일 방식 활용**
 # 
-# 조합이 가능한 모든 클래스를 대상으로 일대일 분류 방식을 진행하여
-# 가장 많은 결투(duell)를 이긴 숫자를 선택한다.
+# 각 샘플에 대해 가능한 모든 조합의 이진 분류기를 훈련한다.
+# 이후 각 샘플에 대해 가장 많은 가장 많은 결투를 이긴,
+# 즉, 해당 샘플에 대해 가장 많은 이진 분류기가 예측한 값을 해당 샘플의 예측값으로 결정한다.
 # 
-# 예를 들어, 모든 훈련 샘플에 대해 "0 대 1", "0 대 2", ..., "1 대 2", "1 대 3", ..., "8 대 9" 등 
-# 총 45(= 9+8+...+1) 번의 결투를 진행하는 45 개의 이진 분류기를 실행한다.
-# 이때 각 결투에 사용되는 분류기는 결투와 관련된 샘플만을 대상으로하기에
-# 보다 작은 훈련셋을 사용한다.
-# 최종적으로 가장 많은 결투를 이긴 숫자가 해당 샘플의 예측값으로 사용된다.
+# 예를 들어, 모든 훈련 샘플에 대해 "0과 1 구별", "0과 2 구별", ..., "1과 2 구별", "1과 3 구별", ..., "8과 9 구별" 등 
+# 총 45(= 9+8+...+1) 개의 이진 분류기를 훈련시킨다.
+# 이제 각각의 이진 분류기는 분류기와 관련된 샘플만을 이용해서 훈련한다.
+# 최종적으로 각 샘플에 대해 가장 많은 결투를 이긴 숫자가 해당 샘플의 예측값으로 사용된다.
+# 예를 들어, 어떤 샘플에 대해 숫자 1이 9번의 결투를 모두 이기면 숫자 1을 해당 샘플의 예측값으로 지정한다.
 
 # :::{prf:example} SVC 모델과 다중 클래스 분류
 # :label: exp_SVC
@@ -361,10 +356,10 @@
 # cross_val_score(sgd_clf, X_train, y_train, cv=3, scoring="accuracy")
 # ```
 
-# ## 에러 분석
+# ## 오류 분석
 
 # 그리드 탐색, 랜덤 탐색 등을 이용한 모델 튜닝 과정을 실행하여 최선의 모델을 찾았다고 가정한다.
-# 이제 에러 분석을 통해 모델을 좀 더 개선하고자 한다.
+# 이제 오류 분석을 통해 모델을 좀 더 개선하고자 한다.
 
 # **오차 행렬 활용**
 # 
@@ -411,32 +406,46 @@
 # 보다 많은 이미지를 훈련셋에 포함시킬 수 있다.
 # 이런 방식을 **데이터 증식**<font size="2">data augmentation</font>이라 부른다.
 
-# ## 다중 클래스 분류 일반화
+# ## 다중 레이블 분류와 다중 출력 분류
 
 # ### 다중 레이블 분류
 
 # 다중 레이블 분류<font size='2'>multilabel classification</font>는 
 # 각 훈련 샘플에 대해 여러 종류의 레이블 클래스와 관련된 분류 예측을 진행한다.
-# 예를 들어, 영훈, 지영, 상우 세 사람의 얼굴이 사진에 있는지 여부를 판별하는 모델의 예측값이 `[True, False, True]`일 때, 이는 영훈과 상우는 사진에 있지만
-# 지영은 사진에 없음을 의미한다. 
+# 예를 들어, MNIST 손글씨 사진이 가리키는 숫자가 7 이상인지 여부와 홀수인지 여부를 
+# 함께 판단하도록 훈련시키기 위해 아래 `y_multilabel`을 레이블로 지정할 수 있다.
+
+# ```python
+# y_train_large = (y_train >= '7')
+# y_train_odd = (y_train.astype('int8') % 2 == 1)
+# y_multilabel = np.c_[y_train_large, y_train_odd]
+# ```
+
+# 그러면 훈련된 모델은 아래 모양의 두 개의 값으로 구성된 어레이를 예측값으로 계산한다.
+# 예를 들어, 숫자 5를 가리키는 이미지에 대한 예측값은 다음과 같다.
+# 
+# ```python
+# array([[False,  True]])
+# ```
 
 # ### 다중 출력 분류
 
-# 앞서 사진에서 여러 사람의 얼굴 포함 여부는 각 사람에 대해 이진 분류를 진행한다.  
+# 앞서 언급한 다중 레이블 분류는 7 이상인지 여부와 홀수인지 여부를 판단한다.
+# 즉, 각각의 질문에 대해 이진 분류를 진행한다.  
 # 반면에 **다중 출력 다중 클래스 분류**라고도 불리는 
-# 다중 출력 분류<font size='2'>multioutput classification</font>는
-# 레이블 클래스 별로 3개 이상의 범주를 예측할 수도 있다.
+# **다중 출력 분류**<font size='2'>multioutput classification</font>는
+# 각 질문의 답에 사용되는 레이블이 다중 클래스 분류를 진행한다.
 # 
 # 예를 들어, 이미지에서 잡음을 제거하는 모델이 다중 출력 다중 클래스 분류기이다.
 # 
-# * 다중 클래스: 입력된 사진의 각 픽셀 수만큼의 여러 레이블 클래스 존재.
-# * 다중 출력: 각각의 픽셀에 대해 0부터 255 중에 하나의 정수를 예측.
+# * 다중 출력: 각각의 픽셀에 대해 픽셀값 예측.
+# * 다중 클래스: 픽셀값은 0부터 255 사이의 정수. 즉 266 개의 정수 중에 하나 선택.
 # 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-11.png" width="400"/></div>
 # 
 # 아래 이미지는 분류기가 예측한 이미지다. 즉, 각 픽셀에 대해 0~255 사이에서 예측된 값을 사용하였다.
 # 
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-12.png" width="130"/></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-12.png" width="200"/></div>
 
 # ## 연습문제
 
