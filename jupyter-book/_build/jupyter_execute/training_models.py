@@ -16,62 +16,53 @@
 
 # **주요 내용**
 # 
-# * 선형 회귀 모델 구현
-#     * 선형대수 활용
-#     * 경사하강법 활용
-# * 경사하강법 종류
-#     * 배치 경사하강법
-#     * 미니배치 경사하강법
-#     * 확률적 경사하강법(SGD)
-# * 다항 회귀: 비선형 회귀 모델
-# * 학습 곡선: 과소, 과대 적합 감지
-# * 모델 규제: 과대 적합 방지
-# * 로지스틱 회귀와 소프트맥스 회귀: 분류 모델
+# * 선형 회귀
+# * 경사하강법
+# * 다항 회귀
+# * 학습 곡선
+# * 모델 규제
+# * 로지스틱 회귀
 
-# **목표**
+# **슬라이드**
 # 
-# 모델 훈련의 기본 작동 과정과 원리를 살펴보며,
-# 이를 통해 다음 사항들에 대한 이해를 넓힌다.
-# 
-# - 적정 모델 선택
-# - 적정 훈련 알고리즘 선택
-# - 적정 하이퍼파라미터 선택
-# - 디버깅과 오차 분석
-# - 신경망 구현 및 훈련 과정 이해
+# 본문 내용을 요약한
+# [슬라이드](https://github.com/codingalzi/handson-ml3/raw/master/slides/slides-training_models.pdf)
+# 다운로드할 수 있다.
 
 # ## 선형 회귀
 
 # **선형 회귀 예제: 1인당 GDP와 삶의 만족도**
 
-# {numref}`%s 절 <sec:model_based_learning>`에서 1인당 GDP와 삶의 만족도 사이의 
+# {numref}`%s절 <sec:model_based_learning>`에서 1인당 GDP와 삶의 만족도 사이의 
 # 관계를 다음 1차 함수로 표현할 수 있었다.
 # 
-# $$(\text{삶의만족도}) = \theta_0 + \theta_1\cdot (\text{1인당GDP})$$
+# $$(\text{삶의만족도}) = \theta_0 + (\text{1인당GDP}) \cdot \theta_1$$
 # 
 # 즉, 1인당 GDP가 주어지면 위 함수를 이용하여 삶의 만족도를 예측하였다.
-# 주어진 1인당 GDP를 **입력 특성**<font size="2">input feature</font> $x$, 
-# 예측된 삶의 만족도를 **예측값** $\hat y$ 라 하면 다음 식으로 변환된다.
+# 주어진 1인당 GDP를 **입력 특성**<font size="2">input feature</font>인 $x_1$으로, 
+# 예측된 삶의 만족도는 **예측값**인 $\hat y$로 하면 삶의 만족도를 예측하는
+# 선형 회귀 모델은 다음 식으로 환원된다.
 # 
-# $$\hat y = \theta_0 + \theta_1\cdot x_1$$
+# $$\hat y = \theta_0 + x_1 \cdot \theta_1$$
 # 
-# 절편 $\theta_0$ 와 기울기 $\theta_1$ 은 (선형) 모델의 **파라미터**<font size="2">weight parameter</font>이다.
-# 머신러닝에서는 절편은 **편향**<font size="2">bias</font>, 
+# 여기서 절편 $\theta_0$ 와 기울기 $\theta_1$ 은 선형 회귀 모델의 
+# **파라미터**<font size="2">weight parameter</font>이며,
+# 일반적으로 절편은 **편향**<font size="2">bias</font>, 
 # 기울기는 **가중치**<font size="2">weight</font> 라 부른다.
-# 
-# 따라서 1인당 GDP와 삶의 만족도 사이의 선형 관계를 모델로 구현하려면
-# 적절한 하나의 편향과 하나의 가중치, 즉 총 2개의 파라미터를 결정해야 한다.
+# 따라서 1인당 GDP와 삶의 만족도 사이의 관계를 선형 회귀 모델로 구현하려면
+# 적절한 하나의 편향과 하나의 가중치, 즉 총 2개의 파라미터를 찾아야 한다.
 
 # **선형 회귀 예제: 캘리포니아 주택 가격 예측**
 
-# 반면에 {numref}`%s 장 <ch:end2end>`의 캘리포니아 주택 가격 예측 선형 회귀 모델은
-# 24개의 입력 특성을 사용하는 다음 함수를 이용한다.
+# 반면에 {numref}`%s장 <ch:end2end>`의 캘리포니아 주택 가격 예측 선형 회귀 모델은
+# 24개의 입력 특성을 사용하는 아래 함수로 환원된다.
 # 
-# $$\hat y = \theta_0 + \theta_1\cdot x_1 + \cdots + \theta_{24}\cdot x_{24}$$
+# $$\hat y = \theta_0 + x_1 \cdot \theta_1 + \cdots + x_{24} \cdot \theta_{24}$$
 # 
 # * $\hat y$: 예측값
-# * $x_i$: 구역의 $i$ 번째 특성값(위도, 경도, 중간소득, 가구당 인원 등등등)
+# * $x_i$: 구역의 $i$ 번째 특성값(위도, 경도, 중간소득, 가구당 인원 등)
 # * $\theta_0$: 편향
-# * $\theta_i$: $i$ 번째 특성에 대한 (가중치) 파라미터, 단 $i > 0$.
+# * $\theta_i$: $i$ ($1 \le i \le 24$)번째 특성에 대한 (가중치) 파라미터
 # 
 # 따라서 캘리포니아의 구역별 중간 주택 가격을 예측하는 선형 회귀 모델을 구하려면 
 # 적절한 하나의 편향과 24개의 가중치,
@@ -79,62 +70,34 @@
 
 # **선형 회귀 함수**
 
-# 이를 일반화하면 다음과 같다.
+# 위 두 개의 예제에서 설명한 선형 회귀 모델을 일반화하면 다음과 같다.
 # 
-# $$\hat y = \theta_0 + \theta_1\cdot x_1 + \cdots + \theta_{n}\cdot x_{n}$$
+# $$\hat y = \theta_0 + x_1 \cdot \theta_1 + \cdots + x_n \cdot \theta_{n}$$
 # 
 # * $\hat y$: 예측값
 # * $n$: 특성 수
 # * $x_i$: 구역의 $i$ 번째 특성값
 # * $\theta_0$: 편향
-# * $\theta_j$: $j$ 번째 특성에 대한 (가중치) 파라미터(단, $1 \le j \le n$)
+# * $\theta_i$: $i$ ($1 \le i \le n$) 번째 특성에 대한 (가중치) 파라미터
 # 
 # 일반적으로 선형 회귀 모델을 구현하려면
 # 한 개의 편향과 $n$ 개의 가중치, 즉 총 $(1+n)$ 개의 파라미터를 결정해야 한다.
 
-# **벡터 표기법**
+# **2D 어레이 표기법**
 # 
-# 예측값을 벡터의 **내적**<font size="2">inner product</font>으로 표현할 수 있다.
+# 머신러닝에서는 훈련 샘플은 1차원 어레이로, 파라미터는 2차원 어레이로 표현하며,
+# 예측값은 다음과 같이 (1, 1+n) 모양의 행렬과 (1+n, 1) 모양의 행렬의 곱으로 표기된다.
 # 
 # $$
 # \hat y
-# = h_\theta (\mathbf{x})
-# = \mathbf{\theta} \cdot \mathbf{x}
-# $$
-# 
-# * $h_\theta(\cdot)$: 예측 함수, 즉 모델의 `predict()` 메서드.
-# * $\mathbf{x} = (1, x_1, \dots, x_n)$
-# * $\mathbf{\theta} = (\theta_0, \theta_1, \dots, \theta_n)$
-
-# **2D 어레이 표기법**
-# 
-# 머신러닝에서는 훈련 샘플을 나타내는 입력 벡터와 파라미터 벡터를 일반적으로 아래 모양의 행렬로 나타낸다.
-# 
-# $$
-# \mathbf{x}=
-# \begin{bmatrix}
-# 1 \\
-# x_1 \\
-# \vdots \\
-# x_n
-# \end{bmatrix},
-# \qquad
-# \mathbf{\theta}=
+# = \theta_0 + x_1 \cdot \theta_1 + \cdots + x_n \cdot \theta_{n}
+# = [1, x_1, \dots, x_n]\, 
 # \begin{bmatrix}
 # \theta_0\\
 # \theta_1 \\
 # \vdots \\
 # \theta_n
 # \end{bmatrix}
-# $$
-# 
-# 따라서 예측값은 다음과 같이 행렬 연산으로 표기된다.
-# 단, $A^T$ 는 행렬 $A$의 전치행렬을 가리킨다.
-# 
-# $$
-# \hat y
-# = h_\theta (\mathbf{x})
-# = \mathbf{\theta}^{T} \mathbf{x}
 # $$
 
 # **선형 회귀 모델의 행렬 연산 표기법**
@@ -144,14 +107,14 @@
 # - $n$: 특성 수
 # 
 # 그러면 $\mathbf{X}$ 는 다음과 같이 표현된다.
-# 단, $\mathbf{x}_j^{(i)}$ 는 $i$-번째 입력 샘플의 $j$-번째 특성값을 가리킨다.
+# 단, $x_j^{(i)}$ 는 $i$-번째 입력 샘플의 $j$-번째 특성값을 가리킨다.
 # 
 # $$
 # \mathbf{X}= 
 # \begin{bmatrix} 
-# [1, \mathbf{x}_1^{(1)}, \dots, \mathbf{x}_n^{(1)}] \\
+# [1, x_1^{(1)}, \dots, x_n^{(1)}] \\
 # \vdots \\
-# [1, \mathbf{x}_1^{(m)}, \dots, \mathbf{x}_n^{(m)}] \\
+# [1, x_1^{(m)}, \dots, x_n^{(m)}] \\
 # \end{bmatrix}
 # $$
 
@@ -165,9 +128,9 @@
 # \end{bmatrix}
 # = 
 # \begin{bmatrix} 
-# [1, \mathbf{x}_1^{(1)}, \dots, \mathbf{x}_n^{(1)}] \\
+# [1, x_1^{(1)}, \dots, x_n^{(1)}] \\
 # \vdots \\
-# [1, \mathbf{x}_1^{(m)}, \dots, \mathbf{x}_n^{(m)}] \\
+# [1, x_1^{(m)}, \dots, x_n^{(m)}] \\
 # \end{bmatrix}
 # \,\, 
 # \begin{bmatrix}
@@ -198,12 +161,16 @@
 # 성능을 평가한다.
 
 # $$
-# \mathrm{MSE}(\mathbf{\theta}) := \mathrm{MSE}(\mathbf X, h_{\mathbf{\theta}}) = 
+# \mathrm{MSE}(\mathbf{\theta}) = 
 # \frac 1 m \sum_{i=1}^{m} \big(\mathbf{\theta}^{T}\, \mathbf{x}^{(i)} - y^{(i)}\big)^2
 # $$
+# 
+# 여기서 $\mathbf{x}^{(i)} = [1, x_1^{(i)}, \dots, x_n^{(i)}]$ 이고, $\theta^T$는 $\theta$의 전치 행렬을 가리킨다.
 
-# 최종 목표는 훈련셋이 주어졌을 때 $\mathrm{MSE}(\mathbf{\theta})$가 최소가 되도록 하는 
-# $\mathbf{\theta}$를 찾는 것이다.
+# **최종 목표**
+
+# 훈련셋이 주어졌을 때 $\mathrm{MSE}(\mathbf{\theta})$가 최소가 되도록 하는 
+# $\mathbf{\theta}$를 찾아야 하며 다음 두 가지 방식으로 해결한다.
 # 
 # * 방식 1: 정규방정식 또는 특이값 분해(SVD) 활용
 #     * 드물지만 수학적으로 비용함수를 최소화하는 $\mathbf{\theta}$ 값을 직접 계산할 수 있는 경우 활용
@@ -631,7 +598,7 @@
 # 복잡한 모델일 수록 편향을 줄어들지만 분산을 커진다.
 #  :::
 
-# ## 규제 사용 선형 모델
+# ## 모델 규제
 
 # 훈련 중에 과소 적합이 발생하면 보다 복잡한 모델을 선택해야 한다.
 # 반면에 과대 적합이 발생할 경우 먼저 모델에 규제를 가해 과대 적합을 방지하거나
