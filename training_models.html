@@ -442,7 +442,7 @@ title="Print to PDF"
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id11">
-   4.5. 규제 사용 선형 모델
+   4.5. 모델 규제
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
@@ -596,7 +596,7 @@ title="Print to PDF"
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id11">
-   4.5. 규제 사용 선형 모델
+   4.5. 모델 규제
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
@@ -682,104 +682,71 @@ title="Print to PDF"
 확인할 수 있다.</p>
 <p><strong>주요 내용</strong></p>
 <ul class="simple">
-<li><p>선형 회귀 모델 구현</p>
-<ul>
-<li><p>선형대수 활용</p></li>
-<li><p>경사하강법 활용</p></li>
+<li><p>선형 회귀</p></li>
+<li><p>경사하강법</p></li>
+<li><p>다항 회귀</p></li>
+<li><p>학습 곡선</p></li>
+<li><p>모델 규제</p></li>
+<li><p>로지스틱 회귀</p></li>
 </ul>
-</li>
-<li><p>경사하강법 종류</p>
-<ul>
-<li><p>배치 경사하강법</p></li>
-<li><p>미니배치 경사하강법</p></li>
-<li><p>확률적 경사하강법(SGD)</p></li>
-</ul>
-</li>
-<li><p>다항 회귀: 비선형 회귀 모델</p></li>
-<li><p>학습 곡선: 과소, 과대 적합 감지</p></li>
-<li><p>모델 규제: 과대 적합 방지</p></li>
-<li><p>로지스틱 회귀와 소프트맥스 회귀: 분류 모델</p></li>
-</ul>
-<p><strong>목표</strong></p>
-<p>모델 훈련의 기본 작동 과정과 원리를 살펴보며,
-이를 통해 다음 사항들에 대한 이해를 넓힌다.</p>
-<ul class="simple">
-<li><p>적정 모델 선택</p></li>
-<li><p>적정 훈련 알고리즘 선택</p></li>
-<li><p>적정 하이퍼파라미터 선택</p></li>
-<li><p>디버깅과 오차 분석</p></li>
-<li><p>신경망 구현 및 훈련 과정 이해</p></li>
-</ul>
+<p><strong>슬라이드</strong></p>
+<p>본문 내용을 요약한
+<a class="reference external" href="https://github.com/codingalzi/handson-ml3/raw/master/slides/slides-training_models.pdf">슬라이드</a>
+다운로드할 수 있다.</p>
 <section id="id2">
 <h2><span class="section-number">4.1. </span>선형 회귀<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
 <p><strong>선형 회귀 예제: 1인당 GDP와 삶의 만족도</strong></p>
-<p><a class="reference internal" href="ml_landscape.html#sec-model-based-learning"><span class="std std-numref">1.3.3.2 절</span></a>에서 1인당 GDP와 삶의 만족도 사이의
+<p><a class="reference internal" href="ml_landscape.html#sec-model-based-learning"><span class="std std-numref">1.3.3.2절</span></a>에서 1인당 GDP와 삶의 만족도 사이의
 관계를 다음 1차 함수로 표현할 수 있었다.</p>
 <div class="math notranslate nohighlight">
-\[(\text{삶의만족도}) = \theta_0 + \theta_1\cdot (\text{1인당GDP})\]</div>
+\[(\text{삶의만족도}) = \theta_0 + (\text{1인당GDP}) \cdot \theta_1\]</div>
 <p>즉, 1인당 GDP가 주어지면 위 함수를 이용하여 삶의 만족도를 예측하였다.
-주어진 1인당 GDP를 <strong>입력 특성</strong><font size="2">input feature</font> <span class="math notranslate nohighlight">\(x\)</span>,
-예측된 삶의 만족도를 <strong>예측값</strong> <span class="math notranslate nohighlight">\(\hat y\)</span> 라 하면 다음 식으로 변환된다.</p>
+주어진 1인당 GDP를 <strong>입력 특성</strong><font size="2">input feature</font>인 <span class="math notranslate nohighlight">\(x_1\)</span>으로,
+예측된 삶의 만족도는 <strong>예측값</strong>인 <span class="math notranslate nohighlight">\(\hat y\)</span>로 하면 삶의 만족도를 예측하는
+선형 회귀 모델은 다음 식으로 환원된다.</p>
 <div class="math notranslate nohighlight">
-\[\hat y = \theta_0 + \theta_1\cdot x_1\]</div>
-<p>절편 <span class="math notranslate nohighlight">\(\theta_0\)</span> 와 기울기 <span class="math notranslate nohighlight">\(\theta_1\)</span> 은 (선형) 모델의 <strong>파라미터</strong><font size="2">weight parameter</font>이다.
-머신러닝에서는 절편은 <strong>편향</strong><font size="2">bias</font>,
-기울기는 <strong>가중치</strong><font size="2">weight</font> 라 부른다.</p>
-<p>따라서 1인당 GDP와 삶의 만족도 사이의 선형 관계를 모델로 구현하려면
-적절한 하나의 편향과 하나의 가중치, 즉 총 2개의 파라미터를 결정해야 한다.</p>
+\[\hat y = \theta_0 + x_1 \cdot \theta_1\]</div>
+<p>여기서 절편 <span class="math notranslate nohighlight">\(\theta_0\)</span> 와 기울기 <span class="math notranslate nohighlight">\(\theta_1\)</span> 은 선형 회귀 모델의
+<strong>파라미터</strong><font size="2">weight parameter</font>이며,
+일반적으로 절편은 <strong>편향</strong><font size="2">bias</font>,
+기울기는 <strong>가중치</strong><font size="2">weight</font> 라 부른다.
+따라서 1인당 GDP와 삶의 만족도 사이의 관계를 선형 회귀 모델로 구현하려면
+적절한 하나의 편향과 하나의 가중치, 즉 총 2개의 파라미터를 찾아야 한다.</p>
 <p><strong>선형 회귀 예제: 캘리포니아 주택 가격 예측</strong></p>
-<p>반면에 <a class="reference internal" href="end2end_ml_project.html#ch-end2end"><span class="std std-numref">2 장</span></a>의 캘리포니아 주택 가격 예측 선형 회귀 모델은
-24개의 입력 특성을 사용하는 다음 함수를 이용한다.</p>
+<p>반면에 <a class="reference internal" href="end2end_ml_project.html#ch-end2end"><span class="std std-numref">2장</span></a>의 캘리포니아 주택 가격 예측 선형 회귀 모델은
+24개의 입력 특성을 사용하는 아래 함수로 환원된다.</p>
 <div class="math notranslate nohighlight">
-\[\hat y = \theta_0 + \theta_1\cdot x_1 + \cdots + \theta_{24}\cdot x_{24}\]</div>
+\[\hat y = \theta_0 + x_1 \cdot \theta_1 + \cdots + x_{24} \cdot \theta_{24}\]</div>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(\hat y\)</span>: 예측값</p></li>
-<li><p><span class="math notranslate nohighlight">\(x_i\)</span>: 구역의 <span class="math notranslate nohighlight">\(i\)</span> 번째 특성값(위도, 경도, 중간소득, 가구당 인원 등등등)</p></li>
+<li><p><span class="math notranslate nohighlight">\(x_i\)</span>: 구역의 <span class="math notranslate nohighlight">\(i\)</span> 번째 특성값(위도, 경도, 중간소득, 가구당 인원 등)</p></li>
 <li><p><span class="math notranslate nohighlight">\(\theta_0\)</span>: 편향</p></li>
-<li><p><span class="math notranslate nohighlight">\(\theta_i\)</span>: <span class="math notranslate nohighlight">\(i\)</span> 번째 특성에 대한 (가중치) 파라미터, 단 <span class="math notranslate nohighlight">\(i &gt; 0\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\theta_i\)</span>: <span class="math notranslate nohighlight">\(i\)</span> (<span class="math notranslate nohighlight">\(1 \le i \le 24\)</span>)번째 특성에 대한 (가중치) 파라미터</p></li>
 </ul>
 <p>따라서 캘리포니아의 구역별 중간 주택 가격을 예측하는 선형 회귀 모델을 구하려면
 적절한 하나의 편향과 24개의 가중치,
 즉 총 25개의 파라미터를 결정해야 한다.</p>
 <p><strong>선형 회귀 함수</strong></p>
-<p>이를 일반화하면 다음과 같다.</p>
+<p>위 두 개의 예제에서 설명한 선형 회귀 모델을 일반화하면 다음과 같다.</p>
 <div class="math notranslate nohighlight">
-\[\hat y = \theta_0 + \theta_1\cdot x_1 + \cdots + \theta_{n}\cdot x_{n}\]</div>
+\[\hat y = \theta_0 + x_1 \cdot \theta_1 + \cdots + x_n \cdot \theta_{n}\]</div>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(\hat y\)</span>: 예측값</p></li>
 <li><p><span class="math notranslate nohighlight">\(n\)</span>: 특성 수</p></li>
 <li><p><span class="math notranslate nohighlight">\(x_i\)</span>: 구역의 <span class="math notranslate nohighlight">\(i\)</span> 번째 특성값</p></li>
 <li><p><span class="math notranslate nohighlight">\(\theta_0\)</span>: 편향</p></li>
-<li><p><span class="math notranslate nohighlight">\(\theta_j\)</span>: <span class="math notranslate nohighlight">\(j\)</span> 번째 특성에 대한 (가중치) 파라미터(단, <span class="math notranslate nohighlight">\(1 \le j \le n\)</span>)</p></li>
+<li><p><span class="math notranslate nohighlight">\(\theta_i\)</span>: <span class="math notranslate nohighlight">\(i\)</span> (<span class="math notranslate nohighlight">\(1 \le i \le n\)</span>) 번째 특성에 대한 (가중치) 파라미터</p></li>
 </ul>
 <p>일반적으로 선형 회귀 모델을 구현하려면
 한 개의 편향과 <span class="math notranslate nohighlight">\(n\)</span> 개의 가중치, 즉 총 <span class="math notranslate nohighlight">\((1+n)\)</span> 개의 파라미터를 결정해야 한다.</p>
-<p><strong>벡터 표기법</strong></p>
-<p>예측값을 벡터의 <strong>내적</strong><font size="2">inner product</font>으로 표현할 수 있다.</p>
-<div class="math notranslate nohighlight">
-\[
-\hat y
-= h_\theta (\mathbf{x})
-= \mathbf{\theta} \cdot \mathbf{x}
-\]</div>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(h_\theta(\cdot)\)</span>: 예측 함수, 즉 모델의 <code class="docutils literal notranslate"><span class="pre">predict()</span></code> 메서드.</p></li>
-<li><p><span class="math notranslate nohighlight">\(\mathbf{x} = (1, x_1, \dots, x_n)\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(\mathbf{\theta} = (\theta_0, \theta_1, \dots, \theta_n)\)</span></p></li>
-</ul>
 <p><strong>2D 어레이 표기법</strong></p>
-<p>머신러닝에서는 훈련 샘플을 나타내는 입력 벡터와 파라미터 벡터를 일반적으로 아래 모양의 행렬로 나타낸다.</p>
+<p>머신러닝에서는 훈련 샘플은 1차원 어레이로, 파라미터는 2차원 어레이로 표현하며,
+예측값은 다음과 같이 (1, 1+n) 모양의 행렬과 (1+n, 1) 모양의 행렬의 곱으로 표기된다.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\mathbf{x}=
-\begin{bmatrix}
-1 \\
-x_1 \\
-\vdots \\
-x_n
-\end{bmatrix},
-\qquad
-\mathbf{\theta}=
+\hat y
+= \theta_0 + x_1 \cdot \theta_1 + \cdots + x_n \cdot \theta_{n}
+= [1, x_1, \dots, x_n]\, 
 \begin{bmatrix}
 \theta_0\\
 \theta_1 \\
@@ -787,14 +754,6 @@ x_n
 \theta_n
 \end{bmatrix}
 \end{split}\]</div>
-<p>따라서 예측값은 다음과 같이 행렬 연산으로 표기된다.
-단, <span class="math notranslate nohighlight">\(A^T\)</span> 는 행렬 <span class="math notranslate nohighlight">\(A\)</span>의 전치행렬을 가리킨다.</p>
-<div class="math notranslate nohighlight">
-\[
-\hat y
-= h_\theta (\mathbf{x})
-= \mathbf{\theta}^{T} \mathbf{x}
-\]</div>
 <p><strong>선형 회귀 모델의 행렬 연산 표기법</strong></p>
 <p><span class="math notranslate nohighlight">\(\mathbf{X}\)</span>가 전체 입력 데이터셋, 즉 전체 훈련셋을 가리키는 (m, 1+n) 모양의 2D 어레이, 즉 행렬이라 하자.</p>
 <ul class="simple">
@@ -802,14 +761,14 @@ x_n
 <li><p><span class="math notranslate nohighlight">\(n\)</span>: 특성 수</p></li>
 </ul>
 <p>그러면 <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> 는 다음과 같이 표현된다.
-단, <span class="math notranslate nohighlight">\(\mathbf{x}_j^{(i)}\)</span> 는 <span class="math notranslate nohighlight">\(i\)</span>-번째 입력 샘플의 <span class="math notranslate nohighlight">\(j\)</span>-번째 특성값을 가리킨다.</p>
+단, <span class="math notranslate nohighlight">\(x_j^{(i)}\)</span> 는 <span class="math notranslate nohighlight">\(i\)</span>-번째 입력 샘플의 <span class="math notranslate nohighlight">\(j\)</span>-번째 특성값을 가리킨다.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \mathbf{X}= 
 \begin{bmatrix} 
-[1, \mathbf{x}_1^{(1)}, \dots, \mathbf{x}_n^{(1)}] \\
+[1, x_1^{(1)}, \dots, x_n^{(1)}] \\
 \vdots \\
-[1, \mathbf{x}_1^{(m)}, \dots, \mathbf{x}_n^{(m)}] \\
+[1, x_1^{(m)}, \dots, x_n^{(m)}] \\
 \end{bmatrix}
 \end{split}\]</div>
 <p>결론적으로 모든 입력값에 대한 예측값을 하나의 행렬식으로 표현하면 다음과 같다.</p>
@@ -822,9 +781,9 @@ x_n
 \end{bmatrix}
 = 
 \begin{bmatrix} 
-[1, \mathbf{x}_1^{(1)}, \dots, \mathbf{x}_n^{(1)}] \\
+[1, x_1^{(1)}, \dots, x_n^{(1)}] \\
 \vdots \\
-[1, \mathbf{x}_1^{(m)}, \dots, \mathbf{x}_n^{(m)}] \\
+[1, x_1^{(m)}, \dots, x_n^{(m)}] \\
 \end{bmatrix}
 \,\, 
 \begin{bmatrix}
@@ -867,11 +826,13 @@ x_n
 성능을 평가한다.</p>
 <div class="math notranslate nohighlight">
 \[
-\mathrm{MSE}(\mathbf{\theta}) := \mathrm{MSE}(\mathbf X, h_{\mathbf{\theta}}) = 
+\mathrm{MSE}(\mathbf{\theta}) = 
 \frac 1 m \sum_{i=1}^{m} \big(\mathbf{\theta}^{T}\, \mathbf{x}^{(i)} - y^{(i)}\big)^2
 \]</div>
-<p>최종 목표는 훈련셋이 주어졌을 때 <span class="math notranslate nohighlight">\(\mathrm{MSE}(\mathbf{\theta})\)</span>가 최소가 되도록 하는
-<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>를 찾는 것이다.</p>
+<p>여기서 <span class="math notranslate nohighlight">\(\mathbf{x}^{(i)} = [1, x_1^{(i)}, \dots, x_n^{(i)}]\)</span> 이고, <span class="math notranslate nohighlight">\(\theta^T\)</span>는 <span class="math notranslate nohighlight">\(\theta\)</span>의 전치 행렬을 가리킨다.</p>
+<p><strong>최종 목표</strong></p>
+<p>훈련셋이 주어졌을 때 <span class="math notranslate nohighlight">\(\mathrm{MSE}(\mathbf{\theta})\)</span>가 최소가 되도록 하는
+<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>를 찾아야 하며 다음 두 가지 방식으로 해결한다.</p>
 <ul class="simple">
 <li><p>방식 1: 정규방정식 또는 특이값 분해(SVD) 활용</p>
 <ul>
@@ -1253,7 +1214,7 @@ x_n
 </section>
 </div></section>
 <section id="id11">
-<h2><span class="section-number">4.5. </span>규제 사용 선형 모델<a class="headerlink" href="#id11" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">4.5. </span>모델 규제<a class="headerlink" href="#id11" title="Permalink to this headline">#</a></h2>
 <p>훈련 중에 과소 적합이 발생하면 보다 복잡한 모델을 선택해야 한다.
 반면에 과대 적합이 발생할 경우 먼저 모델에 규제를 가해 과대 적합을 방지하거나
 아니면 최소한 과대 적합이 최대한 늦게 발생하도록 유도해야 한다.</p>
