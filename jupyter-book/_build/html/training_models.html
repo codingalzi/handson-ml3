@@ -700,9 +700,9 @@ title="Print to PDF"
 일반적으로 절편은 <strong>편향</strong><font size="2">bias</font>,
 기울기는 <strong>가중치</strong><font size="2">weight</font> 라 부른다.
 따라서 1인당 GDP와 삶의 만족도 사이의 관계를 선형 회귀 모델로 구현하려면
-적절한 하나의 편향과 하나의 가중치, 즉 총 2개의 파라미터를 찾아야 한다.</p>
+적절한 하나의 편향과 하나의 가중치, 총 2개의 파라미터를 찾아야 한다.</p>
 <p><strong>선형 회귀 예제: 캘리포니아 주택 가격 예측</strong></p>
-<p>반면에 <a class="reference internal" href="end2end_ml_project.html#ch-end2end"><span class="std std-numref">2장</span></a>의 캘리포니아 주택 가격 예측 선형 회귀 모델은
+<p><a class="reference internal" href="end2end_ml_project.html#ch-end2end"><span class="std std-numref">2장</span></a>에서 다룬 캘리포니아 주택 가격 예측 선형 회귀 모델은
 24개의 입력 특성을 사용하는 아래 함수로 환원된다.</p>
 <div class="math notranslate nohighlight">
 \[\hat y = \theta_0 + x_1 \cdot \theta_1 + \cdots + x_{24} \cdot \theta_{24}\]</div>
@@ -710,7 +710,7 @@ title="Print to PDF"
 <li><p><span class="math notranslate nohighlight">\(\hat y\)</span>: 예측값</p></li>
 <li><p><span class="math notranslate nohighlight">\(x_i\)</span>: 구역의 <span class="math notranslate nohighlight">\(i\)</span> 번째 특성값(위도, 경도, 중간소득, 가구당 인원 등)</p></li>
 <li><p><span class="math notranslate nohighlight">\(\theta_0\)</span>: 편향</p></li>
-<li><p><span class="math notranslate nohighlight">\(\theta_i\)</span>: <span class="math notranslate nohighlight">\(i\)</span> (<span class="math notranslate nohighlight">\(1 \le i \le 24\)</span>)번째 특성에 대한 (가중치) 파라미터</p></li>
+<li><p><span class="math notranslate nohighlight">\(\theta_i\)</span>: <span class="math notranslate nohighlight">\(i\)</span> (<span class="math notranslate nohighlight">\(1 \le i \le 24\)</span>)번째 특성에 대한 가중치</p></li>
 </ul>
 <p>따라서 캘리포니아의 구역별 중간 주택 가격을 예측하는 선형 회귀 모델을 구하려면
 적절한 하나의 편향과 24개의 가중치,
@@ -724,11 +724,14 @@ title="Print to PDF"
 <li><p><span class="math notranslate nohighlight">\(n\)</span>: 특성 수</p></li>
 <li><p><span class="math notranslate nohighlight">\(x_i\)</span>: 구역의 <span class="math notranslate nohighlight">\(i\)</span> 번째 특성값</p></li>
 <li><p><span class="math notranslate nohighlight">\(\theta_0\)</span>: 편향</p></li>
-<li><p><span class="math notranslate nohighlight">\(\theta_i\)</span>: <span class="math notranslate nohighlight">\(i\)</span> (<span class="math notranslate nohighlight">\(1 \le i \le n\)</span>) 번째 특성에 대한 (가중치) 파라미터</p></li>
+<li><p><span class="math notranslate nohighlight">\(\theta_i\)</span>: <span class="math notranslate nohighlight">\(i\)</span> (<span class="math notranslate nohighlight">\(1 \le i \le n\)</span>) 번째 특성에 대한 가중치</p></li>
 </ul>
-<p>일반적으로 선형 회귀 모델을 구현하려면
-한 개의 편향과 <span class="math notranslate nohighlight">\(n\)</span> 개의 가중치, 즉 총 <span class="math notranslate nohighlight">\((1+n)\)</span> 개의 파라미터를 결정해야 한다.</p>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/perceptron.png" width="450"/></div><p><strong>2D 어레이 표기법</strong></p>
+<p>선형 회귀 모델을 구현하려면
+한 개의 편향과 <span class="math notranslate nohighlight">\(n\)</span> 개의 가중치, 즉 총 <span class="math notranslate nohighlight">\((1+n)\)</span> 개의 파라미터를 결정해야 한다.
+선형회귀 모델은 편향과 가중치를 아래 그림과 같이 입력값 각각에 적용하여
+예측값을 계산한다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/perceptron.png" width="450"/></div>
+<br><p><strong>2D 어레이 표기법</strong></p>
 <p>머신러닝에서는 훈련 샘플은 1차원 어레이로, 파라미터는 2차원 어레이로 표현하며,
 예측값은 다음과 같이 (1, 1+n) 모양의 행렬과 (1+n, 1) 모양의 행렬의 곱으로 표기된다.</p>
 <div class="math notranslate nohighlight">
