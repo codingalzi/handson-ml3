@@ -83,6 +83,8 @@
 # 일반적으로 선형 회귀 모델을 구현하려면
 # 한 개의 편향과 $n$ 개의 가중치, 즉 총 $(1+n)$ 개의 파라미터를 결정해야 한다.
 
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/perceptron.png" width="450"/></div>
+
 # **2D 어레이 표기법**
 # 
 # 머신러닝에서는 훈련 샘플은 1차원 어레이로, 파라미터는 2차원 어레이로 표현하며,
@@ -90,7 +92,7 @@
 # 
 # $$
 # \hat y
-# = \theta_0 + x_1 \cdot \theta_1 + \cdots + x_n \cdot \theta_{n}
+# = 1\cdot \theta_0 + x_1 \cdot \theta_1 + \cdots + x_n \cdot \theta_{n}
 # = [1, x_1, \dots, x_n]\, 
 # \begin{bmatrix}
 # \theta_0\\
