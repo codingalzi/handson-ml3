@@ -26,7 +26,8 @@
 # **슬라이드**
 # 
 # 본문 내용을 요약한
-# [슬라이드](https://github.com/codingalzi/handson-ml3/raw/master/slides/slides-training_models.pdf)
+# [슬라이드 1부](https://github.com/codingalzi/handson-ml3/raw/master/slides/slides-training_models-1.pdf),
+# [슬라이드 2부](https://github.com/codingalzi/handson-ml3/raw/master/slides/slides-training_models-2.pdf)
 # 다운로드할 수 있다.
 
 # ## 선형 회귀
@@ -68,7 +69,7 @@
 # 적절한 하나의 편향과 24개의 가중치,
 # 즉 총 25개의 파라미터를 결정해야 한다.
 
-# **선형 회귀 함수**
+# **선형 회귀 모델 함수**
 
 # 위 두 개의 예제에서 설명한 선형 회귀 모델을 일반화하면 다음과 같다.
 # 
@@ -311,7 +312,7 @@
 # 이유는 해당 지점에서 그레이디언트 벡터를 계산하면 정상으로 가는 가장 빠른 길을 안내할 것이기에
 # 그 반대방향으로 움직여야 하기 때문이다.
 
-# :::{admonition} 벡터의 방향과 크기
+# :::{admonition} 그레이디언트 벡터의 방향과 크기
 # :class: info
 # 
 # 모든 벡터는 방향과 크기를 갖는다. 
@@ -344,7 +345,7 @@
 #     </tr>
 # </table>
 # 
-# **그림 출처:** [An overview of gradient descent optimization algorithms](https://ruder.io/optimizing-gradient-descent/index.html)
+# <p><div style="text-align: center">&lt;그림 출처: <a href="https://ruder.io/optimizing-gradient-descent/index.html">An overview of gradient descent optimization algorithms</a>&gt;</div></p>
 # :::
 
 # **학습률의 중요성**
