@@ -730,10 +730,9 @@ title="Print to PDF"
 한 개의 편향과 <span class="math notranslate nohighlight">\(n\)</span> 개의 가중치, 즉 총 <span class="math notranslate nohighlight">\((1+n)\)</span> 개의 파라미터를 결정해야 한다.
 선형회귀 모델은 편향과 가중치를 아래 그림과 같이 입력값 각각에 적용하여
 예측값을 계산한다.</p>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/perceptron.png" width="450"/></div>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/perceptron.png" width="400"/></div>
 <br><p><strong>2D 어레이 표기법</strong></p>
-<p>머신러닝에서는 훈련 샘플은 1차원 어레이로, 파라미터는 2차원 어레이로 표현하며,
-예측값은 다음과 같이 (1, 1+n) 모양의 행렬과 (1+n, 1) 모양의 행렬의 곱으로 표기된다.</p>
+<p>위 그림을 보통 다음과 같이 (1, 1+n) 모양의 행렬과 (1+n, 1) 모양의 행렬의 곱으로 표기한다.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \hat y
@@ -747,13 +746,8 @@ title="Print to PDF"
 \end{bmatrix}
 \end{split}\]</div>
 <p><strong>선형 회귀 모델의 행렬 연산 표기법</strong></p>
-<p><span class="math notranslate nohighlight">\(\mathbf{X}\)</span>가 전체 입력 데이터셋, 즉 전체 훈련셋을 가리키는 (m, 1+n) 모양의 2D 어레이, 즉 행렬이라 하자.</p>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(m\)</span>: 훈련셋의 크기.</p></li>
-<li><p><span class="math notranslate nohighlight">\(n\)</span>: 특성 수</p></li>
-</ul>
-<p>그러면 <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> 는 다음과 같이 표현된다.
-단, <span class="math notranslate nohighlight">\(x_j^{(i)}\)</span> 는 <span class="math notranslate nohighlight">\(i\)</span>-번째 입력 샘플의 <span class="math notranslate nohighlight">\(j\)</span>-번째 특성값을 가리킨다.</p>
+<p><span class="math notranslate nohighlight">\(m\)</span>이 훈련셋의 크기이고 <span class="math notranslate nohighlight">\(n\)</span>이 샘플에 포함된 특성의 개수라 하면
+전체 훈련셋 <span class="math notranslate nohighlight">\(\mathbf{X}\)</span>은 아래와 같이 (m, 1+n) 모양의 2D 어레이로 표기된다.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \mathbf{X}= 
@@ -763,9 +757,16 @@ title="Print to PDF"
 [1, x_1^{(m)}, \dots, x_n^{(m)}] \\
 \end{bmatrix}
 \end{split}\]</div>
-<p>결론적으로 모든 입력값에 대한 예측값을 하나의 행렬식으로 표현하면 다음과 같다.</p>
+<p>여기서 <span class="math notranslate nohighlight">\(x_j^{(i)}\)</span> 는 <span class="math notranslate nohighlight">\(i\)</span>-번째 입력 샘플의 <span class="math notranslate nohighlight">\(j\)</span>-번째 특성값을 가리킨다.
+<span class="math notranslate nohighlight">\(i\)</span>-번째 입력 샘플은 그러면 아래 1차원 어레이가 된다.</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{x}^{(i)} = [1, x_1^{(i)}, \dots, x_n^{(i)}]
+\]</div>
+<p>이제 모든 입력값에 대한 예측값을 계산하는 과정을 하나의 아래 행렬식으로 표현할 수 있다.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
+\hat{\mathbf y} = 
 \begin{bmatrix}
 \hat y_1 \\
 \vdots \\
@@ -799,7 +800,7 @@ title="Print to PDF"
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td class="text-align:center"><p>예측값</p></td>
+<tr class="row-even"><td class="text-align:center"><p>모든 예측값</p></td>
 <td class="text-align:center"><p><span class="math notranslate nohighlight">\(\hat{\mathbf y}\)</span></p></td>
 <td class="text-align:center"><p><span class="math notranslate nohighlight">\((m, 1)\)</span></p></td>
 </tr>
@@ -807,35 +808,34 @@ title="Print to PDF"
 <td class="text-align:center"><p><span class="math notranslate nohighlight">\(\mathbf X\)</span></p></td>
 <td class="text-align:center"><p><span class="math notranslate nohighlight">\((m, 1+n)\)</span></p></td>
 </tr>
-<tr class="row-even"><td class="text-align:center"><p>파라미터</p></td>
+<tr class="row-even"><td class="text-align:center"><p>모델 파라미터</p></td>
 <td class="text-align:center"><p><span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span></p></td>
 <td class="text-align:center"><p><span class="math notranslate nohighlight">\((1+n, 1)\)</span></p></td>
 </tr>
 </tbody>
 </table>
 <p><strong>비용함수: 평균 제곱 오차(MSE)</strong></p>
-<p>회귀 모델은 훈련 중에 <strong>평균 제곱 오차</strong><font size="2">mean squared error</font>(MSE)를 이용하여
-성능을 평가한다.</p>
+<p>회귀 모델의 성능은 <strong>평균 제곱 오차</strong><font size="2">mean squared error</font>(MSE)로 평가한다.</p>
 <div class="math notranslate nohighlight">
 \[
 \mathrm{MSE}(\mathbf{\theta}) = 
 \frac 1 m \sum_{i=1}^{m} \big(\mathbf{\theta}^{T}\, \mathbf{x}^{(i)} - y^{(i)}\big)^2
 \]</div>
-<p>여기서 <span class="math notranslate nohighlight">\(\mathbf{x}^{(i)}\)</span>는 <span class="math notranslate nohighlight">\(i\)</span>번 인덱스 샘플에 1을 0번 항목으로 추가한 1차원 어레이 <span class="math notranslate nohighlight">\([1, x_1^{(i)}, \dots, x_n^{(i)}]\)</span> 를 가리킨다. 반면에 <span class="math notranslate nohighlight">\(\theta^T\)</span>는 <span class="math notranslate nohighlight">\(\theta\)</span>의 전치 행렬을 가리킨다.</p>
+<p>여기서 <span class="math notranslate nohighlight">\(\theta^T\)</span>는 <span class="math notranslate nohighlight">\(\theta\)</span>의 전치 행렬을 가리킨다.</p>
 <p><strong>최종 목표</strong></p>
 <p>훈련셋이 주어졌을 때 <span class="math notranslate nohighlight">\(\mathrm{MSE}(\mathbf{\theta})\)</span>가 최소가 되도록 하는
-<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>를 찾아야 하며 다음 두 가지 방식으로 해결한다.</p>
+<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>를 찾아야 하며 보통 다음 두 가지 방식 중 하나를 이용하여 해결한다.</p>
 <ul class="simple">
 <li><p>방식 1: 정규방정식 또는 특이값 분해(SVD) 활용</p>
 <ul>
 <li><p>드물지만 수학적으로 비용함수를 최소화하는 <span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span> 값을 직접 계산할 수 있는 경우 활용.</p></li>
 <li><p>계산복잡도가 <span class="math notranslate nohighlight">\(O(n^2)\)</span> 이상인 행렬 연산을 수행해야 하기에
-특성의 개수 <span class="math notranslate nohighlight">\(n\)</span>이 매우 큰 경우 메모리 관리 및 시간 복잡도 문제로 인해 매우 비효율적임.</p></li>
+특성의 개수 <span class="math notranslate nohighlight">\(n\)</span>이 매우 큰 경우 컴퓨터로 처리 불가</p></li>
 </ul>
 </li>
 <li><p>방식 2: 경사하강법</p>
 <ul>
-<li><p>특성이 매우 많거나 훈련 샘플이 너무 많아 메모리에 한꺼번에 담을 수 없을 때 적합</p></li>
+<li><p>특성 또는 훈련 샘플이 아주 많은 경우 적용</p></li>
 <li><p>선형 회귀 모델 훈련에 일반적으로 적용되는 기법</p></li>
 </ul>
 </li>
@@ -857,17 +857,19 @@ title="Print to PDF"
 <p>행렬 연산과 역행렬 계산은 계산 복잡도가 <span class="math notranslate nohighlight">\(O(n^{2.4})\)</span> 이상이며
 항상 역행렬 계산이 가능한 것도 아니다.
 반면에, 특잇값 분해를 활용하여 얻어지는
-무어-펜로즈(Moore-Penrose) 유사 역행렬 <span class="math notranslate nohighlight">\(\mathbf{X}^+\)</span>은 항상 존재하며
-계산 복잡도가 <span class="math notranslate nohighlight">\(O(n^2)\)</span> 로 보다 빠른 계산을 지원한다.
-또한 다음이 성립한다.</p>
+무어-펜로즈(Moore-Penrose) 유사 역행렬 <span class="math notranslate nohighlight">\(\mathbf{X}^+\)</span>은 항상 존재하며,
+다음이 성립한다.</p>
 <div class="math notranslate nohighlight">
 \[
 \hat{\mathbf{\theta}} = 
 \mathbf{X}^+\, \mathbf{y}
 \]</div>
-<p><strong><code class="docutils literal notranslate"><span class="pre">LinearRegression</span></code> 모델</strong></p>
+<p>무어-펜로즈 알고리즘의 계산 복잡도가 <span class="math notranslate nohighlight">\(O(n^2)\)</span> 정도로 정규 방정식 알고리즘 보다 좀 더 빠르다.</p>
+<div class="info admonition">
+<p class="admonition-title"><code class="docutils literal notranslate"><span class="pre">LinearRegression</span></code> 모델</p>
 <p>사이킷런의 <code class="docutils literal notranslate"><span class="pre">LinearRegression</span></code> 모델은 특잇값 분해와 무어-펜로즈 유사 역행렬을 이용하여
 최적의 <span class="math notranslate nohighlight">\(\hat \theta\)</span> 를 계산한다.</p>
+</div>
 </section>
 </section>
 <section id="sec-gradient-descent">
