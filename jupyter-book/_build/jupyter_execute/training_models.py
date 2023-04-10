@@ -174,10 +174,8 @@
 
 # $$
 # \mathrm{MSE}(\mathbf{\theta}) = 
-# \frac 1 m \sum_{i=1}^{m} \big(\mathbf{\theta}^{T}\, \mathbf{x}^{(i)} - y^{(i)}\big)^2
+# \frac 1 m \sum_{i=1}^{m} \big(\mathbf{x}^{(i)}\, \mathbf{\theta} - y^{(i)}\big)^2
 # $$
-# 
-# 여기서 $\theta^T$는 $\theta$의 전치 행렬을 가리킨다.
 
 # **최종 목표**
 
