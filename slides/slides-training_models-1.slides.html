@@ -71,6 +71,25 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .highlight .ss { color: var(--jp-mirror-editor-string-color) } /* Literal.String.Symbol */
 .highlight .il { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Integer.Long */
   </style>
+<style type="text/css">
+    
+
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            /*preferredFont: "TeX",*/
+            /*availableFonts: ["TeX", "STIX"],*/
+            styles: {
+                scale: 100,
+                ".MathJax_Display": {
+                    "font-size": "100%",
+                }
+            }
+        }
+    });
+</script>
+    
+  </style>
 
 
 
@@ -14999,22 +15018,8 @@ $$
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 $$
 \mathrm{MSE}(\theta) =
-\frac 1 m \sum_{i=1}^{m} \big(\theta^{T}\, \mathbf{x^{(i)}} - y^{(i)}\big)^2
+\frac 1 m \sum_{i=1}^{m} \big(\mathbf{x}^{(i)}\, \mathbf{\theta} - y^{(i)}\big)^2
 $$
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<ul>
-<li>$\mathbf{x}^{(i)} = [1, x_1^{(i)}, \dots, x_n^{(i)}]$ ($i$ 번 인덱스 샘플)</li>
-</ul>
-
 </div>
 </div>
 </div>
@@ -15479,13 +15484,13 @@ $$
     <tr>
         <td style="padding:1px">
             <figure>
-                <img src="https://ruder.io/content/images/2016/09/contours_evaluation_optimizers.gif" style="width:80%" title="SGD without momentum">
+                <img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/gd-1.png" style="width:80%" title="SGD without momentum">
                 <figcaption>SGD optimization on loss surface contours</figcaption>
             </figure>
         </td>
         <td style="padding:1px">
             <figure>
-                <img src="https://ruder.io/content/images/2016/09/saddle_point_evaluation_optimizers.gif" style="width:80%" title="SGD without momentum">
+                <img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/gd-2.png" style="width:80%" title="SGD without momentum">
                 <figcaption>SGD optimization on saddle point</figcaption>
             </figure>
         </td>        
@@ -16176,24 +16181,9 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
-<li>주어진 특성들의 거듭제곱과 특성들 사이의 곱셈을 실행하여 특성을 추가하는 기능 제공</li>
-</ul>
-
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<ul>
-<li><p><code>degree=d</code>: 몇 차 다항식을 활용할지 지정하는 하이퍼파라미터</p>
-<ul>
-<li>이전 예제: $d=2$으로 지정하여  $x_1^2$에 대한 특성 변수가 추가됨.</li>
-</ul>
+<li><p>주어진 특성들의 거듭제곱과 특성들 사이의 곱셈을 실행하여 특성을 추가하는 기능 제공</p>
+<div class="highlight"><pre><span></span><span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
+</pre></div>
 </li>
 </ul>
 
@@ -16208,9 +16198,23 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
-<li>예제: $n=2, d=3$인 경우에 $(x_1+x_2)^2$과 $(x_1+x_2)^3$의 항목에 해당하는 7개 특성 추가</li>
+<li><code>degree=d</code>: 몇 차 다항식을 활용할지 지정하는 하이퍼파라미터</li>
 </ul>
-$$x_1^2,\,\, x_1 x_2,\,\, x_2^2,\,\, x_1^3,\,\, x_1^2 x_2,\,\, x_1 x_2^2,\,\, x_2^3$$
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ul>
+<li>예제: $n=3, d=2$인 경우에 $(x_1+x_2+x_3)^2$의 항목에 해당하는 6 개 특성 추가</li>
+</ul>
+$$x_1^2,\,\, x_2^2,\,\, x_3^2,\,\, x_1 x_2,\,\, x_2 x_3,\,\, x_1 x_3$$
 </div>
 </div>
 </div>
