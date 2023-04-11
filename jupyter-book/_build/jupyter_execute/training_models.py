@@ -228,55 +228,21 @@
 # (sec:gradient-descent)=
 # ## 경사하강법
 
-# 머신러닝의 모든 모델은 훈련 중에 모델이 학습해야 하는 파라미터를 조금씩, 그리고 반복적으로 조정한다. 
-# 이때 비용 함수의 크기를 줄이는 방향으로 조정한다.
-# 이렇게 모델의 파라미터를 조정하는 방식이 **경사하강법**<font size="2">gradient descent</font>이다.
+# 정규 방정식과 무어-펜로즈 유사 역행렬을 이용하는 방식은 훈련셋이 크거나 특성 수가 많은 경우 계산이 
+# 너무 올래 걸려서 실전에서 사용하지 못한다.
+# 따라서 모델의 파라미터를 조금씩 점진적으로 조정하는 **경사하강법**<font size="2">gradient descent</font>을 
+# 일반적으로 사용한다.
 # 
 # 경사하강법을 이해하려면 먼저 아래 개념들을 충분히 숙지해야 한다.
+
+# **하이퍼파라미터<font size="2">hyperparameter</font>**
+# 
+# 훈련시킬 모델을 지정할 때 사용되는 설정 옵션을 가리킨다.
+# 학습률, 에포크, 허용 오차, 배치 크기 등이 있다.
 
 # **파라미터**<font size="2">parameter</font>
 # 
 # 선형 회귀 모델에 사용되는 편향과 가중치 파라미터처럼 모델 훈련중에 학습되는 파라미터를 가리킨다.
-
-# **비용 함수**<font size="2">cost function</font>
-# 
-# 평균 제곱 오차(MSE)처럼 모델이 얼마나 나쁜가를 측정하는 함수다.
-
-# **전역 최소값**<font size="2">global minimum</font>
-# 
-# 비용 함수의 전역 최소값이다. 
-
-# 비용 함수의 **그레이디언트 벡터**<font size='2'>gradient vector</font>
-# 
-# MSE를 비용 함수로 사용하는 경우 $\textrm{MSE}(\mathbf{\theta})$ 함수의 $\mathbf{\mathbf{\theta}}$ 에 
-# 대한 그레이디언트 벡터를 사용한다.
-# 
-# $$
-# \nabla_\mathbf{\theta} \textrm{MSE}(\mathbf{\theta}) =
-# \begin{bmatrix}
-#     \frac{\partial}{\partial \mathbf{\theta}_0} \textrm{MSE}(\mathbf{\theta}) \\
-#     \frac{\partial}{\partial \mathbf{\theta}_1} \textrm{MSE}(\mathbf{\theta}) \\
-#     \vdots \\
-#     \frac{\partial}{\partial \mathbf{\theta}_n} \textrm{MSE}(\mathbf{\theta})
-# \end{bmatrix}
-# $$
-
-# **최적 학습 모델**
-# 
-# 비용 함수를 최소화하는파라미터를 사용하는 모델이며,
-# 최종적으로 훈련을 통해 얻고자 하는 훈련된 모델이다.
-
-# **학습률($\eta$)**
-# 
-# 훈련 과정에서 비용 함수의 파라미터($\mathbf{\theta}$)를 얼만큼씩 조정할 것인지를 정하는 비율이다.
-
-# **에포크**<font size="2">epoch</font>
-# 
-# 훈련셋에 포함된 모든 데이터를 대상으로 예측값을 한 번 계산하는 과정이다.
-
-# **허용 오차**<font size="2">tolerance</font>
-# 
-# 비용 함수의 값이 허용 오차보다 작아지면 훈련을 종료시킨다.
 
 # **배치 크기**<font size="2">batch size</font>
 # 
@@ -292,36 +258,65 @@
 # 
 # 예를 들어, 훈련셋의 크기가 1,000이고 배치 크기가 10이면, 에포크 당 100번의 스텝이 실행된다.
 
-# **하이퍼파라미터<font size="2">hyperparameter</font>**
+# **비용 함수**<font size="2">cost function</font>
 # 
-# 학습률, 에포크, 허용 오차, 배치 크기 처럼 훈련 시킬 모델을 지정할 때 사용되는 옵션을 가리킨다.
+# 평균 제곱 오차(MSE)처럼 모델이 얼마나 나쁜가를 측정하는 함수다.
+# 회귀 모델의 비용 함수로 사용되는 MSE는 다음과 같다.
+# 
+# $$
+# \mathrm{MSE}(\mathbf{\theta}) = 
+# \frac 1 {m_b} \sum_{i=1}^{m_b} \big(\mathbf{x}^{(i)}\, \mathbf{\theta} - y^{(i)}\big)^2
+# $$
+# 
+# 단, $m_b$는 배치 크기를 가리킨다.
+
+# **전역 최소값**<font size="2">global minimum</font>
+# 
+# 비용 함수의 전역 최소값이다. 
+
+# **최적 학습 모델**
+# 
+# 비용 함수를 최소화하는파라미터를 사용하는 모델이며,
+# 최종적으로 훈련을 통해 얻고자 하는 훈련된 모델이다.
+
+# **비용 함수의 그레이디언트 벡터**<font size='2'>gradient vector</font>
+# 
+# 예를 들어 $\textrm{MSE}$를 비용 함수로 사용하는 경우 $\textrm{MSE}(\mathbf{\theta})$ 함수의 $\mathbf{\mathbf{\theta}}$ 에 
+# 대한 그레이디언트 벡터는 다음과 같다.
+# 
+# $$
+# \nabla_\mathbf{\theta} \textrm{MSE}(\mathbf{\theta}) =
+# \begin{bmatrix}
+#     \frac{\partial}{\partial \mathbf{\theta}_0} \textrm{MSE}(\mathbf{\theta}) \\
+#     \frac{\partial}{\partial \mathbf{\theta}_1} \textrm{MSE}(\mathbf{\theta}) \\
+#     \vdots \\
+#     \frac{\partial}{\partial \mathbf{\theta}_n} \textrm{MSE}(\mathbf{\theta})
+# \end{bmatrix}
+# $$
+
+# **학습률($\eta$)**
+# 
+# 훈련 과정에서 비용 함수의 파라미터($\mathbf{\theta}$)를 얼만큼씩 조정할 것인지를 정하는 비율이다.
+
+# **허용 오차**<font size="2">tolerance</font>
+# 
+# 비용 함수의 값이 허용 오차보다 작아지면 훈련을 종료시킨다.
+
+# **에포크**<font size="2">epoch</font>
+# 
+# 훈련셋에 포함된 모든 데이터를 대상으로 예측값을 한 번 계산하는 과정이다.
+# 이 과정동안 스텝 크기만큼 파라미터의 업데이트가 이루어진다.
 
 # ### 선형 회귀 모델과 경사하강법
 
-# 선형회귀 모델 파라미터를 조정하는 과정을 이용하여 경사하강법의 기본 아이디어를 설명한다.
+# MSE를 비용 함수로 사용하는 선형회귀 모델의 파라미터를 조정하는 과정을 이용하여 경사하강법의 기본 아이디어를 설명한다.
 # 
-# 먼저 $\mathrm{MSE}(\mathbf{\theta})$ 는 $\mathbf{\theta}$ 에 대한 2차 함수임에 주의한다.
-# 여기서는 설명을 단순화하기 위해 $\mathbf{\theta}$ 가 하나의 파라미터로 구성되었다고 가정한다.
-# 따라서 $\mathrm{MSE}(\mathbf{\theta})$의 그래프는 $\theta$에 대한 2차 함수의 그래프인 포물선이 된다.
-# 
-# $$
-# \mathrm{MSE}(\mathbf{\theta}) =
-# \frac 1 m \sum_{i=1}^{m} \big(\mathbf{\theta}^{T}\, \mathbf{x}^{(i)} - y^{(i)}\big)^2
-# $$
-# 
-# 위 2차 함수의 식에서 $m$, $\mathbf{x}^{(i)}$, $y^{(i)}$ 등은 모두 이미 주어진 상수임에 주의한다.
-# 이제 $\mathrm{MSE}(\mathbf{\theta})$의 그레이디언트 벡터는 다음과 같이 계산된다.
-# 
-# $$
-# \nabla_\theta \textrm{MSE}(\theta) = \frac{2}{m}\, \mathbf{X}^T\, (\mathbf{X}\, \theta^T - \mathbf y)
-# $$
-
-# 경사하강법은 다음 과정으로 이루어진다. 
+# 선형 회귀 모델의 경사하강법은 다음 과정으로 이루어진다. 
 # 
 # 1. $\mathbf{\theta}$를 임의의 값으로 지정한 후 훈련을 시작한다.
 # 
 # 1. $\textrm{MSE}(\theta)$ 가 허용 오차보다 작아질 때까지 아래 과정을 반복한다.
-#     * 배치 크기 $m$ 만큼의 훈련 샘플을 이용해서 예측값 생성
+#     * 배치 크기 $m_b$ 만큼의 훈련 샘플을 이용해서 예측값 생성
 #     * $\mathrm{MSE}(\mathbf{\theta})$ 계산.
 #     * $\mathbf{\theta}$를 아래 점화식을 이용하여 업데이트
 # 
@@ -444,7 +439,7 @@
 
 # 배치 크기가 1인 경상하강법을 가리킨다.
 # 즉, 하나의 훈련 셈플에 대한 예측값을 계산한 다음에 바로
-# 비용함수의 그레이디언트를 계산하여 파라미터를 조정한다.
+# 비용 함수의 그레이디언트를 계산하여 파라미터를 조정한다.
 # 
 # 스텝에서 사용되는 샘플은 무작위로 선택된다.
 # 따라서 경우에 따라 하나의 에포크에서 여러 번 선택되거나 전혀 선택되지 않는 샘플이
