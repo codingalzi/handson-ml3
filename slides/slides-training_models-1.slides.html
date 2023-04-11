@@ -14991,7 +14991,7 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="%EB%B9%84%EC%9A%A9%ED%95%A8%EC%88%98:-%ED%8F%89%EA%B7%A0-%EC%A0%9C%EA%B3%B1-%EC%98%A4%EC%B0%A8(MSE)">&#48708;&#50857;&#54632;&#49688;: &#54217;&#44512; &#51228;&#44273; &#50724;&#52264;(MSE)<a class="anchor-link" href="#%EB%B9%84%EC%9A%A9%ED%95%A8%EC%88%98:-%ED%8F%89%EA%B7%A0-%EC%A0%9C%EA%B3%B1-%EC%98%A4%EC%B0%A8(MSE)">&#182;</a></h3>
+<h3 id="%EB%B9%84%EC%9A%A9-%ED%95%A8%EC%88%98:-%ED%8F%89%EA%B7%A0-%EC%A0%9C%EA%B3%B1-%EC%98%A4%EC%B0%A8(MSE)">&#48708;&#50857; &#54632;&#49688;: &#54217;&#44512; &#51228;&#44273; &#50724;&#52264;(MSE)<a class="anchor-link" href="#%EB%B9%84%EC%9A%A9-%ED%95%A8%EC%88%98:-%ED%8F%89%EA%B7%A0-%EC%A0%9C%EA%B3%B1-%EC%98%A4%EC%B0%A8(MSE)">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -15057,7 +15057,7 @@ $$
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
 <li>방식 1: 정규방정식 또는 특이값 분해(SVD) 활용<ul>
-<li>드물지만 수학적으로 비용함수를 최소화하는 $\mathbf{\theta}$ 값을 직접 계산할 수 있는 경우 활용.</li>
+<li>드물지만 수학적으로 비용 함수를 최소화하는 $\mathbf{\theta}$ 값을 직접 계산할 수 있는 경우 활용.</li>
 <li>계산복잡도가 $O(n^2)$ 이상인 행렬 연산을 수행해야 하기에 
   특성의 개수 $n$이 매우 큰 경우 메모리 관리 및 시간 복잡도 문제로 인해 매우 비효율적임.</li>
 </ul>
@@ -15104,7 +15104,7 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
-<li>비용함수를 최소화 하는 $\theta$를 아래 정규 방정식 이용하여 계산 가능</li>
+<li>비용 함수를 최소화 하는 $\theta$를 아래 정규 방정식 이용하여 계산 가능</li>
 </ul>
 
 </div>
@@ -15208,6 +15208,20 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
+<li>훈련셋이 크거나 특성 수가 많은 경우 정규 방정식과 무어-펜로즈 유사 역행렬 실전 활용 어려움.</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ul>
 <li>훈련을 통해 절편과 편향 파라미터를 반복적으로 조금씩 조정</li>
 </ul>
 
@@ -15246,8 +15260,9 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h4 id="%EC%B5%9C%EC%A0%81-%ED%95%99%EC%8A%B5-%EB%AA%A8%EB%8D%B8">&#52572;&#51201; &#54617;&#49845; &#47784;&#45944;<a class="anchor-link" href="#%EC%B5%9C%EC%A0%81-%ED%95%99%EC%8A%B5-%EB%AA%A8%EB%8D%B8">&#182;</a></h4><ul>
-<li>비용함수를 최소화하는 또는 효용함수를 최대화하는 파라미터를 사용하는 모델</li>
+<p><strong>하이퍼파라미터<font size="2">hyperparameter</font></strong></p>
+<ul>
+<li>훈련시킬 모델을 지정할 때 사용되는 옵션: 학습률, 에포크, 허용오차, 배치 크기 등</li>
 </ul>
 
 </div>
@@ -15261,8 +15276,8 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h4 id="%ED%8C%8C%EB%9D%BC%EB%AF%B8%ED%84%B0">&#54028;&#46972;&#48120;&#53552;<a class="anchor-link" href="#%ED%8C%8C%EB%9D%BC%EB%AF%B8%ED%84%B0">&#182;</a></h4><ul>
-<li>예측값을 생성하는 함수로 구현되는 학습 모델에 사용되는 파라미터</li>
-<li>예제: 선형 회귀 모델에 사용되는 편향과 가중치 파라미터 </li>
+<li>모델 훈련 중에 학습되는 파라미터</li>
+<li>예제: 선형 회귀 모델의 편향과 가중치 파라미터 </li>
 </ul>
 $$\theta = [\theta_0,\theta_1, \dots, \theta_n]$$
 </div>
@@ -15275,13 +15290,48 @@ $$\theta = [\theta_0,\theta_1, \dots, \theta_n]$$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h4 id="%EB%B9%84%EC%9A%A9%ED%95%A8%EC%88%98">&#48708;&#50857;&#54632;&#49688;<a class="anchor-link" href="#%EB%B9%84%EC%9A%A9%ED%95%A8%EC%88%98">&#182;</a></h4><ul>
+<p><strong>배치 크기</strong></p>
+<ul>
+<li>파라미터를 업데이트하기 위해 필요한 훈련 샘플의 개수</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p><strong>스텝과 스텝 크기</strong></p>
+<ul>
+<li>스텝<font size='2'>step</font>: 배치 크기 만큼의 샘플에 대해 예측값을 계산한 후에 경사하강법을 적용하여 파라미터를 조정하는 단계</li>
+<li><p>스텝 크기: 하나의 에포크 동안 실행되는 스텝 횟수</p>
+<p>스텝 크기 = (훈련 샘플 수) / (배치 크기)</p>
+</li>
+<li><p>예제: 훈련셋의 크기가 1,000이고 배치 크기가 10이면, 에포크 당 100번의 스텝 실행</p>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h4 id="%EB%B9%84%EC%9A%A9-%ED%95%A8%EC%88%98">&#48708;&#50857; &#54632;&#49688;<a class="anchor-link" href="#%EB%B9%84%EC%9A%A9-%ED%95%A8%EC%88%98">&#182;</a></h4><ul>
 <li>모델이 얼마나 나쁜지를 계산해주는 함수</li>
-<li>예제: 선형 회귀 모델의 평균 제곱 오차(MSE)</li>
+<li>예제: 선형 회귀 모델의 평균 제곱 오차(MSE). 단, $m_b$는 배치 크기.</li>
 </ul>
 $$
 \mathrm{MSE}(\theta) = 
-\frac 1 m \sum_{i=1}^{m} \big(\theta^{T}\, \mathbf{x^{(i)}} - y^{(i)}\big)^2
+\frac 1 {m_b} \sum_{i=1}^{m_b} \big(\mathbf{x}^{(i)}\, \theta - y^{(i)}\big)^2
 $$
 </div>
 </div>
@@ -15294,8 +15344,23 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h4 id="%EC%A0%84%EC%97%AD-%EC%B5%9C%EC%86%9F%EA%B0%92">&#51204;&#50669; &#52572;&#49567;&#44050;<a class="anchor-link" href="#%EC%A0%84%EC%97%AD-%EC%B5%9C%EC%86%9F%EA%B0%92">&#182;</a></h4><ul>
-<li>비용함수가 가질 수 있는 최솟값</li>
+<li>비용 함수가 가질 수 있는 최솟값</li>
 <li>예제: 선형 회귀 모델의 평균 제곱 오차(MSE) 함수가 갖는 최솟값</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h4 id="%EC%B5%9C%EC%A0%81-%ED%95%99%EC%8A%B5-%EB%AA%A8%EB%8D%B8">&#52572;&#51201; &#54617;&#49845; &#47784;&#45944;<a class="anchor-link" href="#%EC%B5%9C%EC%A0%81-%ED%95%99%EC%8A%B5-%EB%AA%A8%EB%8D%B8">&#182;</a></h4><ul>
+<li>비용 함수를 최소화하는파라미터를 사용하는 모델</li>
+<li>최종적으로 훈련을 통해 얻고자 하는 훈련된 모델</li>
 </ul>
 
 </div>
@@ -15309,8 +15374,6 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h4 id="%EB%B9%84%EC%9A%A9-%ED%95%A8%EC%88%98%EC%9D%98-%EA%B7%B8%EB%A0%88%EC%9D%B4%EB%94%94%EC%96%B8%ED%8A%B8-%EB%B2%A1%ED%84%B0">&#48708;&#50857; &#54632;&#49688;&#51032; &#44536;&#47112;&#51060;&#46356;&#50616;&#53944; &#48289;&#53552;<a class="anchor-link" href="#%EB%B9%84%EC%9A%A9-%ED%95%A8%EC%88%98%EC%9D%98-%EA%B7%B8%EB%A0%88%EC%9D%B4%EB%94%94%EC%96%B8%ED%8A%B8-%EB%B2%A1%ED%84%B0">&#182;</a></h4><ul>
-<li><p>다변수 함수의 미분값.</p>
-</li>
 <li><p>(그레이디언트) 벡터는 방향과 크기에 대한 정보 제공</p>
 </li>
 <li><p>그레이디언트가 가리키는 방향의 <strong>반대 방향</strong>으로 움직여야 가장 빠르게 전역 최솟값에 접근</p>
@@ -15347,7 +15410,22 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h4 id="%ED%95%99%EC%8A%B5%EB%A5%A0">&#54617;&#49845;&#47456;<a class="anchor-link" href="#%ED%95%99%EC%8A%B5%EB%A5%A0">&#182;</a></h4><ul>
-<li>훈련 과정에서의 비용함수 파라미터 조정 비율</li>
+<li>훈련 과정에서 비용 함수의 파라미터($\mathbf{\theta}$)를 얼만큼씩 조정할 것인지를 정하는 비율</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p><strong>허용오차<font size="2">tolerance</font></strong></p>
+<ul>
+<li>비용 함수의 값이 허용오차보다 작아지면 훈련 종료</li>
 </ul>
 
 </div>
@@ -15361,46 +15439,10 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p><strong>에포크<font size="2">epoch</font></strong></p>
-<p>훈련셋에 포함된 모든 데이터를 대상으로 예측값을 계산하는 과정을 가리킨다.</p>
-
-</div>
-</div>
-</div>
-</div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><strong>허용오차<font size="2">tolerance</font></strong></p>
-<p>비용함수의 값이 허용오차보다 작아지면 훈련을 종료시킨다.</p>
-
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><strong>배치 크기<font size="2">batch size</font></strong></p>
-<p>파라미터를 업데이트하기 위해, 즉 그레이디언트 벡터를 계산하기 위해 사용되는 훈련 데이터의 개수이다.</p>
-
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><strong>하이퍼파라미터<font size="2">hyperparameter</font></strong></p>
-<p>학습률, 에포크, 허용오차, 배치 크기 처럼 모델을 지정할 때 사용되는 값을 나타낸다.</p>
+<ul>
+<li>훈련셋에 포함된 모든 데이터를 대상으로 예측값을 한 번 계산하는 과정</li>
+<li>이 과정동안 실행된 스텝 회수만큼 파라미터 업데이트</li>
+</ul>
 
 </div>
 </div>
@@ -15423,7 +15465,7 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>경사하강법은 다음 과정으로 이루어진다.</p>
+<p>MSE를 비용 함수로 사용하는 경우 경사하강법은 다음 과정으로 이루어진다.</p>
 
 </div>
 </div>
@@ -15449,16 +15491,49 @@ $$
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p>(2) 아래 단계를 $\textrm{MSE}(\theta)$ 가 허용오차보다 적게 작아지는 단계까지 반복한다.</p>
 <ul>
-<li>지정된 수의 훈련 샘플을 이용한 학습.</li>
-<li>$\mathrm{MSE}(\mathbf{\theta})$ 계산.</li>
-<li><p>이전 $\mathbf{\theta}$에서 $\nabla_\mathbf{\theta} \textrm{MSE}(\mathbf{\theta})$ 와
-  학습률 $\eta$를 곱한 값 빼기.<br><br></p>
+<li>배치 크기 $m_b$ 만큼의 훈련 샘플을 이용하여 예측값 생성 후 $\mathrm{MSE}(\mathbf{\theta})$ 계산.</li>
+<li><p>아래 점화식을 이용한 $\theta$ 업데이트<br><br></p>
 <p>$$
   \theta^{(\text{new})} = \theta^{(\text{old})}\, -\, \eta\cdot \nabla_\theta \textrm{MSE}(\theta^{(\text{old})})
   $$</p>
 </li>
 </ul>
 
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="%EA%B8%B0%EC%9A%B8%EA%B8%B0-%EB%B2%A1%ED%84%B0%EC%9D%98-%EB%B0%A9%ED%96%A5%EA%B3%BC-%ED%81%AC%EA%B8%B0">&#44592;&#50872;&#44592; &#48289;&#53552;&#51032; &#48169;&#54693;&#44284; &#53356;&#44592;<a class="anchor-link" href="#%EA%B8%B0%EC%9A%B8%EA%B8%B0-%EB%B2%A1%ED%84%B0%EC%9D%98-%EB%B0%A9%ED%96%A5%EA%B3%BC-%ED%81%AC%EA%B8%B0">&#182;</a></h3>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<table>
+    <tr>
+        <td style="padding:1px">
+            <figure>
+                <img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/vector01.png" style="width:80%"/>
+            </figure>
+        </td>
+        <td style="padding:1px">
+            <figure>
+                <img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/gradient01b.png" style="width:80%"/>
+            </figure>
+        </td>        
+    </tr>
+</table>
 </div>
 </div>
 </div>
@@ -15578,6 +15653,28 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="%ED%95%99%EC%8A%B5%EC%9C%A8%EA%B3%BC-%EA%B2%BD%EC%82%AC-%ED%95%98%EA%B0%95%EB%B2%95%EC%9D%98-%EA%B4%80%EA%B3%84">&#54617;&#49845;&#50984;&#44284; &#44221;&#49324; &#54616;&#44053;&#48277;&#51032; &#44288;&#44228;<a class="anchor-link" href="#%ED%95%99%EC%8A%B5%EC%9C%A8%EA%B3%BC-%EA%B2%BD%EC%82%AC-%ED%95%98%EA%B0%95%EB%B2%95%EC%9D%98-%EA%B4%80%EA%B3%84">&#182;</a></h3>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-04b.png" width="700"/></div>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
 <li>(선형 회귀가 아닌 경우에) 시작점에 따라 지역 최솟값에 수렴하지 못할 수도 있음.</li>
 </ul>
@@ -15655,6 +15752,7 @@ $$
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h4 id="%EB%B0%B0%EC%B9%98-%EA%B2%BD%EC%82%AC-%ED%95%98%EA%B0%95%EB%B2%95">&#48176;&#52824; &#44221;&#49324; &#54616;&#44053;&#48277;<a class="anchor-link" href="#%EB%B0%B0%EC%B9%98-%EA%B2%BD%EC%82%AC-%ED%95%98%EA%B0%95%EB%B2%95">&#182;</a></h4><ul>
 <li>전체 훈련 샘플을 대상으로 훈련한 후에, 즉 에포크마다 그레이디언트를 계산하여 파라미터 조정</li>
+<li>$m_b = m$</li>
 <li><strong>주의</strong>: 여기서 사용되는 '배치'의 의미가 '배치 크기'의 '배치'와 다른 의미</li>
 </ul>
 
@@ -15669,7 +15767,7 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h4 id="%ED%99%95%EB%A5%A0%EC%A0%81-%EA%B2%BD%EC%82%AC-%ED%95%98%EA%B0%95%EB%B2%95">&#54869;&#47456;&#51201; &#44221;&#49324; &#54616;&#44053;&#48277;<a class="anchor-link" href="#%ED%99%95%EB%A5%A0%EC%A0%81-%EA%B2%BD%EC%82%AC-%ED%95%98%EA%B0%95%EB%B2%95">&#182;</a></h4><ul>
-<li>배치 크기: 1</li>
+<li>배치 크기가 1. 즉, $m_b = 1$</li>
 <li>즉, 하나의 훈련 샘플을 학습할 때마다 그레이디언트를 계산해서 파라미터 조정</li>
 </ul>
 
@@ -15685,7 +15783,7 @@ $$
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h4 id="%EB%AF%B8%EB%8B%88%EB%B0%B0%EC%B9%98-%EA%B2%BD%EC%82%AC-%ED%95%98%EA%B0%95%EB%B2%95">&#48120;&#45768;&#48176;&#52824; &#44221;&#49324; &#54616;&#44053;&#48277;<a class="anchor-link" href="#%EB%AF%B8%EB%8B%88%EB%B0%B0%EC%B9%98-%EA%B2%BD%EC%82%AC-%ED%95%98%EA%B0%95%EB%B2%95">&#182;</a></h4><ul>
 <li>배치 크기: 2에서 수백 사이</li>
-<li>최적 배치 크기: 경우에 따라 다름. 여러 논문이 32 이하 추천</li>
+<li>$2 \le m_b = m &lt; m$</li>
 </ul>
 
 </div>
@@ -15753,34 +15851,11 @@ $$
 <ul>
 <li><p><strong>주의사항</strong></p>
 <ul>
-<li>사이킷런은 배치 경사 하강법을 활용한 선형 회귀 지원하지 않음.
-  (책 176쪽, 표 4-1에서 사이킷런의 SGDRegressor가 배치 경사 하강법을 지원한다고 <strong>잘못</strong> 명시됨.)</li>
+<li>사이킷런은 배치 경사 하강법을 활용한 선형 회귀를 지원하지 않음.</li>
 </ul>
 </li>
 </ul>
 
-</div>
-</div>
-</div>
-</div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h4 id="%ED%95%99%EC%8A%B5%EC%9C%A8%EA%B3%BC-%EA%B2%BD%EC%82%AC-%ED%95%98%EA%B0%95%EB%B2%95%EC%9D%98-%EA%B4%80%EA%B3%84">&#54617;&#49845;&#50984;&#44284; &#44221;&#49324; &#54616;&#44053;&#48277;&#51032; &#44288;&#44228;<a class="anchor-link" href="#%ED%95%99%EC%8A%B5%EC%9C%A8%EA%B3%BC-%EA%B2%BD%EC%82%AC-%ED%95%98%EA%B0%95%EB%B2%95%EC%9D%98-%EA%B4%80%EA%B3%84">&#182;</a></h4>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-04b.png" width="700"/></div>
 </div>
 </div>
 </div>
@@ -15830,8 +15905,7 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>처음 20 단계 동안의 SGD 학습 내용: 모델이 수렴하지 못함을 확인할 수 있음.</p>
-
+<h3 id="%ED%95%99%EC%8A%B5-%EC%8A%A4%EC%BC%80%EC%A4%84">&#54617;&#49845; &#49828;&#52992;&#51460;<a class="anchor-link" href="#%ED%95%99%EC%8A%B5-%EC%8A%A4%EC%BC%80%EC%A4%84">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -15842,18 +15916,7 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-04d.png" width="600"/></div>
-</div>
-</div>
-</div>
-</div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h4 id="%ED%95%99%EC%8A%B5-%EC%8A%A4%EC%BC%80%EC%A4%84">&#54617;&#49845; &#49828;&#52992;&#51460;<a class="anchor-link" href="#%ED%95%99%EC%8A%B5-%EC%8A%A4%EC%BC%80%EC%A4%84">&#182;</a></h4><ul>
+<ul>
 <li>요동치는 파라미터를 제어하기 위해 학습률을 학습 과정 동안 천천히 줄어들게 만들 수 있음</li>
 </ul>
 
@@ -16034,7 +16097,7 @@ $$
 <td style="text-align:center">빠름</td>
 <td style="text-align:center">2</td>
 <td style="text-align:center">필요</td>
-<td style="text-align:center">LogisticRegression</td>
+<td style="text-align:center">지원 없음</td>
 </tr>
 <tr>
 <td style="text-align:center">SGD</td>
@@ -16214,7 +16277,12 @@ $$
 <ul>
 <li>예제: $n=3, d=2$인 경우에 $(x_1+x_2+x_3)^2$의 항목에 해당하는 6 개 특성 추가</li>
 </ul>
-$$x_1^2,\,\, x_2^2,\,\, x_3^2,\,\, x_1 x_2,\,\, x_2 x_3,\,\, x_1 x_3$$
+$$
+\hat y = 
+\theta_0 + \theta_1\, x_1 + \theta_2\, x_2 + \theta_3\, x_3 
++ \theta_4\, x_{1} x_2 + \theta_5\, x_{1} x_3 + \theta_6\, x_{2} x_3 
++ \theta_7\, x_{1}^2 + \theta_8\, x_{2}^2 + \theta_9\, x_{3}^2 
+$$
 </div>
 </div>
 </div>
