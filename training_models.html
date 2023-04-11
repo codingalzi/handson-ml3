@@ -4,11 +4,13 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>4. 모델 훈련 &#8212; 핸즈온 머신러닝(3판)</title>
     
-  <link href="_static/css/theme.css" rel="stylesheet">
-  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,39 +20,39 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="_static/proof.css" />
-    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
-  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/togglebutton.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script src="_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="5. 서포트 벡터 머신" href="svm.html" />
@@ -62,7 +64,21 @@ const thebe_selector_output = ".output, .cell_output"
     <!-- Google Analytics -->
     
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
     
     <div class="container-fluid" id="banner"></div>
 
@@ -71,9 +87,10 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="container-xl">
       <div class="row">
           
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="index.html">
       
       
@@ -135,112 +152,227 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 
     </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
             
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/training_models.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
-
-            <!-- Source interaction buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/codingalzi/handson-ml3"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        <a class="issues-button"
-            href="https://github.com/codingalzi/handson-ml3/issues/new?title=Issue%20on%20page%20%2Ftraining_models.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        
-    </div>
-</div>
-
-            <!-- Full screen (wrap in <a> to have style consistency -->
-
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
-
-            <!-- Launch buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/codingalzi/handson-ml3/master?urlpath=tree/jupyter-book/training_models.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        <a class="colab-button" href="https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/jupyter-book/training_models.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
-                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
-                    src="_static/images/logo_colab.png"
-                    alt="Interact on Colab">Colab</button></a>
-        
-        
-    </div>
-</div>
-
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
             </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/codingalzi/handson-ml3/master?urlpath=tree/jupyter-book/training_models.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/jupyter-book/training_models.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/codingalzi/handson-ml3"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/codingalzi/handson-ml3/issues/new?title=Issue%20on%20page%20%2Ftraining_models.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/training_models.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id2">
    4.1. 선형 회귀
@@ -372,12 +504,11 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
 </ul>
 
-            </nav>
-        </div>
-    </div>
+    </nav>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
                 <h1>모델 훈련</h1>
@@ -525,11 +656,12 @@ const thebe_selector_output = ".output, .cell_output"
                     </div>
                 </div>
             </div>
-            
+            <main id="main-content" role="main">
+                
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="ch-trainingmodels">
-<span id="id1"></span><h1><span class="section-number">4. </span>모델 훈련<a class="headerlink" href="#ch-trainingmodels" title="Permalink to this headline">¶</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="ch-trainingmodels">
+<span id="id1"></span><h1><span class="section-number">4. </span>모델 훈련<a class="headerlink" href="#ch-trainingmodels" title="Permalink to this headline">#</a></h1>
 <p><strong>감사의 글</strong></p>
 <p>자료를 공개한 저자 오렐리앙 제롱과 강의자료를 지원한 한빛아카데미에게 진심어린 감사를 전합니다.</p>
 <p><strong>소스코드</strong></p>
@@ -550,8 +682,8 @@ const thebe_selector_output = ".output, .cell_output"
 <a class="reference external" href="https://github.com/codingalzi/handson-ml3/raw/master/slides/slides-training_models-1.pdf">슬라이드 1부</a>,
 <a class="reference external" href="https://github.com/codingalzi/handson-ml3/raw/master/slides/slides-training_models-2.pdf">슬라이드 2부</a>
 다운로드할 수 있다.</p>
-<div class="section" id="id2">
-<h2><span class="section-number">4.1. </span>선형 회귀<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<section id="id2">
+<h2><span class="section-number">4.1. </span>선형 회귀<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
 <p><strong>선형 회귀 예제: 1인당 GDP와 삶의 만족도</strong></p>
 <p><a class="reference internal" href="ml_landscape.html#sec-model-based-learning"><span class="std std-numref">1.3.3.2절</span></a>에서 1인당 GDP와 삶의 만족도 사이의
 관계를 다음 1차 함수로 표현할 수 있었다.</p>
@@ -710,8 +842,8 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 </li>
 </ul>
-<div class="section" id="id3">
-<h3><span class="section-number">4.1.1. </span>정규 방정식<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<section id="id3">
+<h3><span class="section-number">4.1.1. </span>정규 방정식<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h3>
 <p>비용 함수를 최소화 하는 최적의 <span class="math notranslate nohighlight">\(\hat{\theta}\)</span> 를
 정규 방정식<font size="2">normal equation</font>을 이용하여
 아래와 같이 바로 계산할 수 있다.
@@ -721,9 +853,9 @@ const thebe_selector_output = ".output, .cell_output"
 \hat{\mathbf{\theta}} = 
 (\mathbf{X}^T\, \mathbf{X})^{-1}\, \mathbf{X}^T\, \mathbf{y}
 \]</div>
-</div>
-<div class="section" id="svd">
-<h3><span class="section-number">4.1.2. </span>SVD(특잇값 분해) 활용<a class="headerlink" href="#svd" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="svd">
+<h3><span class="section-number">4.1.2. </span>SVD(특잇값 분해) 활용<a class="headerlink" href="#svd" title="Permalink to this headline">#</a></h3>
 <p>행렬 연산과 역행렬 계산은 계산 복잡도가 <span class="math notranslate nohighlight">\(O(n^{2.4})\)</span> 이상이며
 항상 역행렬 계산이 가능한 것도 아니다.
 반면에, 특잇값 분해를 활용하여 얻어지는
@@ -740,42 +872,20 @@ const thebe_selector_output = ".output, .cell_output"
 <p>사이킷런의 <code class="docutils literal notranslate"><span class="pre">LinearRegression</span></code> 모델은 특잇값 분해와 무어-펜로즈 유사 역행렬을 이용하여
 최적의 <span class="math notranslate nohighlight">\(\hat \theta\)</span> 를 계산한다.</p>
 </div>
-</div>
-</div>
-<div class="section" id="sec-gradient-descent">
-<span id="id4"></span><h2><span class="section-number">4.2. </span>경사하강법<a class="headerlink" href="#sec-gradient-descent" title="Permalink to this headline">¶</a></h2>
-<p>머신러닝의 모든 모델은 훈련 중에 모델이 학습해야 하는 파라미터를 조금씩, 그리고 반복적으로 조정한다.
-이때 비용 함수의 크기를 줄이는 방향으로 조정한다.
-이렇게 모델의 파라미터를 조정하는 방식이 <strong>경사하강법</strong><font size="2">gradient descent</font>이다.</p>
+</section>
+</section>
+<section id="sec-gradient-descent">
+<span id="id4"></span><h2><span class="section-number">4.2. </span>경사하강법<a class="headerlink" href="#sec-gradient-descent" title="Permalink to this headline">#</a></h2>
+<p>정규 방정식과 무어-펜로즈 유사 역행렬을 이용하는 방식은 훈련셋이 크거나 특성 수가 많은 경우 계산이
+너무 올래 걸려서 실전에서 사용하지 못한다.
+따라서 모델의 파라미터를 조금씩 점진적으로 조정하는 <strong>경사하강법</strong><font size="2">gradient descent</font>을
+일반적으로 사용한다.</p>
 <p>경사하강법을 이해하려면 먼저 아래 개념들을 충분히 숙지해야 한다.</p>
+<p><strong>하이퍼파라미터<font size="2">hyperparameter</font></strong></p>
+<p>훈련시킬 모델을 지정할 때 사용되는 설정 옵션을 가리킨다.
+학습률, 에포크, 허용 오차, 배치 크기 등이 있다.</p>
 <p><strong>파라미터</strong><font size="2">parameter</font></p>
 <p>선형 회귀 모델에 사용되는 편향과 가중치 파라미터처럼 모델 훈련중에 학습되는 파라미터를 가리킨다.</p>
-<p><strong>비용 함수</strong><font size="2">cost function</font></p>
-<p>평균 제곱 오차(MSE)처럼 모델이 얼마나 나쁜가를 측정하는 함수다.</p>
-<p><strong>전역 최소값</strong><font size="2">global minimum</font></p>
-<p>비용 함수의 전역 최소값이다.</p>
-<p>비용 함수의 <strong>그레이디언트 벡터</strong><font size='2'>gradient vector</font></p>
-<p>MSE를 비용 함수로 사용하는 경우 <span class="math notranslate nohighlight">\(\textrm{MSE}(\mathbf{\theta})\)</span> 함수의 <span class="math notranslate nohighlight">\(\mathbf{\mathbf{\theta}}\)</span> 에
-대한 그레이디언트 벡터를 사용한다.</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\nabla_\mathbf{\theta} \textrm{MSE}(\mathbf{\theta}) =
-\begin{bmatrix}
-    \frac{\partial}{\partial \mathbf{\theta}_0} \textrm{MSE}(\mathbf{\theta}) \\
-    \frac{\partial}{\partial \mathbf{\theta}_1} \textrm{MSE}(\mathbf{\theta}) \\
-    \vdots \\
-    \frac{\partial}{\partial \mathbf{\theta}_n} \textrm{MSE}(\mathbf{\theta})
-\end{bmatrix}
-\end{split}\]</div>
-<p><strong>최적 학습 모델</strong></p>
-<p>비용 함수를 최소화하는파라미터를 사용하는 모델이며,
-최종적으로 훈련을 통해 얻고자 하는 훈련된 모델이다.</p>
-<p><strong>학습률(<span class="math notranslate nohighlight">\(\eta\)</span>)</strong></p>
-<p>훈련 과정에서 비용 함수의 파라미터(<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>)를 얼만큼씩 조정할 것인지를 정하는 비율이다.</p>
-<p><strong>에포크</strong><font size="2">epoch</font></p>
-<p>훈련셋에 포함된 모든 데이터를 대상으로 예측값을 한 번 계산하는 과정이다.</p>
-<p><strong>허용 오차</strong><font size="2">tolerance</font></p>
-<p>비용 함수의 값이 허용 오차보다 작아지면 훈련을 종료시킨다.</p>
 <p><strong>배치 크기</strong><font size="2">batch size</font></p>
 <p>파라미터를 한 번 업데이트하기 위해 필요한 훈련 샘플의 개수를 가리킨다.</p>
 <p><strong>스텝</strong><font size='2'>step</font>과 <strong>스텝 크기</strong></p>
@@ -786,32 +896,49 @@ const thebe_selector_output = ".output, .cell_output"
 </pre></div>
 </div>
 <p>예를 들어, 훈련셋의 크기가 1,000이고 배치 크기가 10이면, 에포크 당 100번의 스텝이 실행된다.</p>
-<p><strong>하이퍼파라미터<font size="2">hyperparameter</font></strong></p>
-<p>학습률, 에포크, 허용 오차, 배치 크기 처럼 훈련 시킬 모델을 지정할 때 사용되는 옵션을 가리킨다.</p>
-<div class="section" id="id5">
-<h3><span class="section-number">4.2.1. </span>선형 회귀 모델과 경사하강법<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
-<p>선형회귀 모델 파라미터를 조정하는 과정을 이용하여 경사하강법의 기본 아이디어를 설명한다.</p>
-<p>먼저 <span class="math notranslate nohighlight">\(\mathrm{MSE}(\mathbf{\theta})\)</span> 는 <span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span> 에 대한 2차 함수임에 주의한다.
-여기서는 설명을 단순화하기 위해 <span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span> 가 하나의 파라미터로 구성되었다고 가정한다.
-따라서 <span class="math notranslate nohighlight">\(\mathrm{MSE}(\mathbf{\theta})\)</span>의 그래프는 <span class="math notranslate nohighlight">\(\theta\)</span>에 대한 2차 함수의 그래프인 포물선이 된다.</p>
+<p><strong>비용 함수</strong><font size="2">cost function</font></p>
+<p>평균 제곱 오차(MSE)처럼 모델이 얼마나 나쁜가를 측정하는 함수다.
+회귀 모델의 비용 함수로 사용되는 MSE는 다음과 같다.</p>
 <div class="math notranslate nohighlight">
 \[
-\mathrm{MSE}(\mathbf{\theta}) =
-\frac 1 m \sum_{i=1}^{m} \big(\mathbf{\theta}^{T}\, \mathbf{x}^{(i)} - y^{(i)}\big)^2
+\mathrm{MSE}(\mathbf{\theta}) = 
+\frac 1 {m_b} \sum_{i=1}^{m_b} \big(\mathbf{x}^{(i)}\, \mathbf{\theta} - y^{(i)}\big)^2
 \]</div>
-<p>위 2차 함수의 식에서 <span class="math notranslate nohighlight">\(m\)</span>, <span class="math notranslate nohighlight">\(\mathbf{x}^{(i)}\)</span>, <span class="math notranslate nohighlight">\(y^{(i)}\)</span> 등은 모두 이미 주어진 상수임에 주의한다.
-이제 <span class="math notranslate nohighlight">\(\mathrm{MSE}(\mathbf{\theta})\)</span>의 그레이디언트 벡터는 다음과 같이 계산된다.</p>
+<p>단, <span class="math notranslate nohighlight">\(m_b\)</span>는 배치 크기를 가리킨다.</p>
+<p><strong>전역 최소값</strong><font size="2">global minimum</font></p>
+<p>비용 함수의 전역 최소값이다.</p>
+<p><strong>최적 학습 모델</strong></p>
+<p>비용 함수를 최소화하는파라미터를 사용하는 모델이며,
+최종적으로 훈련을 통해 얻고자 하는 훈련된 모델이다.</p>
+<p><strong>비용 함수의 그레이디언트 벡터</strong><font size='2'>gradient vector</font></p>
+<p>예를 들어 <span class="math notranslate nohighlight">\(\textrm{MSE}\)</span>를 비용 함수로 사용하는 경우 <span class="math notranslate nohighlight">\(\textrm{MSE}(\mathbf{\theta})\)</span> 함수의 <span class="math notranslate nohighlight">\(\mathbf{\mathbf{\theta}}\)</span> 에
+대한 그레이디언트 벡터는 다음과 같다.</p>
 <div class="math notranslate nohighlight">
-\[
-\nabla_\theta \textrm{MSE}(\theta) = \frac{2}{m}\, \mathbf{X}^T\, (\mathbf{X}\, \theta^T - \mathbf y)
-\]</div>
-<p>경사하강법은 다음 과정으로 이루어진다.</p>
+\[\begin{split}
+\nabla_\mathbf{\theta} \textrm{MSE}(\mathbf{\theta}) =
+\begin{bmatrix}
+    \frac{\partial}{\partial \mathbf{\theta}_0} \textrm{MSE}(\mathbf{\theta}) \\
+    \frac{\partial}{\partial \mathbf{\theta}_1} \textrm{MSE}(\mathbf{\theta}) \\
+    \vdots \\
+    \frac{\partial}{\partial \mathbf{\theta}_n} \textrm{MSE}(\mathbf{\theta})
+\end{bmatrix}
+\end{split}\]</div>
+<p><strong>학습률(<span class="math notranslate nohighlight">\(\eta\)</span>)</strong></p>
+<p>훈련 과정에서 비용 함수의 파라미터(<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>)를 얼만큼씩 조정할 것인지를 정하는 비율이다.</p>
+<p><strong>허용 오차</strong><font size="2">tolerance</font></p>
+<p>비용 함수의 값이 허용 오차보다 작아지면 훈련을 종료시킨다.</p>
+<p><strong>에포크</strong><font size="2">epoch</font></p>
+<p>훈련셋에 포함된 모든 데이터를 대상으로 예측값을 한 번 계산하는 과정이다.
+이 과정동안 스텝 크기만큼 파라미터의 업데이트가 이루어진다.</p>
+<section id="id5">
+<h3><span class="section-number">4.2.1. </span>선형 회귀 모델과 경사하강법<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h3>
+<p>MSE를 비용 함수로 사용하는 선형회귀 모델의 파라미터를 조정하는 과정을 이용하여 경사하강법의 기본 아이디어를 설명한다.</p>
+<p>선형 회귀 모델의 경사하강법은 다음 과정으로 이루어진다.</p>
 <ol class="simple">
 <li><p><span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>를 임의의 값으로 지정한 후 훈련을 시작한다.</p></li>
 <li><p><span class="math notranslate nohighlight">\(\textrm{MSE}(\theta)\)</span> 가 허용 오차보다 작아질 때까지 아래 과정을 반복한다.</p>
 <ul class="simple">
-<li><p>배치 크기 <span class="math notranslate nohighlight">\(m\)</span> 만큼의 훈련 샘플을 이용해서 예측값 생성</p></li>
-<li><p><span class="math notranslate nohighlight">\(\mathrm{MSE}(\mathbf{\theta})\)</span> 계산.</p></li>
+<li><p>배치 크기 <span class="math notranslate nohighlight">\(m_b\)</span> 만큼의 훈련 샘플을 이용해서 예측값 생성 후 <span class="math notranslate nohighlight">\(\mathrm{MSE}(\mathbf{\theta})\)</span> 계산.</p></li>
 <li><p><span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>를 아래 점화식을 이용하여 업데이트</p></li>
 </ul>
 </li>
@@ -822,14 +949,17 @@ const thebe_selector_output = ".output, .cell_output"
 \]</div>
 <div class="info admonition">
 <p class="admonition-title">그레이디언트 벡터의 방향과 크기</p>
-<p>모든 벡터는 방향과 크기를 갖는다.</p>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/vector01.png" width="200"/></div>
+<p>아래 그림이 보여주듯이 모든 벡터는 방향과 크기를 갖는다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/vector01.png" width="250"/></div>
 <p>그레이디언트 벡터 또한 방향과 크기에 대한 정보를 제공하며,
-그레이디언트가 가리키는 방향의 <strong>반대 방향</strong>으로 움직이면 빠르게 전역 최소값에 접근한다.</p>
-<p>이는 아래 두 그림이 표현하듯이 산에서 가장 경사가 급한 길을 따를 때 가장 빠르게 하산하는 원리와 동일하다.
+그레이디언트가 가리키는 방향의 <strong>반대 방향</strong>으로 움직이면 빠르게 전역 최소값에 접근한다.
+아래 그림은 2차 함수 그래프의 한 점에서의 기울기가 양수인 경우 음수쪽으로 움직여야 전역 최솟값으로 수렴하는 것을 보여준다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/gradient01b.png" width="350"/></div>
+<p><div style="text-align: center">&lt;그림 출처: <a href="https://www.analyticsvidhya.com/blog/2020/10/how-does-the-gradient-descent-algorithm-work-in-machine-learning/">Analytics Vidhya</a>&gt;</div></p>
+<p>아래 두 그림은 산에서 가장 경사가 급한 길을 따를 때 가장 빠르게 하산한다는 원리를 보여준다.
 이유는 해당 지점에서 그레이디언트 벡터를 계산하면 정상으로 가는 가장 빠른 길을 안내할 것이기에
-그 반대방향으로 움직여야 하기 때문이다.</p>
-<p>아래 두 그림은 경사하강법을 담당하는 여러 알고리즘을 비교해서 보여준다.</p>
+그 반대방향으로 움직여야 하기 때문이다.
+그림에서 보여지는 여러 경로는 경사하강법을 담당하는 여러 알고리즘이 선택된다.</p>
 <table>
     <tr>
         <td style="padding:1px">
@@ -881,15 +1011,15 @@ const thebe_selector_output = ".output, .cell_output"
 <li><p>오른편 그림: 두 특성의 스케일이 다른 경우 비용 함수의 최소값으로 보다 먼 거리를 지나간다.
 이런 경우엔 등고선이 타원 모양 또는 찌그러진 모양으로 그려지기 때문이다.</p></li>
 </ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-04a.png" width="500"/></div></div>
-<div class="section" id="id6">
-<h3><span class="section-number">4.2.2. </span>경사하강법 종류<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-04a.png" width="500"/></div></section>
+<section id="id6">
+<h3><span class="section-number">4.2.2. </span>경사하강법 종류<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h3>
 <p>모델 훈련에 사용되는 경사하강법은
 훈련 대상 모델을 지정할 때 사용하는 하이퍼파라미터 중의 하나인 배치 크기에 따라 세 종류로 나뉜다.</p>
-<div class="section" id="id7">
-<h4><span class="section-number">4.2.2.1. </span>배치 경사하강법<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+<section id="id7">
+<h4><span class="section-number">4.2.2.1. </span>배치 경사하강법<a class="headerlink" href="#id7" title="Permalink to this headline">#</a></h4>
 <p>에포크마다 한 번 그레이디언트를 계산하여 파라미터를 조정(업데이트)한다.
-즉, 배치의 크기가 전체 훈련셋의 크기와 같으며, 따라서 스텝의 크기는 1이다.</p>
+즉, 배치 크기(<span class="math notranslate nohighlight">\(m_b\)</span>)가 전체 훈련셋의 크기와 같으며, 따라서 스텝의 크기는 1이다.</p>
 <p>파라미터 업데이트를 에포크에 한 번만 수행 하기에 모델을 지정할 때 에포크를 크게 잡아야 한다.
 그렇지 않으면 훈련이 제대로 진행하지 않는다.
 그런데 훈련셋이 크면 그레이디언트를 계산하는 데에 많은 시간과 메모리가 필요해지는 문제가 발생할 수 있다.
@@ -903,12 +1033,12 @@ const thebe_selector_output = ".output, .cell_output"
 <p>허용 오차와 에포크 수는 일반적으로 서로 반비례의 관계로 지정하는 게 좋다.
 예를 들어, 허용 오차를 1/10로 줄이려면 에포크 수를 10배 늘려야한다.</p>
 </div>
-</div>
-<div class="section" id="sgd">
-<h4><span class="section-number">4.2.2.2. </span>확률적 경사하강법(SGD)<a class="headerlink" href="#sgd" title="Permalink to this headline">¶</a></h4>
-<p>배치 크기가 1인 경상하강법을 가리킨다.
+</section>
+<section id="sgd">
+<h4><span class="section-number">4.2.2.2. </span>확률적 경사하강법(SGD)<a class="headerlink" href="#sgd" title="Permalink to this headline">#</a></h4>
+<p>배치 크기(<span class="math notranslate nohighlight">\(m_b\)</span>)가 1인 경상하강법을 가리킨다.
 즉, 하나의 훈련 셈플에 대한 예측값을 계산한 다음에 바로
-비용함수의 그레이디언트를 계산하여 파라미터를 조정한다.</p>
+비용 함수의 그레이디언트를 계산하여 파라미터를 조정한다.</p>
 <p>스텝에서 사용되는 샘플은 무작위로 선택된다.
 따라서 경우에 따라 하나의 에포크에서 여러 번 선택되거나 전혀 선택되지 않는 샘플이
 존재할 수도 있지만, 이는 별로 문제되지 않는다.</p>
@@ -930,7 +1060,7 @@ const thebe_selector_output = ".output, .cell_output"
 일반적으로 훈련 에포크가 진행될 수록 학습률이 조금씩 작아지도록 지정한다.</p>
 <div class="proof example admonition" id="exp-sgdregressor">
 <p class="admonition-title"><span class="caption-number">Example 4.1 </span> (사이킷런의 <code class="docutils literal notranslate"><span class="pre">SGDRegressor</span></code> 클래스)</p>
-<div class="example-content section" id="proof-content">
+<section class="example-content" id="proof-content">
 <p>확률적 경사하강법을 사용하는 선형 회귀 모델이다.
 아래 코드는 에포크 수, 허용 호차, 학습 스케줄, 규제 적용 여부를 지정하는 하이퍼파라미터를 함께
 사용하는 것을 보여준다.</p>
@@ -944,11 +1074,12 @@ const thebe_selector_output = ".output, .cell_output"
 <li><p><code class="docutils literal notranslate"><span class="pre">eta0=0.1</span></code>: 학습 스케줄 함수에 사용되는 매개 변수. 일종의 학습률.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">penalty=None</span></code>: 규제 사용 여부 결정(추후 설명). <code class="docutils literal notranslate"><span class="pre">None</span></code>은 어떤 규제도 사용하지 않는다는 의미.</p></li>
 </ul>
-</div>
-</div></div>
-<div class="section" id="id8">
-<h4><span class="section-number">4.2.2.3. </span>미니 배치 경사하강법<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
-<p>배치 크기를 2 이상으로 잡는 경사하강법이다. 보통 2에서 수백 사이로 정한다.
+</section>
+</div></section>
+<section id="id8">
+<h4><span class="section-number">4.2.2.3. </span>미니 배치 경사하강법<a class="headerlink" href="#id8" title="Permalink to this headline">#</a></h4>
+<p>배치 크기(<span class="math notranslate nohighlight">\(m_b\)</span>)를 2 이상으로 잡는 경사하강법이다.
+보통 2에서 수백 사이로 정한다.
 배치 크기를 적절히 크게 잡으면 확률적 경사하강법(SGD) 보다 파라미터의 움직임이 덜 불규칙적이 되며,
 배치 경사하강법보다 훨씬 빠르게 최적 학습 모델에 수렴한다.</p>
 <p>배치 경상하강법, 미니 배치 경사하강법, 확률적 경사하강법의 순서대로 최적의 파라미터를
@@ -985,7 +1116,7 @@ const thebe_selector_output = ".output, .cell_output"
 <td class="text-align:center"><p>지원 안됨</p></td>
 <td class="text-align:center"><p>빠름</p></td>
 <td class="text-align:center"><p>필요</p></td>
-<td class="text-align:center"><p>(?)</p></td>
+<td class="text-align:center"><p>지원 없음</p></td>
 </tr>
 <tr class="row-odd"><td class="text-align:center"><p>SGD</p></td>
 <td class="text-align:center"><p>빠름</p></td>
@@ -1006,11 +1137,11 @@ const thebe_selector_output = ".output, .cell_output"
 <p>참고로 심층 신경망을 지원하는 텐서플로우<font size="2">Tensorflow</font>는
 미니 배치 경사하강법을 지원한다.</p>
 </div>
-</div>
-</div>
-</div>
-<div class="section" id="sec-poly-reg">
-<span id="id9"></span><h2><span class="section-number">4.3. </span>다항 회귀<a class="headerlink" href="#sec-poly-reg" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+</section>
+<section id="sec-poly-reg">
+<span id="id9"></span><h2><span class="section-number">4.3. </span>다항 회귀<a class="headerlink" href="#sec-poly-reg" title="Permalink to this headline">#</a></h2>
 <p>비선형 데이터를 선형 회귀를 이용하여 학습하는 기법을
 <strong>다항 회귀</strong><font size="2">polynomial regression</font>라 한다.
 이때 다항식을 이용하여 새로운 특성을 생성하는 아이디어를 사용한다.</p>
@@ -1019,10 +1150,10 @@ const thebe_selector_output = ".output, .cell_output"
 <div class="math notranslate nohighlight">
 \[\hat y = \theta_0 + \theta_1\, x_1\]</div>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-06.png" width="500"/></div><p><strong>2차 함수 모델를 따르는 데이터셋에 2차 다항식 모델 적용 결과</strong></p>
-<p>반면에 아래 그림은 <span class="math notranslate nohighlight">\(x_1^2\)</span> 에 해당하는 특성 <span class="math notranslate nohighlight">\(x_2\)</span> 를 새로이 추가한 후에
+<p>반면에 아래 그림은 <span class="math notranslate nohighlight">\(x_1^2\)</span> 에 해당하는 특성을 새로이 추가한 후에
 선형 회귀 모델을 학습시킨 결과를 보여준다.</p>
 <div class="math notranslate nohighlight">
-\[\hat y = \theta_0 + \theta_1\, x_1 + \theta_2\, x_{2}\]</div>
+\[\hat y = \theta_0 + \theta_1\, x_1 + \theta_2\, x_{1}^2\]</div>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-07.png" width="500"/></div><p><strong>사이킷런의 <code class="docutils literal notranslate"><span class="pre">PolynomialFeatures</span></code> 변환기</strong></p>
 <p>지정된 차수의 다항식에 포함되어야 하는 특성을 생성하여 추가하는 변환기다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
@@ -1031,28 +1162,36 @@ const thebe_selector_output = ".output, .cell_output"
 <p><code class="docutils literal notranslate"><span class="pre">degree=d</span></code>는 몇 차 다항식을 활용할지 지정하는 하이퍼파라미터다.</p>
 <div class="proof example admonition" id="exp:2nd_poly_reg">
 <p class="admonition-title"><span class="caption-number">Example 4.2 </span> (2차 다항 회귀)</p>
-<div class="example-content section" id="proof-content">
+<section class="example-content" id="proof-content">
 <p>기존에 두 개의 <span class="math notranslate nohighlight">\(x_1, x_2, x_3\)</span> 두 개의 특성을 갖는 데이터셋에 대해
 2차 다항식 모델을 훈련시키고자 하면 <span class="math notranslate nohighlight">\(d=2\)</span>으로 설정한다.
 그러면 <span class="math notranslate nohighlight">\(x_1, x_2, x_3\)</span> 을 이용한 2차 다항식에 포함될 항목을 새로운 특성으로 추가해야 한다.
 이는 <span class="math notranslate nohighlight">\((x_1+x_2+x_3)^2\)</span>의 항목에 해당하는 다음 6 개의 특성을 추가해야 함을 의미한다.</p>
 <div class="math notranslate nohighlight">
 \[x_1^2,\,\, x_2^2,\,\, x_3^2,\,\, x_1 x_2,\,\, x_2 x_3,\,\, x_1 x_3\]</div>
-</div>
-</div></div>
-<div class="section" id="id10">
-<h2><span class="section-number">4.4. </span>학습 곡선<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
-<p>차수에 따른 다항 회귀 모델의 성능이 많이 다를 수 있다.
+<p>따라서 예측값은 아래와 같이 계산된다.</p>
+<div class="math notranslate nohighlight">
+\[
+\hat y = 
+\theta_0 + \theta_1\, x_1 + \theta_2\, x_2 + \theta_3\, x_3 
++ \theta_4\, x_{1} x_2 + \theta_5\, x_{1} x_3 + \theta_6\, x_{2} x_3 
++ \theta_7\, x_{1}^2 + \theta_8\, x_{2}^2 + \theta_9\, x_{3}^2 
+\]</div>
+</section>
+</div></section>
+<section id="id10">
+<h2><span class="section-number">4.4. </span>학습 곡선<a class="headerlink" href="#id10" title="Permalink to this headline">#</a></h2>
+<p>사용되는 모델에 따라 회귀 모델의 성능이 많이 다를 수 있다.
 아래 그림은 기본 선형 모델은 성능이 너무 좋지 않은 반면에
-300차 다항 회귀 모델은 너무 과하게 훈련 데이터에 민감하게 반응한다.
-반면에 2차 다항 회귀 모델이 적절하게 예측값을 계산하는 것으로 보인다.</p>
+300차 다항 회귀 모델은 너무 과하게 훈련 데이터에 민감하게 반응하는 것을 보여준다.
+반면에 2차 다항 회귀 모델이 적절(?)하게 예측값을 계산하는 것으로 보인다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-08.png" width="500"/></div><p><strong>교차 검증 vs. 학습 곡선</strong></p>
-<p>일반적으로 어떤 모델이 가장 좋은지 미리 알 수는 없다.
-따라서 다양한 모델을 대상으로 교차 검증을 진행하여 모델의 성능을 평가한다.
+<p>일반적으로 어떤 모델이 가장 좋은지 미리 알 수 없다.
+따라서 보통 다양한 모델을 대상으로 교차 검증을 진행하여 성능을 평가한다.
 교차 검증 결과에 따른 모델 평가는 다음 두 종류로 나뉜다.</p>
 <ul class="simple">
-<li><p>과소 적합 모델: 훈련셋과 교차 검증 점수 모두 낮은 경우</p></li>
-<li><p>과대 적합 모델: 훈련셋에 대한 검증은 우수하지만 교차 검증 점수가 낮은 경우</p></li>
+<li><p>과소 적합 모델: 훈련셋과 교차 검증 점수 모두 너무 낮은 경우</p></li>
+<li><p>과대 적합 모델: 훈련셋에 대한 검증은 우수하지만 교차 검증 점수가 상대적으로 많이 낮은 경우</p></li>
 </ul>
 <p>다른 검증 방법은 <strong>학습 곡선</strong><font size='2'>learning curve</font>을 잘 살펴보는 것이다.
 학습 곡선은 훈련셋과 검증 세트에 대한 모델 성능을 비교하는 그래프이며,
@@ -1077,26 +1216,27 @@ const thebe_selector_output = ".output, .cell_output"
 하지만 일반적으로 더 많은 훈련 데이터를 구하는 일이 매우 어렵거나 불가능할 수 있음.
 아니면 모델에 규제를 가할 수 있음.</p></li>
 </ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-10.png" width="500"/></div><p><strong>모델 일반화 오차의 종류</strong></p>
-<p>훈련 후에 새로운 데이터 대한 예측에서 발생하는 오차를 가리키며 세 종류의 오차가 있다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-10.png" width="500"/></div><p><strong>모델 일반화 오류의 종류</strong></p>
+<p>훈련 과정에서 다루지 않은 새로운 데이터 대한 예측에서 발생하는 오류를 가리키며 세 종류의 오류가 있다.</p>
 <ul class="simple">
 <li><p>편향: 실제로는 2차원 모델인데 1차원 모델을 사용하는 경우처럼 잘못된 가정으로 인해 발생한다.
 과소 적합이 발생할 가능성이 매우 높다.</p></li>
 <li><p>분산: 모델이 훈련 데이터에 민감하게 반응하는 정도를 가리킨다.
 고차 다항 회귀 모델일 수록 분산이 높아질 수 있다.
 일반적으로 <strong>자유도</strong><font size='2'>degree of freedom</font>가 높은 모델일 수록 분산이 커지며,
-과대 적합이 발생할 가능성도 매우 높다.</p></li>
-<li><p>축소 불가능 오차: 잡음(noise) 등 데이터 자체의 한계로 인해 발생한다.
-잡음 등을 제거해야 오차를 줄일 수 있다.</p></li>
+과대 적합이 발생할 가능성도 매우 높다.
+모델의 자유도는 모델이 찾아야 할 파라미터의 개수를 나타낸다.
+따라서 학습시켜야 할 파라미터 수가 많을 수록 모델이 데이터에 민감하게 반응한다.</p></li>
+<li><p>제거 불가능 오류: 잡음(noise) 등 데이터 자체의 한계로 인해 발생한다.
+잡음 등을 제거해야만 오류를 줄일 수 있다.</p></li>
 </ul>
-<div class="proof example admonition" id="exp:bias_variance">
-<p class="admonition-title"><span class="caption-number">Example 4.3 </span> (편향-분산 트레이드오프)</p>
-<div class="example-content section" id="proof-content">
-<p>복잡한 모델일 수록 편향을 줄어들지만 분산을 커진다.</p>
+<div class="info admonition">
+<p class="admonition-title">편향-분산 트레이드오프</p>
+<p>복잡한 모델일 수록 편향을 줄어들지만 분산은 커진다.</p>
 </div>
-</div></div>
-<div class="section" id="id11">
-<h2><span class="section-number">4.5. </span>모델 규제<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="id11">
+<h2><span class="section-number">4.5. </span>모델 규제<a class="headerlink" href="#id11" title="Permalink to this headline">#</a></h2>
 <p>훈련 중에 과소 적합이 발생하면 보다 복잡한 모델을 선택해야 한다.
 반면에 과대 적합이 발생할 경우 먼저 모델에 규제를 가해 과대 적합을 방지하거나
 아니면 최소한 과대 적합이 최대한 늦게 발생하도록 유도해야 한다.</p>
@@ -1120,8 +1260,8 @@ const thebe_selector_output = ".output, .cell_output"
 예를 들어, 분류기의 경우 재현율/정밀도 기준으로 모델의 성능을 평가한다.</p></li>
 </ul>
 </div>
-<div class="section" id="font-size-2-ridge-regression-font">
-<h3><span class="section-number">4.5.1. </span>릿지 회귀<font size='2'>Ridge Regression</font><a class="headerlink" href="#font-size-2-ridge-regression-font" title="Permalink to this headline">¶</a></h3>
+<section id="font-size-2-ridge-regression-font">
+<h3><span class="section-number">4.5.1. </span>릿지 회귀<font size='2'>Ridge Regression</font><a class="headerlink" href="#font-size-2-ridge-regression-font" title="Permalink to this headline">#</a></h3>
 <p>다음 비용 함수를 사용하며,
 특성 스케일링을 해야 규제의 성능이 좋아진다.</p>
 <div class="math notranslate nohighlight">
@@ -1147,9 +1287,9 @@ const thebe_selector_output = ".output, .cell_output"
 (\mathbf{X}^T\, \mathbf{X} + \alpha A)^{-1}\, \mathbf{X}^T\, \mathbf{y}
 \]</div>
 </div>
-</div>
-<div class="section" id="font-size-2-lasso-regression-font">
-<h3><span class="section-number">4.5.2. </span>라쏘 회귀<font size='2'>Lasso Regression</font><a class="headerlink" href="#font-size-2-lasso-regression-font" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="font-size-2-lasso-regression-font">
+<h3><span class="section-number">4.5.2. </span>라쏘 회귀<font size='2'>Lasso Regression</font><a class="headerlink" href="#font-size-2-lasso-regression-font" title="Permalink to this headline">#</a></h3>
 <p>다음 비용 함수를 사용한다.</p>
 <div class="math notranslate nohighlight">
 \[J(\theta) = \textrm{MSE}(\theta) + \alpha \, \sum_{i=1}^{n}\mid \theta_i\mid\]</div>
@@ -1168,9 +1308,9 @@ const thebe_selector_output = ".output, .cell_output"
 <p class="admonition-title">주의 사항</p>
 <p>라쏘 회귀는 정규 방정식을 지원하지 않는다.</p>
 </div>
-</div>
-<div class="section" id="font-size-2-elastic-net-font">
-<h3><span class="section-number">4.5.3. </span>엘라스틱 넷<font size='2'>Elastic Net</font><a class="headerlink" href="#font-size-2-elastic-net-font" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="font-size-2-elastic-net-font">
+<h3><span class="section-number">4.5.3. </span>엘라스틱 넷<font size='2'>Elastic Net</font><a class="headerlink" href="#font-size-2-elastic-net-font" title="Permalink to this headline">#</a></h3>
 <p>릿지 회귀와 라쏘 회귀를 절충한 모델이며 다음 비용 함수를 사용한다.
 <span class="math notranslate nohighlight">\(r\)</span> 은 릿지 규제와 라쏘 규제의 사용 비율이다.
 단, 규제 강도를 의미하는 <code class="docutils literal notranslate"><span class="pre">\alpha</span></code> 가 각 규제에 가해지는 정도가 다름에 주의한다.</p>
@@ -1188,9 +1328,9 @@ r\cdot \bigg (2 \alpha \, \sum_{i=1}^{n}\mid\theta_i\mid \bigg) +
 <p>하지만 특성 수가 훈련 샘플 수보다 크거나 특성 몇 개가 강하게 연관되어 있는 경우엔 엘라스틱 넷을
 사용해야 한다.</p>
 </div>
-</div>
-<div class="section" id="sec-early-stopping">
-<span id="id12"></span><h3><span class="section-number">4.5.4. </span>조기 종료<a class="headerlink" href="#sec-early-stopping" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="sec-early-stopping">
+<span id="id12"></span><h3><span class="section-number">4.5.4. </span>조기 종료<a class="headerlink" href="#sec-early-stopping" title="Permalink to this headline">#</a></h3>
 <p><strong>조기 종료</strong><font size='2'>Early Stopping</font>는
 모델이 훈련셋에 과대 적합하는 것을 방지하기 위해 훈련을 적절한 시기에 중단시키는 기법이며,
 검증 데이터에 대한 손실이 줄어들다가 다시 커지는 순간 훈련을 종료한다.</p>
@@ -1198,17 +1338,17 @@ r\cdot \bigg (2 \alpha \, \sum_{i=1}^{n}\mid\theta_i\mid \bigg) +
 검증 손실이 언제 최소가 되었는지 알기 어렵다.
 따라서 한동안 최소값보다 높게 유지될 때 훈련을 멈추고 기억해둔 최적의 모델로
 되돌린다.</p>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-11.png" width="500"/></div></div>
-</div>
-<div class="section" id="id13">
-<h2><span class="section-number">4.6. </span>로지스틱 회귀<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-11.png" width="500"/></div></section>
+</section>
+<section id="id13">
+<h2><span class="section-number">4.6. </span>로지스틱 회귀<a class="headerlink" href="#id13" title="Permalink to this headline">#</a></h2>
 <p>회귀 모델을 분류 모델로 활용할 수 있다.</p>
 <ul class="simple">
 <li><p>이진 분류: 로지스틱 회귀</p></li>
 <li><p>다중 클래스 분류: 소프트맥스 회귀</p></li>
 </ul>
-<div class="section" id="id14">
-<h3><span class="section-number">4.6.1. </span>확률 추정<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<section id="id14">
+<h3><span class="section-number">4.6.1. </span>확률 추정<a class="headerlink" href="#id14" title="Permalink to this headline">#</a></h3>
 <p>선형 회귀 모델이 예측한 값에 <strong>시그모이드</strong><font size='2'>sigmoid</font> 함수를
 적용하여 0과 1 사이의 값, 즉 양성일 <strong>확률</strong> <span class="math notranslate nohighlight">\(\hat p\)</span> 로 지정한다.</p>
 <div class="math notranslate nohighlight">
@@ -1233,9 +1373,9 @@ r\cdot \bigg (2 \alpha \, \sum_{i=1}^{n}\mid\theta_i\mid \bigg) +
 <li><p>양성: <span class="math notranslate nohighlight">\(\theta_0 + \theta_1\, x_1 + \cdots + \theta_n\, x_n \ge 0\)</span></p></li>
 <li><p>음성: <span class="math notranslate nohighlight">\(\theta_0 + \theta_1\, x_1 + \cdots + \theta_n\, x_n &lt; 0\)</span></p></li>
 </ul>
-</div>
-<div class="section" id="id15">
-<h3><span class="section-number">4.6.2. </span>훈련과 비용 함수<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id15">
+<h3><span class="section-number">4.6.2. </span>훈련과 비용 함수<a class="headerlink" href="#id15" title="Permalink to this headline">#</a></h3>
 <p>로지스틱 회귀 모델은 양성 샘플에 대해서는 1에 가까운 확률값을,
 음성 샘플에 대해서는 0에 가까운 확률값을 내도록 훈련한다.
 각 샘플에 대한 비용은 다음과 같다.</p>
@@ -1276,9 +1416,9 @@ J(\theta) =
 \[
 \dfrac{\partial}{\partial \theta_j} J(\boldsymbol{\theta}) = \dfrac{1}{m}\sum\limits_{i=1}^{m}\left(\mathbf{\sigma(\boldsymbol{\theta}}^T \mathbf{x}^{(i)}) - y^{(i)}\right)\, x_j^{(i)}
 \]</div>
-</div>
-<div class="section" id="id16">
-<h3><span class="section-number">4.6.3. </span>결정 경계<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id16">
+<h3><span class="section-number">4.6.3. </span>결정 경계<a class="headerlink" href="#id16" title="Permalink to this headline">#</a></h3>
 <p>붓꽃 데이터셋을 이용하여 로지스틱 회귀의 사용법을 살펴 본다.
 하나의 붓꽃 샘플은 꽃받침<font size='2'>sepal</font>의 길이와 너비,
 꽃입<font size='2'>petal</font>의 길이와 너비 등 총 4개의 특성으로
@@ -1315,9 +1455,9 @@ J(\theta) =
 <li><p><code class="docutils literal notranslate"><span class="pre">C</span></code>: 릿지 또는 라쏘 규제 정도를 지정하는 <span class="math notranslate nohighlight">\(\alpha\)</span>의 역수에 해당한다.
 따라서 0에 가까울 수록 강한 규제를 의미한다.</p></li>
 </ul>
-</div>
-<div class="section" id="sec-softmax-regression">
-<span id="id17"></span><h3><span class="section-number">4.6.4. </span>소프트맥스 회귀<a class="headerlink" href="#sec-softmax-regression" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="sec-softmax-regression">
+<span id="id17"></span><h3><span class="section-number">4.6.4. </span>소프트맥스 회귀<a class="headerlink" href="#sec-softmax-regression" title="Permalink to this headline">#</a></h3>
 <p>로지스틱 회귀 모델을 일반화하여 다중 클래스 분류를 지원하도록 만든 모델이
 <strong>소프트맥스 회귀</strong><font size='2'>Softmax Regression</font>이며,
 <strong>다항 로지스틱 회귀</strong> 라고도 불린다.</p>
@@ -1390,13 +1530,13 @@ J(\Theta) =
 </div>
 <p>아래 그림은 붓꽃 꽃잎의 너비와 길이를 기준으로 세 개의 품종을 색까로 구분하는 결정 경계를 보여준다.
 다양한 색상의 곡선은 버시컬러 품종에 속할 확률의 영력을 보여준다.</p>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-16.png" width="700"/></div></div>
-</div>
-<div class="section" id="id18">
-<h2><span class="section-number">4.7. </span>연습문제<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h2>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-16.png" width="700"/></div></section>
+</section>
+<section id="id18">
+<h2><span class="section-number">4.7. </span>연습문제<a class="headerlink" href="#id18" title="Permalink to this headline">#</a></h2>
 <p>참고: <a class="reference external" href="https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_training_models.ipynb">(실습) 모델 훈련</a></p>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1420,9 +1560,11 @@ J(\Theta) =
 
               </div>
               
-            
-                <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
     <a class='left-prev' id="prev-link" href="classification.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
@@ -1438,24 +1580,28 @@ J(\Theta) =
     <i class="fas fa-angle-right"></i>
     </a>
 </div>
-            
+            </footer>
         </div>
     </div>
-    <footer class="footer">
-  <p>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By 코딩알지<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
     
-      By 코딩알지<br/>
-    
-        &copy; Copyright 2021.<br/>
-  </p>
-</footer>
-</main>
+</div>
 
 
       </div>
     </div>
   
-  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
 
   </body>
 </html>
