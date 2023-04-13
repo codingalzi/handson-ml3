@@ -643,43 +643,39 @@
 # ## 모델 규제
 
 # 훈련 중에 과소 적합이 발생하면 보다 복잡한 모델을 선택해야 한다.
-# 반면에 과대 적합이 발생할 경우 먼저 모델에 규제를 가해 과대 적합을 방지하거나
-# 아니면 최소한 과대 적합이 최대한 늦게 발생하도록 유도해야 한다. 
+# 반면에 과대 적합이 발생할 경우 보다 단순한 모델을 사용하거나 모델에 규제를 가해서
+# 과대 적합을 방지하거나 아니면 최소한 과대 적합이 최대한 늦게 발생하도록 유도해야 한다. 
 
 # 모델 규제는 보통 모델의 자유도를 제한하는 방식으로 이루어진다. 
 # **자유도**<font size="2">degree of freedom</font>는 모델 결정에 영향을 주는 요소들의 개수이다.
 # 예를 들어 선형 회귀의 경우에는 특성 수가 자유도를 결정하며,
 # 다항 회귀의 경우엔 차수도 자유도에 기여한다.
 # 
-# 선형 회귀 모델에 대한 **규제**<font size='2'>regularization</font>는 가중치를 제한하는 방식으로 이루어지며,
+# 선형 회귀 모델에 대한 **규제**<font size='2'>regularization</font>는 가중치의 역할을 제한하는 방식으로 이루어지며,
 # 방식에 따라 다음 세 가지 선형 회귀 모델이 지정된다.
 # 
 # * 릿지 회귀
 # * 라쏘 회귀
 # * 엘라스틱 넷
 
-# :::{admonition} 주의
-# :class: warning
-# 
-# 규제는 훈련 과정에만 사용된다. 테스트 과정에는 다른 기준으로 성능을 평가한다.
-# 
-# * 훈련 과정: 비용 최소화 목표
-# * 테스트 과정: 최종 목표에 따른 성능 평가. 
-#     예를 들어, 분류기의 경우 재현율/정밀도 기준으로 모델의 성능을 평가한다.
-# :::
-
 # ### 릿지 회귀<font size='2'>Ridge Regression</font>
 
 # 다음 비용 함수를 사용하며,
-# 특성 스케일링을 해야 규제의 성능이 좋아진다.
+# 특성 `StandardScaler` 등을 사용하여 특성 스케일링을 진행 한 다음에 
+# 규제 모델을 훈현해야 모델의 성능이 좋아진다.
+# 이유는 $\theta_i$ 값이 특성의 크기에 의존하기에
+# 모든 특성의 크기를 비슷하게 맞추면 $\theta_i$가 
+# 보다 일정하게 수렴하기 때문이다.
 # 
-# $$J(\theta) = \textrm{MSE}(\theta) + \alpha \sum_{i=1}^{n}\theta_i^2$$
+# $$J(\theta) = \textrm{MSE}(\theta) + \frac{\alpha}{m_b} \sum_{i=1}^{n}\theta_i^2$$
 # 
+# * $m_b$는 배치 크기를 가리킨다.
 # * $\alpha$(알파)는 규제의 강도를 지정한다. 
 #     $\alpha=0$ 이면 규제가 전혀 없는 기본 선형 회귀이다.
 # 
 # * $\alpha$ 가 커질 수록 가중치의 역할이 줄어든다.
 #     왜냐하면 비용을 줄이기 위해 보다 작은 가중치를 선호하는 방향으로 훈련되기 때문이다.
+#     결국 모델의 분산 정도가 작아진다.
 # 
 # * $\theta_0$ 는 규제하지 않는다.
 
@@ -690,22 +686,11 @@
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/ridge01.png" width="600"/></div>
 
-# :::{admonition} 릿지 회귀의 정규 방정식
-# :class: info
-# 
-# $A$ 가 `(n+1)x(n+1)` 모양의 단위 행렬<font size='2'>identity matrix</font>일 때 다음이 성립한다.
-# 
-# $$
-# \hat{\mathbf{\theta}} = 
-# (\mathbf{X}^T\, \mathbf{X} + \alpha A)^{-1}\, \mathbf{X}^T\, \mathbf{y}
-# $$
-# :::
-
 # ### 라쏘 회귀<font size='2'>Lasso Regression</font>
 
 # 다음 비용 함수를 사용한다.
 # 
-# $$J(\theta) = \textrm{MSE}(\theta) + \alpha \, \sum_{i=1}^{n}\mid \theta_i\mid$$
+# $$J(\theta) = \textrm{MSE}(\theta) + 2\alpha \, \sum_{i=1}^{n}\mid \theta_i\mid$$
 # 
 # * 별로 중요하지 않은 특성에 대해 $\theta_i$가 0에 빠르게 수렴하도록 훈련 중에 유도된다.
 #     이유는 $\mid \theta_i \mid$ 의 미분값이 1또는 -1 이기에 상대적으로 큰 값이기에
@@ -726,7 +711,7 @@
 # 라쏘 회귀는 정규 방정식을 지원하지 않는다.
 # :::
 
-# ### 엘라스틱 넷<font size='2'>Elastic Net</font>
+# ### 엘라스틱 넷<font size='2'>Elastic Net</font> 회귀
 
 # 릿지 회귀와 라쏘 회귀를 절충한 모델이며 다음 비용 함수를 사용한다.
 # $r$ 은 릿지 규제와 라쏘 규제의 사용 비율이다. 
@@ -736,7 +721,7 @@
 # J(\theta) = 
 # \textrm{MSE}(\theta) + 
 # r\cdot \bigg (2 \alpha \, \sum_{i=1}^{n}\mid\theta_i\mid \bigg) + 
-# (1-r)\cdot \bigg (\frac{\alpha}{m}\, \sum_{i=1}^{n}\theta_i^2 \bigg )
+# (1-r)\cdot \bigg (\frac{\alpha}{m_b}\, \sum_{i=1}^{n}\theta_i^2 \bigg )
 # $$
 
 # :::{admonition} 규제 선택
@@ -744,17 +729,17 @@
 # 
 # 약간이라도 규제를 사용해야 하며, 일반적으로 릿지 회귀가 추천된다.
 # 반면에 유용한 속성이 그렇게 많지 않다고 판단되는 경우엔 라쏘 회귀 또는 엘라스틱 넷이 추천된다.
-# 
-# 하지만 특성 수가 훈련 샘플 수보다 크거나 특성 몇 개가 강하게 연관되어 있는 경우엔 엘라스틱 넷을
-# 사용해야 한다.
+# 하지만 특성 수가 훈련 샘플 수보다 많거나 특성 몇 개가 상호 강하게 연관되어 있는 경우엔 엘라스틱 넷을 추천한다.
 # :::
 
 # (sec:early-stopping)=
 # ### 조기 종료
 
 # **조기 종료**<font size='2'>Early Stopping</font>는 
-# 모델이 훈련셋에 과대 적합하는 것을 방지하기 위해 훈련을 적절한 시기에 중단시키는 기법이며,
-# 검증 데이터에 대한 손실이 줄어들다가 다시 커지는 순간 훈련을 종료한다. 
+# 모델이 훈련셋에 과대 적합하는 것을 방지하기 위해 훈련을 적절한 시기에 중단시키는 기법이며
+# 가장 일반적으로 사용된다.
+# 훈련 조기 종료는 지정된 에포크가 다 돌아가지 않았다 하더라도
+# 검증셋에 대한 비용함수의 값이 줄어들다가 다시 커지는 순간 훈련을 종료한다.
 # 
 # 확률적 경사하강법, 미니 배치 경사하강법에서는 손실 곡선이 보다 많이 진동하기에
 # 검증 손실이 언제 최소가 되었는지 알기 어렵다.
@@ -776,13 +761,13 @@
 # 적용하여 0과 1 사이의 값, 즉 양성일 **확률** $\hat p$ 로 지정한다.
 # 
 # $$
-# \hat p = h_\theta(\mathbf{x}) = \sigma(\mathbf{\theta}^T \, \mathbf{x})
+# \hat p = h_\theta(\mathbf{x}) 
 # = \sigma(\theta_0 + \theta_1\, x_1 + \cdots + \theta_n\, x_n)
 # $$
 
 # **시그모이드 함수**
 # 
-# $$\sigma(t) = \frac{1}{1 + \exp(-t)}$$
+# $$\sigma(t) = \frac{1}{1 + e^{-t}}$$
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-12.png" width="500"/></div>
 
@@ -798,60 +783,51 @@
 
 # 즉, 다음이 성립한다.
 # 
-# * 양성: $\theta_0 + \theta_1\, x_1 + \cdots + \theta_n\, x_n \ge 0$
-# 
-# * 음성: $\theta_0 + \theta_1\, x_1 + \cdots + \theta_n\, x_n < 0$
+# * 양성: $\theta_0 + \theta_1\, x_1 + \cdots + \theta_n\, x_n \ge 0$ 인 경우
+# * 음성: $\theta_0 + \theta_1\, x_1 + \cdots + \theta_n\, x_n < 0$ 인 경우
 
-# ### 훈련과 비용 함수
+# ### 비용 함수
 
 # 로지스틱 회귀 모델은 양성 샘플에 대해서는 1에 가까운 확률값을,
 # 음성 샘플에 대해서는 0에 가까운 확률값을 내도록 훈련한다.
-# 각 샘플에 대한 비용은 다음과 같다.
-# 
-# $$
-# c(\theta) = 
-# \begin{cases}
-# -\log(\,\hat p\,) & \text{$y=1$ 인 경우}\\
-# -\log(\,1 - \hat p\,) & \text{$y=0$ 인 경우}
-# \end{cases}
-# $$
-# 
 # 양성 샘플에 대해 0에 가까운 값을 예측하거나,
 # 음성 샘플에 대해 1에 가까운 값을 예측하면 
-# 위 비용 함수의 값이 무한히 커진다.
-# 
-# 모델 훈련은 따라서 전체 훈련셋에 대한 다음 
-# **로그 손실**<font size='2'>log loss</font> 함수는 다음과 같다.
+# 비용 함수의 값이 무한히 커지도록 유도한다.
+# 아래 **로그 손실**<font size='2'>log loss</font> 함수가 이런 특성을 만족시킨다.
 # 
 # $$
 # J(\theta) = 
-# - \frac{1}{m}\, \sum_{i=1}^{m}\, [y^{(i)}\, \log(\,\hat p^{(i)}\,) + (1-y^{(i)})\, \log(\,1 - \hat p^{(i)}\,)]
+# - \frac{1}{m_b}\, \sum_{i=1}^{m_b}\, \left( y^{(i)} \cdot \log(\,\hat p^{(i)}\,) + (1-y^{(i)}) \cdot \log(\,1 - \hat p^{(i)}\,)\right)
 # $$
 
 # :::{admonition} 로그 손실 함수 이해
 # :class: info
 # 
-# $c(\theta)$ 는 틀린 예측을 하면 손실값이 매우 커진다.
+# 틀린 예측을 하면 로그 손실값이 매우 커진다.
 # 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-12-10a.png" width="500"/></div>
 # 
-# 훈련셋이 가우시안 분포를 따른다는 전제하에 로그 손실 함수를 최소화하면 
-# **최대 우도**<font size='2'>maximal likelihood</font>를 갖는 최적의 모델을 얻을 수 있다는 사실은
+# 훈련셋이 가우스 분포를 따른다는 전제하에 로그 손실 함수를 최소화하면 
+# 최적의 모델을 얻을 수 있다는 사실이
 # 수학적으로 증명되었다.
-# 상세 내용은 [앤드류 응(Andrew Ng) 교수의 Stanford CS229](https://www.youtube.com/watch?v=jGwO_UgTS7I&list=PLoROMvodv4rMiGQp3WXShtMGgzqpfVfbU) 강의에서 들을 수 있다.
+# 상세 내용은 [앤드류 응(Andrew Ng) 교수의 Stanford CS229](https://www.youtube.com/watch?v=jGwO_UgTS7I&list=PLoROMvodv4rMiGQp3WXShtMGgzqpfVfbU) 강의에서 확인할 수 있다.
 # :::
 
-# 최적의 $\theta$ 를 계산하는 정규 방정식은 하지 않는다.
-# 하지만 다행히도 경사하강법은 적용할 수 있으며,
-# 선형 회귀의 경우처럼 적절한 학습률을 사용하면 언제나 최소 비용에 수렴하도록
-# 파라미터가 훈련된다.
-# 
-# 참고로 로그 손실 함수의 그레이디이언트 벡터는 선형 회귀의 그것과 매우 유사하며,
-# 다음 편도 함수들로 이루어진다.
-# 
-# $$
-# \dfrac{\partial}{\partial \theta_j} J(\boldsymbol{\theta}) = \dfrac{1}{m}\sum\limits_{i=1}^{m}\left(\mathbf{\sigma(\boldsymbol{\theta}}^T \mathbf{x}^{(i)}) - y^{(i)}\right)\, x_j^{(i)}
-# $$
+# ### 붓꽃 데이터셋
+
+# 붓꽃의 품종 분류를 로지스틱 회귀로 진행한다.
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
 
 # ### 결정 경계
 
@@ -883,7 +859,7 @@
 # log_reg.fit(X_train, y_train)
 # ```
 # 
-# 훈련 결과 꽃잎의 넙가 약 1.65cm 보다 큰 경우 버지니카 품종일 가능성이 높아짐이 확인된다.
+# 훈련 결과 꽃잎의 너비가 약 1.65cm 보다 큰 경우 버지니카 품종일 가능성이 높아짐이 확인된다.
 # 즉, 버지니카 품좀 감지기의 
 # **결정 경계**<font size='2'>decision boundary</font>는 꽃잎 넙 기준으로 약 1.65cm 이다.
 
