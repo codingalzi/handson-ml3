@@ -805,6 +805,9 @@
 # 
 # 틀린 예측을 하면 로그 손실값이 매우 커진다.
 # 
+# - 아래 왼쪽 그림: 샘플의 레이블이 1(양성)인데 예측 확률($\hat p$)이 0에 가까운 경우 로그 손실이 매우 클 수 있음
+# - 아래 오른쪽 그림: 샘플의 레이블이 0(음성)인데 예측 확률($\hat p$)이 1에 가까운 경우 로그 손실이 매우 클 수 있음
+# 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-12-10a.png" width="500"/></div>
 # 
 # 훈련셋이 가우스 분포를 따른다는 전제하에 로그 손실 함수를 최소화하면 
