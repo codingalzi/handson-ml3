@@ -1391,6 +1391,10 @@ J(\theta) =
 <div class="info admonition">
 <p class="admonition-title">로그 손실 함수 이해</p>
 <p>틀린 예측을 하면 로그 손실값이 매우 커진다.</p>
+<ul class="simple">
+<li><p>아래 왼쪽 그림: 샘플의 레이블이 1(양성)인데 예측 확률(<span class="math notranslate nohighlight">\(\hat p\)</span>)이 0에 가까운 경우 로그 손실이 매우 클 수 있음</p></li>
+<li><p>아래 오른쪽 그림: 샘플의 레이블이 0(음성)인데 예측 확률(<span class="math notranslate nohighlight">\(\hat p\)</span>)이 1에 가까운 경우 로그 손실이 매우 클 수 있음</p></li>
+</ul>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-12-10a.png" width="500"/></div>
 <p>훈련셋이 가우스 분포를 따른다는 전제하에 로그 손실 함수를 최소화하면
 최적의 모델을 얻을 수 있다는 사실이
