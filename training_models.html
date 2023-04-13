@@ -488,18 +488,23 @@ title="Print to PDF"
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id16">
-     4.6.3. 결정 경계
+     4.6.3. 붓꽃 데이터셋
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id17">
+     4.6.4. 결정 경계
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#sec-softmax-regression">
-     4.6.4. 소프트맥스 회귀
+     4.6.5. 소프트맥스 회귀
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id18">
+  <a class="reference internal nav-link" href="#id19">
    4.7. 연습문제
   </a>
  </li>
@@ -637,18 +642,23 @@ title="Print to PDF"
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id16">
-     4.6.3. 결정 경계
+     4.6.3. 붓꽃 데이터셋
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id17">
+     4.6.4. 결정 경계
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#sec-softmax-regression">
-     4.6.4. 소프트맥스 회귀
+     4.6.5. 소프트맥스 회귀
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id18">
+  <a class="reference internal nav-link" href="#id19">
    4.7. 연습문제
   </a>
  </li>
@@ -1309,7 +1319,7 @@ title="Print to PDF"
 J(\theta) = 
 \textrm{MSE}(\theta) + 
 r\cdot \bigg (2 \alpha \, \sum_{i=1}^{n}\mid\theta_i\mid \bigg) + 
-(1-r)\cdot \bigg (\frac{\alpha}{m}\, \sum_{i=1}^{n}\theta_i^2 \bigg )
+(1-r)\cdot \bigg (\frac{\alpha}{m_b}\, \sum_{i=1}^{n}\theta_i^2 \bigg )
 \]</div>
 <div class="info admonition">
 <p class="admonition-title">규제 선택</p>
@@ -1349,7 +1359,7 @@ r\cdot \bigg (2 \alpha \, \sum_{i=1}^{n}\mid\theta_i\mid \bigg) +
 \]</div>
 <p><strong>시그모이드 함수</strong></p>
 <div class="math notranslate nohighlight">
-\[\sigma(t) = \frac{1}{1 + \exp(-t)}\]</div>
+\[\sigma(t) = \frac{1}{1 + e^{-t}}\]</div>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-12.png" width="500"/></div><p>로지스틱 회귀 모델의 <strong>예측값</strong>은 다음과 같다.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -1361,8 +1371,8 @@ r\cdot \bigg (2 \alpha \, \sum_{i=1}^{n}\mid\theta_i\mid \bigg) +
 \end{split}\]</div>
 <p>즉, 다음이 성립한다.</p>
 <ul class="simple">
-<li><p>양성: <span class="math notranslate nohighlight">\(\theta_0 + \theta_1\, x_1 + \cdots + \theta_n\, x_n \ge 0\)</span></p></li>
-<li><p>음성: <span class="math notranslate nohighlight">\(\theta_0 + \theta_1\, x_1 + \cdots + \theta_n\, x_n &lt; 0\)</span></p></li>
+<li><p>양성: <span class="math notranslate nohighlight">\(\theta_0 + \theta_1\, x_1 + \cdots + \theta_n\, x_n \ge 0\)</span> 인 경우</p></li>
+<li><p>음성: <span class="math notranslate nohighlight">\(\theta_0 + \theta_1\, x_1 + \cdots + \theta_n\, x_n &lt; 0\)</span> 인 경우</p></li>
 </ul>
 </section>
 <section id="id15">
@@ -1371,8 +1381,8 @@ r\cdot \bigg (2 \alpha \, \sum_{i=1}^{n}\mid\theta_i\mid \bigg) +
 음성 샘플에 대해서는 0에 가까운 확률값을 내도록 훈련한다.
 양성 샘플에 대해 0에 가까운 값을 예측하거나,
 음성 샘플에 대해 1에 가까운 값을 예측하면
-비용 함수의 값이 무한히 커지도록 유도한다.</p>
-<p>아래 <strong>로그 손실</strong><font size='2'>log loss</font> 함수가 이런 특성을 만족시킨다.</p>
+비용 함수의 값이 무한히 커지도록 유도한다.
+아래 <strong>로그 손실</strong><font size='2'>log loss</font> 함수가 이런 특성을 만족시킨다.</p>
 <div class="math notranslate nohighlight">
 \[
 J(\theta) = 
@@ -1389,7 +1399,11 @@ J(\theta) =
 </div>
 </section>
 <section id="id16">
-<h3><span class="section-number">4.6.3. </span>결정 경계<a class="headerlink" href="#id16" title="Permalink to this headline">#</a></h3>
+<h3><span class="section-number">4.6.3. </span>붓꽃 데이터셋<a class="headerlink" href="#id16" title="Permalink to this headline">#</a></h3>
+<p>붓꽃의 품종 분류를 로지스틱 회귀로 진행한다.</p>
+</section>
+<section id="id17">
+<h3><span class="section-number">4.6.4. </span>결정 경계<a class="headerlink" href="#id17" title="Permalink to this headline">#</a></h3>
 <p>붓꽃 데이터셋을 이용하여 로지스틱 회귀의 사용법을 살펴 본다.
 하나의 붓꽃 샘플은 꽃받침<font size='2'>sepal</font>의 길이와 너비,
 꽃입<font size='2'>petal</font>의 길이와 너비 등 총 4개의 특성으로
@@ -1412,7 +1426,7 @@ J(\theta) =
 <span class="n">log_reg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>훈련 결과 꽃잎의 넙가 약 1.65cm 보다 큰 경우 버지니카 품종일 가능성이 높아짐이 확인된다.
+<p>훈련 결과 꽃잎의 너비가 약 1.65cm 보다 큰 경우 버지니카 품종일 가능성이 높아짐이 확인된다.
 즉, 버지니카 품좀 감지기의
 <strong>결정 경계</strong><font size='2'>decision boundary</font>는 꽃잎 넙 기준으로 약 1.65cm 이다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/iris02.png" width="700"/></div><p>아래 그림은 꽃잎의 너비와 길이 두 속성을 이용한 버지니카 품종 감지기가 찾은
@@ -1428,7 +1442,7 @@ J(\theta) =
 </ul>
 </section>
 <section id="sec-softmax-regression">
-<span id="id17"></span><h3><span class="section-number">4.6.4. </span>소프트맥스 회귀<a class="headerlink" href="#sec-softmax-regression" title="Permalink to this headline">#</a></h3>
+<span id="id18"></span><h3><span class="section-number">4.6.5. </span>소프트맥스 회귀<a class="headerlink" href="#sec-softmax-regression" title="Permalink to this headline">#</a></h3>
 <p>로지스틱 회귀 모델을 일반화하여 다중 클래스 분류를 지원하도록 만든 모델이
 <strong>소프트맥스 회귀</strong><font size='2'>Softmax Regression</font>이며,
 <strong>다항 로지스틱 회귀</strong> 라고도 불린다.</p>
@@ -1503,8 +1517,8 @@ J(\Theta) =
 다양한 색상의 곡선은 버시컬러 품종에 속할 확률의 영력을 보여준다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-16.png" width="700"/></div></section>
 </section>
-<section id="id18">
-<h2><span class="section-number">4.7. </span>연습문제<a class="headerlink" href="#id18" title="Permalink to this headline">#</a></h2>
+<section id="id19">
+<h2><span class="section-number">4.7. </span>연습문제<a class="headerlink" href="#id19" title="Permalink to this headline">#</a></h2>
 <p>참고: <a class="reference external" href="https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_training_models.ipynb">(실습) 모델 훈련</a></p>
 </section>
 </section>
