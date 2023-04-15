@@ -268,7 +268,7 @@
 # \frac 1 {m_b} \sum_{i=1}^{m_b} \big(\mathbf{x}^{(i)}\, \mathbf{\theta} - y^{(i)}\big)^2
 # $$
 # 
-# 단, $m_b$는 배치 크기를 가리킨다.
+# MSE는 스텝마다 계산되며, $m_b$는 따라서 배치 크기를 가리킨다.
 
 # **전역 최소값**<font size="2">global minimum</font>
 # 
@@ -519,7 +519,7 @@
 # :::
 
 # (sec:poly_reg)=
-# ## 다항 회귀
+# ## 비선형 데이터 학습: 다항 회귀
 
 # 비선형 데이터를 선형 회귀를 이용하여 학습하는 기법을
 # **다항 회귀**<font size="2">polynomial regression</font>라 한다.
@@ -752,8 +752,8 @@
 
 # 회귀 모델을 분류 모델로 활용할 수 있다. 
 # 
-# * 이진 분류: 로지스틱 회귀
-# * 다중 클래스 분류: 소프트맥스 회귀
+# * 이진 분류: 로지스틱 회귀 사용
+# * 다중 클래스 분류: 소프트맥스 회귀 사용
 
 # ### 확률 추정
 
@@ -765,13 +765,19 @@
 # = \sigma(\theta_0 + \theta_1\, x_1 + \cdots + \theta_n\, x_n)
 # $$
 
-# **시그모이드 함수**
+# :::{admonition} 시그모이드 함수
+# :class: info
+# 
+# 시그모이드 함수는 다음과 같다.
 # 
 # $$\sigma(t) = \frac{1}{1 + e^{-t}}$$
-
+# 
+# 그래프로 그리면 $t=0$일 때 0.5를 가지면 그보다 크면 1에, 작으면 -1에 수렴한다.
+# 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-12.png" width="500"/></div>
+# :::
 
-# 로지스틱 회귀 모델의 **예측값**은 다음과 같다.
+# 로지스틱 회귀 모델의 예측값은 시그모이드 함숫값이 0.5 이상인지 여부로 결정한다.
 # 
 # $$
 # \hat y = 
@@ -781,7 +787,7 @@
 # \end{cases}
 # $$
 
-# 즉, 다음이 성립한다.
+# 이는 다음과 같이 가중치와 특성의 선형 조합 결과가 0 이상인지 여부에 따라 양성 또는 음성으로 판별함을 의미한다.
 # 
 # * 양성: $\theta_0 + \theta_1\, x_1 + \cdots + \theta_n\, x_n \ge 0$ 인 경우
 # * 음성: $\theta_0 + \theta_1\, x_1 + \cdots + \theta_n\, x_n < 0$ 인 경우
@@ -800,7 +806,7 @@
 # - \frac{1}{m_b}\, \sum_{i=1}^{m_b}\, \left( y^{(i)} \cdot \log(\,\hat p^{(i)}\,) + (1-y^{(i)}) \cdot \log(\,1 - \hat p^{(i)}\,)\right)
 # $$
 
-# :::{admonition} 로그 손실 함수 이해
+# :::{admonition} 로그 손실 함수
 # :class: info
 # 
 # 틀린 예측을 하면 로그 손실값이 매우 커진다.
@@ -819,27 +825,17 @@
 # ### 붓꽃 데이터셋
 
 # 붓꽃의 품종 분류를 로지스틱 회귀로 진행한다.
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# ### 결정 경계
-
-# 붓꽃 데이터셋을 이용하여 로지스틱 회귀의 사용법을 살펴 본다. 
-# 하나의 붓꽃 샘플은 꽃받침<font size='2'>sepal</font>의 길이와 너비, 
+# 붓꽃 데이터셋의 샘플은 꽃받침<font size='2'>sepal</font>의 길이와 너비, 
 # 꽃입<font size='2'>petal</font>의 길이와 너비 등 총 4개의 특성으로 
 # 이루어진다. 
 # 
-# 타깃값은 0, 1, 2 중에 하나이며 각 숫자는 다음 세 개의 품종을 가리킨다. 
+# ```python
+# [꽃받침 길이, 꽃받침 너비, 꽃잎 길이, 꽃잎 너비]
+# ```
+
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/datapy/master/jupyter-book//images/iris_petal-sepal.png" width="500"/></div>
+
+# 레이블은 0, 1, 2 중에 하나이며 각 숫자는 하나의 품종을 가리킨다. 
 # 
 # * 0: Iris-Setosa(세토사)
 # * 1: Iris-Versicolor(버시컬러)
@@ -847,34 +843,95 @@
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/iris01.png" width="600"/></div>
 
-# **버지니카 품종 감지기**
-# 
-# 로지스틱 회귀 모델을 이용하여 아이리스 데이터셋을 대상으로 버지니카 품종을 감지하는
-# 이진 분류기를 다음과 같이 훈련시킨다.
-# 단, 문제를 간단하기 만들기 위해 꽃잎의 너비 속성 하나만 이용한다. 
+# **붓꽃 데이터셋 불러오기**
+
+# 붓꽃 데이터셋은 머신러닝 분류 모델을 소개할 때 자주 활용되는 유명한 데이터셋이다.
+# 많은 서이트에서 다운로드 서비스를 제공하지만 여기서는 사이킷런 자체로 제공하는 데이터셋을 불러온다.
+
+# ```python
+# from sklearn.datasets import load_iris
+# iris = load_iris(as_frame=True)
+# ```
+
+# `load_iris()` 함수는 데이터셋을 사전 자료형과 유사한 `Bunch` 자료형으로 불러온다.
+# 사용되는 키(key) 중에 `data` 키와 연결된 값이 4개의 특성으로 구성된 훈련셋 데이터프레임<font size='2'>DataFrame</font>이고
+# `target` 키와 연결된 값이 레이블셋 시리즈<font size='2'>Series</font>이다.
+
+# 훈련셋의 처음 5개의 샘플은 다음과 같다.
 # 
 # ```python
-# X = iris.data[["petal width (cm)"]].values
-# y = iris.target_names[iris.target] == 'virginica'
-# X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42)
+# >>> iris.data.head(5)
+#      sepal length (cm) sepal width (cm) petal length (cm) petal width (cm)
+# 0    5.1               3.5              1.4               0.2
+# 1    4.9               3.0              1.4               0.2
+# 2    4.7               3.2              1.3               0.2
+# 3    4.6               3.1              1.5               0.2
+# 4    5.0               3.6              1.4               0.2
+# ```
+
+# 레이블셋의 처음 5개의 샘플은 다음과 같이 모두 세토사 품종이다.
+# 
+# ```python
+# >>> iris.target.head(5)
+# 0    0
+# 1    0
+# 2    0
+# 3    0
+# 4    0
+# ```
+
+# 품종의 실제 이름은 `target_names` 키의 값으로 지정되었으며 다음과 같이
+# `setosa`, `versicolor`, `virginica` 세 개의 품종이다.
+
+# ```python
+# >>> iris.target_names
+# array(['setosa', 'versicolor', 'virginica'], dtype='<U10')
+# ```
+
+# ### 결정 경계
+
+# **버지니카 품종 감지기: 꽃잎 너비 특성 활용**
+
+# 로지스틱 회귀 모델을 이용하여 붓꽃의 품종이 버지니카인지 여부를 판별하는
+# 이진 분류기를 훈련시켜 보자.
+# 문제를 단순화하기 위해 꽃잎의 너비 속성 하나만 이용하여 붓꽃의 품종을 판별한다. 
+# 
+# ```python
+# X = iris.data[["petal width (cm)"]].values        # 꽃잎 너비 특성만 데이터셋으로 사용
+# y = iris.target_names[iris.target] == 'virginica' # 레이블 셋: 버지니카 품종이면 1, 아니면 0.
+# X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42) # 훈련셋:테스트셋 = 7.5:2.2
 # 
 # log_reg = LogisticRegression(random_state=42)
 # log_reg.fit(X_train, y_train)
 # ```
 # 
-# 훈련 결과 꽃잎의 너비가 약 1.65cm 보다 큰 경우 버지니카 품종일 가능성이 높아짐이 확인된다.
+# 훈련 결과 꽃잎의 너비가 1.65cm 보다 크면 버지니카 품종일 가능성이 50% 이상으로 계산된다.
 # 즉, 버지니카 품좀 감지기의 
-# **결정 경계**<font size='2'>decision boundary</font>는 꽃잎 넙 기준으로 약 1.65cm 이다.
+# **결정 경계**<font size='2'>decision boundary</font>는 꽃잎 너비 기준으로 1.65cm 이다.
+# 
+# 아래 그림의 초록 실선은 꽃잎 너비 1.65 기준으로 버지니카 품종일 확율이 50%를 넘어서는 것을 보여준다.
+# 반면에 파랑 파선은 반대로 꽃잎 너비 1.65 기준으로 버니니카 품종이 아닐 확률이 50% 아래로 떨어지는 것을 보여준다.
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/iris02.png" width="700"/></div>
+# 
+# <br>
 
-# 아래 그림은 꽃잎의 너비와 길이 두 속성을 이용한 버지니카 품종 감지기가 찾은 
-# 결정 경계(검정 파선)를 보여준다. 
-# 반면에 다양한 색상의 직선은 버지니카 품종일 가능성을 보여주는 영역을 표시한다. 
+# **버지니카 품종 감지기: 꽃잎 길이와 너비 특성 활용**
 
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-15.png" width="700"/></div>
+# 이번에는 꽃잎의 길이와 너비 두 특성을 이용하여 붓꽃의 품종을 판별하는 로지스틱 회귀 모델을 훈련한다.
+# 
+# 
+# ```python
+# X = iris.data[["petal length (cm)", "petal width (cm)"]].values # 꽃잎 너비 특성만 데이터셋으로 사용
+# y = iris.target_names[iris.target] == 'virginica'               # 레이블 셋: 버지니카 품종이면 1, 아니면 0.
+# X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42) # 훈련셋:테스트셋 = 7.5:2.2
+# 
+# log_reg = LogisticRegression(C=2, random_state=42)
+# log_reg.fit(X_train, y_train)
+# ```
 
-# **로지스틱 회귀 규제**
+# :::{admonition} 로지스틱 회귀 모델 규제
+# :class: info
 # 
 # `LogisticRegression` 모델의 하이퍼파라미터 `penalty` 와 `C` 를 이용하여 규제와 규제의 강도를 지정한다. 
 # 
@@ -882,29 +939,74 @@
 #     기본값은 `l2`, 즉, 릿지 규제를 기본으로 적용한다.
 # 
 # * `C`: 릿지 또는 라쏘 규제 정도를 지정하는 $\alpha$의 역수에 해당한다. 
-#     따라서 0에 가까울 수록 강한 규제를 의미한다.
+#     따라서 0에 가까울 수록 강한 규제를 의미한다. 
+#     기본값은 1이다.
+# :::
+
+# 아래 그림의 검정 파선은 아래 식을 만족시키는 (꽃잎길이 $x_1$, 꽃잎너비 $x_2$)의 점들로 구성된다.
+# 
+# $$
+# \sigma(\theta_0 + x_1 \cdot \theta_1 + x_2 \cdot \theta_2) = 0.5
+# $$
+# 
+# 즉, 다음을 만족시키는 직선상의 점들이다. 
+# 
+# $$
+# \theta_0 + x_1 \cdot \theta_1 + x_2 \cdot \theta_2 = 0
+# $$
+# 
+# 일차 함수식으로 표현하면 다음과 같다.
+# 
+# $$
+# x_2 = - \frac{\theta_0 + x_1 \cdot \theta_1}{\theta_2}
+# $$
+# 
+# 결론적으로 검정 파선은  꽃잎의 너비와 길이 두 속성을 이용했을 때 버지니카 품종의 여부를 
+# 결정하는 **결정 경계**를 나타낸다. 
+# 반면에 다양한 색상의 직선은 버지니카 품종일 가능성(확률)을 보여주는 영역을 구분한다. 
+
+# 편향 $\theta_0$는 `lin_reg.intercept_` 속성에, 가중치들의 리스트 $[\theta_1, \theta_2]$는 `lin_reg.coef_` 속성에 저장되어 있다.
+# 편향과 가중치의 실제 값은 다음과 같다.
+# 따라서 다음이 성립한다.
+# 
+# ```
+# x2 = - (log_reg.coef_[0, 0] * x1 + log_reg.intercept_[0]) / log_reg.coef_[0, 1]
+# ```
+# 
+# 훈련을 통해 알아낸 편형과 가중치는 다음과 같다. 
+# 
+# ```python
+# >>> log_reg.intercept_
+# array([-19.39071015])
+# 
+# >>> log_reg.coef_
+# array([[3.05915555, 2.70297187]])
+# ```
+
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-15.png" width="700"/></div>
+# 
+# <br>
 
 # (sec:softmax-regression)=
 # ### 소프트맥스 회귀
 
 # 로지스틱 회귀 모델을 일반화하여 다중 클래스 분류를 지원하도록 만든 모델이
-# **소프트맥스 회귀**<font size='2'>Softmax Regression</font>이며, 
-# **다항 로지스틱 회귀** 라고도 불린다.
+# **소프트맥스 회귀**<font size='2'>Softmax regression</font>이며, 
+# **다항 로지스틱 회귀**<font size='2'>multinomial logistic regression</font> 라고도 불린다.
 
 # **클래스별 확률 예측**
 # 
-# 샘플 $\mathbf x$가 주어졌을 때 각각의 분류 클래스 $k$ 에 대한 점수 $s_k(\mathbf x)$를
+# 샘플 $\mathbf x$가 주어졌을 때 각각의 분류 클래스 $k$ 에 대해 점수 $s_k(\mathbf x)$를
 # 선형 회귀 방식으로 계산한다.
 # 
 # $$
 # s_k(\mathbf{x}) = \theta_0^{(k)} + \theta_1^{(k)} x_1 + \cdots + \theta_n^{(k)} x_n
 # $$    
 # 
-# 이는 $k\, (n+1)$ 개의 파라미터를 학습시켜야 함을 의미한다.
-# 위 식에서 $\theta_i^{(k)}$ 는 분류 클래스 $k$에 대해 필요한 $i$ 번째 속성을 
-# 대상으로 파라미터를 가리킨다.
-# 
-# 예를 들어, 붓꽃 데이터를 대상으로 하는 경우 최대 15개의 파라미터를 훈련시켜야 한다.
+# 이는 모델 훈련을 통해 총 $k\cdot (n+1)$ 개의 파라미터를 학습시켜야 함을 의미한다.
+# 위 식에서 $\theta_i^{(k)}$ 는 $i$ 번째 특성에 대한 파라미터가 $k$ 개 필요함을 의미한다.
+# 예를 들어, 붓꽃 데이터셋에 포함된 $n = 4$ 개의 특성 모두를 이용하여 품종을 분류하는
+# 소프트맥스 회귀 모델을 훈련시키려면 3 $\times$ 5 = 15개의 파라미터를 훈련시켜야 한다.
 # 
 # $$
 # \Theta = 
@@ -915,15 +1017,16 @@
 # \end{bmatrix}
 # $$
 # 
-# 이제 다음 **소프트맥스** 함수를 이용하여 클래스 $k$에 속할 확률 $\hat p_k$ 를 계산한다.
-# 단, $K$ 는 클래스의 개수를 나타낸다.
+# 모델의 최종 예측값은 아래 **소프트맥스** 함수를 이용하여 계산된 각 클래스에 속할 확률 $\hat p_k$ 이
+# 가장 높은 $k$로 지정된다.
+# 아래 식에서 $K$는 선택 가능한 클래스(레이블)의 개수를 나타낸다.
 # 
 # $$
 # \hat p_k = 
 # \frac{\exp(s_k(\mathbf x))}{\sum_{j=1}^{K}\exp(s_j(\mathbf x))}
 # $$
 # 
-# 소프트맥스 회귀 모델은 각 샘플에 대해 추정 확률이 가장 높은 클래스를 선택한다. 
+# 즉, 소프트맥스 회귀 모델은 각 샘플에 대해 추정 확률이 가장 높은 클래스를 선택한다. 
 # 
 # $$
 # \hat y = 
@@ -934,7 +1037,7 @@
 # :class: tip
 # 
 # 소프트맥스 회귀는 다중 출력<font size='2'>multioutput</font> 분류를 지원하지 않는다.
-# 예를 들어, 하나의 사진에서 여러 사람의 얼굴을 인식하는 데에 사용할 수 없다.
+# 예를 들어, 여러 개의 붓꽃이 찍힌 사진에서 붓꽃 각각에 대한 품종을 예측하는 모델은 지원하지 않는다.
 # :::
 
 # **소프트맥스 회귀의 비용 함수**
@@ -948,14 +1051,19 @@
 # - \frac{1}{m}\, \sum_{i=1}^{m}\sum_{k=1}^{K} y^{(i)}_k\, \log\big( \hat{p}_k^{(i)}\big)
 # $$
 # 
-# 위 식에서 $y^{(i)}_k$ 는 타깃 확률값을 가리키며, 0 또는 1 중에 하나의 값을 갖는다. 
+# 위 식에서 $y^{(i)}_k$ 는 타깃 확률값을 가리키며, 0 또는 1 중에 하나의 값을 갖고,
+# 하나의 $k$에 대해서만 1이고 나머지는 0이다.
 # $K=2$이면 로지스틱 회귀의 로그 손실 함수와 정확하게 일치한다.
+
+# :::{admonition} 크로스 엔트로피
+# :class: info
 # 
 # 크로스 엔트로피는 주어진 샘플의 타깃 클래스를 제대로 예측하지 못하는 경우 높은 값을 갖는다.
 # 크로스 엔트로피 개념은 정보 이론에서 유래하며, 
 # 자세한 설명은 오렐리앙 제롱의 동영상
 # ["A Short Introduction to Entropy, Cross-Entropy and KL-Divergence"](https://www.youtube.com/watch?v=ErfnhcEV1O8)를
-# 참고하기 바란다.
+# 참고한다.
+# :::
 
 # **붓꽃 데이터 다중 클래스 분류**
 # 
@@ -972,7 +1080,7 @@
 # softmax_reg = LogisticRegression(C=30, random_state=42)
 # softmax_reg.fit(X_train, y_train)
 # ```
-# 
+
 # 아래 그림은 붓꽃 꽃잎의 너비와 길이를 기준으로 세 개의 품종을 색까로 구분하는 결정 경계를 보여준다. 
 # 다양한 색상의 곡선은 버시컬러 품종에 속할 확률의 영력을 보여준다.
 
