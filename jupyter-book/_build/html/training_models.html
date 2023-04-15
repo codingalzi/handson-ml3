@@ -1168,10 +1168,14 @@ title="Print to PDF"
 \[\hat y = \theta_0 + \theta_1\, x_1 + \theta_2\, x_{1}^2\]</div>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-07.png" width="500"/></div><p><strong>사이킷런의 <code class="docutils literal notranslate"><span class="pre">PolynomialFeatures</span></code> 변환기</strong></p>
 <p>지정된 차수의 다항식에 포함되어야 하는 특성을 생성하여 추가하는 변환기다.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">include_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">degree=d</span></code>는 몇 차 다항식을 활용할지 지정하는 하이퍼파라미터다.</p>
+<p><code class="docutils literal notranslate"><span class="pre">degree=d</span></code>는 몇 차 다항식을 활용할지 지정하는 하이퍼파라미터다.
+<code class="docutils literal notranslate"><span class="pre">include_bias=False</span></code>는 편향에 활용되는 1을 특성으로 추가하지 않는다는 의미이다.
+원래는 <code class="docutils literal notranslate"><span class="pre">include_bias=True</span></code>가 기본값이기에 모든 샘플에 1을 0번 특성으로 추가해야 하지만
+여기서는 편향은 <code class="docutils literal notranslate"><span class="pre">LinearRegression</span></code> 모델이 함께 처리하기에
+데이터 변환 과정에서 추가하지 않는 것이다.</p>
 <div class="proof example admonition" id="exp:2nd_poly_reg">
 <p class="admonition-title"><span class="caption-number">Example 4.2 </span> (2차 다항 회귀)</p>
 <section class="example-content" id="proof-content">
@@ -1181,7 +1185,7 @@ title="Print to PDF"
 이는 <span class="math notranslate nohighlight">\((x_1+x_2+x_3)^2\)</span>의 항목에 해당하는 다음 6 개의 특성을 추가해야 함을 의미한다.</p>
 <div class="math notranslate nohighlight">
 \[x_1^2,\,\, x_2^2,\,\, x_3^2,\,\, x_1 x_2,\,\, x_2 x_3,\,\, x_1 x_3\]</div>
-<p>따라서 예측값은 아래와 같이 계산된다.</p>
+<p>위 특성들에 선형 회귀 모델을 훈련시키면 예측값은 아래와 같이 계산된다.</p>
 <div class="math notranslate nohighlight">
 \[
 \hat y = 
@@ -1606,13 +1610,25 @@ J(\Theta) =
 <span class="n">y</span> <span class="o">=</span> <span class="n">iris</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">]</span>
 <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 
-<span class="n">softmax_reg</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">softmax_reg</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span> <span class="c1"># 조금 약한 alpha 규제</span>
 <span class="n">softmax_reg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>아래 그림은 붓꽃 꽃잎의 너비와 길이를 기준으로 세 개의 품종을 색까로 구분하는 결정 경계를 보여준다.
-다양한 색상의 곡선은 버시컬러 품종에 속할 확률의 영력을 보여준다.</p>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-16.png" width="700"/></div></section>
+다양한 색상의 곡선은 버시컬러 품종에 속할 확률의 영역 구분하는 등고선이다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-16.png" width="700"/></div><div class="info admonition">
+<p class="admonition-title">로지스틱 회귀와 일대다 방식</p>
+<p>다중 클래스 분류를 위해 <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> 모델을 지정할 때 <code class="docutils literal notranslate"><span class="pre">multi_clas=ovr</span></code> 옵션을 사용하면
+소프트맥스 회귀 대신에 로지스틱 회귀를 일대다 방식과 혼합해서 다중 클래스 분류를 진행한다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">softmax_reg</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">multi_class</span><span class="o">=</span><span class="s1">&#39;ovr&#39;</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span> <span class="c1"># 일대다 방식 적용</span>
+<span class="n">softmax_reg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>아래 그림은 일대다 방식으로 세 개의 품종으로 구분된 결과를 보여준다.
+등고선이 소프트맥스 회귀의 경우 꽤 다르게 그려진다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-16a.png" width="700"/></div>
+</div>
+</section>
 </section>
 <section id="id19">
 <h2><span class="section-number">4.7. </span>연습문제<a class="headerlink" href="#id19" title="Permalink to this headline">#</a></h2>

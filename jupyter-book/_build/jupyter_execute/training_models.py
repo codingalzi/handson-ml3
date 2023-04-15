@@ -547,9 +547,13 @@
 # 지정된 차수의 다항식에 포함되어야 하는 특성을 생성하여 추가하는 변환기다.
 # 
 # ```python
-# PolynomialFeatures(degree=d)
+# PolynomialFeatures(degree=d, include_bias=False)
 # ```
 # `degree=d`는 몇 차 다항식을 활용할지 지정하는 하이퍼파라미터다. 
+# `include_bias=False`는 편향에 활용되는 1을 특성으로 추가하지 않는다는 의미이다.
+# 원래는 `include_bias=True`가 기본값이기에 모든 샘플에 1을 0번 특성으로 추가해야 하지만
+# 여기서는 편향은 `LinearRegression` 모델이 함께 처리하기에 
+# 데이터 변환 과정에서 추가하지 않는 것이다.
 
 # :::{prf:example} 2차 다항 회귀
 # :label: exp:2nd_poly_reg
@@ -561,7 +565,7 @@
 # 
 # $$x_1^2,\,\, x_2^2,\,\, x_3^2,\,\, x_1 x_2,\,\, x_2 x_3,\,\, x_1 x_3$$
 # 
-# 따라서 예측값은 아래와 같이 계산된다.
+# 위 특성들에 선형 회귀 모델을 훈련시키면 예측값은 아래와 같이 계산된다.
 # 
 # $$
 # \hat y = 
@@ -1077,14 +1081,31 @@
 # y = iris["target"]
 # X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42)
 # 
-# softmax_reg = LogisticRegression(C=30, random_state=42)
+# softmax_reg = LogisticRegression(C=30, random_state=42) # 조금 약한 alpha 규제
 # softmax_reg.fit(X_train, y_train)
 # ```
 
 # 아래 그림은 붓꽃 꽃잎의 너비와 길이를 기준으로 세 개의 품종을 색까로 구분하는 결정 경계를 보여준다. 
-# 다양한 색상의 곡선은 버시컬러 품종에 속할 확률의 영력을 보여준다.
+# 다양한 색상의 곡선은 버시컬러 품종에 속할 확률의 영역 구분하는 등고선이다.
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-16.png" width="700"/></div>
+
+# :::{admonition} 로지스틱 회귀와 일대다 방식
+# :class: info
+# 
+# 다중 클래스 분류를 위해 `LogisticRegression` 모델을 지정할 때 `multi_clas=ovr` 옵션을 사용하면
+# 소프트맥스 회귀 대신에 로지스틱 회귀를 일대다 방식과 혼합해서 다중 클래스 분류를 진행한다.
+# 
+# ```python
+# softmax_reg = LogisticRegression(C=30, multi_class='ovr', random_state=42) # 일대다 방식 적용
+# softmax_reg.fit(X_train, y_train)
+# ```
+# 
+# 아래 그림은 일대다 방식으로 세 개의 품종으로 구분된 결과를 보여준다. 
+# 등고선이 소프트맥스 회귀의 경우 꽤 다르게 그려진다.
+# 
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-16a.png" width="700"/></div>
+# :::
 
 # ## 연습문제
 
