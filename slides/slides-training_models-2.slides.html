@@ -71,25 +71,6 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .highlight .ss { color: var(--jp-mirror-editor-string-color) } /* Literal.String.Symbol */
 .highlight .il { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Integer.Long */
   </style>
-<style type="text/css">
-    
-
-<script>
-    MathJax.Hub.Config({
-        "HTML-CSS": {
-            /*preferredFont: "TeX",*/
-            /*availableFonts: ["TeX", "STIX"],*/
-            styles: {
-                scale: 100,
-                ".MathJax_Display": {
-                    "font-size": "100%",
-                }
-            }
-        }
-    });
-</script>
-    
-  </style>
 
 
 
@@ -14682,11 +14663,20 @@ div.jp-OutputPrompt {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="%EA%B3%BC%EC%86%8C%EC%A0%81%ED%95%A9/%EA%B3%BC%EB%8C%80%EC%A0%81%ED%95%A9-%ED%8C%90%EC%A0%95">&#44284;&#49548;&#51201;&#54633;/&#44284;&#45824;&#51201;&#54633; &#54032;&#51221;<a class="anchor-link" href="#%EA%B3%BC%EC%86%8C%EC%A0%81%ED%95%A9/%EA%B3%BC%EB%8C%80%EC%A0%81%ED%95%A9-%ED%8C%90%EC%A0%95">&#182;</a></h3><ul>
-<li><p>예제: 선형 모델, 2차 다항 회귀 모델, 300차 다항 회귀 모델 비교</p>
-</li>
-<li><p>다항 회귀 모델의 차수에 따라 훈련된 모델이 훈련셋에 과소 또는 과대 적합할 수 있음.</p>
-</li>
+<h3 id="%EA%B3%BC%EC%86%8C%EC%A0%81%ED%95%A9/%EA%B3%BC%EB%8C%80%EC%A0%81%ED%95%A9-%ED%8C%90%EC%A0%95">&#44284;&#49548;&#51201;&#54633;/&#44284;&#45824;&#51201;&#54633; &#54032;&#51221;<a class="anchor-link" href="#%EA%B3%BC%EC%86%8C%EC%A0%81%ED%95%A9/%EA%B3%BC%EB%8C%80%EC%A0%81%ED%95%A9-%ED%8C%90%EC%A0%95">&#182;</a></h3>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ul>
+<li>예제: 선형 모델, 2차 다항 회귀 모델, 300차 다항 회귀 모델 비교</li>
+<li>차수에 따라 모델이 훈련셋에 과소 또는 과대 적합할 수 있음.</li>
 </ul>
 
 </div>
@@ -14734,9 +14724,9 @@ div.jp-OutputPrompt {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
-<li>교차 검증(2장)<ul>
-<li>과소적합: 훈련셋에 대한 성능 평가와 교차 검증 점수 모두 낮은 경우</li>
-<li>과대적합: 훈련셋에 대한 성능 평가는 우수하지만 교차 검증 점수가 낮은 경우</li>
+<li>교차 검증(2장 참고)<ul>
+<li>과소적합: 훈련 점수와 교차 검증 점수 모두 낮은 경우</li>
+<li>과대적합: 훈련 점수는 높지만 교차 검증 점수가 상대적으로 많이 낮은 경우</li>
 </ul>
 </li>
 </ul>
@@ -14759,7 +14749,6 @@ div.jp-OutputPrompt {
 </ul>
 </li>
 <li>학습 곡선의 모양에 따라 과소적합/과대적합 판정 가능</li>
-<li><code>sklearn.model_selection</code> 모듈의 <code>learning_curve()</code> 함수를 이용해서 쉽게 시각화 가능</li>
 </ul>
 </li>
 </ul>
@@ -14828,7 +14817,7 @@ div.jp-OutputPrompt {
 <ul>
 <li>2차 다항 함수의 분포를 따르는 데이터셋에 10차 다항회귀 모델을 적용한 학습 곡선  <ul>
 <li>훈련셋에 대한 성능(빨강): 훈련셋에 대한 평균 제곱근 오차가 매우 낮음.</li>
-<li>검증셋에 대한 성능(파랑): 훈련셋에 대한 성능과 차이가 크게 벌어짐.</li>
+<li>검증셋에 대한 성능(파랑): 검증셋에 대한 평균 제곱근 오차가 보다 높음.</li>
 </ul>
 </li>
 <li>과대적합 모델 개선법: 훈련 데이터 추가. 하지만 일반적으로 매우 어렵거나 불가능.</li>
@@ -14866,17 +14855,6 @@ div.jp-OutputPrompt {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-08.png" width="400"/></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
 <li><p>편향<font size='2'>bias</font></p>
 <ul>
@@ -14890,17 +14868,6 @@ div.jp-OutputPrompt {
 </div>
 </div>
 </div>
-</div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="%ED%8E%B8%ED%96%A5-vs-%EB%B6%84%EC%82%B0">&#54200;&#54693; vs &#48516;&#49328;<a class="anchor-link" href="#%ED%8E%B8%ED%96%A5-vs-%EB%B6%84%EC%82%B0">&#182;</a></h3>
-</div>
-</div>
-</div>
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
@@ -14909,6 +14876,17 @@ div.jp-OutputPrompt {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-08.png" width="400"/></div>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="%ED%8E%B8%ED%96%A5-vs-%EB%B6%84%EC%82%B0">&#54200;&#54693; vs &#48516;&#49328;<a class="anchor-link" href="#%ED%8E%B8%ED%96%A5-vs-%EB%B6%84%EC%82%B0">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -14931,6 +14909,17 @@ div.jp-OutputPrompt {
 </li>
 </ul>
 
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-08.png" width="400"/></div>
 </div>
 </div>
 </div>
@@ -15003,7 +14992,7 @@ div.jp-OutputPrompt {
 <li>줄일 수 없는 오차: 데이터 자체가 갖고 있는 잡음(noise) 때문에 발생하는 어쩔 수 없는 오차</li>
 </ul>
 </li>
-<li><p>결론: 일반화 오차를 줄이기 위해 모델의 편향 또는 분산 둘 중에 하나에 집중해야 함.</p>
+<li><p>결론: 모델의 편향 또는 분산 둘 중 하나에 집중하면 모델 성능을 향상시킬 수 있음</p>
 </li>
 </ul>
 
@@ -15058,11 +15047,7 @@ div.jp-OutputPrompt {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
-<li><strong>규제</strong><font size='2'>regularization</font>: 자유도 제한<ul>
-<li>선형 회귀 모델 규제: 가중치 역할 제한</li>
-<li>다항 회귀 모델 규제: 차수 줄이기</li>
-</ul>
-</li>
+<li><strong>규제</strong><font size='2'>regularization</font>: 가중치의 영향력을 줄이는 방향으로 모델의 자유도 제한</li>
 </ul>
 
 </div>
@@ -15087,7 +15072,7 @@ div.jp-OutputPrompt {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
-<li>릿지 회귀</li>
+<li>릿지 회귀: 가중치의 절대값을 최대한 작게 유지. 모델의 분산을 줄임. 단 편향은 커짐.</li>
 </ul>
 
 </div>
@@ -15101,7 +15086,7 @@ div.jp-OutputPrompt {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
-<li>라쏘 회귀</li>
+<li>라쏘 회귀: 중요하지 않은 특성의 가중치를 0으로 만듦. 자유도가 줄어들어 모델의 분산이 줄어듦. 단, 편향은 커짐.</li>
 </ul>
 
 </div>
@@ -15115,7 +15100,7 @@ div.jp-OutputPrompt {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
-<li>엘라스틱 넷</li>
+<li>엘라스틱 넷: 릿지 회귀와 라쏘 회귀 혼합</li>
 </ul>
 
 </div>
@@ -15154,7 +15139,7 @@ $$J(\theta) = \textrm{MSE}(\theta) + \frac{\alpha}{m_b} \sum_{i=1}^{n}\theta_i^2
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
-<li>$m_b$: 배치 크기</li>
+<li>$m_b$: 배치 크기(하이퍼파라미터)</li>
 </ul>
 
 </div>
@@ -15168,14 +15153,10 @@ $$J(\theta) = \textrm{MSE}(\theta) + \frac{\alpha}{m_b} \sum_{i=1}^{n}\theta_i^2
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
-<li><p>$\alpha$(알파): 규제 강도 지정.</p>
-<ul>
-<li><p>$\alpha=0$이면 규제가 전혀 없는 기본 선형 회귀</p>
-</li>
-<li><p>$\alpha$가 커질 수록 가중치의 역할이 줄어듦. 
-  비용을 줄이기 위해 가중치를 작게 유지하는 방향으로 학습.
-  따라서 모델의 분산 정도가 약해짐.</p>
-</li>
+<li>$\alpha$(알파): 규제 강도(하이퍼파라미터).<ul>
+<li>$\alpha=0$: 규제 없음</li>
+<li>$\alpha$ 값을 크게 잡으면 가중치($\theta_i$)의 절대값은 보다 0에 가깝워지도록 유도됨. 
+  즉, 가중치의 역할이 줄어듦.</li>
 </ul>
 </li>
 </ul>
@@ -15191,7 +15172,7 @@ $$J(\theta) = \textrm{MSE}(\theta) + \frac{\alpha}{m_b} \sum_{i=1}^{n}\theta_i^2
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
-<li>$\theta_0$은 규제하지 않음</li>
+<li>편향($\theta_0$): 제하지 않음. 규제해선 않됨.</li>
 </ul>
 
 </div>
@@ -15218,8 +15199,89 @@ $$J(\theta) = \textrm{MSE}(\theta) + \frac{\alpha}{m_b} \sum_{i=1}^{n}\theta_i^2
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="%EB%A6%BF%EC%A7%80-%ED%9A%8C%EA%B7%80%EC%9D%98-%EB%B9%84%EC%9A%A9-%ED%95%A8%EC%88%98-%ED%95%B4%EC%84%9D">&#47551;&#51648; &#54924;&#44480;&#51032; &#48708;&#50857; &#54632;&#49688; &#54644;&#49437;<a class="anchor-link" href="#%EB%A6%BF%EC%A7%80-%ED%9A%8C%EA%B7%80%EC%9D%98-%EB%B9%84%EC%9A%A9-%ED%95%A8%EC%88%98-%ED%95%B4%EC%84%9D">&#182;</a></h3>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
-<li><p>라쏘 규제를 적용한 적용한 6 가지 경우</p>
+<li>비용 함수의 $J(\theta)$ 전역 최솟값: $\sum_{i=1}^{n}\theta_i^2$ 값이 최대한 작은 지점</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ul>
+<li>$\theta_i$의 절대값을 가급적 0에 가깝게하는 방향으로 경사하강법이 작동</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ul>
+<li>이렇게 하면 자연스럽게 모델의 분산도 작아짐. </li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ul>
+<li>즉, 입력값이 조금 변하더라도 예측값이 변하는 정도가 약해짐.</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ul>
+<li>예측값 $\hat y$를 계산할 때 $\theta_i$가 미치는 영향이 작아지기 때문임.</li>
+</ul>
+$$\hat y = \theta_0 + x_1 \cdot \theta_1 + \cdots + x_n \cdot \theta_{n}$$
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ul>
+<li><p>릿지 규제를 적용한 6 가지 경우: 분산 줄고 편향 늘어남.</p>
 <ul>
 <li>왼편: 선형 회귀 모델에 세 개의 $\alpha$ 값 적용.</li>
 <li>오른편: 10차 다항 회귀 모델에 세 개의 $\alpha$ 값 적용.</li>
@@ -15317,7 +15379,89 @@ $$J(\theta) = \textrm{MSE}(\theta) + 2\alpha \, \sum_{i=1}^{n}\mid\theta_i\mid$$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>라쏘 규제를 적용한 적용한 6 가지의 경우</p>
+<h3 id="%EB%9D%BC%EC%8F%98-%ED%9A%8C%EA%B7%80%EC%9D%98-%EB%B9%84%EC%9A%A9-%ED%95%A8%EC%88%98-%ED%95%B4%EC%84%9D">&#46972;&#50136; &#54924;&#44480;&#51032; &#48708;&#50857; &#54632;&#49688; &#54644;&#49437;<a class="anchor-link" href="#%EB%9D%BC%EC%8F%98-%ED%9A%8C%EA%B7%80%EC%9D%98-%EB%B9%84%EC%9A%A9-%ED%95%A8%EC%88%98-%ED%95%B4%EC%84%9D">&#182;</a></h3>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ul>
+<li>비용 함수의 $J(\theta)$ 전역 최솟값: $\sum_{i=1}^{n}\mid\theta_i\mid$ 값이 최대한 작은 지점</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ul>
+<li>별로 중요하지 않은 특성에 대해 $\theta_i$가 0에 빠르게 수렴하도록 훈련 중에 유도됨</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ul>
+<li>이유: $\mid \theta_i \mid$ 의 미분값이 1또는 -1 이기에 $\theta_i$가 0이 아닌 이상
+  비용 함수의 그레이디언트의 크기가 0에 가까워 지기가 상대적으로 어렵기 때문</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ul>
+<li>경사하강법을 반복적으로 적용하는 훈련 과정동안 중요하지 않은 특성의 가중치를 빠르게 0으로 수렴하게 만듦.</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ul>
+<li>대신 중요한 특성의 가중치를 결정하는 데에 보다 집중</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>라쏘 규제를 적용한 6 가지의 경우: 분산 줄고 편향 늘어남.</p>
 <ul>
 <li>왼편: 선형 회귀 모델에 세 개의 $\alpha$ 값 적용.</li>
 <li>오른편: 10차 다항 회귀 모델에 세 개의 $\alpha$ 값 적용.</li>
@@ -15428,20 +15572,6 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
-<li>릿지 규제가 기본</li>
-</ul>
-
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<ul>
 <li>유용한 속성이 많지 않다고 판단되는 경우 <ul>
 <li>라쏘 규제나 엘라스틱 넷 활용 추천</li>
 <li>불필요한 속성의 가중치를 0으로 만들기 때문</li>
@@ -15460,7 +15590,7 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
-<li>특성 수가 훈련 샘플 수보다 많거나 특성 몇 개가 상호 강하게 연관되어 있는 경우엔 엘라스틱 넷 추천</li>
+<li>일반적으로 엘라스틱 넷을 보다 많이 추천</li>
 </ul>
 
 </div>
@@ -15531,7 +15661,6 @@ $$
 <li><code>penalty='elasticnet'</code>: 엘라스틱 넷 회귀 적용</li>
 <li><code>alpha=0.1</code>: 규제 강도</li>
 <li><code>l1_ratio=0.5</code>: 라쏘 규제 비율</li>
-<li><code>eta0=0.002</code>: 학습률</li>
 <li><code>early_stopping=True</code>: 조기 종료 실행. 훈련셋의 일부를 검증셋으로 활용.</li>
 <li><code>max_iter=1000</code>: 최대 훈련 에포크</li>
 <li><code>tol=1e-3</code>: 훈련 점수 또는 검증 점수가 지정된 값 이하로 최대 <code>n_iter_no_change</code> 에포크 동안 변하지 않으면 조기 종료 실행</li>
