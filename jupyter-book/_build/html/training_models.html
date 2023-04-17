@@ -1201,7 +1201,7 @@ title="Print to PDF"
 아래 그림은 기본 선형 모델은 성능이 너무 좋지 않은 반면에
 300차 다항 회귀 모델은 너무 과하게 훈련 데이터에 민감하게 반응하는 것을 보여준다.
 반면에 2차 다항 회귀 모델이 적절(?)하게 예측값을 계산하는 것으로 보인다.</p>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-08.png" width="500"/></div><p><strong>교차 검증 vs. 학습 곡선</strong></p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-08.png" width="500"/></div><p><strong>모델 성능 평가: 교차 검증 vs. 학습 곡선</strong></p>
 <p>일반적으로 어떤 모델이 가장 좋은지 미리 알 수 없다.
 따라서 보통 다양한 모델을 대상으로 교차 검증을 진행하여 성능을 평가한다.
 교차 검증 결과에 따른 모델 평가는 다음 두 종류로 나뉜다.</p>
@@ -1214,26 +1214,37 @@ title="Print to PDF"
 학습 곡선의 모양에 따라 과소 적합 또는 과대 적합 여부를 판정할 수 있다.</p>
 <p>사이킷런의 <code class="docutils literal notranslate"><span class="pre">learning_curve()</span></code> 함수를 이용하여 학습 곡선을 그릴 수 있다.</p>
 <ul class="simple">
-<li><p>x 축: 훈련셋 크기. 전체 훈련셋의 10%에서 출발하여 훈련셋 전체를 대상으로 할 때까지
+<li><p>x 축: 훈련셋 크기. 전체 훈련셋의 1%에서 출발하여 훈련셋 전체를 대상으로 할 때까지
 훈련셋의 크기를 키워가며 교차 검증 진행.</p></li>
-<li><p>y 축: 교차 검증을 통해 확인된 훈련셋 및 검증셋 대상 RMSE(평균 제곱근 오차).</p></li>
+</ul>
+<ul class="simple">
+<li><p>y-축: 훈련셋 크기에 따른 모델 성능. 훈련 점수와 검증 점수 사용</p></li>
 </ul>
 <p><strong>과소 적합 모델의 학습 곡선 특징</strong></p>
+<p>아래 그래프는  2차 다항 함수의 분포를 따르는 데이터셋에 <code class="docutils literal notranslate"><span class="pre">LinearRegression</span></code> 모델을 적용한 학습 곡선을 보여준다.</p>
 <ul class="simple">
-<li><p>훈련셋(빨강)에 대한 성능: 훈련셋이 커지면서 RMSE 증가하지만
-훈련셋이 어느 정도 커지면 거의 불변.</p></li>
-<li><p>검증셋(파랑)에 대한 성능: 검증 세트에 대한 성능이 훈련셋에 대한 성능과 거의 비슷해짐.</p></li>
+<li><p>훈련셋에 대한 성능(빨강)</p>
+<ul>
+<li><p>훈련셋이 커지면서 RMSE(평균 제곱근 오차)가 커짐</p></li>
+<li><p>훈련셋이 어느 정도 커지면 더 이상 RMSE가 변하지 않음</p></li>
+</ul>
+</li>
+<li><p>검증셋에 대한 성능(파랑)</p>
+<ul>
+<li><p>검증셋에 대한 성능이 훈련셋에 대한 성능과 거의 비슷해짐</p></li>
+</ul>
+</li>
 </ul>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-09.png" width="500"/></div><p><strong>과대 적합 모델의 학습 곡선 특징</strong></p>
+<p>아래 그래프는 2차 다항 함수의 분포를 따르는 데이터셋에 10차 다항회귀 모델을 적용한 학습 곡선을 보여준다.</p>
 <ul class="simple">
-<li><p>훈련셋(빨강)에 대한 성능: 훈련 데이터에 대한 평균 제곱근 오차가 매우 낮음.</p></li>
-<li><p>검증셋(파랑)에 대한 성능: 훈련 데이터에 대한 성능과 차이가 어느 정도 이상 벌어짐.</p></li>
-<li><p>과대 적합 모델 개선법: 두 그래프가 맞닿을 때까지 훈련 데이터 추가.
-하지만 일반적으로 더 많은 훈련 데이터를 구하는 일이 매우 어렵거나 불가능할 수 있음.
-아니면 모델에 규제를 가할 수 있음.</p></li>
+<li><p>훈련셋에 대한 성능(빨강): 훈련 데이터에 대한 평균 제곱근 오차가 매우 낮음.</p></li>
+<li><p>검증셋에 대한 성능(파랑): 훈련 데이터에 대한 성능과 차이가 크게 벌어짐.</p></li>
 </ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-10.png" width="500"/></div><p><strong>모델 일반화 오류의 종류</strong></p>
-<p>훈련 과정에서 다루지 않은 새로운 데이터 대한 예측에서 발생하는 오류를 가리키며 세 종류의 오류가 있다.</p>
+<p>과대적합 모델을 개선하기 위해서는 훈련 데이터를 추가해야 하지만 일반적으로 매우 어렵거나 불가능하다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-10.png" width="500"/></div><p><strong>모델 일반화 오차의 종류</strong></p>
+<p>훈련 과정에서 다루지 않은 새로운 데이터 대한 예측에서 발생하는 오차를 가리키며
+발생 원이은 다음 세 가지다.</p>
 <ul class="simple">
 <li><p>편향: 실제로는 2차원 모델인데 1차원 모델을 사용하는 경우처럼 잘못된 가정으로 인해 발생한다.
 과소 적합이 발생할 가능성이 매우 높다.</p></li>
@@ -1243,8 +1254,8 @@ title="Print to PDF"
 과대 적합이 발생할 가능성도 매우 높다.
 모델의 자유도는 모델이 찾아야 할 파라미터의 개수를 나타낸다.
 따라서 학습시켜야 할 파라미터 수가 많을 수록 모델이 데이터에 민감하게 반응한다.</p></li>
-<li><p>제거 불가능 오류: 잡음(noise) 등 데이터 자체의 한계로 인해 발생한다.
-잡음 등을 제거해야만 오류를 줄일 수 있다.</p></li>
+<li><p>제거 불가능 오차: 잡음(noise) 등 데이터 자체의 한계로 인해 발생한다.
+잡음 등을 제거해야만 오차를 줄일 수 있다.</p></li>
 </ul>
 <div class="info admonition">
 <p class="admonition-title">편향-분산 트레이드오프</p>
@@ -1286,7 +1297,7 @@ title="Print to PDF"
 결국 모델의 분산 정도가 작아진다.</p></li>
 <li><p><span class="math notranslate nohighlight">\(\theta_0\)</span> 는 규제하지 않는다.</p></li>
 </ul>
-<p>아래 그림은 릿지 규제를 적용한 적용한 6 개의 경우를 보여준다.</p>
+<p>아래 그림은 릿지 규제를 적용한 적용한 6 가지의 경우를 보여준다.</p>
 <ul class="simple">
 <li><p>왼편: 선형 회귀 모델에 세 개의 <span class="math notranslate nohighlight">\(\alpha\)</span> 값 적용.</p></li>
 <li><p>오른편: 10차 다항 회귀 모델에 세 개의 <span class="math notranslate nohighlight">\(\alpha\)</span> 값 적용.</p></li>
@@ -1303,7 +1314,7 @@ title="Print to PDF"
 파라미터 업데이크 과정에서 보다 작은 <span class="math notranslate nohighlight">\(\mid \theta_i \mid\)</span> 가 보다 빠르게 0에 수렴하기 때문이다.</p></li>
 <li><p><span class="math notranslate nohighlight">\(\alpha\)</span> 와 <span class="math notranslate nohighlight">\(\theta_0\)</span> 에 대한 설명은 릿지 회귀의 경우와 동일하다.</p></li>
 </ul>
-<p>아래 그림은 라쏘 규제를 적용한 적용한 6 개의 경우를 보여준다.</p>
+<p>아래 그림은 라쏘 규제를 적용한 적용한 6 가지의 경우를 보여준다.</p>
 <ul class="simple">
 <li><p>왼편: 선형 회귀 모델에 세 개의 <span class="math notranslate nohighlight">\(\alpha\)</span> 값 적용.</p></li>
 <li><p>오른편: 10차 다항 회귀 모델에 세 개의 <span class="math notranslate nohighlight">\(\alpha\)</span> 값 적용.</p></li>
@@ -1343,7 +1354,25 @@ r\cdot \bigg (2 \alpha \, \sum_{i=1}^{n}\mid\theta_i\mid \bigg) +
 검증 손실이 언제 최소가 되었는지 알기 어렵다.
 따라서 한동안 최소값보다 높게 유지될 때 훈련을 멈추고 기억해둔 최적의 모델로
 되돌린다.</p>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-11.png" width="500"/></div></section>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-11.png" width="500"/></div><p><strong>확률적 경사하강법과 조기 종료</strong></p>
+<p>아래 코드는 <code class="docutils literal notranslate"><span class="pre">SGDRegressor</span></code> 모델에 조기 종료를 지정한다.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">penalty='elasticnet'</span></code>: 엘라스틱 넷 회귀 적용</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">alpha=0.1</span></code>: 규제 강도</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">l1_ratio=0.5</span></code>: 라쏘 규제 비율</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">eta0=0.002</span></code>: 학습률</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">early_stopping=True</span></code>: 조기 종료 실행. 훈련셋의 일부를 검증셋으로 활용.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_iter=1000</span></code>: 최대 훈련 에포크</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tol=1e-3</span></code>: 훈련 점수 또는 검증 점수가 지정된 값 이하로 최대 <code class="docutils literal notranslate"><span class="pre">n_iter_no_change</span></code> 에포크 동안 변하지 않으면 조기 종료 실행</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">n_iter_no_change=5</span></code>: 훈련 점수 또는 검증 점수가 지정된 에포크 동안 얼마나 변하는지 확인</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sgd_reg</span> <span class="o">=</span> <span class="n">SGDRegressor</span><span class="p">(</span><span class="n">penalty</span><span class="o">=</span><span class="s1">&#39;elasticnet&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">l1_ratio</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+                        <span class="n">eta0</span><span class="o">=</span><span class="mf">0.002</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>
+                        <span class="n">early_stopping</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                        <span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">n_iter_no_change</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="id13">
 <h2><span class="section-number">4.6. </span>로지스틱 회귀<a class="headerlink" href="#id13" title="Permalink to this headline">#</a></h2>
@@ -1436,6 +1465,14 @@ J(\theta) =
 <p><code class="docutils literal notranslate"><span class="pre">load_iris()</span></code> 함수는 데이터셋을 사전 자료형과 유사한 <code class="docutils literal notranslate"><span class="pre">Bunch</span></code> 자료형으로 불러온다.
 사용되는 키(key) 중에 <code class="docutils literal notranslate"><span class="pre">data</span></code> 키와 연결된 값이 4개의 특성으로 구성된 훈련셋 데이터프레임<font size='2'>DataFrame</font>이고
 <code class="docutils literal notranslate"><span class="pre">target</span></code> 키와 연결된 값이 레이블셋 시리즈<font size='2'>Series</font>이다.</p>
+<div class="info admonition">
+<p class="admonition-title">Bunch 자료형</p>
+<p>불러온 자료형는 사전(<code class="docutils literal notranslate"><span class="pre">dict</span></code>)과 유사한 <code class="docutils literal notranslate"><span class="pre">Bunch</span></code> 자료형이며 사이킷런 라이브러리에서 제공한다.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Bunch</span></code> 자료형은 키를 사용한 인덱싱을 마치 클래스의 속성을 확인하는 방식으로 다룰 수 있음</p></li>
+<li><p>예제: <code class="docutils literal notranslate"><span class="pre">iris['data']</span></code> 대시 <code class="docutils literal notranslate"><span class="pre">iris.data</span></code> 사용 가능</p></li>
+</ul>
+</div>
 <p>훈련셋의 처음 5개의 샘플은 다음과 같다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 <span class="go">     sepal length (cm) sepal width (cm) petal length (cm) petal width (cm)</span>
@@ -1481,10 +1518,10 @@ J(\theta) =
 <strong>결정 경계</strong><font size='2'>decision boundary</font>는 꽃잎 너비 기준으로 1.65cm 이다.</p>
 <p>아래 그림의 초록 실선은 꽃잎 너비 1.65 기준으로 버지니카 품종일 확율이 50%를 넘어서는 것을 보여준다.
 반면에 파랑 파선은 반대로 꽃잎 너비 1.65 기준으로 버니니카 품종이 아닐 확률이 50% 아래로 떨어지는 것을 보여준다.</p>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/iris02.png" width="700"/></div>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-14.png" width="700"/></div>
 <br><p><strong>버지니카 품종 감지기: 꽃잎 길이와 너비 특성 활용</strong></p>
 <p>이번에는 꽃잎의 길이와 너비 두 특성을 이용하여 붓꽃의 품종을 판별하는 로지스틱 회귀 모델을 훈련한다.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">[[</span><span class="s2">&quot;petal length (cm)&quot;</span><span class="p">,</span> <span class="s2">&quot;petal width (cm)&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span> <span class="c1"># 꽃잎 너비 특성만 데이터셋으로 사용</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">[[</span><span class="s2">&quot;petal length (cm)&quot;</span><span class="p">,</span> <span class="s2">&quot;petal width (cm)&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span> <span class="c1"># 꽃잎 길이와 너비 특성</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">target_names</span><span class="p">[</span><span class="n">iris</span><span class="o">.</span><span class="n">target</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;virginica&#39;</span>               <span class="c1"># 레이블 셋: 버지니카 품종이면 1, 아니면 0.</span>
 <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span> <span class="c1"># 훈련셋:테스트셋 = 7.5:2.2</span>
 

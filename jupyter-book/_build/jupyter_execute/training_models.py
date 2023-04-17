@@ -584,7 +584,7 @@
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-08.png" width="500"/></div>
 
-# **교차 검증 vs. 학습 곡선**
+# **모델 성능 평가: 교차 검증 vs. 학습 곡선**
 # 
 # 일반적으로 어떤 모델이 가장 좋은지 미리 알 수 없다. 
 # 따라서 보통 다양한 모델을 대상으로 교차 검증을 진행하여 성능을 평가한다.
@@ -599,32 +599,38 @@
 # 
 # 사이킷런의 `learning_curve()` 함수를 이용하여 학습 곡선을 그릴 수 있다.
 # 
-# * x 축: 훈련셋 크기. 전체 훈련셋의 10%에서 출발하여 훈련셋 전체를 대상으로 할 때까지 
+# * x 축: 훈련셋 크기. 전체 훈련셋의 1%에서 출발하여 훈련셋 전체를 대상으로 할 때까지 
 #     훈련셋의 크기를 키워가며 교차 검증 진행.
-# * y 축: 교차 검증을 통해 확인된 훈련셋 및 검증셋 대상 RMSE(평균 제곱근 오차).
+# - y-축: 훈련셋 크기에 따른 모델 성능. 훈련 점수와 검증 점수 사용
 
 # **과소 적합 모델의 학습 곡선 특징**
 # 
-# * 훈련셋(빨강)에 대한 성능: 훈련셋이 커지면서 RMSE 증가하지만 
-#     훈련셋이 어느 정도 커지면 거의 불변.
+# 아래 그래프는  2차 다항 함수의 분포를 따르는 데이터셋에 `LinearRegression` 모델을 적용한 학습 곡선을 보여준다.
 # 
-# * 검증셋(파랑)에 대한 성능: 검증 세트에 대한 성능이 훈련셋에 대한 성능과 거의 비슷해짐.
+# * 훈련셋에 대한 성능(빨강)
+#     * 훈련셋이 커지면서 RMSE(평균 제곱근 오차)가 커짐
+#     * 훈련셋이 어느 정도 커지면 더 이상 RMSE가 변하지 않음
+# 
+# * 검증셋에 대한 성능(파랑)
+#     * 검증셋에 대한 성능이 훈련셋에 대한 성능과 거의 비슷해짐
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-09.png" width="500"/></div>
 
 # **과대 적합 모델의 학습 곡선 특징**
 # 
-# * 훈련셋(빨강)에 대한 성능: 훈련 데이터에 대한 평균 제곱근 오차가 매우 낮음.
-# * 검증셋(파랑)에 대한 성능: 훈련 데이터에 대한 성능과 차이가 어느 정도 이상 벌어짐.
-# * 과대 적합 모델 개선법: 두 그래프가 맞닿을 때까지 훈련 데이터 추가. 
-#     하지만 일반적으로 더 많은 훈련 데이터를 구하는 일이 매우 어렵거나 불가능할 수 있음.
-#     아니면 모델에 규제를 가할 수 있음.
+# 아래 그래프는 2차 다항 함수의 분포를 따르는 데이터셋에 10차 다항회귀 모델을 적용한 학습 곡선을 보여준다.
+# 
+# * 훈련셋에 대한 성능(빨강): 훈련 데이터에 대한 평균 제곱근 오차가 매우 낮음.
+# * 검증셋에 대한 성능(파랑): 훈련 데이터에 대한 성능과 차이가 크게 벌어짐.
+# 
+# 과대적합 모델을 개선하기 위해서는 훈련 데이터를 추가해야 하지만 일반적으로 매우 어렵거나 불가능하다.
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-10.png" width="500"/></div>
 
-# **모델 일반화 오류의 종류**
+# **모델 일반화 오차의 종류**
 # 
-# 훈련 과정에서 다루지 않은 새로운 데이터 대한 예측에서 발생하는 오류를 가리키며 세 종류의 오류가 있다.
+# 훈련 과정에서 다루지 않은 새로운 데이터 대한 예측에서 발생하는 오차를 가리키며 
+# 발생 원이은 다음 세 가지다.
 # 
 # - 편향: 실제로는 2차원 모델인데 1차원 모델을 사용하는 경우처럼 잘못된 가정으로 인해 발생한다.
 #     과소 적합이 발생할 가능성이 매우 높다.
@@ -635,8 +641,8 @@
 #     과대 적합이 발생할 가능성도 매우 높다.
 #     모델의 자유도는 모델이 찾아야 할 파라미터의 개수를 나타낸다.
 #     따라서 학습시켜야 할 파라미터 수가 많을 수록 모델이 데이터에 민감하게 반응한다.
-# - 제거 불가능 오류: 잡음(noise) 등 데이터 자체의 한계로 인해 발생한다.
-#     잡음 등을 제거해야만 오류를 줄일 수 있다.
+# - 제거 불가능 오차: 잡음(noise) 등 데이터 자체의 한계로 인해 발생한다.
+#     잡음 등을 제거해야만 오차를 줄일 수 있다.
 
 # :::{admonition} 편향-분산 트레이드오프
 # :class: info
@@ -683,7 +689,7 @@
 # 
 # * $\theta_0$ 는 규제하지 않는다.
 
-# 아래 그림은 릿지 규제를 적용한 적용한 6 개의 경우를 보여준다.
+# 아래 그림은 릿지 규제를 적용한 적용한 6 가지의 경우를 보여준다.
 # 
 # - 왼편: 선형 회귀 모델에 세 개의 $\alpha$ 값 적용.
 # - 오른편: 10차 다항 회귀 모델에 세 개의 $\alpha$ 값 적용.
@@ -702,7 +708,7 @@
 #    
 # * $\alpha$ 와 $\theta_0$ 에 대한 설명은 릿지 회귀의 경우와 동일하다.
 
-# 아래 그림은 라쏘 규제를 적용한 적용한 6 개의 경우를 보여준다.
+# 아래 그림은 라쏘 규제를 적용한 적용한 6 가지의 경우를 보여준다.
 # 
 # - 왼편: 선형 회귀 모델에 세 개의 $\alpha$ 값 적용.
 # - 오른편: 10차 다항 회귀 모델에 세 개의 $\alpha$ 값 적용.
@@ -751,6 +757,26 @@
 # 되돌린다.
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-11.png" width="500"/></div>
+
+# **확률적 경사하강법과 조기 종료**
+
+# 아래 코드는 `SGDRegressor` 모델에 조기 종료를 지정한다.
+# 
+# - `penalty='elasticnet'`: 엘라스틱 넷 회귀 적용
+# - `alpha=0.1`: 규제 강도
+# - `l1_ratio=0.5`: 라쏘 규제 비율
+# - `eta0=0.002`: 학습률
+# - `early_stopping=True`: 조기 종료 실행. 훈련셋의 일부를 검증셋으로 활용.
+# - `max_iter=1000`: 최대 훈련 에포크
+# - `tol=1e-3`: 훈련 점수 또는 검증 점수가 지정된 값 이하로 최대 `n_iter_no_change` 에포크 동안 변하지 않으면 조기 종료 실행
+# - `n_iter_no_change=5`: 훈련 점수 또는 검증 점수가 지정된 에포크 동안 얼마나 변하는지 확인
+# 
+# ```python
+# sgd_reg = SGDRegressor(penalty='elasticnet', alpha=0.1, l1_ratio=0.5,
+#                         eta0=0.002, random_state=42,
+#                         early_stopping=True,
+#                         max_iter=1000, tol=1e-3, n_iter_no_change=5)
+# ```
 
 # ## 로지스틱 회귀
 
@@ -861,6 +887,15 @@
 # 사용되는 키(key) 중에 `data` 키와 연결된 값이 4개의 특성으로 구성된 훈련셋 데이터프레임<font size='2'>DataFrame</font>이고
 # `target` 키와 연결된 값이 레이블셋 시리즈<font size='2'>Series</font>이다.
 
+# :::{admonition} Bunch 자료형
+# :class: info
+# 
+# 불러온 자료형는 사전(`dict`)과 유사한 `Bunch` 자료형이며 사이킷런 라이브러리에서 제공한다.
+# 
+# - `Bunch` 자료형은 키를 사용한 인덱싱을 마치 클래스의 속성을 확인하는 방식으로 다룰 수 있음
+# - 예제: `iris['data']` 대시 `iris.data` 사용 가능
+# :::
+
 # 훈련셋의 처음 5개의 샘플은 다음과 같다.
 # 
 # ```python
@@ -916,7 +951,7 @@
 # 아래 그림의 초록 실선은 꽃잎 너비 1.65 기준으로 버지니카 품종일 확율이 50%를 넘어서는 것을 보여준다.
 # 반면에 파랑 파선은 반대로 꽃잎 너비 1.65 기준으로 버니니카 품종이 아닐 확률이 50% 아래로 떨어지는 것을 보여준다.
 
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/iris02.png" width="700"/></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-14.png" width="700"/></div>
 # 
 # <br>
 
@@ -924,9 +959,8 @@
 
 # 이번에는 꽃잎의 길이와 너비 두 특성을 이용하여 붓꽃의 품종을 판별하는 로지스틱 회귀 모델을 훈련한다.
 # 
-# 
 # ```python
-# X = iris.data[["petal length (cm)", "petal width (cm)"]].values # 꽃잎 너비 특성만 데이터셋으로 사용
+# X = iris.data[["petal length (cm)", "petal width (cm)"]].values # 꽃잎 길이와 너비 특성
 # y = iris.target_names[iris.target] == 'virginica'               # 레이블 셋: 버지니카 품종이면 1, 아니면 0.
 # X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42) # 훈련셋:테스트셋 = 7.5:2.2
 # 
