@@ -478,7 +478,7 @@ title="Print to PDF"
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id14">
-     4.6.1. 확률 계산: 시그모이드 함수
+     4.6.1. 확률 추정
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -632,7 +632,7 @@ title="Print to PDF"
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id14">
-     4.6.1. 확률 계산: 시그모이드 함수
+     4.6.1. 확률 추정
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -1201,44 +1201,39 @@ title="Print to PDF"
 아래 그림은 기본 선형 모델은 성능이 너무 좋지 않은 반면에
 300차 다항 회귀 모델은 너무 과하게 훈련 데이터에 민감하게 반응하는 것을 보여준다.
 반면에 2차 다항 회귀 모델이 적절(?)하게 예측값을 계산하는 것으로 보인다.</p>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-08.png" width="500"/></div><p><strong>모델 성능 평가: 교차 검증 vs. 학습 곡선</strong></p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-08.png" width="500"/></div><p><strong>교차 검증 vs. 학습 곡선</strong></p>
 <p>일반적으로 어떤 모델이 가장 좋은지 미리 알 수 없다.
 따라서 보통 다양한 모델을 대상으로 교차 검증을 진행하여 성능을 평가한다.
 교차 검증 결과에 따른 모델 평가는 다음 두 종류로 나뉜다.</p>
 <ul class="simple">
-<li><p>과소 적합 모델: 훈련 점수와 교차 검증 점수 모두 낮은 경우.
-즉, 두 경의 비용<font size='2'>cost</font>이 모두 높은 경우.</p></li>
-<li><p>과대 적합 모델: 훈련 점수는 높지만 교차 검증 점수가 상대적으로 많이 낮은 경우
-즉, 훈련셋에 대한 비용은 낮지만 검증셋에 대한 비용은 높은 경우.</p></li>
+<li><p>과소 적합 모델: 훈련셋과 교차 검증 점수 모두 너무 낮은 경우</p></li>
+<li><p>과대 적합 모델: 훈련셋에 대한 검증은 우수하지만 교차 검증 점수가 상대적으로 많이 낮은 경우</p></li>
 </ul>
 <p>다른 검증 방법은 <strong>학습 곡선</strong><font size='2'>learning curve</font>을 잘 살펴보는 것이다.
 학습 곡선은 훈련셋과 검증 세트에 대한 모델 성능을 비교하는 그래프이며,
 학습 곡선의 모양에 따라 과소 적합 또는 과대 적합 여부를 판정할 수 있다.</p>
-<p><strong>과소 적합 모델의 학습 곡선 특징</strong></p>
-<p>아래 그래프는  2차 다항 함수의 분포를 따르는 데이터셋에 <code class="docutils literal notranslate"><span class="pre">LinearRegression</span></code> 모델을 적용한 학습 곡선을 보여준다.</p>
+<p>사이킷런의 <code class="docutils literal notranslate"><span class="pre">learning_curve()</span></code> 함수를 이용하여 학습 곡선을 그릴 수 있다.</p>
 <ul class="simple">
-<li><p>훈련셋에 대한 성능(빨강)</p>
-<ul>
-<li><p>훈련셋이 커지면서 RMSE(평균 제곱근 오차)가 커짐</p></li>
-<li><p>훈련셋이 어느 정도 커지면 더 이상 RMSE가 변하지 않음</p></li>
+<li><p>x 축: 훈련셋 크기. 전체 훈련셋의 10%에서 출발하여 훈련셋 전체를 대상으로 할 때까지
+훈련셋의 크기를 키워가며 교차 검증 진행.</p></li>
+<li><p>y 축: 교차 검증을 통해 확인된 훈련셋 및 검증셋 대상 RMSE(평균 제곱근 오차).</p></li>
 </ul>
-</li>
-<li><p>검증셋에 대한 성능(파랑)</p>
-<ul>
-<li><p>검증셋에 대한 성능이 훈련셋에 대한 성능과 거의 비슷해짐</p></li>
-</ul>
-</li>
+<p><strong>과소 적합 모델의 학습 곡선 특징</strong></p>
+<ul class="simple">
+<li><p>훈련셋(빨강)에 대한 성능: 훈련셋이 커지면서 RMSE 증가하지만
+훈련셋이 어느 정도 커지면 거의 불변.</p></li>
+<li><p>검증셋(파랑)에 대한 성능: 검증 세트에 대한 성능이 훈련셋에 대한 성능과 거의 비슷해짐.</p></li>
 </ul>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-09.png" width="500"/></div><p><strong>과대 적합 모델의 학습 곡선 특징</strong></p>
-<p>아래 그래프는 2차 다항 함수의 분포를 따르는 데이터셋에 10차 다항회귀 모델을 적용한 학습 곡선을 보여준다.</p>
 <ul class="simple">
-<li><p>훈련셋에 대한 성능(빨강): 훈련 데이터에 대한 평균 제곱근 오차가 매우 낮음.</p></li>
-<li><p>검증셋에 대한 성능(파랑): 훈련 데이터에 대한 성능과 차이가 크게 벌어짐.</p></li>
+<li><p>훈련셋(빨강)에 대한 성능: 훈련 데이터에 대한 평균 제곱근 오차가 매우 낮음.</p></li>
+<li><p>검증셋(파랑)에 대한 성능: 훈련 데이터에 대한 성능과 차이가 어느 정도 이상 벌어짐.</p></li>
+<li><p>과대 적합 모델 개선법: 두 그래프가 맞닿을 때까지 훈련 데이터 추가.
+하지만 일반적으로 더 많은 훈련 데이터를 구하는 일이 매우 어렵거나 불가능할 수 있음.
+아니면 모델에 규제를 가할 수 있음.</p></li>
 </ul>
-<p>과대적합 모델을 개선하기 위해서는 훈련 데이터를 추가해야 하지만 일반적으로 매우 어렵거나 불가능하다.</p>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-10.png" width="500"/></div><p><strong>모델 일반화 오차의 종류</strong></p>
-<p>훈련 과정에서 다루지 않은 새로운 데이터 대한 예측에서 발생하는 오차를 가리키며
-발생 원이은 다음 세 가지다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-10.png" width="500"/></div><p><strong>모델 일반화 오류의 종류</strong></p>
+<p>훈련 과정에서 다루지 않은 새로운 데이터 대한 예측에서 발생하는 오류를 가리키며 세 종류의 오류가 있다.</p>
 <ul class="simple">
 <li><p>편향: 실제로는 2차원 모델인데 1차원 모델을 사용하는 경우처럼 잘못된 가정으로 인해 발생한다.
 과소 적합이 발생할 가능성이 매우 높다.</p></li>
@@ -1248,8 +1243,8 @@ title="Print to PDF"
 과대 적합이 발생할 가능성도 매우 높다.
 모델의 자유도는 모델이 찾아야 할 파라미터의 개수를 나타낸다.
 따라서 학습시켜야 할 파라미터 수가 많을 수록 모델이 데이터에 민감하게 반응한다.</p></li>
-<li><p>제거 불가능 오차: 잡음(noise) 등 데이터 자체의 한계로 인해 발생한다.
-잡음 등을 제거해야만 오차를 줄일 수 있다.</p></li>
+<li><p>제거 불가능 오류: 잡음(noise) 등 데이터 자체의 한계로 인해 발생한다.
+잡음 등을 제거해야만 오류를 줄일 수 있다.</p></li>
 </ul>
 <div class="info admonition">
 <p class="admonition-title">편향-분산 트레이드오프</p>
@@ -1265,13 +1260,12 @@ title="Print to PDF"
 <strong>자유도</strong><font size="2">degree of freedom</font>는 모델 결정에 영향을 주는 요소들의 개수이다.
 예를 들어 선형 회귀의 경우에는 특성 수가 자유도를 결정하며,
 다항 회귀의 경우엔 차수도 자유도에 기여한다.</p>
-<p>선형 회귀 모델에 대한 <strong>규제</strong><font size='2'>regularization</font>는 가중치의 영향력을 제한하는 방식으로 이루어진다.
-즉, 모델의 자유도에 제한을 가하는 형식이며,
+<p>선형 회귀 모델에 대한 <strong>규제</strong><font size='2'>regularization</font>는 가중치의 역할을 제한하는 방식으로 이루어지며,
 방식에 따라 다음 세 가지 선형 회귀 모델이 지정된다.</p>
 <ul class="simple">
-<li><p>릿지 회귀: 가중치의 절대값을 최대한 작게 유지. 모델의 분산을 줄임. 단 편향은 커짐.</p></li>
-<li><p>라쏘 회귀: 중요하지 않은 특성의 가중치를 0으로 만듦. 자유도가 줄어들어 모델의 분산이 줄어듦. 단, 편향은 커짐.</p></li>
-<li><p>엘라스틱 넷: 릿지 회귀와 라쏘 회귀 혼합</p></li>
+<li><p>릿지 회귀</p></li>
+<li><p>라쏘 회귀</p></li>
+<li><p>엘라스틱 넷</p></li>
 </ul>
 <section id="font-size-2-ridge-regression-font">
 <h3><span class="section-number">4.5.1. </span>릿지 회귀<font size='2'>Ridge Regression</font><a class="headerlink" href="#font-size-2-ridge-regression-font" title="Permalink to this headline">#</a></h3>
@@ -1284,29 +1278,15 @@ title="Print to PDF"
 <div class="math notranslate nohighlight">
 \[J(\theta) = \textrm{MSE}(\theta) + \frac{\alpha}{m_b} \sum_{i=1}^{n}\theta_i^2\]</div>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(m_b\)</span>: 배치 크기(하이퍼파라미터)</p></li>
-<li><p><span class="math notranslate nohighlight">\(\alpha\)</span>(알파): 규제 강도(하이퍼파라미터).</p>
-<ul>
-<li><p><span class="math notranslate nohighlight">\(\alpha=0\)</span>: 규제 없음</p></li>
-<li><p><span class="math notranslate nohighlight">\(\alpha\)</span> 값을 크게 잡으면 가중치(<span class="math notranslate nohighlight">\(\theta_i\)</span>)의 절대값은 보다 0에 가깝워지도록 유도됨.
-즉, 가중치의 역할이 줄어듦.</p></li>
+<li><p><span class="math notranslate nohighlight">\(m_b\)</span>는 배치 크기를 가리킨다.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\alpha\)</span>(알파)는 규제의 강도를 지정한다.
+<span class="math notranslate nohighlight">\(\alpha=0\)</span> 이면 규제가 전혀 없는 기본 선형 회귀이다.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\alpha\)</span> 가 커질 수록 가중치의 역할이 줄어든다.
+왜냐하면 비용을 줄이기 위해 보다 작은 가중치를 선호하는 방향으로 훈련되기 때문이다.
+결국 모델의 분산 정도가 작아진다.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\theta_0\)</span> 는 규제하지 않는다.</p></li>
 </ul>
-</li>
-<li><p>편향(<span class="math notranslate nohighlight">\(\theta_0\)</span>): 제하지 않음. 규제해선 않됨.</p></li>
-</ul>
-<div class="info admonition">
-<p class="admonition-title">릿지 회귀의 비용 함수 해석</p>
-<p>비용 함수의 <span class="math notranslate nohighlight">\(J(\theta)\)</span> 전역 최솟값을 찾기 위해서는 <span class="math notranslate nohighlight">\(\sum_{i=1}^{n}\theta_i^2\)</span> 값을 최대한 작게 만들어야 하기에
-<span class="math notranslate nohighlight">\(\theta_i\)</span>의 절대값을 가급적 0에 가깝게 하는 방향으로 경사하강법이 작동한다.
-이렇게 하면 자연스럽게 모델의 분산도 작아진다.
-즉, 입력값이 조금 변하더라도 예측값이 변하는 정도가 약해진다.
-이유는 아래 식에서 볼 수 있듯이 예측값 <span class="math notranslate nohighlight">\(\hat y\)</span>를 계산할 때 <span class="math notranslate nohighlight">\(\theta_i\)</span>가 미치는 영향이 작아지기 때문이다.
-단, 이는 각 특성의 크기<font size='2'>scale</font>가 일정하다는 전제하에 그렇다.</p>
-<div class="math notranslate nohighlight">
-\[\hat y = \theta_0 + x_1 \cdot \theta_1 + \cdots + x_n \cdot \theta_{n}\]</div>
-</div>
-<p>아래 그림은 릿지 규제를 적용한 6 가지의 경우를 보여준다.
-두 경우 모두 규제 강도가 커질 수록 모델의 분산은 줄어들고 편향은 커진다.</p>
+<p>아래 그림은 릿지 규제를 적용한 적용한 6 개의 경우를 보여준다.</p>
 <ul class="simple">
 <li><p>왼편: 선형 회귀 모델에 세 개의 <span class="math notranslate nohighlight">\(\alpha\)</span> 값 적용.</p></li>
 <li><p>오른편: 10차 다항 회귀 모델에 세 개의 <span class="math notranslate nohighlight">\(\alpha\)</span> 값 적용.</p></li>
@@ -1318,24 +1298,21 @@ title="Print to PDF"
 <div class="math notranslate nohighlight">
 \[J(\theta) = \textrm{MSE}(\theta) + 2\alpha \, \sum_{i=1}^{n}\mid \theta_i\mid\]</div>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\alpha\)</span> 와 <span class="math notranslate nohighlight">\(\theta_0\)</span>: 릿지 회귀의 경우와 동일</p></li>
+<li><p>별로 중요하지 않은 특성에 대해 <span class="math notranslate nohighlight">\(\theta_i\)</span>가 0에 빠르게 수렴하도록 훈련 중에 유도된다.
+이유는 <span class="math notranslate nohighlight">\(\mid \theta_i \mid\)</span> 의 미분값이 1또는 -1 이기에 상대적으로 큰 값이기에
+파라미터 업데이크 과정에서 보다 작은 <span class="math notranslate nohighlight">\(\mid \theta_i \mid\)</span> 가 보다 빠르게 0에 수렴하기 때문이다.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\alpha\)</span> 와 <span class="math notranslate nohighlight">\(\theta_0\)</span> 에 대한 설명은 릿지 회귀의 경우와 동일하다.</p></li>
 </ul>
-<div class="info admonition">
-<p class="admonition-title">라쏘 회귀의 비용 함수 해석</p>
-<p>비용 함수의 <span class="math notranslate nohighlight">\(J(\theta)\)</span> 전역 최솟값을 찾기 위해서는 <span class="math notranslate nohighlight">\(\sum_{i=1}^{n}\mid\theta_i\mid\)</span> 값을 최대한 작게 만들어야 하기에
-별로 중요하지 않은 특성에 대해 <span class="math notranslate nohighlight">\(\theta_i\)</span>가 0에 빠르게 수렴하도록 훈련 중에 유도된다.
-이유는 <span class="math notranslate nohighlight">\(\mid \theta_i \mid\)</span> 의 미분값이 1또는 -1 이기에 <span class="math notranslate nohighlight">\(\theta_i\)</span>가 0이 아닌 이상
-비용 함수의 그레이디언트의 크기가 0에 가까워 지기가 상대적으로 어렵기 때문이다.
-따라서 경사하강법을 반복적으로 적용하는 훈련 과정동안 중요하지 않은 특성의 가중치를 빠르게 0으로 수렴하게 만들고
-대신 중요한 특성의 가중치를 결정하는 데에 보다 집중한다.</p>
-</div>
-<p>아래 그림은 라쏘 규제를 적용한 6 가지의 경우를 보여준다.
-두 경우 모두 규제 강도가 커질 수록 모델의 분산은 줄어들고 편향은 커진다.</p>
+<p>아래 그림은 라쏘 규제를 적용한 적용한 6 개의 경우를 보여준다.</p>
 <ul class="simple">
 <li><p>왼편: 선형 회귀 모델에 세 개의 <span class="math notranslate nohighlight">\(\alpha\)</span> 값 적용.</p></li>
 <li><p>오른편: 10차 다항 회귀 모델에 세 개의 <span class="math notranslate nohighlight">\(\alpha\)</span> 값 적용.</p></li>
 </ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/lasso01.png" width="600"/></div></section>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/lasso01.png" width="600"/></div><div class="warning admonition">
+<p class="admonition-title">주의 사항</p>
+<p>라쏘 회귀는 정규 방정식을 지원하지 않는다.</p>
+</div>
+</section>
 <section id="font-size-2-elastic-net-font">
 <h3><span class="section-number">4.5.3. </span>엘라스틱 넷<font size='2'>Elastic Net</font> 회귀<a class="headerlink" href="#font-size-2-elastic-net-font" title="Permalink to this headline">#</a></h3>
 <p>릿지 회귀와 라쏘 회귀를 절충한 모델이며 다음 비용 함수를 사용한다.
@@ -1350,9 +1327,9 @@ r\cdot \bigg (2 \alpha \, \sum_{i=1}^{n}\mid\theta_i\mid \bigg) +
 \]</div>
 <div class="info admonition">
 <p class="admonition-title">규제 선택</p>
-<p>약간이라도 규제를 사용해야 한다.
-유용한 속성이 많지 않다고 판단되는 경우엔 중요하지 않은 특성을 무시하게 만드는 라쏘 회귀 또는 엘라스틱 넷을 사용한다.
-하지만 일반적으로 엘라스틱 넷이 보다 많이 추천된다.</p>
+<p>약간이라도 규제를 사용해야 하며, 일반적으로 릿지 회귀가 추천된다.
+반면에 유용한 속성이 그렇게 많지 않다고 판단되는 경우엔 라쏘 회귀 또는 엘라스틱 넷이 추천된다.
+하지만 특성 수가 훈련 샘플 수보다 많거나 특성 몇 개가 상호 강하게 연관되어 있는 경우엔 엘라스틱 넷을 추천한다.</p>
 </div>
 </section>
 <section id="sec-early-stopping">
@@ -1366,24 +1343,7 @@ r\cdot \bigg (2 \alpha \, \sum_{i=1}^{n}\mid\theta_i\mid \bigg) +
 검증 손실이 언제 최소가 되었는지 알기 어렵다.
 따라서 한동안 최소값보다 높게 유지될 때 훈련을 멈추고 기억해둔 최적의 모델로
 되돌린다.</p>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-11.png" width="500"/></div><p><strong>확률적 경사하강법과 조기 종료</strong></p>
-<p>아래 코드는 <code class="docutils literal notranslate"><span class="pre">SGDRegressor</span></code> 모델에 조기 종료를 지정한다.</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">penalty='elasticnet'</span></code>: 엘라스틱 넷 회귀 적용</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">alpha=0.1</span></code>: 규제 강도</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">l1_ratio=0.5</span></code>: 라쏘 규제 비율</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">early_stopping=True</span></code>: 조기 종료 실행. 훈련셋의 일부를 검증셋으로 활용.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">max_iter=1000</span></code>: 최대 훈련 에포크</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">tol=1e-3</span></code>: 훈련 점수 또는 검증 점수가 지정된 값 이하로 최대 <code class="docutils literal notranslate"><span class="pre">n_iter_no_change</span></code> 에포크 동안 변하지 않으면 조기 종료 실행</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">n_iter_no_change=5</span></code>: 훈련 점수 또는 검증 점수가 지정된 에포크 동안 얼마나 변하는지 확인</p></li>
-</ul>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sgd_reg</span> <span class="o">=</span> <span class="n">SGDRegressor</span><span class="p">(</span><span class="n">penalty</span><span class="o">=</span><span class="s1">&#39;elasticnet&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">l1_ratio</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-                        <span class="n">eta0</span><span class="o">=</span><span class="mf">0.002</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>
-                        <span class="n">early_stopping</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                        <span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">n_iter_no_change</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-11.png" width="500"/></div></section>
 </section>
 <section id="id13">
 <h2><span class="section-number">4.6. </span>로지스틱 회귀<a class="headerlink" href="#id13" title="Permalink to this headline">#</a></h2>
@@ -1393,7 +1353,7 @@ r\cdot \bigg (2 \alpha \, \sum_{i=1}^{n}\mid\theta_i\mid \bigg) +
 <li><p>다중 클래스 분류: 소프트맥스 회귀 사용</p></li>
 </ul>
 <section id="id14">
-<h3><span class="section-number">4.6.1. </span>확률 계산: 시그모이드 함수<a class="headerlink" href="#id14" title="Permalink to this headline">#</a></h3>
+<h3><span class="section-number">4.6.1. </span>확률 추정<a class="headerlink" href="#id14" title="Permalink to this headline">#</a></h3>
 <p>선형 회귀 모델이 예측한 값에 <strong>시그모이드</strong><font size='2'>sigmoid</font> 함수를
 적용하여 0과 1 사이의 값, 즉 양성일 <strong>확률</strong> <span class="math notranslate nohighlight">\(\hat p\)</span> 로 지정한다.</p>
 <div class="math notranslate nohighlight">
@@ -1476,14 +1436,6 @@ J(\theta) =
 <p><code class="docutils literal notranslate"><span class="pre">load_iris()</span></code> 함수는 데이터셋을 사전 자료형과 유사한 <code class="docutils literal notranslate"><span class="pre">Bunch</span></code> 자료형으로 불러온다.
 사용되는 키(key) 중에 <code class="docutils literal notranslate"><span class="pre">data</span></code> 키와 연결된 값이 4개의 특성으로 구성된 훈련셋 데이터프레임<font size='2'>DataFrame</font>이고
 <code class="docutils literal notranslate"><span class="pre">target</span></code> 키와 연결된 값이 레이블셋 시리즈<font size='2'>Series</font>이다.</p>
-<div class="info admonition">
-<p class="admonition-title">Bunch 자료형</p>
-<p>불러온 자료형는 사전(<code class="docutils literal notranslate"><span class="pre">dict</span></code>)과 유사한 <code class="docutils literal notranslate"><span class="pre">Bunch</span></code> 자료형이며 사이킷런 라이브러리에서 제공한다.</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">Bunch</span></code> 자료형은 키를 사용한 인덱싱을 마치 클래스의 속성을 확인하는 방식으로 다룰 수 있음</p></li>
-<li><p>예제: <code class="docutils literal notranslate"><span class="pre">iris['data']</span></code> 대시 <code class="docutils literal notranslate"><span class="pre">iris.data</span></code> 사용 가능</p></li>
-</ul>
-</div>
 <p>훈련셋의 처음 5개의 샘플은 다음과 같다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 <span class="go">     sepal length (cm) sepal width (cm) petal length (cm) petal width (cm)</span>
@@ -1529,10 +1481,10 @@ J(\theta) =
 <strong>결정 경계</strong><font size='2'>decision boundary</font>는 꽃잎 너비 기준으로 1.65cm 이다.</p>
 <p>아래 그림의 초록 실선은 꽃잎 너비 1.65 기준으로 버지니카 품종일 확율이 50%를 넘어서는 것을 보여준다.
 반면에 파랑 파선은 반대로 꽃잎 너비 1.65 기준으로 버니니카 품종이 아닐 확률이 50% 아래로 떨어지는 것을 보여준다.</p>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-14.png" width="700"/></div>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/iris02.png" width="700"/></div>
 <br><p><strong>버지니카 품종 감지기: 꽃잎 길이와 너비 특성 활용</strong></p>
 <p>이번에는 꽃잎의 길이와 너비 두 특성을 이용하여 붓꽃의 품종을 판별하는 로지스틱 회귀 모델을 훈련한다.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">[[</span><span class="s2">&quot;petal length (cm)&quot;</span><span class="p">,</span> <span class="s2">&quot;petal width (cm)&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span> <span class="c1"># 꽃잎 길이와 너비 특성</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">[[</span><span class="s2">&quot;petal length (cm)&quot;</span><span class="p">,</span> <span class="s2">&quot;petal width (cm)&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span> <span class="c1"># 꽃잎 너비 특성만 데이터셋으로 사용</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">target_names</span><span class="p">[</span><span class="n">iris</span><span class="o">.</span><span class="n">target</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;virginica&#39;</span>               <span class="c1"># 레이블 셋: 버지니카 품종이면 1, 아니면 0.</span>
 <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span> <span class="c1"># 훈련셋:테스트셋 = 7.5:2.2</span>
 
@@ -1591,12 +1543,19 @@ x_2 = - \frac{\theta_0 + x_1 \cdot \theta_1}{\theta_2}
 <strong>소프트맥스 회귀</strong><font size='2'>Softmax regression</font>이며,
 <strong>다항 로지스틱 회귀</strong><font size='2'>multinomial logistic regression</font> 라고도 불린다.</p>
 <p><strong>클래스별 확률 예측</strong></p>
-<p>샘플 <span class="math notranslate nohighlight">\(\mathbf x\)</span>가 주어졌을 때 각각의 분류 클래스 <span class="math notranslate nohighlight">\(k\)</span> 에 대해 점수 <span class="math notranslate nohighlight">\(s_k(\mathbf x)\)</span>를
+<p>샘플 <span class="math notranslate nohighlight">\(\mathbf x\)</span>가 주어졌을 때 각각의 분류 클래스 <span class="math notranslate nohighlight">\(k\)</span> 에 대해 <strong>소프트맥스 점수</strong> <span class="math notranslate nohighlight">\(s_k(\mathbf x)\)</span>를
 선형 회귀 방식으로 계산한다.</p>
 <div class="math notranslate nohighlight">
-\[
+\[\begin{split}
 s_k(\mathbf{x}) = \theta_0^{(k)} + \theta_1^{(k)} x_1 + \cdots + \theta_n^{(k)} x_n
-\]</div>
+= [1, x_1, \dots, x_n]\, 
+\begin{bmatrix}
+\theta_0^{(k)}\\
+\theta_1^{(k)} \\
+\vdots \\
+\theta_n^{(k)}
+\end{bmatrix}
+\end{split}\]</div>
 <p>이는 모델 훈련을 통해 총 <span class="math notranslate nohighlight">\(k\cdot (n+1)\)</span> 개의 파라미터를 학습시켜야 함을 의미한다.
 위 식에서 <span class="math notranslate nohighlight">\(\theta_i^{(k)}\)</span> 는 <span class="math notranslate nohighlight">\(i\)</span> 번째 특성에 대한 파라미터가 <span class="math notranslate nohighlight">\(k\)</span> 개 필요함을 의미한다.
 예를 들어, 붓꽃 데이터셋에 포함된 <span class="math notranslate nohighlight">\(n = 4\)</span> 개의 특성 모두를 이용하여 품종을 분류하는
@@ -1605,24 +1564,42 @@ s_k(\mathbf{x}) = \theta_0^{(k)} + \theta_1^{(k)} x_1 + \cdots + \theta_n^{(k)} 
 \[\begin{split}
 \Theta = 
 \begin{bmatrix}
-\theta_0^{(0)} &amp; \theta_1^{(0)} &amp; \theta_2^{(0)} &amp; \theta_3^{(0)} &amp; \theta_4^{(0)}\\
-\theta_0^{(1)} &amp; \theta_1^{(1)} &amp; \theta_2^{(1)} &amp; \theta_3^{(1)} &amp; \theta_4^{(1)}\\
-\theta_0^{(2)} &amp; \theta_1^{(2)} &amp; \theta_2^{(2)} &amp; \theta_3^{(2)} &amp; \theta_4^{(2)}
+\theta_0^{(0)} &amp; \theta_0^{(1)} &amp; \theta_0^{(2)} \\
+\theta_1^{(0)} &amp; \theta_1^{(1)} &amp; \theta_1^{(2)} \\
+\theta_2^{(0)} &amp; \theta_2^{(1)} &amp; \theta_2^{(2)} \\
+\theta_3^{(0)} &amp; \theta_3^{(1)} &amp; \theta_3^{(2)} \\
+\theta_4^{(0)} &amp; \theta_4^{(1)} &amp; \theta_4^{(2)} 
 \end{bmatrix}
 \end{split}\]</div>
-<p>모델의 최종 예측값은 아래 <strong>소프트맥스</strong> 함수를 이용하여 계산된 각 클래스에 속할 확률 <span class="math notranslate nohighlight">\(\hat p_k\)</span> 이
-가장 높은 <span class="math notranslate nohighlight">\(k\)</span>로 지정된다.
-아래 식에서 <span class="math notranslate nohighlight">\(K\)</span>는 선택 가능한 클래스(레이블)의 개수를 나타낸다.</p>
+<p><strong>소프트맥스 함수</strong> <span class="math notranslate nohighlight">\(\sigma()\)</span>는 각 클래스에 속할 확률 <span class="math notranslate nohighlight">\(\hat p_k\)</span>를 계산한다.</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(K\)</span>: 클래스(레이블)의 개수</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{s}(\mathbf{x}) = [s_1(\mathbf{x}), \dots, s_K(\mathbf{x})]\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\sigma()\)</span> 함수: 소프트맥스 확률값 계산 함수. 각 클래스별 확률 예측값으로 구성된 어레이 생성.</p></li>
+</ul>
 <div class="math notranslate nohighlight">
 \[
-\hat p_k = 
-\frac{\exp(s_k(\mathbf x))}{\sum_{j=1}^{K}\exp(s_j(\mathbf x))}
+\hat p_k 
+= \sigma(\mathbf{s}(\mathbf{x}))[k]
+= \frac{\exp(s_k(\mathbf x))}{\sum_{j=1}^{K}\exp(s_j(\mathbf x))}
 \]</div>
-<p>즉, 소프트맥스 회귀 모델은 각 샘플에 대해 추정 확률이 가장 높은 클래스를 선택한다.</p>
+<p>소프트맥스 회귀 모델의 각 샘플에 대한 최종 예측 레이블은 추정 확률이 가장 높은 클래스로 선택된다.</p>
 <div class="math notranslate nohighlight">
 \[
 \hat y = 
-\mathrm{argmax}_k s_k(\mathbf x)
+\mathrm{np.argmax}(\sigma(\mathbf{s}(\mathbf{x})))
+\]</div>
+<p>위 설명을 종합해서 모든 샘플에 대한 확률 예측값을 동시에 실행하는 행렬 연산을 다음과 같이
+정의할 수 있다.</p>
+<div class="math notranslate nohighlight">
+\[
+\sigma(\mathbf{s}(\mathbf{X})) = \sigma(\mathbf{X} \, \Theta)
+\]</div>
+<p>단, <span class="math notranslate nohighlight">\(\sigma()\)</span> 함수가 행별로, 즉 샘플별로 작동한다고 가정한다.
+그리고 각 샘플별 최종 예측 레이블 계산은 다음과 같다.</p>
+<div class="math notranslate nohighlight">
+\[
+\mathrm{np.argmax}(\sigma(\mathbf{X} \, \Theta), \mathrm{axis}=1)
 \]</div>
 <div class="tip admonition">
 <p class="admonition-title">소프트맥스 회귀와 다중 출력 분류</p>
@@ -1653,7 +1630,7 @@ J(\Theta) =
 <p>사이킷런의 <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> 예측기를 활용한다.
 기본값 <code class="docutils literal notranslate"><span class="pre">solver=lbfgs</span></code> 사용하면 모델이 알아서 다중 클래스 분류를 훈련한다.
 아래 코드는 꽃잎의 길이와 너비 두 특성을 이용하여
-세토사, 버시컬러, 버지니카 클래스를 선택하는 모델을 훈련시킨다.</p>
+세토사, 버시컬러, 버지니카 클래스 중 하나를 선택하는 모델을 훈련시킨다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">[[</span><span class="s2">&quot;petal length (cm)&quot;</span><span class="p">,</span> <span class="s2">&quot;petal width (cm)&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">iris</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">]</span>
 <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
