@@ -71,6 +71,25 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .highlight .ss { color: var(--jp-mirror-editor-string-color) } /* Literal.String.Symbol */
 .highlight .il { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Integer.Long */
   </style>
+<style type="text/css">
+    
+
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            /*preferredFont: "TeX",*/
+            /*availableFonts: ["TeX", "STIX"],*/
+            styles: {
+                scale: 100,
+                ".MathJax_Display": {
+                    "font-size": "100%",
+                }
+            }
+        }
+    });
+</script>
+    
+  </style>
 
 
 
@@ -16307,16 +16326,34 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
-<li>샘플 $\mathbf x$가 주어졌을 때 각각의 분류 클래스 $k$ 에 대한 점수 $s_k(\mathbf x)$ 계산.
+<li>샘플 $\mathbf x = [x_1, \dots, x_n]$가 주어졌을 때 각각의 분류 클래스 $k$ 에 대한 점수 $s_k(\mathbf x)$ 계산.
   즉, <code>k*(n+1)</code> 개의 파라미터를 학습시켜야 함.</li>
 </ul>
 $$
 s_k(\mathbf x) = \theta_0^{(k)} + \theta_1^{(k)}\, x_1 + \cdots + \theta_n^{(k)}\, x_n
+= [1, x_1, \dots, x_n]\, 
+\begin{bmatrix}
+\theta_0^{(k)}\\
+\theta_1^{(k)} \\
+\vdots \\
+\theta_n^{(k)}
+\end{bmatrix}
 $$<p></p>
 
 </div>
 </div>
 </div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="%EA%B0%80%EC%A4%91%EC%B9%98-%EC%96%B4%EB%A0%88%EC%9D%B4">&#44032;&#51473;&#52824; &#50612;&#47112;&#51060;<a class="anchor-link" href="#%EA%B0%80%EC%A4%91%EC%B9%98-%EC%96%B4%EB%A0%88%EC%9D%B4">&#182;</a></h3>
+</div>
+</div>
+</div>
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
@@ -16325,28 +16362,17 @@ $$<p></p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
-<li><strong>소프트맥스 함수</strong>를 이용하여 각 클래스 $k$에 속할 확률 $\hat p_k$ 계산</li>
+<li>편향과 가중치들의 2차원 어레이: $n=4$, 클래스 종류는 $3$개인 경우 </li>
 </ul>
 $$
-\hat p_k = 
-\frac{\exp(s_k(\mathbf x))}{\sum_{j=1}^{K}\exp(s_j(\mathbf x))}
-$$
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<ul>
-<li>추정 확률이 가장 높은 클래스 선택</li>
-</ul>
-$$
-\hat y = 
-\mathrm{argmax}_k s_k(\mathbf x)
+\Theta = 
+\begin{bmatrix}
+\theta_0^{(0)} &amp; \theta_0^{(1)} &amp; \theta_0^{(2)} \\
+\theta_1^{(0)} &amp; \theta_1^{(1)} &amp; \theta_1^{(2)} \\
+\theta_2^{(0)} &amp; \theta_2^{(1)} &amp; \theta_2^{(2)} \\
+\theta_3^{(0)} &amp; \theta_3^{(1)} &amp; \theta_3^{(2)} \\
+\theta_4^{(0)} &amp; \theta_4^{(1)} &amp; \theta_4^{(2)} 
+\end{bmatrix}
 $$
 </div>
 </div>
@@ -16358,7 +16384,7 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="%EC%86%8C%ED%94%84%ED%8A%B8%EB%A7%A5%EC%8A%A4-%ED%9A%8C%EA%B7%80-%EB%B9%84%EC%9A%A9%ED%95%A8%EC%88%98">&#49548;&#54532;&#53944;&#47589;&#49828; &#54924;&#44480; &#48708;&#50857;&#54632;&#49688;<a class="anchor-link" href="#%EC%86%8C%ED%94%84%ED%8A%B8%EB%A7%A5%EC%8A%A4-%ED%9A%8C%EA%B7%80-%EB%B9%84%EC%9A%A9%ED%95%A8%EC%88%98">&#182;</a></h3>
+<h3 id="%EC%86%8C%ED%94%84%ED%8A%B8%EB%A7%A5%EC%8A%A4-%ED%95%A8%EC%88%98:-$%5Csigma()$">&#49548;&#54532;&#53944;&#47589;&#49828; &#54632;&#49688;: $\sigma()$<a class="anchor-link" href="#%EC%86%8C%ED%94%84%ED%8A%B8%EB%A7%A5%EC%8A%A4-%ED%95%A8%EC%88%98:-$%5Csigma()$">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -16370,7 +16396,109 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
-<li>각 분류 클래스 $k$에 대한 적절한 가중치 벡터 $\theta_k$를 학습해 나가야 함.</li>
+<li>$K$: 클래스(레이블)의 개수</li>
+<li>$\mathbf{s}(\mathbf{x}) = [s_1(\mathbf{x}), \dots, s_K(\mathbf{x})]$</li>
+<li>$\sigma()$ 함수: 소프트맥스 확률값 계산 함수. 각 클래스별 확률 예측값으로 구성된 어레이 생성.</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+$$
+\hat p_k 
+= \sigma(\mathbf{s}(\mathbf{x}))[k]
+= \frac{\exp(s_k(\mathbf x))}{\sum_{j=1}^{K}\exp(s_j(\mathbf x))}
+$$
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+$$
+\hat y = 
+\mathrm{np.argmax}(\sigma(\mathbf{s}(\mathbf{x})))
+$$
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="%EC%86%8C%ED%94%84%ED%8A%B8%EB%A7%A5%EC%8A%A4-%ED%9A%8C%EA%B7%80-%EB%AA%A8%EB%8D%B8-%ED%96%89%EB%A0%AC-%EC%97%B0%EC%82%B0">&#49548;&#54532;&#53944;&#47589;&#49828; &#54924;&#44480; &#47784;&#45944; &#54665;&#47148; &#50672;&#49328;<a class="anchor-link" href="#%EC%86%8C%ED%94%84%ED%8A%B8%EB%A7%A5%EC%8A%A4-%ED%9A%8C%EA%B7%80-%EB%AA%A8%EB%8D%B8-%ED%96%89%EB%A0%AC-%EC%97%B0%EC%82%B0">&#182;</a></h3>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ul>
+<li>모든 샘플에 대한 확률 예측값</li>
+</ul>
+$$
+\sigma(\mathbf{s}(\mathbf{X})) = \sigma(\mathbf{X} \, \Theta)
+$$
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ul>
+<li>모든 샘플에 대한 최종 예측 레이블</li>
+</ul>
+$$
+\hat{\mathbf{y}} = \mathrm{np.argmax}(\sigma(\mathbf{X} \, \Theta), \mathrm{axis}=1)
+$$
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="%EC%86%8C%ED%94%84%ED%8A%B8%EB%A7%A5%EC%8A%A4-%ED%9A%8C%EA%B7%80%EC%9D%98-%EB%B9%84%EC%9A%A9%ED%95%A8%EC%88%98">&#49548;&#54532;&#53944;&#47589;&#49828; &#54924;&#44480;&#51032; &#48708;&#50857;&#54632;&#49688;<a class="anchor-link" href="#%EC%86%8C%ED%94%84%ED%8A%B8%EB%A7%A5%EC%8A%A4-%ED%9A%8C%EA%B7%80%EC%9D%98-%EB%B9%84%EC%9A%A9%ED%95%A8%EC%88%98">&#182;</a></h3>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ul>
+<li>아래 비용 함수에 대해 경사 하강법을 적용하여 최적의 가중치 벡터 $\theta_k^{(i)}$ 학습<ul>
+<li>$K=2$이면 로지스틱 회귀의 로그 손실 함수와 정확하게 일치.</li>
+</ul>
+</li>
 </ul>
 
 </div>
@@ -16401,65 +16529,12 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
-<li>위 비용함수에 대해 경사 하강법 적용</li>
+<li>클래스 $k$에 대한 그레이디언트 벡터</li>
 </ul>
-
-</div>
-</div>
-</div>
-</div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 $$
-J(\Theta) = 
-- \frac{1}{m}\, \sum_{i=1}^{m}\sum_{k=1}^{K} y^{(i)}_k\, \log(\hat{p}_k^{(i)})
+\nabla_{\Theta}(k) J(\Theta) = 
+\frac{1}{m}\, \sum_{i=1}^{m} \left( \hat{p}_k^{(i)} - y^{(i)}_k \right)\, \mathbf{x}^{(i)}
 $$
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<ul>
-<li>$K=2$이면 로지스틱 회귀의 로그 손실 함수와 정확하게 일치.</li>
-</ul>
-
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<ul>
-<li>주어진 샘플의 타깃 클래스를 제대로 예측할 경우 높은 확률값 계산</li>
-</ul>
-
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<ul>
-<li>크로스 엔트로피 개념은 정보 이론에서 유래함. 자세한 설명은 생략.</li>
-</ul>
-
 </div>
 </div>
 </div>
