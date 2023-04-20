@@ -1148,4 +1148,5 @@
 
 # ## 연습문제
 
-# 참고: [(실습) 모델 훈련](https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_training_models.ipynb)
+# 참고: [(실습) 모델 훈련](https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_training_models.ipynb) 와
+# [(실습) 머신러닝 모델 웹앱](https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_webApp_mlModel.ipynb)

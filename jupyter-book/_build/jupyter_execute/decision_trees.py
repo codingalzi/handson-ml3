@@ -416,5 +416,4 @@
 
 # ## 연습문제
 
-# 참고: [(실습) 결정트리](https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_decision_trees.ipynb) 와
-# [(실습) 머신러닝 모델 웹앱](https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_webApp_mlModel.ipynb)
+# 참고: [(실습) 결정트리](https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_decision_trees.ipynb)
