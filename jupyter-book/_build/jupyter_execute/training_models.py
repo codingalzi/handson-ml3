@@ -113,9 +113,9 @@
 # $$
 # \mathbf{X}= 
 # \begin{bmatrix} 
-# [1, x_1^{(1)}, \dots, x_n^{(1)}] \\
+# [1, x_1^{(0)}, \dots, x_n^{(0)}] \\
 # \vdots \\
-# [1, x_1^{(m)}, \dots, x_n^{(m)}] \\
+# [1, x_1^{(m-1)}, \dots, x_n^{(m-1)}] \\
 # \end{bmatrix}
 # $$
 # 
@@ -131,15 +131,15 @@
 # $$
 # \hat{\mathbf y} = 
 # \begin{bmatrix}
-# \hat y_1 \\
+# \hat y_0 \\
 # \vdots \\
-# \hat y_m
+# \hat y_{m-1}
 # \end{bmatrix}
 # = 
 # \begin{bmatrix} 
-# [1, x_1^{(1)}, \dots, x_n^{(1)}] \\
+# [1, x_1^{(0)}, \dots, x_n^{(0)}] \\
 # \vdots \\
-# [1, x_1^{(m)}, \dots, x_n^{(m)}] \\
+# [1, x_1^{(m-1)}, \dots, x_n^{(m-1)}] \\
 # \end{bmatrix}
 # \,\, 
 # \begin{bmatrix}
@@ -174,7 +174,7 @@
 
 # $$
 # \mathrm{MSE}(\mathbf{\theta}) = 
-# \frac 1 m \sum_{i=1}^{m} \big(\mathbf{x}^{(i)}\, \mathbf{\theta} - y^{(i)}\big)^2
+# \frac 1 m \sum_{i=0}^{m-1} \big(\mathbf{x}^{(i)}\, \mathbf{\theta} - y^{(i)}\big)^2
 # $$
 
 # **최종 목표**
@@ -246,7 +246,9 @@
 
 # **배치 크기**<font size="2">batch size</font>
 # 
-# 파라미터를 한 번 업데이트하기 위해 필요한 훈련 샘플의 개수를 가리킨다.
+# 파라미터를 한 번 업데이트하기 위해 필요한 훈련 샘플의 개수를 가리키며,
+# 전체 데이터셋의 크기 $m$과 구분하기 위해 $m_b$를 사용한다.
+# 그러면 $1 \le m_b \le m$이 성립한다.
 
 # **스텝**<font size='2'>step</font>과 **스텝 크기**
 # 
@@ -265,7 +267,7 @@
 # 
 # $$
 # \mathrm{MSE}(\mathbf{\theta}) = 
-# \frac 1 {m_b} \sum_{i=1}^{m_b} \big(\mathbf{x}^{(i)}\, \mathbf{\theta} - y^{(i)}\big)^2
+# \frac 1 {m_b} \sum_{i=0}^{m_b-1} \big(\mathbf{x}^{(i)}\, \mathbf{\theta} - y^{(i)}\big)^2
 # $$
 # 
 # MSE는 스텝마다 계산되며, $m_b$는 따라서 배치 크기를 가리킨다.
@@ -719,7 +721,7 @@
 
 # 릿지 회귀와 라쏘 회귀를 절충한 모델이며 다음 비용 함수를 사용한다.
 # $r$ 은 릿지 규제와 라쏘 규제의 사용 비율이다. 
-# 단, 규제 강도를 의미하는 `\alpha` 가 각 규제에 가해지는 정도가 다름에 주의한다.
+# 단, 규제 강도를 의미하는 $\alpha$ 가 각 규제에 가해지는 정도가 다름에 주의한다.
 # 
 # $$
 # J(\theta) = 
@@ -813,7 +815,7 @@
 # 
 # $$
 # J(\theta) = 
-# - \frac{1}{m_b}\, \sum_{i=1}^{m_b}\, \left( y^{(i)} \cdot \log(\,\hat p^{(i)}\,) + (1-y^{(i)}) \cdot \log(\,1 - \hat p^{(i)}\,)\right)
+# - \frac{1}{m_b}\, \sum_{i=0}^{m_b-1}\, \left( y^{(i)} \cdot \log(\,\hat p^{(i)}\,) + (1-y^{(i)}) \cdot \log(\,1 - \hat p^{(i)}\,)\right)
 # $$
 
 # :::{admonition} 로그 손실 함수
@@ -1004,9 +1006,9 @@
 # **소프트맥스 회귀**<font size='2'>Softmax regression</font>이며, 
 # **다항 로지스틱 회귀**<font size='2'>multinomial logistic regression</font> 라고도 불린다.
 
-# **클래스별 확률 예측**
+# **소프트맥스 점수**
 # 
-# 샘플 $\mathbf x = [x_1, \dots, x_n]$가 주어졌을 때 각각의 분류 클래스 $k$ 에 대해 **소프트맥스 점수** $s_k(\mathbf x)$를
+# 입력 샘플 $\mathbf x = [x_1, \dots, x_n]$가 주어졌을 때 각각의 분류 클래스 $k$ 에 대해 **소프트맥스 점수** $s_k(\mathbf x)$를
 # 선형 회귀 방식으로 계산한다.
 # 
 # $$
@@ -1021,9 +1023,11 @@
 # $$    
 # 
 # 위 식에서 $\theta_i^{(k)}$ 는 $i$ 번째 특성에 대한 가중치 파라미터를 가리킨다.
-# 따라서 $K$ 개의 클래스로 분류하는 모델 훈련을 통해 총 $K \cdot (n+1)$ 개의 편향과 가중치 파라미터를 학습시켜야 한다.
+# 따라서 $K$ 개의 클래스로 분류하는 모델 훈련을 통해 총 $(n+1) \cdot K$ 개의 편향과 가중치 파라미터를 학습시켜야 한다.
+# 
 # 예를 들어, 붓꽃 데이터셋에 포함된 $n = 4$ 개의 특성 모두를 이용하여 품종을 분류하는
-# 소프트맥스 회귀 모델을 훈련시키려면 3 $\times$ 5 = 15개의 파라미터를 훈련시켜야 한다.
+# 소프트맥스 회귀 모델을 훈련시키려면 5 $\times$ 3 = 15개의 파라미터를 훈련시켜야 한다.
+# 15 개의 파라미터로 구성된 파라미터 행렬은 아래와 같다.
 # 
 # $$
 # \Theta = 
@@ -1036,37 +1040,80 @@
 # \end{bmatrix}
 # $$
 
-# **소프트맥스 함수** $\sigma()$는 각 클래스에 속할 확률 $\hat p_k$를 계산한다.
+# 반면에 꽃받침의 길이와 너비, 꽃잎 길이와 너비 네 개의 특성과 추가된 편향으로 구성된 훈련셋 `X_train`은 다음과 같은 형식이다.
+# 각 행이 하나의 샘플을 가리키며, 배치 크기가 $m_b$일 때 스텝마다 계산되는 예측값과 비용함수 계산에
+# 사용되는 배치 데이터셋은 다음과 같이 표현된다.
 # 
-# - $K$: 클래스(레이블)의 개수
-# - $\mathbf{s}(\mathbf{x}) = [s_1(\mathbf{x}), \dots, s_K(\mathbf{x})]$
-# - $\sigma()$ 함수: 소프트맥스 확률값 계산 함수. 각 클래스별 확률 예측값으로 구성된 어레이 생성.
+# $$
+# \mathbf{X}_{batch} = 
+# \begin{bmatrix}
+# 1 & x_1^{(0)} & x_2^{(0)} & x_3^{(0)} & x_4^{(0)} \\
+# 1 & x_1^{(1)} & x_2^{(1)} & x_3^{(1)} & x_4^{(1)} \\
+#  & & \vdots & & \\
+# 1 & x_1^{(m_b-1)} & x_2^{(m_b-1)} & x_3^{(m_b-1)} & x_4^{(m_b-1)}
+# \end{bmatrix}
+# $$
+
+# 이제 모든 훈련 샘플에 대한 소프트맥스 점수를 일시에 다음과 같이 행렬곱으로 계산할 수 있다.
+
+# $$
+# \begin{align*}
+# \mathbf{X}_{batch} \,\, \Theta
+# & = 
+# \begin{bmatrix}
+# 1 & x_1^{(0)} & x_2^{(0)} & x_3^{(0)} & x_4^{(0)} \\
+# 1 & x_1^{(1)} & x_2^{(1)} & x_3^{(1)} & x_4^{(1)} \\
+#  & & \vdots & & \\
+# 1 & x_1^{(m_b-1)} & x_2^{(m_b-1)} & x_3^{(m_b-1)} & x_4^{(m_b-1)}
+# \end{bmatrix}
+# \,\,
+# \begin{bmatrix}
+# \theta_0^{(0)} & \theta_0^{(1)} & \theta_0^{(2)} \\
+# \theta_1^{(0)} & \theta_1^{(1)} & \theta_1^{(2)} \\
+# \theta_2^{(0)} & \theta_2^{(1)} & \theta_2^{(2)} \\
+# \theta_3^{(0)} & \theta_3^{(1)} & \theta_3^{(2)} \\
+# \theta_4^{(0)} & \theta_4^{(1)} & \theta_4^{(2)} 
+# \end{bmatrix} \\[3ex]
+# & =
+# \begin{bmatrix}
+# s_0(\mathbf{x}^{(0)}) & s_1(\mathbf{x}^{(0)}) & s_2(\mathbf{x}^{(0)}) \\
+# s_0(\mathbf{x}^{(1)}) & s_1(\mathbf{x}^{(1)}) & s_2(\mathbf{x}^{(1)}) \\
+# & \vdots & \\
+# s_0(\mathbf{x}^{(m_b-1)}) & s_1(\mathbf{x}^{(m_b-1)}) & s_2(\mathbf{x}^{(m_b-1)})
+# \end{bmatrix}
+# \end{align*}
+# $$
+
+# **소프트맥스 함수**
+
+# **소프트맥스 함수** $\sigma()$는 각 클래스에 속할 확률 $\hat p_k$를 계산한다.
+# 인자는 소프트맥스 점수로 구성된 벡터 $\mathbf{s}(\mathbf{x}) = [s_0(\mathbf{x}), \dots, s_{K-1}(\mathbf{x})]$ 이다.
 # 
 # $$
 # \hat p_k 
 # = \sigma(\mathbf{s}(\mathbf{x}))[k]
-# = \frac{\exp(s_k(\mathbf x))}{\sum_{j=1}^{K}\exp(s_j(\mathbf x))}
+# = \frac{\exp(s_k(\mathbf x))}{\sum\limits_{j=0}^{K-1}\exp(s_j(\mathbf x))}
 # $$
 # 
-# 소프트맥스 회귀 모델의 각 샘플에 대한 최종 예측 레이블은 예측 확률이 가장 높은 클래스로 선택된다.
+# 소프트맥스 회귀 모델의 각 샘플에 대한 최종 예측 레이블은 추정 확률이 가장 높은 클래스로 선택된다.
 # 
 # $$
-# \hat y = 
-# \mathrm{np.argmax}(\sigma(\mathbf{s}(\mathbf{x})))
+# \hat y 
+# = \mathrm{np.argmax}(\sigma(\mathbf{s}(\mathbf{x})))
 # $$
 
 # 위 설명을 종합해서 모든 샘플에 대한 확률 예측값을 동시에 실행하는 행렬 연산을 다음과 같이
 # 정의할 수 있다.
 # 
 # $$
-# \sigma(\mathbf{s}(\mathbf{X})) = \sigma(\mathbf{X} \, \Theta)
+# \sigma(\mathbf{s}(\mathbf{X}_{batch})) = \sigma(\mathbf{X}_{batch} \, \Theta)
 # $$
 # 
 # 단, $\sigma()$ 함수가 행별로, 즉 샘플별로 작동한다고 가정한다.
 # 그리고 모든 샘플에 대한 최종 예측 레이블 계산은 다음과 같다.
 # 
 # $$
-# \hat{\mathbf{y}} = \mathrm{np.argmax}(\sigma(\mathbf{X} \, \Theta), \mathrm{axis}=1)
+# \hat{\mathbf{y}} = \mathrm{np.argmax}(\sigma(\mathbf{X}_{batch} \, \Theta), \mathrm{axis}=1)
 # $$
 
 # :::{admonition} 소프트맥스 회귀와 다중 출력 분류
@@ -1078,25 +1125,53 @@
 
 # **소프트맥스 회귀의 비용 함수**
 # 
-# 각 분류 클래스 $k$에 대한 적절한 가중치 벡터 $\theta_k$를 
+# 각 분류 클래스 $k$에 대한 적절한 가중치들의 벡터 $\mathbf{\theta}^{(k)} = [\theta_0^{(k)}, \theta_1^{(k)}, \theta_2^{(k)}, \theta_3^{(k)}, \theta_4^{(k)}]$를 
 # 경사하강법을 이용하여 업데이트 한다.
 # 이를 위해 **크로스 엔트로피**<font size='2'>cross entropy</font>를 비용 함수로 사용한다.
 # $K=2$이면 로지스틱 회귀의 로그 손실 함수와 정확하게 일치한다.
-# 
-# - $y^{(i)}_k$: 타깃(레이블). 0 또는 1 중에 하나의 값을 갖고, 하나의 $k$에 대해서만 1이고 나머지는 0.
-# - $\hat{p}_k^{(i)}$: $i$-번째 샘플이 클래스 $k$에 속할 확률 예측값
-# 
-# $$
-# J(\Theta) = 
-# - \frac{1}{m}\, \sum_{i=1}^{m}\sum_{k=1}^{K} y^{(i)}_k\, \log\big( \hat{p}_k^{(i)}\big)
-# $$
 
-# 클래스 $k$에 대한 크로스 엔트로피 함수의 그레이디언트 벡터는 다음과 같다.
+# - 크로스 엔트로피 비용 함수
+#     - $y^{(i)}_k$: $i$-번째 샘플에 대한 원-핫 인코딩된 타깃(레이블)
+#     - $\hat{p}_k^{(i)}$: $i$-번째 샘플이 클래스 $k$에 속할 확률 예측값<br><br>
 # 
-# $$
-# \nabla_{\Theta}(k) J(\Theta) = 
-# \frac{1}{m}\, \sum_{i=1}^{m} \left( \hat{p}_k^{(i)} - y^{(i)}_k \right)\, \mathbf{x}^{(i)}
-# $$
+#     $$
+#     J(\Theta) = 
+#     - \frac{1}{m_b}\, \sum_{i=0}^{m_b-1}\sum_{k=0}^{K-1} y^{(i)}_k\, \log\big( \hat{p}_k^{(i)}\big)
+#     $$
+
+# - $\mathbf{\theta}^{(k)} = [\theta_0^{(k)}, \theta_1^{(k)}, \theta_2^{(k)}, \theta_3^{(k)}, \theta_4^{(k)}]$에 대한 비용 함수의 그레이디언트 벡터<br><br>
+# 
+#     $$
+#     \begin{align*}
+#     \nabla_{\mathbf{\theta}^{(k)}} \, J(\mathbf{\Theta}) 
+#     & = \left( \frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(k)}_0},
+#     \frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(k)}_1}, 
+#     \frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(k)}_2}, 
+#     \frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(k)}_3}, 
+#     \frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(k)}_4} \right) \\[1ex]
+#     & = \dfrac{1}{m_b} \sum\limits_{i=0}^{m_b-1}{ \left ( \hat{p}^{(i)}_k - y_k^{(i)} \right ) \mathbf{x}^{(i)}}
+#     \end{align*}
+#     $$
+# 
+#     따라서 $\mathbf{\Theta}$에 대한 비용 함수의 그레이디언트 벡터는 다음과 같다.<br><br>
+# 
+#     $$
+#     \begin{align*}
+#     \nabla_{\mathbf{\Theta}} \, J(\mathbf{\Theta}) 
+#     & = [\nabla_{\mathbf{\theta}^{(0)}} \, J(\mathbf{\Theta})^{T}, 
+#     \nabla_{\mathbf{\theta}^{(1)}} \, J(\mathbf{\Theta})^{T}, 
+#     \nabla_{\mathbf{\theta}^{(2)}} \, J(\mathbf{\Theta})^{T}] \\[2ex]
+#     & = 
+#     \begin{bmatrix}
+#     \frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(0)}_0} & \frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(1)}_0} & \frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(2)}_0} \\
+#     \frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(0)}_1} & \frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(1)}_1} & \frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(2)}_1} \\
+#     \frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(0)}_2} & \frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(1)}_2} & \frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(2)}_2} \\
+#     \frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(0)}_3} & \frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(1)}_3} & \frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(2)}_3} \\
+#     \frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(0)}_4} & \frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(1)}_4} & \frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(2)}_4}
+#     \end{bmatrix}
+#     \end{align*}
+#     $$
+# 
 
 # :::{admonition} 크로스 엔트로피
 # :class: info
