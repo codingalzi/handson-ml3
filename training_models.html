@@ -940,7 +940,8 @@ title="Print to PDF"
 <p><strong>학습률(<span class="math notranslate nohighlight">\(\eta\)</span>)</strong></p>
 <p>훈련 과정에서 비용 함수의 파라미터(<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>)를 얼만큼씩 조정할 것인지를 정하는 비율이다.</p>
 <p><strong>허용 오차</strong><font size="2">tolerance</font></p>
-<p>비용 함수의 값이 허용 오차보다 작아지면 훈련을 종료시킨다.</p>
+<p>비용 함수의 그레이디언트 벡터의 노름(norm)이 허용 오차보다 작아지면 훈련을 종료시킨다.
+이유는 그레이디언트 벡터의 노름이 0에 가까우면 비용함수의 전역(지역) 최솟값에 거의 다다랐음을 의미하기 때문이다.</p>
 <p><strong>에포크</strong><font size="2">epoch</font></p>
 <p>훈련셋에 포함된 모든 데이터를 대상으로 예측값을 한 번 계산하는 과정이다.
 이 과정동안 실행된 스텝 회수만큼 파라미터의 업데이트가 이루어진다.</p>
