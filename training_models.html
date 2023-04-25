@@ -1289,7 +1289,7 @@ title="Print to PDF"
 결국 모델의 분산 정도가 작아진다.</p></li>
 <li><p><span class="math notranslate nohighlight">\(\theta_0\)</span> 는 규제하지 않는다.</p></li>
 </ul>
-<p>아래 그림은 릿지 규제를 적용한 적용한 6 개의 경우를 보여준다.</p>
+<p>아래 그림은 서로 다른 규제 강도를 사용한 릿지 회귀 모델의 훈련 결과를 보여준다.</p>
 <ul class="simple">
 <li><p>왼편: 선형 회귀 모델에 세 개의 <span class="math notranslate nohighlight">\(\alpha\)</span> 값 적용.</p></li>
 <li><p>오른편: 10차 다항 회귀 모델에 세 개의 <span class="math notranslate nohighlight">\(\alpha\)</span> 값 적용.</p></li>
@@ -1306,7 +1306,7 @@ title="Print to PDF"
 파라미터 업데이크 과정에서 보다 작은 <span class="math notranslate nohighlight">\(\mid \theta_i \mid\)</span> 가 보다 빠르게 0에 수렴하기 때문이다.</p></li>
 <li><p><span class="math notranslate nohighlight">\(\alpha\)</span> 와 <span class="math notranslate nohighlight">\(\theta_0\)</span> 에 대한 설명은 릿지 회귀의 경우와 동일하다.</p></li>
 </ul>
-<p>아래 그림은 라쏘 규제를 적용한 적용한 6 개의 경우를 보여준다.</p>
+<p>아래 그림은 서로 다른 규제 강도를 사용한 라쏘 회귀 모델의 훈련 결과를 보여준다.</p>
 <ul class="simple">
 <li><p>왼편: 선형 회귀 모델에 세 개의 <span class="math notranslate nohighlight">\(\alpha\)</span> 값 적용.</p></li>
 <li><p>오른편: 10차 다항 회귀 모델에 세 개의 <span class="math notranslate nohighlight">\(\alpha\)</span> 값 적용.</p></li>
@@ -1319,7 +1319,7 @@ title="Print to PDF"
 <section id="font-size-2-elastic-net-font">
 <h3><span class="section-number">4.5.3. </span>엘라스틱 넷<font size='2'>Elastic Net</font> 회귀<a class="headerlink" href="#font-size-2-elastic-net-font" title="Permalink to this headline">#</a></h3>
 <p>릿지 회귀와 라쏘 회귀를 절충한 모델이며 다음 비용 함수를 사용한다.
-<span class="math notranslate nohighlight">\(r\)</span> 은 릿지 규제와 라쏘 규제의 사용 비율이다.
+<span class="math notranslate nohighlight">\(r\)</span> 은 릿지 회귀에 사용되는 규제와 라쏘 회귀에 사용되는 규제의 사용 비율이다.
 단, 규제 강도를 의미하는 <span class="math notranslate nohighlight">\(\alpha\)</span> 가 각 규제에 가해지는 정도가 다름에 주의한다.</p>
 <div class="math notranslate nohighlight">
 \[
@@ -1504,9 +1504,9 @@ J(\theta) =
 <p class="admonition-title">로지스틱 회귀 모델 규제</p>
 <p><code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> 모델의 하이퍼파라미터 <code class="docutils literal notranslate"><span class="pre">penalty</span></code> 와 <code class="docutils literal notranslate"><span class="pre">C</span></code> 를 이용하여 규제와 규제의 강도를 지정한다.</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">penalty</span></code>: <code class="docutils literal notranslate"><span class="pre">l1</span></code>(라쏘 규제), <code class="docutils literal notranslate"><span class="pre">l2</span></code>(릿지 규제), <code class="docutils literal notranslate"><span class="pre">elasticnet</span></code>(엘라스틱 넷) 방식 중 하나 선택하며,
-기본값은 <code class="docutils literal notranslate"><span class="pre">l2</span></code>, 즉, 릿지 규제를 기본으로 적용한다.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">C</span></code>: <code class="docutils literal notranslate"><span class="pre">solver</span></code>로 지정되는 알고리즘에 따라 릿지 또는 라쏘 규제의 정도를 지정하는 <span class="math notranslate nohighlight">\(\alpha\)</span>의 역수에 해당한다.
+<li><p><code class="docutils literal notranslate"><span class="pre">penalty</span></code>: <code class="docutils literal notranslate"><span class="pre">l1</span></code> 벌점 (라쏘 회귀), <code class="docutils literal notranslate"><span class="pre">l2</span></code> 벌점(릿지 회귀), <code class="docutils literal notranslate"><span class="pre">elasticnet</span></code>(엘라스틱 넷) 방식 중 하나 선택하며,
+기본값은 <code class="docutils literal notranslate"><span class="pre">l2</span></code> 벌점이다. 즉, 릿지 회귀를 기본 회귀 모델로 사용한다.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">C</span></code>: <code class="docutils literal notranslate"><span class="pre">solver</span></code>로 지정되는 알고리즘에 따라 릿지 회귀 또는 라쏘 회귀 모델에 사용되는 <span class="math notranslate nohighlight">\(\alpha\)</span> 값의 역수에 해당한다.
 따라서 0에 가까울 수록 강한 규제를 의미한다.
 기본값은 1이다.</p></li>
 </ul>
