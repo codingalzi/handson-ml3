@@ -21,9 +21,12 @@
 # * SVM 회귀
 # * SVM 이론
 
-# **목표**
+# **슬라이드**
 # 
-# 서포트 벡터 머신의 주요 개념, 사용법, 작동법을 알아본다. 
+# 본문 내용을 요약한
+# [슬라이드 1부](https://github.com/codingalzi/handson-ml3/raw/master/slides/slides-svm-1.pdf),
+# [슬라이드 2부](https://github.com/codingalzi/handson-ml3/raw/master/slides/slides-svm-2.pdf)
+# 다운로드할 수 있다.
 
 # ## 선형 SVM 분류
 
@@ -69,7 +72,7 @@
 
 # **소프트 마진 분류**<font size='2'>soft margin classification</font>는 어느 정도의 마진 오류를 허용하면서
 # 결정 경계 도로의 폭을 최대로 하는 방향으로 유도한다.
-# **마진 오류**<font size='2'>margin violations</font>는 결정 경계 도로 상에 또는 결정 경계를 넘어 해당 클래스 반대편에 위치하는 샘플을 의미한다. 
+# **마진 오류**<font size='2'>margin violations</font>는 결정 경계 도로 위에 또는 결정 경계를 넘어 해당 클래스 반대편에 위치하는 샘플을 의미한다. 
 # 
 # 예를 들어 꽃잎 길이와 너비 기준으로 붓꽃의 버지니카와 버시컬러 품종을 하드 마진 분류하기는 불가능하며,
 # 아래 그래프에서처럼 어느 정도의 마진 오류를 허용해야 한다.
@@ -110,7 +113,9 @@
 #     SGDClassifier(loss="hinge", alpha=1/(m*C))
 #     ```
 # 
-# hinge 손실 함수는 어긋난 예측 정도에 비례하여 손실값이 선형적으로 커진다.
+# - hinge 손실 함수: 어긋난 예측 정도에 비례하여 손실값이 선형적으로 커짐.
+
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch05/homl05-06c.png" width="400"/></div>
 # :::
 
 # ## 비선형 SVM 분류
@@ -126,7 +131,7 @@
 #     * 예제 1: 다항 커널
 #     * 예제 2: 가우시안 RBF(방사 기저 함수) 커널
 
-# **다항 특성 추가 + 선형 SVM**
+# **다항 특성 추가 + 선형 SVC**
 # 
 # {numref}`%s절 <sec:poly_reg>`에서 설명한 다항 회귀 기법에서 다항 특성을 추가한 후에 
 # 선형 회귀를 적용한 방식과 동일하다. 
@@ -210,8 +215,8 @@
 # 
 # 위 코드는 3차 다항 커널을 적용한 모델이며 아래 왼편 그래프와 같은 분류 모델을 학습한다.
 # 반면에 아래 오른편 그래프는 10차 다항 커널을 적용한 모델이다. 
-# `coef0` 하이퍼파라미터는 고차항의 중요도를 지정하며, 아래 그래프에서는 $r$ 이 동일한 
-# 하이퍼파라미터를 가리킨다.
+# `coef0` 하이퍼파라미터는 고차항의 중요도를 지정하며, 
+# 아래 이미지에서는 $r$ 이 동일한 하이퍼파라미터를 가리킨다.
 # 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch05/homl05-09.png" width="800"/></div>
 
@@ -289,7 +294,7 @@
 # 하지만 교차 검증, 그리드 탐색 등을 이용하여 적절한 커널을 찾아볼 수 있다.
 # 특히 훈련 세트에 특화된 커널이 알려져 있다면 해당 커널을 먼저 사용해봐야 한다. 
 
-# ### SVM 클래스의 계산 복잡도
+# ### SVM 계산 복잡도
 
 # `SGDClassifier` 클래스는 확률적 경사하강법을 적용하기에 온라인 학습에 활용될 수 있다.
 # 아래 표에서 '외부 메모리 학습'<font size='2'>out-of-core learning</font> 항목이 
@@ -298,10 +303,10 @@
 # 하지만 `LinearSVC` 클래스는 배치학습과 다른 옵티마이저 알고리즘을 사용한다.  
 
 # | 클래스 |시간 복잡도(m 샘플 수, n 특성 수)| 외부 메모리 학습 | 스케일 조정 | 커널 | 다중 클래스 분류 |
-# |:----|:-----|:-----|:-----|:-----|:-----|
+# | :----: | :-----: | :-----: | :-----:| :-----: | :-----: |
 # | LinearSVC | $O(m \times n)$ | 미지원 | 필요 | 미지원 | OvR |
 # | SVC | $O(m^2 \times n) \sim O(m^3 \times n)$ | 미지원 | 필요 | 지원 | OvR |
-# | SGDClassifier | $O(m \times n)$ | 지원 | 필요 | 미지원 | 지원 |
+# | SGDClassifier | $O(m \times n)$ | 지원 | 필요 | 미지원 | OvR |
 # 
 
 # ## SVM 회귀
@@ -323,14 +328,14 @@
 
 # 아래 그래프는 LinearSVR 클래스를 이용한 결과를 보여준다. 
 # `epsilon`($\varepsilon$)이 작을 수록(왼쪽 그래프) 도로폭이 좁아진다.
-# 따라서 보다 많은 서포트 벡터가 지정된다.
-# 반면에 결정 경계 도로 위에 포함되는 샘플를 추가해도 예측에 영향 주지 않는다.
+# 따라서 보다 많은 샘플을 도로에 포함시키기 위해 굴곡이 심해지며 결과적으로 보다 많은 서포트 벡터가 지정된다.
+# 반면에 도로 위(마진)에 포함되는 샘플를 추가해도 예측에 영향 주지 않는다.
 # 
 # ```python
 # svm_reg = make_pipeline(StandardScaler(),
 #                         LinearSVR(epsilon=0.5, random_state=42))
 # ```    
-# 
+
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch05/homl05-11.png" width="600"/></div>
 
 # **비선형 SVM 회귀**
@@ -344,7 +349,7 @@
 #                              SVR(kernel="poly", degree=2, C=100))
 # ```
 # 
-# `C`와 `epsilon` 두 하이퍼파라미터의 의미는 SVC 모델의 경우와 동일하다.
+# `C` 하이퍼파라미터의 의미는 SVC 모델의 경우와 동일하다.
 # 즉, `C` 는 클 수록 적은 규제를 가하고 `epsilon`은 도로폭을 결정한다.
 # `C=100` 인 경우(오른쪽 그래프)가 `C=0.01` 인 경우(왼쪽 그래프) 보다 마진 오류가 적음을
 # 볼 수 있다.
@@ -423,6 +428,17 @@
 # 다음 수식을 최소화하는 $\mathbf{w}$, $b$ 를 찾아야 한다.
 # 
 # $$\frac 1 2 \mathbf w^T \mathbf w$$
+
+# 단, $t^{(i)}$는 $i$ 번째 샘플의 클래스(양성/음성)를 가리킨다.
+# 
+# 
+# $$
+# t^{(i)} = 
+# \begin{cases}
+# -1 & \text{$x^{(i)}$가 음성인 경우} \\
+# 1 & \text{$x^{(i)}$가 양성인 경우} 
+# \end{cases}
+# $$
 
 # **소프트 마진 선형 SVM 분류기의 목표**
 # 
