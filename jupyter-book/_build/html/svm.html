@@ -574,7 +574,7 @@ title="Print to PDF"
 <h3><span class="section-number">5.1.2. </span>소프트 마진 분류<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h3>
 <p><strong>소프트 마진 분류</strong><font size='2'>soft margin classification</font>는 어느 정도의 마진 오류를 허용하면서
 결정 경계 도로의 폭을 최대로 하는 방향으로 유도한다.
-<strong>마진 오류</strong><font size='2'>margin violations</font>는 결정 경계 도로 위에 또는 결정 경계를 넘어 해당 클래스 반대편에 위치하는 샘플을 의미한다.</p>
+<strong>마진 오류</strong><font size='2'>margin violations</font>는 결정 경계 도로 위에 또는 결정 경계를 넘어 해당 클래스 반대편에 위치하는 샘플을 가리키며 소프트 마진 분류의 <strong>서포트 벡터</strong>를 구성한다.</p>
 <p>예를 들어 꽃잎 길이와 너비 기준으로 붓꽃의 버지니카와 버시컬러 품종을 하드 마진 분류하기는 불가능하며,
 아래 그래프에서처럼 어느 정도의 마진 오류를 허용해야 한다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch05/homl05-03b.png" width="400"/></div><p><strong><code class="docutils literal notranslate"><span class="pre">LinearSVC</span></code> 클래스</strong></p>
