@@ -20,14 +20,14 @@
 # * CART 알고리즘
 # * 지니 불순도 vs. 엔트로피
 # * 결정트리 규제
-# * 결정트리 회귀 모델
+# * 회귀 결정트리
 # * 결정트리 단점
 
-# **목표**
+# **슬라이드**
 # 
-# 분류와 회귀 모두 사용 가능하며
-# 랜덤 포레스트의 기본 요소로 사용되는 
-# 결정트리에 대해 알아본다. 
+# 본문 내용을 요약한
+# [슬라이드](https://github.com/codingalzi/handson-ml3/raw/master/slides/slides-decision_trees.pdf)를
+# 다운로드할 수 있다.
 
 # ## 결정트리 훈련과 활용
 
@@ -35,12 +35,16 @@
 
 # 아래 코드는 붓꽃 데이터셋을 대상으로 사이킷런의 `DecisionTreeClassifier` 모델을 훈련시킨다. 
 # 특성은 꽃잎의 길이와 너비만을 사용하여 세 개의 품종으로 분류하는 다중 클래스 모델을 훈련시킨다. 
-# `max_depth`는 결정트리의 최대 깊이 지정하는 하이퍼파라미터이며 허용되는 최대 가지치수 수를 지정하며,
+# `max_depth`는 결정트리의 최대 깊이 지정하는 하이퍼파라미터이며 허용되는 최대 가지치기 횟수를 지정하며,
 # 여기서는 2를 사용한다. 
 # 
 # ```python
-# >>> tree_clf = DecisionTreeClassifier(max_depth=2, random_state=42)
-# >>> tree_clf.fit(X, y)
+# iris = load_iris(as_frame=True)
+# X_iris = iris.data[["petal length (cm)", "petal width (cm)"]].values
+# y_iris = iris.target
+# 
+# tree_clf = DecisionTreeClassifier(max_depth=2, random_state=42)
+# tree_clf.fit(X_iris, y_iris)
 # ```
 
 # :::{admonition} 결정트리 모델과 데이터 전처리
@@ -165,7 +169,7 @@
 # array([1])
 # ```
 
-# ## CART 훈련 알고리즘
+# ## CART 알고리즘
 
 # **CART<font size='2'>Classification and Regression Tree</font> 분류 알고리즘**
 
@@ -304,8 +308,8 @@
 # `max_depth`의 의미는 `DecisionTreeClassifier`의 경우와 동일하다. 
 # 
 # ```python
-# >>> tree_reg = DecisionTreeRegressor(max_depth=2, random_state=42)
-# >>> tree_reg.fit(X_quad, y_quad)
+# tree_reg = DecisionTreeRegressor(max_depth=2, random_state=42)
+# tree_reg.fit(X_quad, y_quad)
 # ```
 # 
 # 훈련된 결정트리는 다음과 같다.
@@ -365,7 +369,7 @@
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch06/homl06-06.png" width="600"/></div>
 
-# ## 결정트리의 단점
+# ## 결정트리 단점
 
 # ### 훈련셋  회전 민감도
 
@@ -383,30 +387,30 @@
 # 
 # PCA 기법은 간단하게 말해 데이터셋을 회전시켜서 특성들 사이의 연관성을 약화시키며, 이를 통해
 # 결정트리의 학습에 도움을 줄 수 있다는 정도만 여기서는 언급한다. 
+# 예를 들어, PCA 기법으로 회전시킨 붓꽃 데이터셋에 분류 결정트리를 훈련시킨 결과는 다음과 같다.
+
+# ```python
+# from sklearn.decomposition import PCA
+# from sklearn.pipeline import make_pipeline
+# from sklearn.preprocessing import StandardScaler
 # 
-# ```python
-# >>> pca_pipeline = make_pipeline(StandardScaler(), PCA())
-# >>> X_iris_rotated = pca_pipeline.fit_transform(X_iris)
+# pca_pipeline = make_pipeline(StandardScaler(), PCA())
+# X_iris_rotated = pca_pipeline.fit_transform(X_iris)
+# tree_clf_pca = DecisionTreeClassifier(max_depth=2, random_state=42)
+# tree_clf_pca.fit(X_iris_rotated, y_iris)
 # ```
 
-# PCA 기법으로 회전시킨 붓꽃 데이터셋에 분류 결정트리를 훈련시킨 결과는 다음과 같다.
-
-# ```python
-# >>> tree_clf_pca = DecisionTreeClassifier(max_depth=2, random_state=42)
-# >>> tree_clf_pca.fit(X_iris_rotated, y_iris)
-# ```
-
-# <img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch06/homl06-08d.png"/>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch06/homl06-08d.png"/></div>
 
 # ### 높은 분산
 
-# 결정트리은 꽤 높은 분산을 갖는다. 
+# 결정트리는 꽤 높은 분산을 갖는다. 
 # 즉, 훈련셋이나 하이퍼파라미터가 조금만 달라져도 완전히 다른 결정트리가 훈련될 수 있다. 
 # 심지어 동일한 모델을 훈련시켜도 많이 다른 결정트리가 생성되기도 한다.
 # 이는 결정트리가 생성될 때 특성을 무작위로 선택하기 때문이다. 
 # 따라서 `random_state` 를 지정하지 않으면 아래 그래프와 같은 많이 다른 결정트리가 생성되기도 한다.
 
-# <img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch06/homl06-08e.png"/>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch06/homl06-08e.png"/></div
 
 # **랜덤 포레스트**
 # 

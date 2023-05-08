@@ -25,7 +25,7 @@
 # 
 # 본문 내용을 요약한
 # [슬라이드 1부](https://github.com/codingalzi/handson-ml3/raw/master/slides/slides-svm-1.pdf),
-# [슬라이드 2부](https://github.com/codingalzi/handson-ml3/raw/master/slides/slides-svm-2.pdf)
+# [슬라이드 2부](https://github.com/codingalzi/handson-ml3/raw/master/slides/slides-svm-2.pdf)를
 # 다운로드할 수 있다.
 
 # ## 선형 SVM 분류
