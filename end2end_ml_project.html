@@ -4,11 +4,13 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>2. 머신러닝 프로젝트 처음부터 끝까지 &#8212; 핸즈온 머신러닝(3판)</title>
     
-  <link href="_static/css/theme.css" rel="stylesheet">
-  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,39 +20,39 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="_static/proof.css" />
-    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
-  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/togglebutton.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script src="_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="3. 분류" href="classification.html" />
@@ -62,7 +64,21 @@ const thebe_selector_output = ".output, .cell_output"
     <!-- Google Analytics -->
     
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
     
     <div class="container-fluid" id="banner"></div>
 
@@ -71,9 +87,10 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="container-xl">
       <div class="row">
           
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="index.html">
       
       
@@ -135,112 +152,227 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 
     </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
             
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/end2end_ml_project.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
-
-            <!-- Source interaction buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/codingalzi/handson-ml3"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        <a class="issues-button"
-            href="https://github.com/codingalzi/handson-ml3/issues/new?title=Issue%20on%20page%20%2Fend2end_ml_project.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        
-    </div>
-</div>
-
-            <!-- Full screen (wrap in <a> to have style consistency -->
-
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
-
-            <!-- Launch buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/codingalzi/handson-ml3/master?urlpath=tree/jupyter-book/end2end_ml_project.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        <a class="colab-button" href="https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/jupyter-book/end2end_ml_project.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
-                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
-                    src="_static/images/logo_colab.png"
-                    alt="Interact on Colab">Colab</button></a>
-        
-        
-    </div>
-</div>
-
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
             </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/codingalzi/handson-ml3/master?urlpath=tree/jupyter-book/end2end_ml_project.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/jupyter-book/end2end_ml_project.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/codingalzi/handson-ml3"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/codingalzi/handson-ml3/issues/new?title=Issue%20on%20page%20%2Fend2end_ml_project.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/end2end_ml_project.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id2">
    2.1. 실전 데이터 활용
@@ -408,12 +540,11 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
 </ul>
 
-            </nav>
-        </div>
-    </div>
+    </nav>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
                 <h1>머신러닝 프로젝트 처음부터 끝까지</h1>
@@ -597,11 +728,12 @@ const thebe_selector_output = ".output, .cell_output"
                     </div>
                 </div>
             </div>
-            
+            <main id="main-content" role="main">
+                
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="ch-end2end">
-<span id="id1"></span><h1><span class="section-number">2. </span>머신러닝 프로젝트 처음부터 끝까지<a class="headerlink" href="#ch-end2end" title="Permalink to this headline">¶</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="ch-end2end">
+<span id="id1"></span><h1><span class="section-number">2. </span>머신러닝 프로젝트 처음부터 끝까지<a class="headerlink" href="#ch-end2end" title="Permalink to this headline">#</a></h1>
 <p><strong>감사의 글</strong></p>
 <p>자료를 공개한 저자 오렐리앙 제롱과 강의자료를 지원한 한빛아카데미에게 진심어린 감사를 전합니다.</p>
 <p><strong>소스코드</strong></p>
@@ -619,8 +751,8 @@ const thebe_selector_output = ".output, .cell_output"
 <a class="reference external" href="https://github.com/codingalzi/handson-ml3/raw/master/slides/slides-end2end_ml_project-2.pdf">슬라이드 2부</a>,
 <a class="reference external" href="https://github.com/codingalzi/handson-ml3/raw/master/slides/slides-end2end_ml_project-3.pdf">슬라이드 3부</a>를
 다운로드할 수 있다.</p>
-<div class="section" id="id2">
-<h2><span class="section-number">2.1. </span>실전 데이터 활용<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<section id="id2">
+<h2><span class="section-number">2.1. </span>실전 데이터 활용<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
 <p>다양한 실전 데이터를 모아놓은 데이터 저장소를
 머신러닝 공부에 잘 활용할 수 있어야 한다.
 가장 유명한 데이터 저장소는 다음과 같다.</p>
@@ -635,20 +767,20 @@ const thebe_selector_output = ".output, .cell_output"
 <p>여기서는 1990년 미국 캘리포니아 주에서 수집한 인구조사 데이터를 사용하며,
 데이터의 원본은 다양한 공개 저장소에서 다운로드할 수 있다.
 아래 그림은 원본 csv 파일의 일부 내용을 보여준다.</p>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/housing-data.png" width="800"></div></div>
-<div class="section" id="id3">
-<h2><span class="section-number">2.2. </span>큰 그림 그리기<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/housing-data.png" width="800"></div></section>
+<section id="id3">
+<h2><span class="section-number">2.2. </span>큰 그림 그리기<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h2>
 <p>머신러닝으로 해결하고자 하는 문제를 파악하기 위해
 주어진 데이터에 대한 기초적인 정보를 확인하고,
 문제 파악 및 해결법 등을 구상해야 한다.</p>
-<div class="section" id="id4">
-<h3><span class="section-number">2.2.1. </span>데이터 정보 확인<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<section id="id4">
+<h3><span class="section-number">2.2.1. </span>데이터 정보 확인<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h3>
 <p>1990년도에 시행된 미국 캘리포니아 주의 20,640개 구역별 인구조사 데이터는
 경도, 위도, 중간 주택 연도, 방의 총 개수, 침실 총 개수, 인구, 가구 수, 중간 소득, 중간 주택 가격, 해안 근접도
 등 총 10개의 특성을 포함한다.</p>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/LA-USA01.png" width="600"></div></div>
-<div class="section" id="id5">
-<h3><span class="section-number">2.2.2. </span>훈련 모델 확인<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/LA-USA01.png" width="600"></div></section>
+<section id="id5">
+<h3><span class="section-number">2.2.2. </span>훈련 모델 확인<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h3>
 <p><strong>훈련 모델 종류</strong></p>
 <p>구역별 중간 주택 가격을 예측하는 시스템에 활용될
 <strong>회귀 모델</strong>을 훈련시키고자 한다.
@@ -690,7 +822,7 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <div class="proof example admonition" id="2d-array">
 <p class="admonition-title"><span class="caption-number">Example 2.1 </span> (훈련셋과 2D 어레이)</p>
-<div class="example-content section" id="proof-content">
+<section class="example-content" id="proof-content">
 <p>모델 훈련에 사용되는 훈련셋에
 <span class="math notranslate nohighlight">\(m\)</span> 개의 샘플이 포함되어 있고 각각의 샘플이 <span class="math notranslate nohighlight">\(n\)</span> 개의 특성을 갖는다면
 훈련셋은 <span class="math notranslate nohighlight">\((m, n)\)</span> 모양의 numpy의 2D 어레이로 지정된다.</p>
@@ -711,7 +843,7 @@ const thebe_selector_output = ".output, .cell_output"
 <p>단변량 회귀에서 <span class="math notranslate nohighlight">\(y^{(i)}\)</span> 는 보통 부동소수점을 가리키며,
 다변량 회귀에서는 <span class="math notranslate nohighlight">\(\mathbf{x}^{(i)}\)</span> 처럼
 여러 개의 타깃 값으로 구성된 1D 어레이로 표현된다.</p>
-</div>
+</section>
 </div><p><strong>평균 절대 오차</strong><font size="2">Mean Absolute Error</font>(MAE)는
 <strong>맨해튼 노름</strong> 또는 <strong><span class="math notranslate nohighlight">\(\ell_1\)</span> 노름</strong>으로도 불리며
 예측값과 타깃 사이의 오차의 평균값이다.</p>
@@ -719,18 +851,18 @@ const thebe_selector_output = ".output, .cell_output"
 \[\text{MAE}(\mathbf X, h) = \frac 1 m \sum_{i=0}^{m-1} \mid h(\mathbf x^{(i)}) - y^{(i)} \mid\]</div>
 <p>훈련셋에 이상치가 많이 포함된 경우 주로 사용되지만,
 그렇지 않다면 일반적으로 RMSE가 선호된다.</p>
-</div>
-</div>
-<div class="section" id="id6">
-<h2><span class="section-number">2.3. </span>데이터 훑어보기<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="id6">
+<h2><span class="section-number">2.3. </span>데이터 훑어보기<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h2>
 <p>캘리포니아 주택가격 데이터셋은 매우 유명하여 많은 공개 저장소에서 다운로드할 수 있다.
 여기서는 깃허브 리포지토리에 압축파일로 저장한 파일을 다운로드해서 사용하며
 <code class="docutils literal notranslate"><span class="pre">housing</span></code> 변수가 가리키도록 적재되었다고 가정한다.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">housing</span></code> 변수: 캘리포티아 주택 가격 데이터를 담고 있는 csv 파일을 적재하여 생성된 데이터 프레임 할당</p></li>
 </ul>
-<div class="section" id="id7">
-<h3><span class="section-number">2.3.1. </span>데이터 기본 정보 확인<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<section id="id7">
+<h3><span class="section-number">2.3.1. </span>데이터 기본 정보 확인<a class="headerlink" href="#id7" title="Permalink to this headline">#</a></h3>
 <p>pandas의 데이터프레임으로 데이터셋을 적재하여 기본적인 데이터 구조를 훑어볼 수 있다.</p>
 <p><strong><code class="docutils literal notranslate"><span class="pre">head()</span></code> 메서드 활용</strong></p>
 <p>데이터프레임 객체의 처음 5개 샘플을 보여준다.</p>
@@ -794,9 +926,9 @@ const thebe_selector_output = ".output, .cell_output"
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">housing</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
 </pre></div>
 </div>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/feature-histogram.png" width="600px"></div></div>
-<div class="section" id="id8">
-<h3><span class="section-number">2.3.2. </span>훈련셋과 테스트셋<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/feature-histogram.png" width="600px"></div></section>
+<section id="id8">
+<h3><span class="section-number">2.3.2. </span>훈련셋과 테스트셋<a class="headerlink" href="#id8" title="Permalink to this headline">#</a></h3>
 <p>모델 학습 시작 이전에 준비된 데이터셋을 <strong>훈련셋</strong>과 <strong>테스트셋</strong>으로 구분해야 한다.
 테스트셋은 훈련 과정중에 전혀 사용되지 않으며 보통 전체 데이터셋의 20% 정도 이하로
 선택하며, 전체 데이터셋의 크기에 따라 테스트셋의 크기가 너무 크지 않게
@@ -888,24 +1020,24 @@ const thebe_selector_output = ".output, .cell_output"
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-<div class="section" id="id9">
-<h2><span class="section-number">2.4. </span>데이터 탐색과 시각화<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="id9">
+<h2><span class="section-number">2.4. </span>데이터 탐색과 시각화<a class="headerlink" href="#id9" title="Permalink to this headline">#</a></h2>
 <p>테스트셋을 제외한 훈련셋에 대해서 시각화를 이용하여 데이터셋을 탐색한다.
 테스트셋을 함께 탐색하면 미래의 데이터 특징을 미리 가정하는 데이터 스누핑 편향 오류를
 범할 가능성이 높아진다.</p>
-<div class="section" id="id10">
-<h3><span class="section-number">2.4.1. </span>지리적 데이터 시각화<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<section id="id10">
+<h3><span class="section-number">2.4.1. </span>지리적 데이터 시각화<a class="headerlink" href="#id10" title="Permalink to this headline">#</a></h3>
 <p>경도와 위도 정보를 이용하여 구역을 산포도로 나타내면 인구의 밀집 정도를 확인할 수 있다.
 예를 들어, 샌프란시스코의 Bay Area, LA, 샌디에고 등 유명 대도시의 특정 구역이 높은 인구 밀도를 갖는다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-09.png" width="500"></div><p>인구 밀도가 높은 유명 대도시의 특정 구역에 위치한
 주택 가격이 높다는 일반적인 사실 또한 산포도록 확인할 수 있다.
 산포도를 그릴 때 해당 구역의 중간 주택 가격을 색상으로,
 인구밀도는 원의 크기로 활용한 결과는 다음과 같다.</p>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-11.png" width="500"></div></div>
-<div class="section" id="id11">
-<h3><span class="section-number">2.4.2. </span>상관관계 조사<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-11.png" width="500"></div></section>
+<section id="id11">
+<h3><span class="section-number">2.4.2. </span>상관관계 조사<a class="headerlink" href="#id11" title="Permalink to this headline">#</a></h3>
 <p>중간 주택 가격 특성과 다른 특성 사이의 선형 상관관계를 나타내는 상관계수는 다음과 같다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">median_house_value</span>    <span class="mf">1.000000</span>
 <span class="n">median_income</span>         <span class="mf">0.688380</span>
@@ -953,10 +1085,10 @@ const thebe_selector_output = ".output, .cell_output"
 <p>실제로 세 특성을 새로 추가한 다음에 상관계수를 확인하면
 방 하나당 침실 개수와 중간 주택 가격 사이의 선형 상관관계가
 중간 소득을 제외한 기존의 다른 특성들에 비해 높게 나타난다.</p>
-</div>
-</div>
-<div class="section" id="id12">
-<h2><span class="section-number">2.5. </span>데이터 준비<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="id12">
+<h2><span class="section-number">2.5. </span>데이터 준비<a class="headerlink" href="#id12" title="Permalink to this headline">#</a></h2>
 <p>머신러닝 모델 훈련에 사용되는 알고리즘을 이용하려면
 적재된 데이터셋을 데이터 정제와 전처리 과정을 수행해서
 바로 모델 훈련에 사용될 수 있도록 해야 한다.
@@ -979,8 +1111,8 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </li>
 </ul>
-<div class="section" id="id13">
-<h3><span class="section-number">2.5.1. </span>데이터 정제와 전처리<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<section id="id13">
+<h3><span class="section-number">2.5.1. </span>데이터 정제와 전처리<a class="headerlink" href="#id13" title="Permalink to this headline">#</a></h3>
 <p>데이터 정제는 결측치 처리, 이상치 및 노이즈 데이터 제거 등을 의미한다.
 캘리포니아 주택 가격 데이터셋은 구역별 방 총 개수(<code class="docutils literal notranslate"><span class="pre">total_rooms</span></code>) 특성에서
 결측치가 일부 포함되어 있지만 이상치 또는 노이즈 데이터는 없다.</p>
@@ -1037,9 +1169,9 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 </li>
 </ul>
-</div>
-<div class="section" id="id14">
-<h3><span class="section-number">2.5.2. </span>데이터 정제<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id14">
+<h3><span class="section-number">2.5.2. </span>데이터 정제<a class="headerlink" href="#id14" title="Permalink to this headline">#</a></h3>
 <p>입력 데이터셋의 <code class="docutils literal notranslate"><span class="pre">total_bedrooms</span></code> 특성에 168개 구역의 값이 <code class="docutils literal notranslate"><span class="pre">NaN</span></code>(Not a Number)로 표시되어 있다.
 즉, 일부 구역에 대한 방의 총 개수 정보가 누락되었다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/null-value01.png" width="800"></div><p>머신러닝 모델은 결측치가 있는 데이터셋을 잘 활용하지 못한다.
@@ -1050,9 +1182,9 @@ const thebe_selector_output = ".output, .cell_output"
 <li><p>방법 3: 평균값, 중앙값, 0, 주변에 위치한 값 등 특정 값으로 채우기.</p></li>
 </ul>
 <p>여기서는 중앙값으로 채우는 방법 3을 사이킷런의 <code class="docutils literal notranslate"><span class="pre">SimpleImputer</span></code> 변환기를 이용하여 적용한다.</p>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/null-value02.png" width="800"></div></div>
-<div class="section" id="id15">
-<h3><span class="section-number">2.5.3. </span>범주형 특성 전처리: 원-핫 인코딩<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/null-value02.png" width="800"></div></section>
+<section id="id15">
+<h3><span class="section-number">2.5.3. </span>범주형 특성 전처리: 원-핫 인코딩<a class="headerlink" href="#id15" title="Permalink to this headline">#</a></h3>
 <p>해안 근접도(<code class="docutils literal notranslate"><span class="pre">ocean_proximity</span></code>)는 수가 아닌 5 개의 범주를 나타내는 문자열, 즉 텍스트 데이터를 값으로 사용한다.
 그런데 머신러닝 모델은 일반적으로 텍스트 데이터를 처리하지 못한다.</p>
 <p>가장 단순한 해결책으로 5 개의 범주를 정수로 변환할 수 있다.</p>
@@ -1106,9 +1238,9 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <p>사이킷런의 <code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code> 변환기가 원-핫-인코딩을 지원하며
 해안 근접도를 변환한 결과는 아래 모양을 갖는다.</p>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/one_hot01.png" width="800"></div></div>
-<div class="section" id="id16">
-<h3><span class="section-number">2.5.4. </span>수치형 특성 전처리: 크기 조정<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/one_hot01.png" width="800"></div></section>
+<section id="id16">
+<h3><span class="section-number">2.5.4. </span>수치형 특성 전처리: 크기 조정<a class="headerlink" href="#id16" title="Permalink to this headline">#</a></h3>
 <p>머신러닝 알고리즘은 입력 데이터셋의 특성값들의
 <strong>크기</strong><font size="2">scale</font>가 다르면 제대로 작동하지 않는다.
 따라서 모든 특성의 크기를 통일하는 <strong>크기 조정</strong><font size="2">scaling</font>이 요구된다.</p>
@@ -1137,12 +1269,12 @@ const thebe_selector_output = ".output, .cell_output"
 \]</div>
 <p>변환된 데이터셋은 평균값은 0, 표준편차는 1인 분포를 따르며, 이상치에 상대적으로 덜 영향을 받는다.
 여기서는 사이킷런의 <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code> 변환기를 이용하여 표준화를 적용한다.</p>
-</div>
-<div class="section" id="id17">
-<h3><span class="section-number">2.5.5. </span>사용자 정의 변환기<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id17">
+<h3><span class="section-number">2.5.5. </span>사용자 정의 변환기<a class="headerlink" href="#id17" title="Permalink to this headline">#</a></h3>
 <p>데이터 준비 과정에서 경우에 따라 사용자가 직접 변환기를 구현해야할 필요가 있다.</p>
-<div class="section" id="functiontransformer">
-<h4><span class="section-number">2.5.5.1. </span><code class="docutils literal notranslate"><span class="pre">FunctionTransformer</span></code> 변환기<a class="headerlink" href="#functiontransformer" title="Permalink to this headline">¶</a></h4>
+<section id="functiontransformer">
+<h4><span class="section-number">2.5.5.1. </span><code class="docutils literal notranslate"><span class="pre">FunctionTransformer</span></code> 변환기<a class="headerlink" href="#functiontransformer" title="Permalink to this headline">#</a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">fit()</span></code> 메서드를 먼저 사용하지 않고 <code class="docutils literal notranslate"><span class="pre">transform()</span></code> 메서드를 바로 적용해도 되는
 변환기는 <code class="docutils literal notranslate"><span class="pre">FunctionTransformer</span></code> 객체를 활용하여 생성할 수 있다.</p>
 <p><strong>로그 함수 적용 변환기</strong></p>
@@ -1167,9 +1299,9 @@ const thebe_selector_output = ".output, .cell_output"
 <li><p>방 하나당 침실 개수(bedrooms for room)</p></li>
 <li><p>가구당 인원(population per household)</p></li>
 </ul>
-</div>
-<div class="section" id="id18">
-<h4><span class="section-number">2.5.5.2. </span>사용자 정의 변환기 클래스 선언: 군집 변환기<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="id18">
+<h4><span class="section-number">2.5.5.2. </span>사용자 정의 변환기 클래스 선언: 군집 변환기<a class="headerlink" href="#id18" title="Permalink to this headline">#</a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">SimpleImputer</span></code> 변환기의 경우처럼
 먼저 <code class="docutils literal notranslate"><span class="pre">fit()</span></code> 메서드를 이용하여 평균값, 중앙값 등을 확인한 다음에
 <code class="docutils literal notranslate"><span class="pre">transform()</span></code> 메서드를 적용할 수 있는 변환기는 클래스를 직접 선언해야 한다.
@@ -1239,10 +1371,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li><p>모든 구역을 10개의 군집으로 분류한다.</p></li>
 <li><p>🗙는 각 군집의 중심 구역을 나타낸다.</p></li>
 </ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-cluster.jpg" width="550"></div></div>
-</div>
-<div class="section" id="id19">
-<h3><span class="section-number">2.5.6. </span>변환 파이프라인<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-cluster.jpg" width="550"></div></section>
+</section>
+<section id="id19">
+<h3><span class="section-number">2.5.6. </span>변환 파이프라인<a class="headerlink" href="#id19" title="Permalink to this headline">#</a></h3>
 <p>모든 전처리 단계가 정확한 순서대로 진행되어야 한다.
 이를 위해 사이킷런의 <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> 클래스를 이용하여 여러 변환기를 순서대로
 실행하는 변환기 파이프라인을 활용한다.</p>
@@ -1316,9 +1448,9 @@ const thebe_selector_output = ".output, .cell_output"
 <span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="id20">
-<h3><span class="section-number">2.5.7. </span>캘리포니아 데이터셋 변환 파이프라인<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id20">
+<h3><span class="section-number">2.5.7. </span>캘리포니아 데이터셋 변환 파이프라인<a class="headerlink" href="#id20" title="Permalink to this headline">#</a></h3>
 <p>다음 변환기를 모아 캘리포니아 데이터셋 전용 변환 파이프라인을 생성할 수 있다.</p>
 <p>(1) 비율 변환기</p>
 <p>가구당 방 개수, 방 하나당 침실 개수, 가구당 인원 등
@@ -1384,10 +1516,10 @@ const thebe_selector_output = ".output, .cell_output"
 하지만 이런 경우 예측값을 계산할 때 원래의 척도로 되돌려야 하며
 이를 위해 대부분의 사이킷런 변환기가 지원하는 <code class="docutils literal notranslate"><span class="pre">inverse_transorm()</span></code> 메서드를 활용할 수 있다.</p>
 </div>
-</div>
-</div>
-<div class="section" id="id21">
-<h2><span class="section-number">2.6. </span>모델 선택과 훈련<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="id21">
+<h2><span class="section-number">2.6. </span>모델 선택과 훈련<a class="headerlink" href="#id21" title="Permalink to this headline">#</a></h2>
 <p>훈련셋 준비가 완료된 상황에서 모델을 선택하고 훈련시키는 일이 남아 있다.</p>
 <p>사이킷런이 제공하는 예측기 모델을 사용하면 훈련은 기본적으로 간단하게 진행된다.
 여기서는 사이킷런이 제공하는 다양한 모델의 사용법과 차이점을 간단하게 살펴본다.
@@ -1397,8 +1529,8 @@ const thebe_selector_output = ".output, .cell_output"
 <p>소개되는 모든 모델은 앞서 설명한 전처리 과정과 함께 하나의 파이프라인으로 묶여서 정의된다.
 따라서 테스트셋과 미래의 새로운 입력 데이터에 대해서도 전처리를 별도로 신경쓸 필요가 없다.</p>
 </div>
-<div class="section" id="id22">
-<h3><span class="section-number">2.6.1. </span>모델 훈련과 평가<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h3>
+<section id="id22">
+<h3><span class="section-number">2.6.1. </span>모델 훈련과 평가<a class="headerlink" href="#id22" title="Permalink to this headline">#</a></h3>
 <p><strong>선형 회귀 모델 (<a class="reference internal" href="training_models.html#ch-trainingmodels"><span class="std std-numref">4장</span></a>)</strong></p>
 <ul>
 <li><p>훈련 및 예측</p>
@@ -1465,9 +1597,9 @@ const thebe_selector_output = ".output, .cell_output"
                            <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">))</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="id23">
-<h3><span class="section-number">2.6.2. </span>교차 검증<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id23">
+<h3><span class="section-number">2.6.2. </span>교차 검증<a class="headerlink" href="#id23" title="Permalink to this headline">#</a></h3>
 <p><strong>교차 검증</strong><font size="2">cross validation</font>을 이용하여
 훈련중인 모델의 성능을 평가할 수 있다.</p>
 <p><strong>k-겹 교차 검증</strong></p>
@@ -1510,10 +1642,10 @@ RMSE의 음숫값을 선택하는 이유는 RMSE가 낮을 수록 좋은 모델�
 현재 사용 가능한 옵션값은 <a class="reference external" href="https://scikit-learn.org/stable/modules/model_evaluation.html">사이킷런의 Metrics and Scoring 문서</a>에서
 확인할 수 있다.</p>
 </div>
-</div>
-</div>
-<div class="section" id="id24">
-<h2><span class="section-number">2.7. </span>모델 미세 조정<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="id24">
+<h2><span class="section-number">2.7. </span>모델 미세 조정<a class="headerlink" href="#id24" title="Permalink to this headline">#</a></h2>
 <p>지금까지 살펴 본 모델 중에서 랜덤 포레스트 회귀 모델의 성능이 가장 좋았다.
 이렇게 가능성이 높은 모델을 찾은 다음엔
 모델의 세부 설정(하이퍼파라미터)을 조정하거나
@@ -1526,8 +1658,8 @@ RMSE의 음숫값을 선택하는 이유는 RMSE가 낮을 수록 좋은 모델�
 <li><p>랜덤 탐색</p></li>
 <li><p>앙상블 학습</p></li>
 </ul>
-<div class="section" id="id25">
-<h3><span class="section-number">2.7.1. </span>그리드 탐색<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h3>
+<section id="id25">
+<h3><span class="section-number">2.7.1. </span>그리드 탐색<a class="headerlink" href="#id25" title="Permalink to this headline">#</a></h3>
 <p>지정된 하이퍼파라미터의 모든 조합에 대해 교차 검증을 진행하여 최적의 하이퍼파라미터 조합을 찾는다.</p>
 <p><strong><code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code> 클래스</strong></p>
 <p>랜덤 포레스트 모델을 대상으로 그리드 탐색을 다음과 같이 실행하면
@@ -1551,9 +1683,9 @@ RMSE의 음숫값을 선택하는 이유는 RMSE가 낮을 수록 좋은 모델�
 <span class="n">grid_search</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">housing</span><span class="p">,</span> <span class="n">housing_labels</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="id26">
-<h3><span class="section-number">2.7.2. </span>랜덤 탐색<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id26">
+<h3><span class="section-number">2.7.2. </span>랜덤 탐색<a class="headerlink" href="#id26" title="Permalink to this headline">#</a></h3>
 <p>그리드 탐색은 적은 수의 조합을 실험해볼 때만 유용하다.
 반면에 하이퍼파라미터의 탐색 공간이 크면 랜덤 탐색이 보다 유용하다.
 랜덤 탐색은 하이퍼라라미터 조합을 임의로 지정된 횟수만큼 진행한다.</p>
@@ -1601,9 +1733,9 @@ RMSE의 음숫값을 선택하는 이유는 RMSE가 낮을 수록 좋은 모델�
 또한 최고 성능을 보이는 서로 다른 개별 모델을 조합하면 보다 좋은 성능을 얻을 수 있다.
 이렇게 성능이 좋은 여러 개의 모델을 함께 학습하여 예측값을 지정하는 방식을 앙상블 학습이라 하며,
 <a class="reference internal" href="ensemble_learning_random_forests.html#ch-ensemble"><span class="std std-numref">7장</span></a>에서 자세히 다룬다.</p>
-</div>
-<div class="section" id="id27">
-<h3><span class="section-number">2.7.3. </span>최적 모델 활용<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id27">
+<h3><span class="section-number">2.7.3. </span>최적 모델 활용<a class="headerlink" href="#id27" title="Permalink to this headline">#</a></h3>
 <p>그리드 탐색 또는 랜덤 탐색을 통해 얻어진 최적의 모델을 분석해서 문제에 대한 통찰을 얻을 수 있다.
 예를 들어, 최적의 랜덤 포레스트 모델로부터 타깃 예측에 사용된 특성들의 상대적 중요도를 확인하여
 중요하지 않은 특성을 제외할 수 있다.</p>
@@ -1642,10 +1774,10 @@ RMSE의 음숫값을 선택하는 이유는 RMSE가 낮을 수록 좋은 모델�
 <span class="n">final_rmse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">final_predictions</span><span class="p">,</span> <span class="n">squared</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="id28">
-<h2><span class="section-number">2.8. </span>최적 모델 저장과 활용<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="id28">
+<h2><span class="section-number">2.8. </span>최적 모델 저장과 활용<a class="headerlink" href="#id28" title="Permalink to this headline">#</a></h2>
 <p>최적의 모델을 훈련시키는 과정이 매우 길 수 있다.
 따라서 한 번 훈련된 좋은 모델은 저장해 놓고 필요할 때 불러와서 바로 사용할 수 있도록 해둔다.
 이 뿐만 아니라 업데이트된 모델이 적절하지 않은 경우 이전 모델로 되돌려야 하는 상황이 발생할 수도 있다.</p>
@@ -1663,13 +1795,13 @@ RMSE의 음숫값을 선택하는 이유는 RMSE가 낮을 수록 좋은 모델�
 </div>
 </li>
 </ul>
-</div>
-<div class="section" id="id29">
-<h2><span class="section-number">2.9. </span>연습문제<a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="id29">
+<h2><span class="section-number">2.9. </span>연습문제<a class="headerlink" href="#id29" title="Permalink to this headline">#</a></h2>
 <p>참고: <a class="reference external" href="https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_end2end_ml_project_1.ipynb">(실습) 머신러닝 프로젝트 처음부터 끝까지 1부</a> 와
 <a class="reference external" href="https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_end2end_ml_project_2.ipynb">(실습) 머신러닝 프로젝트 처음부터 끝까지 2부</a></p>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1693,9 +1825,11 @@ RMSE의 음숫값을 선택하는 이유는 RMSE가 낮을 수록 좋은 모델�
 
               </div>
               
-            
-                <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
     <a class='left-prev' id="prev-link" href="ml_landscape.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
@@ -1711,24 +1845,28 @@ RMSE의 음숫값을 선택하는 이유는 RMSE가 낮을 수록 좋은 모델�
     <i class="fas fa-angle-right"></i>
     </a>
 </div>
-            
+            </footer>
         </div>
     </div>
-    <footer class="footer">
-  <p>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By 코딩알지<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
     
-      By 코딩알지<br/>
-    
-        &copy; Copyright 2021.<br/>
-  </p>
-</footer>
-</main>
+</div>
 
 
       </div>
     </div>
   
-  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
 
   </body>
 </html>
