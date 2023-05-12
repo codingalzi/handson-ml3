@@ -706,5 +706,4 @@
 
 # ## 연습문제
 
-# 참고: [(실습) 앙상블 학습과 랜덤 포레스트](https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_ensemble_learning_random_forests.ipynb)와
-# [(실습) 텐서플로우 결정 포레스트](https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_tf_decision_forests.ipynb)
+# 참고: [(실습) 앙상블 학습과 랜덤 포레스트](https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_ensemble_learning_random_forests.ipynb)
