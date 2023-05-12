@@ -19,25 +19,26 @@
 # (1) 편향과 분산의 트레이드오프
 # 
 # 앙상블 학습의 핵심은 **편향**<font size='2'>bias</font>과 
-# **분산**<font size='2'>variance</font>을 줄인 모델을 구현하는 것이다.
+# **분산**<font size='2'>variance</font>을 최소화한 모델을 구현하는 것이다.
 # 
 # * 편향: 예측값과 정답이 떨어져 있는 정도를 나타낸다.
 #     정답에 대한 잘못된 가정으로부터 유발되며
 #     편향이 크면 과소적합이 발생한다.
 # 
 # * 분산: 입력 샘플의 작은 변동에 반응하는 정도를 나타낸다.
-#     정답에 대한 너무 복잡한 모델을 설정하는 경우 분산이 커지며,
-#     분산이 크면 과대적합이 발생한다.
+#     일반적으로 모델을 복잡하게 설정할 수록 분산이 커지며,
+#     따라서 과대적합이 발생한다.
 # 
 # 그런데 편향과 분산을 동시에 줄일 수 없다.
 # 이유는 편향과 분산은 서로 트레이드오프 관계를 갖기 때문이다. 
-# 예를 들어 회귀 모델의 평균 제곱 오차(MSE)는 편향의 제곱과 분산의 합으로 근사되는데,
+# 예를 들어 회귀 모델의 평균 제곱 오차(MSE)는 
+# 편향을 제곱한 값과 분산의 합으로 근사되는데,
 # 회귀 모델의 복잡도에 따른 편향, 분산, 평균 제곱 오차 사이의 관계를 
 # 그래프로 나타내면 보통 다음과 같다.
 
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/bagging_boosting02.png" width="600"/></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/bagging_boosting02.png" width="500"/></div>
 # 
-# <[위키백과: 편향-분산 트레이드오프](https://en.wikipedia.org/wiki/Bias%E2%80%93variance_tradeoff)>
+# <p><div style="text-align: center">&lt;그림 출처: <a href="https://en.wikipedia.org/wiki/Bias%E2%80%93variance_tradeoff">위키백과: 편향-분산 트레이드오프</a>&gt;</div></p>
 
 # :::{admonition} 평균 제곱 오차, 편향, 분산의 관계
 # :class: info
@@ -53,19 +54,19 @@
 # (2) 앙상블 학습
 # 
 # **앙상블 학습**<font size='2'>ensemble learning</font>은 
-# 모델 여러 개를 이용한 훈련과 예측을 진행하는 모델을 구현할 때 사용한다.
-# 결과적으로 분산 또는 편향을 줄이기 사용되며 대표적으로 
+# 여러 개 모델을 훈련시킨 결과를 이용하여 기법이며,
+# 대표적으로 
 # **배깅**<font size='2'>bagging</font> 기법과
-# **부스팅**<font size='2'>boosting</font> 기법이 
-# 주로 사용된다.
+# **부스팅**<font size='2'>boosting</font> 기법이 있다.
 # 
-# - 배깅 기법: 독립적으로 학습된 예측기 여러 개의 예측값들의 평균값을 예측값으로 
-#     사용하여 분산이 줄어든 모델을 구현한다.
+# - 배깅 기법: 여러 개의 예측기를 (가능한한) 독립적으로 학습시킨 후
+#     모든 예측기들의 예측값들의 평균값을 최종 모델의 예측값으로 사용한다.
+#     분산이 보다 줄어든 모델을 구현한다.
 # 
-# - 부스팅 기법: 예측기 여러 개를 순차적으로 쌓아 올려 예측값의 편향를 줄이는 
-#     모델을 구현한다.
+# - 부스팅 기법: 여러 개의 예측기를 순차적으로 훈련시킨 결과를 예측값으로 사용한다.
+#     보다 적은 편향를 갖는 모델을 구현한다.
 
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/bagging_boosting01.png" width="500"/></div>
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/bagging_boosting01.png" width="550"/></div>
 
 # ## 투표식 분류기
 
@@ -84,12 +85,12 @@
 # **간접 투표**
 # 
 # 앙상블 학습에 사용된 예측기들의 예측한 확률값들의 평균값으로 예측값 결정한다.
-# 이를 위해서는 모든 예측기가 `predict_proba()` 메서드처럼 확률을 예측하는 기능을 지원해야 한다.
-# 높은 확률에 보다 높은 비중을 두기 때문에 직접 투표 방식보다 성능이 좀 더 좋은 경향이 있다.
+# 이를 위해서는 사용되는 모든 분류기가 `predict_proba()` 메서드처럼 확률을 예측하는 기능을 지원해야 한다.
+# 높은 확률의 비중을 크게 잡기 때문에 직접 투표 방식보다 일반적으로 성능이 좀 더 좋다.
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-04.png" width="500"/></div>
 # 
-# <그림출처: [kaggle](https://www.kaggle.com/fengdanye/machine-learning-6-basic-ensemble-learning)>
+# <p><div style="text-align: center">&lt;그림 출처: <a href="https://www.kaggle.com/fengdanye/machine-learning-6-basic-ensemble-learning">Machine Learning 6 Basic Ensemble Learning</a>&gt;</div></p>
 
 # **사이킷런의 투표식 분류기: `VotingClassifier`, `VotingRegressor`**
 # 
@@ -112,6 +113,11 @@
 # 
 # 이항분포의 누적 분포 함수<font size='2'>cumulative distribution function</font>(cdf)를 
 # 이용하여 앙상블 학습의 성능이 향상되는 이유를 설명할 수 있다.
+# 누적 분포 함수는 주어진 확률 변수가 특정 값보다 같거나 작은 값을 가질 확률을 계산한다.
+# 
+# 아래 코드에서 `binom.cdf(int(n*0.4999), n, p)`는 `p`의 확률로
+# 문제를 맞추는 예측기 `n` 개를 이용하여 다수결에 따라 예측을 했을 때
+# 성공할 확률을 계산한다.
 # 
 # ```python
 # from scipy.stats import binom
@@ -120,7 +126,7 @@
 #     """
 #     p: 예측기 하나의 성능.
 #     n: 앙상블 크기, 즉 예측기 개수.
-#     반환값: 다수결을 따를 때 성공할 확률. 이항 분포의 누적분포함수 활용.
+#     반환값: 다수결을 따를 때 성공할 확률. 이항 분포의 누적 분포수 활용.
 #     """
 #     return 1 - binom.cdf(int(n*0.4999), n, p)
 # ```
@@ -155,75 +161,117 @@
 
 # ## 배깅과 페이스팅
 
-# 배깅 기법은 여러 개의 동일 모델을 훈련 세트의 다양한 부분집합을
-# 대상으로 학습시키는 방식이다. 
+# 배깅 기법은 하나의 훈련 세트의 다양한 부분집합을 이용하여 
+# 동일한 모델 여러 개를 학습시키는 방식이다. 
 # 부분집합을 임의로 선택할 때의 중복 허용 여부에 따라 앙상블 학습 방식이 달라진다.
 # 
-# - **배깅**<font size='2'>bagging</font>: 중복 허용 샘플링(부분집합 선택)
-# - **페이스팅**<font size='2'>pasting</font>: 중복 미허용 샘플링(부분집합 선택)
+# - **배깅**<font size='2'>bagging</font>: 중복을 허용하며 부분집합 샘플링(부분집합 선택)
+# - **페이스팅**<font size='2'>pasting</font>: 중복을 허용하지 않으면서 부분집합 샘플링(부분집합 선택)
 
 # :::{admonition} 배깅과 부트스트랩
 # :class: info
 # 
 # 배깅은 bootstrap aggregation의 줄임말이며,
-# 부트스트랩<font size='2'>bootstrap</font>은 전문 통계 용어로 중복허용 리샘플링을 가리킨다.
+# 부트스트랩<font size='2'>bootstrap</font>은 전문 통계 용어로 중복 허용 리샘플링을 가리킨다.
 # :::
 
-# 아래 그림은 배깅 기법으로 하나의 훈련셋으로 네 개의 동일 예측기를 사용하는 것을 보여준다.
-# 각 예측기의 훈련셋이 다르게, 하지만 중복을 허용하는 방식으로 지정되는 것을 그림에서도 확인할 수 있다.
+# 아래 그림은 하나의 훈련셋으로 동일한 예측기 네 개를 훈련시키는 내용을 보여준다.
+# 훈련셋으로 사용되는 각각의 부분집합이 중복을 허용하는 방식, 즉 
+# 배깅 방식으로 지정되는 것을 그림이 잘 보여준다.
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-05.png" width="500"/></div>
 
 # **예측값**
 # 
-# 배깅 또는 페이스팅 모델의 예측값은 분류 모델은 예측값의 최빈값을 선택하며,
-# 회귀 모델은 예측값들의 평균값을 사용한다.
+# 배깅 또는 페이스팅 방식으로 훈련된 모델의 예측값은,
+# 분류기인 경우엔 최빈 예측값<font size='2'>mode</font>을,
+# 회귀인 경우엔 예측값들의 평균값<font size='2'>mean</font>을 사용한다.
 
 # **병렬 훈련 및 예측**
 # 
-# 배깅/페이스팅 모델의 훈련과 예측은 다른 CPU 또는 심지어 다른 컴퓨터 서버를 이용하여 각 모델을 훈련 또는 예측을 하게 만든 후 병합하여 하나의 예측값을 생성하도록 할 수 있다.
+# 배깅/페이스팅 기법은 각 모델의 훈련과 예측을 병렬로 다룰 수 있다.
+# 즉, 다른 CPU 또는 심지어 다른 컴퓨터 서버를 이용하여 각 모델을 훈련 또는 예측을 하게 만든 후 
+# 그 결과를 병합하여 하나의 예측값을 생성할 수 있다.
 
 # **편향과 분산**
 # 
-# 개별 예측기의 경우에 비해 앙상블 모델의 편향은 조금 커지거나 거의 비슷하지만 분산은 줄어든다.
-# 이유는 배깅이 표본 샘플링의 다양성을 보다 많이 추가하기 때문이다.
-# 배깅 방식이 페이스팅 방식보다 과대적합의 위험성일 줄어주기에 기본으로 사용된다.
+# 개별 예측기의 경우에 비해 배깅 방식으로 학습된 앙상블 모델의 편향은 비슷하거나 조금 커지는
+# 반면에 분산은 줄어든다.
+# 분산이 줄어드는 이유는 배깅 방식이 표본 샘플링의 다양성을 키우기 때문이다.
+# 또한 배깅 방식이 페이스팅 방식보다 과대적합의 위험성을 잘 줄어주며,
+# 따라서 보다 선호된다.
 # 보다 자세한 설명은 
 # [Single estimator versus bagging: bias-variance decomposition](https://scikit-learn.org/stable/auto_examples/ensemble/plot_bias_variance.html#sphx-glr-auto-examples-ensemble-plot-bias-variance-py) 을 참고한다.
 
 # ### 사이킷런의 배깅과 페이스팅
 
-# 사이킷런은 `BaggingClassifier` 분류 모델과 `BaggingRegressor` 회귀 모델을 지원하며
-# 사용법은 다음과 같다.
+# 사이킷런은 분류 모델인 `BaggingClassifier`와 회귀 모델인 `BaggingRegressor`을 지원한다.
+# 아래 코드에서 사용된 분류 모델의 하이퍼파라미터는 다음과 같다.
 # 
-# - `n_estimators=500` 개의 `DecisionTreeClassifier` 모델을 이용항 앙상블 학습.
-# - `max_samples=100` 개의 훈련 샘플 사용.
-# - 배깅 방식. 페이스팅 방식을 사용하려면 `bootstrap=False` 로 지정.
-# - `n_jobs=-1` 하이퍼파라미터를 이용하여 사용할 CPU 수 지정. 기본값 -1은 전부 사용을 의미함.
-# - 기본적으로 간전 투표 방식 사용. 하지만 기본 예측기가 `predict_proba()` 메서드를 지원하지 않으면
-#     직접 투표 방식 사용. 결정트리는 `predict_proba()` 메서드를 지원하기에 간접 투표 방식을 사용함.
-
+# - `n_estimators=500`: 500 개의 `DecisionTreeClassifier` 모델을 이용항 앙상블 학습.
+# - `max_samples=100`: 각각의 모델을 100 개의 훈련 샘플을 이용하여 훈련.
+# 
+# 이외에 아래 옵션이 기본으로 사용된다.
+# 
+# - `n_jobs=None`:  하이퍼파라미터를 이용하여 사용할 CPU 수 지정. 
+#     `None`은 1을 의미함. -1로 지정하면 모든 CPU를 사용함.
+# - `bootstrap=True`: 배깅 방식. 페이스팅 방식을 사용하려면 `bootstrap=False` 로 지정.
+# - `oob_score=False`: oob 평가 진행 여부. `bootstrap=True`인 경우에만 설정 가능.
+# 
 # ```python
 # bag_clf = BaggingClassifier(DecisionTreeClassifier(), n_estimators=500,
 #                             max_samples=100, random_state=42)
 # ```
 
-# 아래 두 이미지는 한 개의 결정트리 모델과 500개의 결정트리 모델의 
-# 초승달 데이터셋<font size='2'>moons dataset</font>에 대한 훈련 결과의 차이를 명확하게 보여준다.
-# 배깅을 사용한 오른쪽 결정트리 모델의 일반화 성능이 훨씬 좋음을 알 수 있다.
-# 왼쪽 하나의 결정트리 모델과 비교해서 편향(오류 숫자)은 좀 더 커졌지만
+# 모델의 예측값은 기본적으로 간전 투표 방식을 사용한다.
+# 하지만 기본 예측기가 `predict_proba()` 메서드를 지원하지 않으면
+# 직접 투표 방식을 사용한다. 
+# 위 코드에서는 결정트리가 `predict_proba()` 메서드를 지원하기에 간접 투표 방식을 사용하게 된다.
+
+# 아래 두 그림은 한 개의 결정트리 모델의 훈련 결과와 500개의 결정트리 모델을 
+# 배깅 기법으로 훈련시킨 결과의 차이를 보여준다.
+# 훈련셋으로 초승달 데이터셋<font size='2'>moons dataset</font>이 사용되었다.
+# 
+# 왼쪽 그림은 규제를 전혀 사용하지 않아 훈련셋에 과대적합된 결정트리 모델을 보여준다.
+# 반면에 오른쪽 그림은 규제를 전혀 사용하지 않은 결정트리를 이용했음에도 불구하고
+# 배깅 기법을 적용하면 보다 높은 일반화 성능의 모델을 얻을 수 있음을 잘 보여준다.
+# 하나의 결정트리 모델과 비교해서 편향(오류 숫자)은 좀 더 커졌지만
 # 분산(결정 경계의 불규칙성)은 훨씬 덜하다.
-# 하지만 편향이 커졌다는 의미는 각 결정트리들 사이의 연관성이 약해졌음을 의미한다.
-# 즉, 각 결정트리의 독립성이 커졌고, 따라서 학습 모델의 일반화 성능이 좋아졌다.
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-06.png" width="600"/></div>
 
 # ### oob 평가
 
-# 배깅 기법을 적용하면 모델 훈련에 선택되지 않은 훈련 샘플이 평균적으로 전체 훈련셋의 37% 정도를 차지한다.
+# 배깅 기법을 적용하면 하나의 모델 훈련에 선택되지 않은 훈련 샘플이 평균적으로 
+# 전체 훈련셋의 37% 정도를 차지한다.
 # 이런 샘플을 oob(out-of-bag) 샘플이라 부른다.
-# oob 평가는 각 샘플에 대해 해당 샘플을 훈련에 사용하지 않은 예측기들로 이루어진 앙상블 모델의 예측값을 이용하여
-# 전체 앙상블 모델의 성능을 검증하는 것이다.
+# oob 평가는 각각의 샘플에 대해 해당 샘플을 훈련에 사용하지 않은 
+# 모델들의 예측값을 이용하여 앙상블 학습 모델의 검증하는 기법이다.
+# 
+# 6 개의 훈련 샘플로 구성된 훈련셋 대해 5개의 결정트리 모델을 배깅기법으로
+# 적용할 때 예를 들어 아래 표와 같은 경우가 발생할 수 있다.
+# 표에 사용된 정수는 중복으로 뽑힌 횟수를 가리키며,
+# 각 샘플은 위치 인덱스로 구분한다.
+# 
+# 
+# | | 훈련 샘플(총 6개) | OOB 평가 샘플 |
+# | :---: | :---: | :---: |
+# | 결정트리1 | 1, 1, 0, 2, 1, 1 | 2번 |
+# | 결정트리2 | 3, 0, 1, 0, 2, 0 | 1번, 3번, 5번 |
+# | 결정트리3 | 0, 1, 3, 1, 0, 1 | 0번, 4번 |
+# | 결정트리4 | 0, 0, 2, 0, 2, 2 | 0번, 1번, 3번 |
+# | 결정트리5 | 2, 0, 0, 1, 3, 0 | 1번, 2번, 5번 |
+# 
+# 그러면 각 샘플을 이용한 앙상블 학습에 사용된 모델은 다음과 같다.
+# 
+# - 0번 샘플: 결정트리3, 결정트리4
+# - 1번 샘플: 결정트리2, 결정트리4, 결정트리5
+# - 2번 샘플: 결정트리1, 결정트리5
+# - 3번 샘플: 결정트리2, 결정트리4
+# - 4번 샘플: 결정트리3
+# - 5번 샘플: 결정트리2, 결정트리5
+
+# **예제: `BaggingClassifier`를 이용한 oob 평가**
 
 # `BaggingClassifier` 의 경우 `oob_score=True` 하이퍼파라미터를 사용하면
 # oob 평가를 자동으로 실행한다. 
@@ -235,8 +283,8 @@
 # ```
 
 # 각 샘플에 대한 oob 예측값, 즉 해당 샘플을 훈련에 사용하지 않은 예측기들로 이루어진 앙상블 모델의 예측값은 
-# `oob_decision_function_()` 메서드가 계산한다. 
-# 예를 들어, 처음 세 개 훈련 샘플에 대한 oob 예측값은 다음과 같다. 
+# `oob_decision_function_` 속성에 저장된다. 
+# 예를 들어, 훈련셋의 맨 앞에 위치한 3 개의 훈련 샘플에 대한 oob 예측값은 다음과 같다. 
 # 결정트리 모델이 `predict_proba()` 메서드를 지원하기에 양성, 음성 여부를 확률로 계산한다.
 
 # ```python
@@ -245,6 +293,8 @@
 #        [0.3375    , 0.6625    ],
 #        [1.        , 0.        ]])
 # ```
+
+# 예를 들어, 첫째 훈련 샘플에 대한 oob 평가는 양성일 확률을 67.6% 정도로 평가한다.
 
 # ## 랜덤 패치와 랜덤 서브스페이스
 
