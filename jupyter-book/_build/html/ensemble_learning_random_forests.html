@@ -644,7 +644,7 @@ title="Print to PDF"
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    p: 예측기 하나의 성능.</span>
 <span class="sd">    n: 앙상블 크기, 즉 예측기 개수.</span>
-<span class="sd">    반환값: 다수결을 따를 때 성공할 확률. 이항 분포의 누적 분포수 활용.</span>
+<span class="sd">    반환값: 다수결을 따를 때 성공할 확률. 이항 분포의 누적 분포 함수의 반환값.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">binom</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="mf">0.4999</span><span class="p">),</span> <span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
 </pre></div>
@@ -809,8 +809,8 @@ oob 평가를 자동으로 실행한다.
 </section>
 <section id="id5">
 <h2><span class="section-number">7.3. </span>랜덤 패치와 랜덤 서브스페이스<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h2>
-<p>이미지 데이터의 경우처럼 특성 수가 매우 많은 경우 특성에 대해 중복선택 옵션을 지정할 수 있다.
-이를 통해 더 다양한 예측기를 만들며, 편향이 커지지만 분산은 낮아진다.</p>
+<p>이미지 데이터의 경우처럼 특성이 매우 많은 경우 특성에 대해 중복선택 옵션을 지정할 수 있다.
+이를 통해 더 다양한 예측기를 만들게 되어 앙상블 학습 모델의 편향이 커지지만 분산은 보다 낮아진다.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">max_features</span></code> 하이퍼파라미터:
 학습에 사용할 특성 수 지정. 기본값은 1.0, 즉 전체 특성 모두 사용.
@@ -820,44 +820,60 @@ oob 평가를 자동으로 실행한다.
 학습에 사용할 특성을 선택할 때 중복 허용 여부 지정.
 기본값은 False. 즉, 중복 허용하지 않음.</p></li>
 </ul>
-<p><strong>랜덤 패치 기법</strong></p>
-<p>훈련 샘플과 훈련 특성 모두를 대상으로 중복을 허용하며 임의의 샘플 수와 임의의 특성 수만큼을 샘플링해서 학습하는 기법이다.</p>
 <p><strong>랜덤 서브스페이스 기법</strong></p>
 <p>전체 훈련 세트를 학습 대상으로 삼지만 훈련 특성은 임의의 특성 수만큼 샘플링해서 학습하는 기법이다.</p>
 <ul class="simple">
 <li><p>샘플에 대해: <code class="docutils literal notranslate"><span class="pre">bootstrap=False</span></code>이고 <code class="docutils literal notranslate"><span class="pre">max_samples=1.0</span></code></p></li>
 <li><p>특성에 대해: <code class="docutils literal notranslate"><span class="pre">bootstrap_features=True</span></code> 또는 <code class="docutils literal notranslate"><span class="pre">max_features</span></code> 는 1.0 보다 작게.</p></li>
 </ul>
-</section>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">BaggingClassifier</span><span class="p">(</span><span class="n">DecisionTreeClassifier</span><span class="p">(),</span> <span class="n">n_estimators</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+                  <span class="n">max_samples</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">bootstrap</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                  <span class="n">max_features</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">bootstrap_features</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                  <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>랜덤 패치 기법</strong></p>
+<p>훈련 샘플과 훈련 특성 모두를 대상으로 중복을 허용하며 임의의 샘플 수와 임의의 특성 수만큼을 샘플링해서 학습하는 기법이다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">BaggingClassifier</span><span class="p">(</span><span class="n">DecisionTreeClassifier</span><span class="p">(),</span> <span class="n">n_estimators</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+                  <span class="n">max_samples</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span> <span class="n">bootstrap</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                  <span class="n">max_features</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">bootstrap_features</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                  <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>배깅 vs 랜덤 서브스페이스 vs 랜덤 패치</strong></p>
+<p>아래 세 개의 그림이 배깅, 랜덤 서브스페이스, 랜덤 패치 등 세 기법에 사용되는 훈련셋의 차이를 보여준다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/patches_vs_subspaces.png" width="100%"/></div>
+<p><div style="text-align: center">&lt;그림 출처: <a href="https://livebook.manning.com/concept/machine-learning/random-patch">Ensemble Methods for Machine Learning</a>&gt;</div></p></section>
 <section id="id6">
 <h2><span class="section-number">7.4. </span>랜덤 포레스트<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h2>
 <p><strong>랜덤 포레스트</strong><font size='2'>random forest</font>는
 배깅 기법을 결정트리의 앙상블에 특화시킨 모델이다.
 배깅 기법 대신에 페이스팅 기법을 옵션으로 사용할 수도 있으며,
-<code class="docutils literal notranslate"><span class="pre">RandomForestClassifier</span></code> 는 분류 용도로, <code class="docutils literal notranslate"> <span class="pre">RandomForestRegressor</span></code> 는 회귀 용도로 사용한다.</p>
-<p>아래 두 모델은 기본적으로 동일하며, 사용된 하이퍼파라미터는 다음과 같다.</p>
+<code class="docutils literal notranslate"><span class="pre">RandomForestClassifier</span></code> 는 분류 용도로, <code class="docutils literal notranslate"> <span class="pre">RandomForestRegressor</span></code> 는 회귀 용도로 사용한다.
+<code class="docutils literal notranslate"><span class="pre">RandomForestClassifier</span></code> 모델의 하아퍼파라미터는
+<code class="docutils literal notranslate"><span class="pre">BaggingClassifier</span></code>와 <code class="docutils literal notranslate"><span class="pre">DecisionTreeClassifier</span></code>의 그것과 거의 동일하다.</p>
+<p>예를 들어, 아래 두 모델은 기본적으로 동일하다.</p>
+<p><code class="docutils literal notranslate"><span class="pre">RandomForestClassifier</span></code> 모델</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">n_estimators=500</span></code>: 500 개의 결정트리 사용</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">max_leaf_nodes=16</span></code>: 리프 노드 최대 16개</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">n_jobs=-1</span></code>: 모든 CPU 사용</p></li>
 </ul>
-<p><code class="docutils literal notranslate"><span class="pre">RandomForestClassifier</span></code> 모델</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rnd_clf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">max_leaf_nodes</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
-                                 <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">max_leaf_nodes</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> 
+                       <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">BaggingClassifier</span></code> 모델</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">bag_clf</span> <span class="o">=</span> <span class="n">BaggingClassifier</span><span class="p">(</span>
-    <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_features</span><span class="o">=</span><span class="s2">&quot;sqrt&quot;</span><span class="p">,</span> <span class="n">max_leaf_nodes</span><span class="o">=</span><span class="mi">16</span><span class="p">),</span>
-    <span class="n">n_estimators</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">DecisionTreeClassifier</span></code>의 <code class="docutils literal notranslate"><span class="pre">max_features=&quot;sqrt&quot;</span></code>:
+노드 분할에 사용되는 특성의 수를 전체 특성 수 <span class="math notranslate nohighlight">\(n\)</span>의 제곱근 값인 <span class="math notranslate nohighlight">\(\sqrt{n}\)</span>으로 제한하고 특성을 무작위로 선택.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">BaggingClassifier</span><span class="p">(</span><span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_features</span><span class="o">=</span><span class="s2">&quot;sqrt&quot;</span><span class="p">,</span> 
+                                         <span class="n">max_leaf_nodes</span><span class="o">=</span><span class="mi">16</span><span class="p">),</span>
+                  <span class="n">n_estimators</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> 
+                  <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>배깅 모델에 사용된 <code class="docutils literal notranslate"><span class="pre">DecisionTreeClassifier</span></code>의 <code class="docutils literal notranslate"><span class="pre">max_features=&quot;sqrt&quot;</span></code> 하이퍼파라미터 인자는
-노드 분할에 사용되는 특성의 수를 전체 특성 개수 <span class="math notranslate nohighlight">\(n\)</span>의 제곱근 값인 <span class="math notranslate nohighlight">\(\sqrt{n}\)</span> 으로 제한한다는 의미다.
-더 나아가 특성 선택이 무작위로 이루어진다.
-이를 통해 보다 다양한 결정트리를 사용하게 되며, 결과적으로 편향은 좀 더 높지만 보다 좋은 성능의
-앙상블 모델이 학습된다.</p>
-<p><code class="docutils literal notranslate"><span class="pre">RandomForestClassifier</span></code> 모델의 하아퍼파라미터는 <code class="docutils literal notranslate"><span class="pre">BaggingClassifier</span></code>와 <code class="docutils literal notranslate"><span class="pre">DecisionTreeClassifier</span></code>의 옵션을 거의 모두 동일하게 사용한다.</p>
 <section id="id7">
 <h3><span class="section-number">7.4.1. </span>엑스트라 트리<a class="headerlink" href="#id7" title="Permalink to this headline">#</a></h3>
 <p>랜덤 포레스트는 <span class="math notranslate nohighlight">\(\sqrt{n}\)</span> 개의 특성을 무작위로 선택하지만 선택된 특성의 임곗값은 모든 특성값에

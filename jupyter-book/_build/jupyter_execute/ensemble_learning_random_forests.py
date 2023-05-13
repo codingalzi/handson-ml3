@@ -126,7 +126,7 @@
 #     """
 #     p: 예측기 하나의 성능.
 #     n: 앙상블 크기, 즉 예측기 개수.
-#     반환값: 다수결을 따를 때 성공할 확률. 이항 분포의 누적 분포수 활용.
+#     반환값: 다수결을 따를 때 성공할 확률. 이항 분포의 누적 분포 함수의 반환값.
 #     """
 #     return 1 - binom.cdf(int(n*0.4999), n, p)
 # ```
@@ -298,8 +298,8 @@
 
 # ## 랜덤 패치와 랜덤 서브스페이스
 
-# 이미지 데이터의 경우처럼 특성 수가 매우 많은 경우 특성에 대해 중복선택 옵션을 지정할 수 있다.
-# 이를 통해 더 다양한 예측기를 만들며, 편향이 커지지만 분산은 낮아진다.
+# 이미지 데이터의 경우처럼 특성이 매우 많은 경우 특성에 대해 중복선택 옵션을 지정할 수 있다.
+# 이를 통해 더 다양한 예측기를 만들게 되어 앙상블 학습 모델의 편향이 커지지만 분산은 보다 낮아진다.
 
 # * `max_features` 하이퍼파라미터: 
 #     학습에 사용할 특성 수 지정. 기본값은 1.0, 즉 전체 특성 모두 사용.
@@ -310,16 +310,38 @@
 #     학습에 사용할 특성을 선택할 때 중복 허용 여부 지정. 
 #     기본값은 False. 즉, 중복 허용하지 않음.
 
-# **랜덤 패치 기법**
-# 
-# 훈련 샘플과 훈련 특성 모두를 대상으로 중복을 허용하며 임의의 샘플 수와 임의의 특성 수만큼을 샘플링해서 학습하는 기법이다.
-
 # **랜덤 서브스페이스 기법**
 # 
 # 전체 훈련 세트를 학습 대상으로 삼지만 훈련 특성은 임의의 특성 수만큼 샘플링해서 학습하는 기법이다.
 # 
 # - 샘플에 대해: `bootstrap=False`이고 `max_samples=1.0`
 # - 특성에 대해: `bootstrap_features=True` 또는 `max_features` 는 1.0 보다 작게.
+# 
+# ```python
+# BaggingClassifier(DecisionTreeClassifier(), n_estimators=500,
+#                   max_samples=1.0, bootstrap=False,
+#                   max_features=0.5, bootstrap_features=True,
+#                   random_state=42)
+# ```
+
+# **랜덤 패치 기법**
+# 
+# 훈련 샘플과 훈련 특성 모두를 대상으로 중복을 허용하며 임의의 샘플 수와 임의의 특성 수만큼을 샘플링해서 학습하는 기법이다.
+# 
+# ```python
+# BaggingClassifier(DecisionTreeClassifier(), n_estimators=500,
+#                   max_samples=0.75, bootstrap=True,
+#                   max_features=0.5, bootstrap_features=True,
+#                   random_state=42)
+# ```
+
+# **배깅 vs 랜덤 서브스페이스 vs 랜덤 패치**
+
+# 아래 세 개의 그림이 배깅, 랜덤 서브스페이스, 랜덤 패치 등 세 기법에 사용되는 훈련셋의 차이를 보여준다.
+
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/patches_vs_subspaces.png" width="100%"/></div>
+# 
+# <p><div style="text-align: center">&lt;그림 출처: <a href="https://livebook.manning.com/concept/machine-learning/random-patch">Ensemble Methods for Machine Learning</a>&gt;</div></p>
 
 # ## 랜덤 포레스트
 
@@ -327,35 +349,33 @@
 # 배깅 기법을 결정트리의 앙상블에 특화시킨 모델이다.
 # 배깅 기법 대신에 페이스팅 기법을 옵션으로 사용할 수도 있으며,
 # `RandomForestClassifier` 는 분류 용도로, ` RandomForestRegressor` 는 회귀 용도로 사용한다.
-# 
-# 아래 두 모델은 기본적으로 동일하며, 사용된 하이퍼파라미터는 다음과 같다.
+# `RandomForestClassifier` 모델의 하아퍼파라미터는 
+# `BaggingClassifier`와 `DecisionTreeClassifier`의 그것과 거의 동일하다.
+
+# 예를 들어, 아래 두 모델은 기본적으로 동일하다.
+
+# `RandomForestClassifier` 모델
 # 
 # - `n_estimators=500`: 500 개의 결정트리 사용
 # - `max_leaf_nodes=16`: 리프 노드 최대 16개
 # - `n_jobs=-1`: 모든 CPU 사용
 
-# `RandomForestClassifier` 모델
-
 # ```python
-# rnd_clf = RandomForestClassifier(n_estimators=500, max_leaf_nodes=16,
-#                                  n_jobs=-1, random_state=42)
+# RandomForestClassifier(n_estimators=500, max_leaf_nodes=16, 
+#                        n_jobs=-1, random_state=42)
 # ```
 
 # `BaggingClassifier` 모델
+# 
+# - `DecisionTreeClassifier`의 `max_features="sqrt"`: 
+#     노드 분할에 사용되는 특성의 수를 전체 특성 수 $n$의 제곱근 값인 $\sqrt{n}$으로 제한하고 특성을 무작위로 선택. 
 
 # ```python
-# bag_clf = BaggingClassifier(
-#     DecisionTreeClassifier(max_features="sqrt", max_leaf_nodes=16),
-#     n_estimators=500, n_jobs=-1, random_state=42)
+# BaggingClassifier(DecisionTreeClassifier(max_features="sqrt", 
+#                                          max_leaf_nodes=16),
+#                   n_estimators=500, 
+#                   n_jobs=-1, random_state=42)
 # ```
-
-# 배깅 모델에 사용된 `DecisionTreeClassifier`의 `max_features="sqrt"` 하이퍼파라미터 인자는 
-# 노드 분할에 사용되는 특성의 수를 전체 특성 개수 $n$의 제곱근 값인 $\sqrt{n}$ 으로 제한한다는 의미다.
-# 더 나아가 특성 선택이 무작위로 이루어진다.
-# 이를 통해 보다 다양한 결정트리를 사용하게 되며, 결과적으로 편향은 좀 더 높지만 보다 좋은 성능의 
-# 앙상블 모델이 학습된다.
-
-# `RandomForestClassifier` 모델의 하아퍼파라미터는 `BaggingClassifier`와 `DecisionTreeClassifier`의 옵션을 거의 모두 동일하게 사용한다.
 
 # ### 엑스트라 트리
 
