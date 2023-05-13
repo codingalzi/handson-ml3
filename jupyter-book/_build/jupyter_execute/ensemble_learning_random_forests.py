@@ -67,7 +67,7 @@
 
 # 앙상블 학습 모델의 성능 비교에 대한 보다 자세한 내용은 아래 논문을 참고한다.
 # 
-# - R.S. Olson et al., [Data-driven Advice for Applying Machine Learning to Bioinformatics Problems](https://arxiv.org/abs/1708.05070), 2018.
+# - R.S. Olson 외, [Data-driven Advice for Applying Machine Learning to Bioinformatics Problems](https://arxiv.org/abs/1708.05070), 2018.
 
 # ### 편향과 분산의 트레이드오프
 
@@ -388,6 +388,10 @@
 # `RandomForestClassifier` 모델의 하아퍼파라미터는 
 # `BaggingClassifier`와 `DecisionTreeClassifier`의 그것과 거의 동일하다.
 
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/random_forests.png" width="60%"/></div>
+# 
+# <p><div style="text-align: center">&lt;그림 출처: <a href="https://livebook.manning.com/book/ensemble-methods-for-machine-learning/chapter-1/1">Ensemble Methods for Machine Learning</a>&gt;</div></p>
+
 # 예를 들어, 아래 두 모델은 기본적으로 동일하다.
 
 # `RandomForestClassifier` 모델
@@ -419,10 +423,9 @@
 # 대해 확인한다.
 # 그런데 `DecisionTreeClassifier` 모델의 `splitter="random"` 하이퍼파라미터를 사용하면 
 # 임곗값도 무작위로 몇 개 선택해서 그중에 최선의 임곗값을 찾는다.
-# 이렇게 작동하는 결정트리로 구성된 앙상블 학습 모델이
-# **엑스트라 트리**<font size='2'>Extra-Tree</font>이다. 
+# 이렇게 작동하는 결정트리로 구성된 앙상블 학습 모델을
+# **엑스트라 트리**<font size='2'>Extra-Tree</font>라고 부른다. 
 # 참고로 엑스트라 트리는 **Extremely Randomized Tree** 의 줄임말이다.
-
 # 엑스트라 트리는 일반적인 램덤포레스트보다 속도가 훨씬 빠르고,
 # 보다 높은 편향을 갖지만 분산은 상대적으로 낮다.
 # 
@@ -446,7 +449,7 @@
 
 # `RandomForestClassifier` 모델은 훈련할 때마다 자동으로 모든 특성에 대해 
 # 상대적 특성 중요도를 계산하여 `feature_importances_` 속성에 저장한다.
-# 즉, 모든 특성 중요도의 합은 1이다.
+# 상대적인 이유는 모든 특성 중요도의 합이 1이 되도록 계산되기 때문이다.
 # 이렇듯 랜덤 포레스트 모델을 이용하여 특성의 상대적 중요도를 파악한 다음에 보다 
 # 중요한 특성을 선택해서 활용할 수 있다.
 
@@ -476,97 +479,24 @@
 
 # ## 부스팅
 
-# 약한 성능의 예측기 여러 개를 이용하여 보다 강한 성능의 예측기를 학습시기는 기법이
-# **부스팅**<font size='2'>boosting</font>이다.
-# 일반적으로 여러 개의 예측기를 선형적으로 훈련시키면서 약점을 보완해 나가는 알고리즘을 사용하며
-# 대표적으로 다음 두 기법이 사용된다.
+# 성능이 약한 하나의 예측기로부터 출발하여 선형적으로 차례대로 강력한 성능의 예측기를 
+# 만들어 가는 과정을 **부스팅**<font size='2'>boosting</font>이라 한다.
+# 대표적으로 다음 세 기법이 사용된다.
 # 
 # - 에이다부스트<font size='2'>AdaBoost</font>
 # - 그레이디언트 부스팅<font size='2'>Gradient Boosting</font>
+# - XGBoost
 # 
-# 두 기법은 순차적으로 이전 예측기의 결과를 바탕으로 예측 성능을 조금씩 높혀 간다.
-# 즉, 예측 모델의 편향을 줄여나간다.
-# 하지만 순차적으로 학습하기에 배깅/페이스팅 방식과는 달리 훈련을 동시에 진행할 수 없다는 단점을 갖는다.
-# 훈련 시간이 훨씬 오래 걸릴 수 있고 따라서 훈련셋 또는 특성 수가 너무 커지면
-# 적용이 어려울 수 있다.
-
-# ### 에이다부스트
-
-# **에이다부스트**<font size='2'>AdaBoost</font> 기법은 
-# 하나의 모델을 훈련 시킨 후 **잘못 예측된 샘플을 보다 강조**하면서 해당 모델을 다시 훈련시킨다.
-# 아래 그림은 모델이 제대로 학습하지 못한, 즉 과소적합했던 **샘플에 대한 가중치**를 
-# 키우는 방식으로 모델을 다시 훈련시키는 과정을 반복하는 것을 보여준다.
-
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-08.png" width="500"/></div>
-
-# **샘플 가중치**
+# 세 기법 모두 순차적으로 이전 예측기의 결과를 바탕으로 예측 성능을 조금씩 높혀 간다.
+# 하지만 순차적으로 학습하기에 배깅/페이스팅 방식과는 달리 훈련을 동시에 진행할 수 없어서
+# 훈련 시간이 훨씬 오래 걸릴 수 있는 단점을 갖는다.
 # 
-# 훈련중에 특정 샘플을 보다 강조하도록 유도하는 값을 **샘플 가중치**라 하며,
-# 모든 훈련 샘플에 대해 지정할 수 있다.
-# 지정하지 않으며 모든 훈련 샘플에 대한 가중치는 동일한 값으로 처리된다.
-# 특정 훈련 샘플에 대한 샘플 가중치를 크게 주면 해당 샘플이 그만큼 더 훈련셋에 많이 포함된 것처럼
-# 처리되어, 해당 샘플의 중요도를 키우게 된다.
-
-# :::{admonition} `fit()` 메서드와 샘플 가중치
-# :class: info
-# 
-# 사이킷런 모델의 `fit()` 메서드는 `sample_weight` 옵션인자를 이용하여
-# 각 훈련 샘플에 대한 가중치를 지정할 수 있다.
-# :::
-
-# **에이다부스트 알고리즘 작동 과정**
-# 
-# 아래 두 개의 그래프는 
-# 초승달 데이터셋에 rbf 커널을 사용하는 SVC 모델을 5번 연속 새로 훈련시킨 결과를 보여준다.
-# 새로 훈련시킬 때마다 이전에 제대로 학습하지 못한 샘플에 대한 샘플 가중치를 키워
-# 해당 샘플에 보다 집중하여 훈련하도록 유도된다.
-# 
-# 왼쪽과 오른쪽은 새 모델을 훈련하기 시작할 때 적용할 샘플 가중치의 적용 정도를 
-# 지정하는 학습률(`learnign_rate`)을 달리한 결과를 보여준다.
-# 
-# - 왼쪽 그래프: 학습률 1
-# - 오른쪽 그래프: 학습률 0.5
-# 
-# 왼쪽 그래프는 학습률을 너무 크게 잡으면 각 모델의 변화가 커질 수 있음을 보여준다.
-# 이유는 기존의 모델을 새로운 모델로 업데이트할 때 기존 모델로부터 계산된 샘플 가중치를
-# 계산된 그대로 또는 그 이상으로 각 샘플에 적용하면 그만큼 모델의 변화가 커져서
-# 하나의 좋은 모델로 수렴하지 못할 수 있기 때문이다.
-
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-09.png" width="600"/></div>
-
-# :::{admonition} 학습률
-# :class: info
-# 
-# 여기서 말하는 학습률은 {ref}`경사하강법의 학습률 <sec:gradient-descent>`과 
-# 다른 개념이지만 모델을 업데이트할 때 
-# 샘플 가중치의 적용 정도를 조절한다는 의미에서 비슷한 의미로 사용된다.
-# :::
-
-# **사이킷런의 에이다부스트 모델**
-# 
-# 사이키런에서 제공하는 에이다부스트 모델은 두 개다.
-# 
-# * 분류 모델: `AdaBoostClassifier` 
-# * 회귀 모델: `AdaBoostRegressor`
-
-# 아래 코드는 결정트리 분류 모델에 에이다부스트 기법을 적용한다.
-# 
-# * `n_estimators=30`: 30번 부스팅 반복
-# * `learning_rate=0.5`: 학습률 0.5
-# 
-# ```python
-# ada_clf = AdaBoostClassifier(
-#     DecisionTreeClassifier(max_depth=1), n_estimators=30,
-#     learning_rate=0.5, random_state=42)
-# ```
-# 
-# 초승달 데이터셋을 대상으로 훈련시킨 결과는 다음과 같다.
-
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-10.png" width="400"/></div>
+# 여기서는 부스팅 기법을 사용하면서 가장 성능이 좋은 모델을 학습시키는
+# 그레이디언트 부스팅 기법과 XGBoost 기법을 자세히 다룬다.
 
 # ### 그레이디언트 부스팅
 
-# **그레이디언트 부스팅**<font size='2'>Gradient Boosting</font> 기법 또한 
+# **그레이디언트 부스팅**<font size='2'>Gradient Boosting</font> 기법은 
 # 이전 모델의 예측에 오차가 있다면 그 오차를 보정하는 새로운 예측기를 새롭게 훈련시킨다. 
 # 에이다부스트 기법이 샘플의 가중치를 조정하는 반면에
 # 그레이디언트 부스팅 기법은 이전 예측기에 의해 생성된 **잔차**(residual error)에 대해 
@@ -650,7 +580,7 @@
 # 이용해서 훈련한다. 훈련 샘플은 매번 무작위로 선택된다.
 # 이 방식을 사용하면 훈련 속도가 빨라지며, 편향은 높아지지만, 모델의 다양성이 많아지기에 분산은 낮아진다.
 
-# ### 히스토그램 그레이디언트 부스팅
+# **히스토그램 그레이디언트 부스팅**
 
 # 대용량 데이터셋을 이용하여 훈련해야 하는 경우 
 # **히스토그램 그레이디언트 부스팅**<font size='2'>Histogram-based Gradient Boosing</font>(HGB)
@@ -699,71 +629,38 @@
 # hgb_reg.fit(housing, housing_labels)
 # ```
 
-# :::{admonition} 기타 그레이디언트 부스팅 모델
-# :class: tip
-# 
-# 다음 모델들이 제3자 라이브러리로 제공되지만 사이킷런의 모델과 유사하게 작동한다.
-# 
-# - XGBoost
-# - CatBoost
-# - LightGBM
-# 
-# 또한 
-# [텐서플로우<font size='2'>Tensorflow</font>의 랜덤 포레스트와 GBRT 관련 다양한 최신 모델](https://www.tensorflow.org/decision_forests/api_docs/python/tfdf/keras)도 있다.
-# :::
+# ### XGBoost
 
-# ## 스태킹
+# In[ ]:
 
-# 배깅방식의 응용으로 볼 수 있는 기법이다.
-# 다수결을 이용하는 대신 여러 예측값을 훈련 데이터로 활용하는 예측기를 훈련시킨다.
 
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-13.png" width="400"/></div>
 
-# **사이킷런의 `StackingRegressor` 모델 활용법**
 
-# ```python
-# estimators = [('ridge', RidgeCV()),
-#               ('lasso', LassoCV(random_state=42)),
-#               ('knr', KNeighborsRegressor(n_neighbors=20,
-#                                           metric='euclidean'))]
-# 
-# final_estimator = GradientBoostingRegressor(n_estimators=25, subsample=0.5, 
-#                         min_samples_leaf=25, max_features=1, random_state=42)
-# 
-# reg = StackingRegressor(estimators=estimators,
-#                         final_estimator=final_estimator)
-# ```
 
-# **사이킷런의 `StackingClassifier` 모델 활용법**
+# In[ ]:
 
-# ```python
-# estimators = [('rf', RandomForestClassifier(n_estimators=10, random_state=42)),
-#               ('svr', make_pipeline(StandardScaler(),
-#                                     LinearSVC(random_state=42)))]
-# 
-# clf = StackingClassifier(estimators=estimators, 
-#                          final_estimator=LogisticRegression())
-# ```
 
-# **스태킹 모델의 예측값**
-# 
-# 레이어를 차례대로 실행해서 믹서기(블렌더)가 예측한 값을 예측값으로 지정한다.
-# 훈련된 스태킹 모델의 편향과 분산이 훈련에 사용된 모델들에 비해 모두 감소한다.
 
-# **다층 스태킹**
 
-# 2층에서 여러 개의 믹서기(블렌더)를 사용하고, 
-# 그위 3층에 새로운 믹서기를 추가하는 방식으로 다층 스태킹을 훈련시킬 수 있다.
-# 다층 스태킹의 훈련 방식은 2층 스태킹의 훈련 방식을 반복하면 된다.
 
-# **예제: 3층 스태킹 모델 훈련과정**
+# In[ ]:
 
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-17.png" width="400"/></div>
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
 
 # ## 연습문제
-
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/ensemble-benchmark.png" width="80%"/></div>
-# 
-# <p><div style="text-align: center">&lt;그림 출처: <a href="https://livebook.manning.com/book/ensemble-methods-for-machine-learning/chapter-1/39">Ensemble Methods for Machine Learning</a>&gt;</div></p>
 
 # 참고: [(실습) 앙상블 학습과 랜덤 포레스트](https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_ensemble_learning_random_forests.ipynb)
