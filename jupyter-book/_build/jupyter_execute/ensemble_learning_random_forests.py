@@ -14,10 +14,63 @@
 # [(구글코랩) 앙상블 학습과 랜덤 포레스트](https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/notebooks/code_ensemble_learning_random_forests.ipynb)에서 
 # 확인할 수 있다.
 
-# **주요 내용**
+# ## 소개
 
-# (1) 편향과 분산의 트레이드오프
+# ### 앙상블 학습
+
+# **앙상블 학습**<font size='2'>ensemble learning</font>은 
+# 여러 개 모델을 훈련시킨 결과를 이용하여 기법이며,
+# 대표적으로 
+# **배깅**<font size='2'>bagging</font> 기법과
+# **부스팅**<font size='2'>boosting</font> 기법이 있다.
 # 
+# - 배깅 기법: 여러 개의 예측기를 (가능한한) 독립적으로 학습시킨 후
+#     모든 예측기들의 예측값들의 평균값을 최종 모델의 예측값으로 사용한다.
+#     분산이 보다 줄어든 모델을 구현한다.
+# 
+# - 부스팅 기법: 여러 개의 예측기를 순차적으로 훈련시킨 결과를 예측값으로 사용한다.
+#     보다 적은 편향를 갖는 모델을 구현한다.
+
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/bagging_boosting01.png" width="450"/></div>
+
+# **앙상블 학습의 중요도**
+
+# 캐글<font size='2'>Kaggle</font> 경진대회에서 가장 좋은 성능을 내는 3 개의 모델은 다음과 같이 모두 앙상블 학습 모델이다.
+# 
+# - XGBoost
+# - 랜덤 포레스트
+# - 그레이디언트 부스팅
+# 
+# 앙상블 학습 모델은 특히 엑셀의 표<font size='2'>table</font> 형식으로 저장될 수 있는
+# 정형 데이터<font size='2'>structured data</font>의 분석에 유용한다.
+# 
+# 반면에 이미지, 오디오, 동영상, 자연어 등 비정형 데이터<font size='2'>unstructured data</font>에 대한 
+# 분석은 지금은 딥러닝 기법이 훨씬 좋은 성능을 보인다.
+# 그럼에도 불구하고 앙상블 학습 기법을 딥러닝 모델에 적용하여 모델의 성능
+# 최대한 끌어 올리기도 한다.
+
+# 아래 그림은 165 개의 데이터셋에 14개의 앙상블 학습 모델을 훈련시켰을 때 
+# 각각의 모델이 다른 모델에 비해 보다 좋은 성능을 보인 횟수를 측정한
+# 결과를 요약한다. 
+# 
+# - XGBoost, Gradient Boosting, Extra Trees, Random Forest, ... 등의 순서로 성능 좋음.
+# - 예제: XGBoost와 Random Forest 모델 비교
+#     - XGBoost: 48 개의 데이터셋에서 우세
+#     - Random Forest: 22 개의 데이터셋에서 우세
+#     - 나머지 95 개의 데이터셋에 대해서는 동등    
+
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/ensemble-benchmark.png" width="100%"/></div>
+# 
+# <p><div style="text-align: center">&lt;그림 출처: <a href="https://livebook.manning.com/book/ensemble-methods-for-machine-learning/chapter-1/39">Ensemble Methods for Machine Learning</a>&gt;</div></p>
+
+# **참고 문헌**
+
+# 앙상블 학습 모델의 성능 비교에 대한 보다 자세한 내용은 아래 논문을 참고한다.
+# 
+# - R.S. Olson et al., [Data-driven Advice for Applying Machine Learning to Bioinformatics Problems](https://arxiv.org/abs/1708.05070), 2018.
+
+# ### 편향과 분산의 트레이드오프
+
 # 앙상블 학습의 핵심은 **편향**<font size='2'>bias</font>과 
 # **분산**<font size='2'>variance</font>을 최소화한 모델을 구현하는 것이다.
 # 
@@ -50,23 +103,6 @@
 # \text{평균제곱오차} \approx \text{편향}^2 + \text{분산}
 # $$
 # :::
-
-# (2) 앙상블 학습
-# 
-# **앙상블 학습**<font size='2'>ensemble learning</font>은 
-# 여러 개 모델을 훈련시킨 결과를 이용하여 기법이며,
-# 대표적으로 
-# **배깅**<font size='2'>bagging</font> 기법과
-# **부스팅**<font size='2'>boosting</font> 기법이 있다.
-# 
-# - 배깅 기법: 여러 개의 예측기를 (가능한한) 독립적으로 학습시킨 후
-#     모든 예측기들의 예측값들의 평균값을 최종 모델의 예측값으로 사용한다.
-#     분산이 보다 줄어든 모델을 구현한다.
-# 
-# - 부스팅 기법: 여러 개의 예측기를 순차적으로 훈련시킨 결과를 예측값으로 사용한다.
-#     보다 적은 편향를 갖는 모델을 구현한다.
-
-# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/bagging_boosting01.png" width="550"/></div>
 
 # ## 투표식 분류기
 
@@ -381,10 +417,10 @@
 
 # 랜덤 포레스트는 $\sqrt{n}$ 개의 특성을 무작위로 선택하지만 선택된 특성의 임곗값은 모든 특성값에 
 # 대해 확인한다.
-# 그런데 `DecisionTreeClassifier` 모델의 `splitter="random"` 하이퍼파라미터 인자를 사용하면 
-# 임곗값도 무작위로 몇 개 선택해서 그중에 최선의 임곗값을 찾는데,
-# 그런 결정트리로 구성된 앙상블 학습 모델을 
-# **엑스트라 트리**<font size='2'>Extra-Tree</font>라 한다. 
+# 그런데 `DecisionTreeClassifier` 모델의 `splitter="random"` 하이퍼파라미터를 사용하면 
+# 임곗값도 무작위로 몇 개 선택해서 그중에 최선의 임곗값을 찾는다.
+# 이렇게 작동하는 결정트리로 구성된 앙상블 학습 모델이
+# **엑스트라 트리**<font size='2'>Extra-Tree</font>이다. 
 # 참고로 엑스트라 트리는 **Extremely Randomized Tree** 의 줄임말이다.
 
 # 엑스트라 트리는 일반적인 램덤포레스트보다 속도가 훨씬 빠르고,
@@ -394,7 +430,7 @@
 # 하이퍼파라미터는 `bootstrap=False` 를  사용하는 것 이외에는 랜덤포레스트의 경우와 하나만 빼고 동일하다.
 # `bootstrap=False` 를 사용하는 이유는 특성과 임곗값을 무작위로 선택하기에 각
 # 결정트리의 훈련에 사용될 훈련 샘플들까지 중복을 허용해서 모델의 다양성을 굳이
-# 보다 더 키울 필요는 없는 것으로 이해된다.
+# 보다 더 키울 필요는 없다는 정도로 이해할 수 있다.
 
 # ```python
 # extra_clf = ExtraTreesClassifier(n_estimators=500, max_leaf_nodes=16, 
@@ -725,5 +761,9 @@
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-17.png" width="400"/></div>
 
 # ## 연습문제
+
+# <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/ensemble-benchmark.png" width="80%"/></div>
+# 
+# <p><div style="text-align: center">&lt;그림 출처: <a href="https://livebook.manning.com/book/ensemble-methods-for-machine-learning/chapter-1/39">Ensemble Methods for Machine Learning</a>&gt;</div></p>
 
 # 참고: [(실습) 앙상블 학습과 랜덤 포레스트](https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_ensemble_learning_random_forests.ipynb)
