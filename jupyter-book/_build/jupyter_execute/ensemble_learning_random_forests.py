@@ -63,8 +63,8 @@
 # - XGBoost, Gradient Boosting, Extra Trees, Random Forest, ... 등의 순서로 성능 좋음.
 # - 예제: XGBoost와 Random Forest 모델 비교
 #     - XGBoost: 48 개의 데이터셋에서 우세
-#     - Random Forest: 22 개의 데이터셋에서 우세
-#     - 나머지 95 개의 데이터셋에 대해서는 동등    
+#     - Random Forest: 16 개의 데이터셋에서 우세
+#     - 나머지 101 개의 데이터셋에 대해서는 동등    
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/ensemble-benchmark.png" width="100%"/></div>
 # 
@@ -134,6 +134,24 @@
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-04.png" width="500"/></div>
 # 
 # <p><div style="text-align: center">&lt;그림 출처: <a href="https://www.kaggle.com/fengdanye/machine-learning-6-basic-ensemble-learning">Machine Learning 6 Basic Ensemble Learning</a>&gt;</div></p>
+
+# :::{admonition} 직접 투표 대 간접 투표
+# :class: info
+# 
+# 분류기 다섯개의 예측확률이 아래와 같은 경우  직접 투표 방시과 간접 투표 방식의 결과가 다르다.
+# 
+# | 분류기 | 클래스1 예측 확률 | 클래스2 예측 확률 | 클래스3 예측 확률 |
+# | :---: | :---: | :---: | :---: |
+# | 분류기1 | 90% | 8% | 2% |
+# | 분류기2 | 40% | 7% | 53% |
+# | 분류기3 | 45% | 9% | 46% |
+# | 분류기4 | 30% | 20% | 50% |
+# | 분류기5 | 44% | 16% | 40% |
+# | 합 | 249% | 60%| 191% |
+# 
+# - 직접 투표: 클래스 3으로 예측
+# - 간접 투표: 클래스 1로 예측
+# :::
 
 # **사이킷런의 투표식 분류기: `VotingClassifier`, `VotingRegressor`**
 # 

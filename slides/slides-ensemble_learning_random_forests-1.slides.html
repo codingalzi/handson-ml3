@@ -71,25 +71,6 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .highlight .ss { color: var(--jp-mirror-editor-string-color) } /* Literal.String.Symbol */
 .highlight .il { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Integer.Long */
   </style>
-<style type="text/css">
-    
-
-<script>
-    MathJax.Hub.Config({
-        "HTML-CSS": {
-            /*preferredFont: "TeX",*/
-            /*availableFonts: ["TeX", "STIX"],*/
-            styles: {
-                scale: 100,
-                ".MathJax_Display": {
-                    "font-size": "100%",
-                }
-            }
-        }
-    });
-</script>
-    
-  </style>
 
 
 
@@ -14514,6 +14495,9 @@ a.anchor-link {
 .reveal {
   font-size: 160%;
 }
+.reveal table {
+  font-size: var(--jp-ui-font-size1);
+}
 .reveal pre {
   width: inherit;
   padding: 0.4em;
@@ -14557,6 +14541,23 @@ div.jp-OutputPrompt {
   margin: 5px 5px 0 0;
 }
 
+.reveal div.highlight {
+  margin: 0;
+}
+
+.reveal div.highlight > pre {
+  margin: 0;
+  width: 100%;
+  font-size: var(--jp-code-font-size);
+}
+
+.reveal div.jp-OutputArea-output > pre {
+  margin: 0;
+  width: 90%;
+  font-size: var(--jp-code-font-size);
+  box-shadow: none;
+}
+
 /* Reveal navigation controls */
 
 .reveal .controls .navigate-left,
@@ -14597,17 +14598,14 @@ div.jp-OutputPrompt {
 
 /* Scrollbars */
 
-::-webkit-scrollbar
-{
+::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
-::-webkit-scrollbar *
-{
-  background:transparent;
+::-webkit-scrollbar * {
+  background: transparent;
 }
-::-webkit-scrollbar-thumb
-{
+::-webkit-scrollbar-thumb {
   background: #727272 !important;
 }
 </style>
@@ -14634,12 +14632,12 @@ div.jp-OutputPrompt {
                 },
                 displayAlign: 'center',
                 CommonHTML: {
-                    linebreaks: { 
-                    automatic: true 
+                    linebreaks: {
+                    automatic: true
                     }
                 }
             });
-        
+
             MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
         }
     }
@@ -14752,7 +14750,7 @@ div.jp-OutputPrompt {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="%EB%B0%B0%EA%B9%85%EA%B3%BC-%EC%95%99%EC%83%81%EB%B8%94-%ED%95%99%EC%8A%B5">&#48176;&#44613;&#44284; &#50521;&#49345;&#48660; &#54617;&#49845;<a class="anchor-link" href="#%EB%B0%B0%EA%B9%85%EA%B3%BC-%EC%95%99%EC%83%81%EB%B8%94-%ED%95%99%EC%8A%B5">&#182;</a></h3>
+<h3 id="%EB%B0%B0%EA%B9%85%EA%B3%BC-%EB%B6%80%EC%8A%A4%ED%8C%85">&#48176;&#44613;&#44284; &#48512;&#49828;&#54021;<a class="anchor-link" href="#%EB%B0%B0%EA%B9%85%EA%B3%BC-%EB%B6%80%EC%8A%A4%ED%8C%85">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -15115,6 +15113,91 @@ div.jp-OutputPrompt {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="%EC%A7%81%EC%A0%91-%ED%88%AC%ED%91%9C-%EB%8C%80-%EA%B0%84%EC%A0%91-%ED%88%AC%ED%91%9C">&#51649;&#51217; &#53804;&#54364; &#45824; &#44036;&#51217; &#53804;&#54364;<a class="anchor-link" href="#%EC%A7%81%EC%A0%91-%ED%88%AC%ED%91%9C-%EB%8C%80-%EA%B0%84%EC%A0%91-%ED%88%AC%ED%91%9C">&#182;</a></h3>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>분류기 다섯개의 예측확률이 아래와 같은 경우  직접 투표 방시과 간접 투표 방식의 결과가 다르다.</p>
+<table>
+<thead><tr>
+<th style="text-align:center">분류기</th>
+<th style="text-align:center">클래스1 예측 확률</th>
+<th style="text-align:center">클래스2 예측 확률</th>
+<th style="text-align:center">클래스3 예측 확률</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">분류기1</td>
+<td style="text-align:center">90%</td>
+<td style="text-align:center">8%</td>
+<td style="text-align:center">2%</td>
+</tr>
+<tr>
+<td style="text-align:center">분류기2</td>
+<td style="text-align:center">40%</td>
+<td style="text-align:center">7%</td>
+<td style="text-align:center">53%</td>
+</tr>
+<tr>
+<td style="text-align:center">분류기3</td>
+<td style="text-align:center">45%</td>
+<td style="text-align:center">9%</td>
+<td style="text-align:center">46%</td>
+</tr>
+<tr>
+<td style="text-align:center">분류기4</td>
+<td style="text-align:center">30%</td>
+<td style="text-align:center">20%</td>
+<td style="text-align:center">50%</td>
+</tr>
+<tr>
+<td style="text-align:center">분류기5</td>
+<td style="text-align:center">44%</td>
+<td style="text-align:center">16%</td>
+<td style="text-align:center">40%</td>
+</tr>
+<tr>
+<td style="text-align:center">합</td>
+<td style="text-align:center">249%</td>
+<td style="text-align:center">60%</td>
+<td style="text-align:center">191%</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ul>
+<li>직접 투표: 클래스 3으로 예측</li>
+<li>간접 투표: 클래스 1로 예측</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="%ED%88%AC%ED%91%9C%EC%8B%9D-%EB%B6%84%EB%A5%98%EA%B8%B0%EC%9D%98-%ED%99%95%EB%A5%A0%EC%A0%81-%EA%B7%BC%EA%B1%B0">&#53804;&#54364;&#49885; &#48516;&#47448;&#44592;&#51032; &#54869;&#47456;&#51201; &#44540;&#44144;<a class="anchor-link" href="#%ED%88%AC%ED%91%9C%EC%8B%9D-%EB%B6%84%EB%A5%98%EA%B8%B0%EC%9D%98-%ED%99%95%EB%A5%A0%EC%A0%81-%EA%B7%BC%EA%B1%B0">&#182;</a></h3>
 </div>
 </div>
@@ -15147,11 +15230,11 @@ div.jp-OutputPrompt {
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">binom</span>
 
 <span class="k">def</span> <span class="nf">ensemble_win_proba</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+    <span class="sd">"""</span>
 <span class="sd">    p: 예측기 하나의 성능</span>
 <span class="sd">    n: 앙상블 크기, 즉 예측기 개수</span>
 <span class="sd">    반환값: 다수결을 따를 때 성공할 확률. 이항 분포의 누적분포함수 반환값.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">binom</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="mf">0.4999</span><span class="p">),</span> <span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
 </pre></div>
 
