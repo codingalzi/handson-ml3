@@ -14,12 +14,19 @@
 # [(구글코랩) 앙상블 학습과 랜덤 포레스트](https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/notebooks/code_ensemble_learning_random_forests.ipynb)에서 
 # 확인할 수 있다.
 
+# **슬라이드**
+# 
+# 본문 내용을 요약한
+# [슬라이드 1부](https://github.com/codingalzi/handson-ml3/raw/master/slides/slides-ensemble_learning_random_forests-1.pdf),
+# [슬라이드 2부](https://github.com/codingalzi/handson-ml3/raw/master/slides/slides-ensemble_learning_random_forests-2.pdf)를
+# 다운로드할 수 있다.
+
 # ## 소개
 
 # ### 앙상블 학습
 
 # **앙상블 학습**<font size='2'>ensemble learning</font>은 
-# 여러 개 모델을 훈련시킨 결과를 이용하여 기법이며,
+# 여러 개의 모델을 훈련시킨 결과를 이용하여 기법이며,
 # 대표적으로 
 # **배깅**<font size='2'>bagging</font> 기법과
 # **부스팅**<font size='2'>boosting</font> 기법이 있다.
@@ -160,13 +167,23 @@
 # 
 # def ensemble_win_proba(n, p):
 #     """
-#     p: 예측기 하나의 성능.
-#     n: 앙상블 크기, 즉 예측기 개수.
-#     반환값: 다수결을 따를 때 성공할 확률. 이항 분포의 누적 분포 함수의 반환값.
+#     p: 예측기 성능. 즉, 예측값이 맞을 확률
+#     n: 앙상블 크기, 즉 하나의 예측기를 독립적으로 사용한 횟수.
+#     반환값: 다수결을 따를 때 성공할 확률. 이항 분포의 누적분포함수의 반환값.
 #     """
 #     return 1 - binom.cdf(int(n*0.4999), n, p)
 # ```
+
+# **함수 설명**
 # 
+# `binom.cdf(int(n*0.4999), n, p)`는 `p`의 확률로 정답을 맞추는 예측기를 `n`번
+# 독립적으로 실행했을 때 `n/2`번 미만으로 정답을 맞출 확률을 계산한다. 
+# 따라서 `ensemble_win_proba(n, p)`는 과반 이상으로 정답을 맞출 확률이 된다.
+# 즉, 동일한 예측기를 `n`번 실행했을 때 과반을 넘긴 정답을 선택했을 때
+# 실제로 정답일 확률을 계산한다.
+
+# **예제**
+
 # 적중률 51% 모델 1,000개의 다수결을 따르면 74.7% 정도의 적중률 나옴.
 # 
 # ```python
@@ -269,8 +286,8 @@
 # 훈련셋으로 초승달 데이터셋<font size='2'>moons dataset</font>이 사용되었다.
 # 
 # 왼쪽 그림은 규제를 전혀 사용하지 않아 훈련셋에 과대적합된 결정트리 모델을 보여준다.
-# 반면에 오른쪽 그림은 규제를 전혀 사용하지 않은 결정트리를 이용했음에도 불구하고
-# 배깅 기법을 적용하면 보다 높은 일반화 성능의 모델을 얻을 수 있음을 잘 보여준다.
+# 반면에 오른쪽 그림은 규제 `max_samples=100`를 사용하는 결정트리 500개에
+# 배깅 기법을 적용하여 훈련시킨 보다 높은 일반화 성능의 모델의 보여준다.
 # 하나의 결정트리 모델과 비교해서 편향(오류 숫자)은 좀 더 커졌지만
 # 분산(결정 경계의 불규칙성)은 훨씬 덜하다.
 
@@ -282,9 +299,9 @@
 # 전체 훈련셋의 37% 정도를 차지한다.
 # 이런 샘플을 oob(out-of-bag) 샘플이라 부른다.
 # oob 평가는 각각의 샘플에 대해 해당 샘플을 훈련에 사용하지 않은 
-# 모델들의 예측값을 이용하여 앙상블 학습 모델의 검증하는 기법이다.
+# 모델들의 예측값을 이용하여 앙상블 학습 모델을 검증하는 기법이다.
 # 
-# 6 개의 훈련 샘플로 구성된 훈련셋 대해 5개의 결정트리 모델을 배깅기법으로
+# 6 개의 훈련 샘플로 구성된 훈련셋 대해 5개의 결정트리 모델을 배깅 기법으로
 # 적용할 때 예를 들어 아래 표와 같은 경우가 발생할 수 있다.
 # 표에 사용된 정수는 중복으로 뽑힌 횟수를 가리키며,
 # 각 샘플은 위치 인덱스로 구분한다.
@@ -346,6 +363,17 @@
 #     학습에 사용할 특성을 선택할 때 중복 허용 여부 지정. 
 #     기본값은 False. 즉, 중복 허용하지 않음.
 
+# **랜덤 패치 기법**
+# 
+# 훈련 샘플과 훈련 특성 모두를 대상으로 중복을 허용하며 임의의 샘플 수와 임의의 특성 수만큼을 샘플링해서 학습하는 기법이다.
+# 
+# ```python
+# BaggingClassifier(DecisionTreeClassifier(), n_estimators=500,
+#                   max_samples=0.75, bootstrap=True,
+#                   max_features=0.5, bootstrap_features=True,
+#                   random_state=42)
+# ```
+
 # **랜덤 서브스페이스 기법**
 # 
 # 전체 훈련 세트를 학습 대상으로 삼지만 훈련 특성은 임의의 특성 수만큼 샘플링해서 학습하는 기법이다.
@@ -356,17 +384,6 @@
 # ```python
 # BaggingClassifier(DecisionTreeClassifier(), n_estimators=500,
 #                   max_samples=1.0, bootstrap=False,
-#                   max_features=0.5, bootstrap_features=True,
-#                   random_state=42)
-# ```
-
-# **랜덤 패치 기법**
-# 
-# 훈련 샘플과 훈련 특성 모두를 대상으로 중복을 허용하며 임의의 샘플 수와 임의의 특성 수만큼을 샘플링해서 학습하는 기법이다.
-# 
-# ```python
-# BaggingClassifier(DecisionTreeClassifier(), n_estimators=500,
-#                   max_samples=0.75, bootstrap=True,
 #                   max_features=0.5, bootstrap_features=True,
 #                   random_state=42)
 # ```
@@ -631,11 +648,10 @@
 
 # ### XGBoost
 
-# In[ ]:
-
-
-
-
+# 장점
+# 
+# - 결측치 다룰 수 있음.
+#     - `missing` 하이퍼파라미터 활용
 
 # In[ ]:
 
