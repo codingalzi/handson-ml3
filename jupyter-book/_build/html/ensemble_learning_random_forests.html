@@ -1077,14 +1077,9 @@ oob 평가를 자동으로 실행한다.
 <section id="id13">
 <h3><span class="section-number">7.6.1. </span>그레이디언트 부스팅<a class="headerlink" href="#id13" title="Permalink to this headline">#</a></h3>
 <p><strong>그레이디언트 부스팅</strong><font size='2'>Gradient Boosting</font> 기법은
-이전 모델의 예측에 오차가 있다면 그 오차를 보정하는 새로운 예측기를 새롭게 훈련시킨다.
-에이다부스트 기법이 샘플의 가중치를 조정하는 반면에
-그레이디언트 부스팅 기법은 이전 예측기에 의해 생성된 <strong>잔차</strong>(residual error)에 대해
-새로운 예측기를 학습시킨다.</p>
-<div class="info admonition">
-<p class="admonition-title">잔차</p>
-<p>잔차<font size='2'>residual error</font>는 예측값과 실제값 사이의 오차를 가리킨다.</p>
-</div>
+그레이디언트 부스팅 기법은 이전 예측기에 의해 생성된 <strong>잔차</strong><font size='2'>residual error</font>에 대해
+새로운 예측기를 학습시킨다.
+잔차는 예측값과 타깃 사이의 오차를 가리킨다.</p>
 <p><strong>사이킷런 그레이디언트 부스팅 모델</strong></p>
 <p>사이키런에서 제공하는 그레이디언트 부스팅 모델은 두 개다.</p>
 <ul class="simple">
@@ -1095,8 +1090,10 @@ oob 평가를 자동으로 실행한다.
 <p><strong>예제: GBRT</strong></p>
 <p>아래 그래프는 2차 다항식 모양의 훈련 데이터셋에 결정트리 모델을 3번 연속 적용하면서
 생성한 예측값의 변화과정을 보여준다.</p>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-11.png" width="700"/></div><p>위 그래프는 아래 <code class="docutils literal notranslate"><span class="pre">GradientBoostingRegressor</span></code> 모델을 훈련할 때 실제로 학습되는 과정을 잘 보여준다.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">gbrt</span> <span class="o">=</span> <span class="n">GradientBoostingRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_estimators</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-11.png" width="700"/></div><p><code class="docutils literal notranslate"><span class="pre">GradientBoostingRegressor</span></code> 모델을 아래와 같이 설정하고 훈련하면 실제로 세 개의 결정트리가
+위 그래프처럼 학습한다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">gbrt</span> <span class="o">=</span> <span class="n">GradientBoostingRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> 
+                                 <span class="n">n_estimators</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
                                  <span class="n">learning_rate</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1105,30 +1102,38 @@ oob 평가를 자동으로 실행한다.
 <p>GBRT는 Gradient Boosted Regression Trees, 즉 ‘그레이디언트 부스팅 회귀 나무’의 줄임말이다.</p>
 </div>
 <p><strong>학습률과 축소 규제</strong></p>
-<p>학습률(<code class="docutils literal notranslate"><span class="pre">learnign_rate</span></code>)는 그레이디언트 부스팅 기법으로 훈련된 모델의
-예측값을 정할 때 훈련 과정에 사용된 각 모델의 예측값이 기여하는 정도를 결정한다.</p>
+<p>학습률(<code class="docutils literal notranslate"><span class="pre">learnign_rate</span></code>)은 그레이디언트 부스팅 기법으로 훈련할 때
+훈련에 사용된 각 결정 트리 모델의 예측값이 최종 예측값을 계산할 때 기여하는 정도를 결정한다.</p>
 <p>학습률이 0.1 등처럼 작게 잡으면 보다 많은 수의 모델을 훈련시켜야 하지만
 그만큼 일반화 성능이 좋은 모델이 훈련된다.
-이런 방식으로 훈련 과정을 규제하는 기법을 <strong>축소 규제</strong><font size='2'>shrinkage regularization</font>다.
+이런 방식으로 훈련 과정을 규제하는 기법이 <strong>축소 규제</strong><font size='2'>shrinkage regularization</font>다.
 즉, 훈련에 사용되는 각 모델의 기여도를 어느 정도로 축소할지 결정하는 방식으로
-모델의 훈련을 규제한다는 의미다.</p>
-<p>아래 두 그래프는 학습률이 1인 경우(왼쪽)와 0.05인 경우(오른쪽)의 차이를 보여준다.
-학습률이 1인 경우 모델 훈련을 세 번만 반복해서 과소적합이 발생했지만,
-학습률이 0.05인 경우 모델 훈련을 92번 반복해서 적절한 모델을 훈련시켰다.</p>
+모델의 훈련을 규제한다.</p>
+<p>아래 두 그래프는 학습률이 1인 경우(왼쪽)와 0.05인 경우(오른쪽)의 차이를 보여준다.</p>
+<ul class="simple">
+<li><p>학습률이 1인 경우(왼쪽): 모델 훈련 세 번 반복. 과소적합.</p></li>
+<li><p>학습률이 0.05인 경우(오른쪽): 모델 훈련 92번 반복. 적절한 모델 생성.</p></li>
+</ul>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-12a.png" width="700"/></div><p><strong>조기 종료</strong></p>
 <p>훈련 모델의 수를 너무 크게 잡으면 과대적합의 위험성은 커지게 된다.
 따라서 훈련되는 모델의 적절한 수를 알아내는 일이 중요하다.
 이를 위해 그리드 탐색 기법, 랜덤 탐색 기법 등을 사용할 수 있다.</p>
 <p>하지만 <code class="docutils literal notranslate"><span class="pre">GradientBoostingRegressor</span></code> 모델의 <code class="docutils literal notranslate"><span class="pre">n_iter_no_change</span></code> 하이퍼파라미터를 지정하면
 간단하게 <a class="reference internal" href="training_models.html#sec-early-stopping"><span class="std std-ref">조기 종료</span></a> 기법을 적용할 수 있다.</p>
-<p>아래 코드는 <code class="docutils literal notranslate"><span class="pre">n_iter_no_change=10</span></code> 을 사용하여 모델이 연속적으로 10번 제대로 개선되지 못하는 경우
-훈련을 종료시킨다.
-원래 500 번 연속 결정트리를 훈련시켜야 하지만 실제로는 훨씬 일찍 훈련을 종료한다.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">gbrt_best</span> <span class="o">=</span> <span class="n">GradientBoostingRegressor</span><span class="p">(</span>
-    <span class="n">max_depth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">n_estimators</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
-    <span class="n">n_iter_no_change</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<p>아래 코드는 <code class="docutils literal notranslate"><span class="pre">n_iter_no_change=10</span></code> 을 사용하여 원래 500번 연속 결정트리를 훈련시켜야 하지만
+모델이 검증셋에 대해 연속적으로 10번 제대로 개선되지 못하는 경우
+훈련을 종료시킨 다음에 그때까지의 최적의 모델을 저장한다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">GradientBoostingRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> 
+                          <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> 
+                          <span class="n">n_estimators</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+                          <span class="n">n_iter_no_change</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 </pre></div>
 </div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">n_iter_no_change=None</span></code>이 기본값이지만 위 코드에서처럼 다른 값으로 지정되면
+<code class="docutils literal notranslate"><span class="pre">validation_fraction=10</span></code>이 기본값으로 사용되어 10% 정도의 검증셋을 매 결정트리 훈련마다 사용한다.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tol=0.0001</span></code> 허용오차 이하로 성능이 변하지 않은 경우 좋아지지 않는다고 판단한다.</p></li>
+</ul>
 <p><strong>확률적 그레이디언트 부스팅</strong></p>
 <p><code class="docutils literal notranslate"><span class="pre">subsample</span></code> 하이퍼파라리미터를 이용하여 각 결정트리가 훈련에 사용할 훈련 샘플의 비율을 지정한다.
 예를 들어 <code class="docutils literal notranslate"><span class="pre">subsample=0.25</span></code> 로 설정하면 각 결정트리 모델은 전체 훈련셋의 25% 정도만
@@ -1138,16 +1143,17 @@ oob 평가를 자동으로 실행한다.
 <p>대용량 데이터셋을 이용하여 훈련해야 하는 경우
 <strong>히스토그램 그레이디언트 부스팅</strong><font size='2'>Histogram-based Gradient Boosing</font>(HGB)
 기법이 추천된다.
-이 기법은 훈련 샘플의 특성값을 최대 255개의 구간으로 분류한다.
-즉, 샘플의 특성이 최대 255개의 값 중에 하나라는 의미다.
-원래는 훈련 샘플 수만큼 다른 특성값이 존재한다.</p>
+이 기법은 훈련 샘플의 특성값을 <code class="docutils literal notranslate"><span class="pre">max_bins</span></code> 개의 구간으로 분류한다.
+즉, 샘플의 특성이 최대 <code class="docutils literal notranslate"><span class="pre">max_bins</span></code> 개의 값 중에 하나라는 의미다.
+<code class="docutils literal notranslate"><span class="pre">max_bins=255</span></code>가 기본값이며 255보다 큰 값의 정수를 지정할 수 없다.</p>
 <p>이렇게 하면 결정트리의 CART 알고리즘이 적용될 때 최적의 임곗값을 결정할 때
 확인해야 하는 경우의 수가 매우 작아지기에 수 백배 이상 빠르게 학습된다.
 또한 특성값이 모두 정수이기에 메모리도 보다 효율적으로 사용한다.
 실제로 하나의 결정트리 모델의 훈련 시간 복잡도는 원래 <span class="math notranslate nohighlight">\(O(n\times m \times \log(m))\)</span> 이지만
-히스토그램 방식을 사용하면 <span class="math notranslate nohighlight">\(O(n\times m)\)</span> 로 줄어든다.
-이유는 특성값을 정렬할 필요가 없어지기 때문이다.
-물론 모델의 정확도는 떨어진다. 하지만 경우에 따라 과대적합을 방지하는 규제 역할도 수행한다.</p>
+히스토그램 방식을 사용하면 <span class="math notranslate nohighlight">\(O(b \times m)\)</span> 로 줄어든다.
+여기서 <code class="docutils literal notranslate"><span class="pre">b</span></code>는 실제로 사용된 구간의 수를 가리킨다.
+물론 모델의 정확도는 떨어지며, 경우에 따라 과대적합을 방지하는 규제 역할도 수행한다.
+하지만 과소적합을 유발할 수도 있다.</p>
 <p><strong>사이킷런의 히스토그램 그레이디언트 부스팅 모델</strong></p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">HistGradientBoostingRegressor</span></code>: 회귀 모델</p></li>

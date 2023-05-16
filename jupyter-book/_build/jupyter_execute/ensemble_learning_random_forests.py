@@ -532,16 +532,9 @@
 # ### 그레이디언트 부스팅
 
 # **그레이디언트 부스팅**<font size='2'>Gradient Boosting</font> 기법은 
-# 이전 모델의 예측에 오차가 있다면 그 오차를 보정하는 새로운 예측기를 새롭게 훈련시킨다. 
-# 에이다부스트 기법이 샘플의 가중치를 조정하는 반면에
-# 그레이디언트 부스팅 기법은 이전 예측기에 의해 생성된 **잔차**(residual error)에 대해 
+# 그레이디언트 부스팅 기법은 이전 예측기에 의해 생성된 **잔차**<font size='2'>residual error</font>에 대해 
 # 새로운 예측기를 학습시킨다. 
-
-# :::{admonition} 잔차
-# :class: info
-# 
-# 잔차<font size='2'>residual error</font>는 예측값과 실제값 사이의 오차를 가리킨다.
-# :::
+# 잔차는 예측값과 타깃 사이의 오차를 가리킨다.
 
 # **사이킷런 그레이디언트 부스팅 모델**
 # 
@@ -559,10 +552,12 @@
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-11.png" width="700"/></div>
 
-# 위 그래프는 아래 `GradientBoostingRegressor` 모델을 훈련할 때 실제로 학습되는 과정을 잘 보여준다.
+# `GradientBoostingRegressor` 모델을 아래와 같이 설정하고 훈련하면 실제로 세 개의 결정트리가
+# 위 그래프처럼 학습한다.
 
 # ```python
-# gbrt = GradientBoostingRegressor(max_depth=2, n_estimators=3,
+# gbrt = GradientBoostingRegressor(max_depth=2, 
+#                                  n_estimators=3,
 #                                  learning_rate=1.0, random_state=42)
 # ```
 
@@ -574,18 +569,18 @@
 
 # **학습률과 축소 규제**
 
-# 학습률(`learnign_rate`)는 그레이디언트 부스팅 기법으로 훈련된 모델의 
-# 예측값을 정할 때 훈련 과정에 사용된 각 모델의 예측값이 기여하는 정도를 결정한다.
+# 학습률(`learnign_rate`)은 그레이디언트 부스팅 기법으로 훈련할 때
+# 훈련에 사용된 각 결정 트리 모델의 예측값이 최종 예측값을 계산할 때 기여하는 정도를 결정한다.
 # 
 # 학습률이 0.1 등처럼 작게 잡으면 보다 많은 수의 모델을 훈련시켜야 하지만 
 # 그만큼 일반화 성능이 좋은 모델이 훈련된다.
-# 이런 방식으로 훈련 과정을 규제하는 기법을 **축소 규제**<font size='2'>shrinkage regularization</font>다. 
+# 이런 방식으로 훈련 과정을 규제하는 기법이 **축소 규제**<font size='2'>shrinkage regularization</font>다. 
 # 즉, 훈련에 사용되는 각 모델의 기여도를 어느 정도로 축소할지 결정하는 방식으로
-# 모델의 훈련을 규제한다는 의미다. 
+# 모델의 훈련을 규제한다.
 # 
 # 아래 두 그래프는 학습률이 1인 경우(왼쪽)와 0.05인 경우(오른쪽)의 차이를 보여준다.
-# 학습률이 1인 경우 모델 훈련을 세 번만 반복해서 과소적합이 발생했지만, 
-# 학습률이 0.05인 경우 모델 훈련을 92번 반복해서 적절한 모델을 훈련시켰다.
+# - 학습률이 1인 경우(왼쪽): 모델 훈련 세 번 반복. 과소적합.
+# - 학습률이 0.05인 경우(오른쪽): 모델 훈련 92번 반복. 적절한 모델 생성.
 
 # <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-12a.png" width="700"/></div>
 
@@ -598,15 +593,20 @@
 # 하지만 `GradientBoostingRegressor` 모델의 `n_iter_no_change` 하이퍼파라미터를 지정하면
 # 간단하게 {ref}`조기 종료 <sec:early-stopping>` 기법을 적용할 수 있다.
 # 
-# 아래 코드는 `n_iter_no_change=10` 을 사용하여 모델이 연속적으로 10번 제대로 개선되지 못하는 경우
-# 훈련을 종료시킨다.
-# 원래 500 번 연속 결정트리를 훈련시켜야 하지만 실제로는 훨씬 일찍 훈련을 종료한다. 
+# 아래 코드는 `n_iter_no_change=10` 을 사용하여 원래 500번 연속 결정트리를 훈련시켜야 하지만
+# 모델이 검증셋에 대해 연속적으로 10번 제대로 개선되지 못하는 경우
+# 훈련을 종료시킨 다음에 그때까지의 최적의 모델을 저장한다.
 # 
 # ```python
-# gbrt_best = GradientBoostingRegressor(
-#     max_depth=2, learning_rate=0.05, n_estimators=500,
-#     n_iter_no_change=10, random_state=42)
+# GradientBoostingRegressor(max_depth=2, 
+#                           learning_rate=0.05, 
+#                           n_estimators=500,
+#                           n_iter_no_change=10, random_state=42)
 # ```
+# 
+# - `n_iter_no_change=None`이 기본값이지만 위 코드에서처럼 다른 값으로 지정되면 
+#     `validation_fraction=10`이 기본값으로 사용되어 10% 정도의 검증셋을 매 결정트리 훈련마다 사용한다.
+# - `tol=0.0001` 허용오차 이하로 성능이 변하지 않은 경우 좋아지지 않는다고 판단한다.
 
 # **확률적 그레이디언트 부스팅**
 # 
@@ -620,17 +620,18 @@
 # 대용량 데이터셋을 이용하여 훈련해야 하는 경우 
 # **히스토그램 그레이디언트 부스팅**<font size='2'>Histogram-based Gradient Boosing</font>(HGB)
 # 기법이 추천된다.
-# 이 기법은 훈련 샘플의 특성값을 최대 255개의 구간으로 분류한다.
-# 즉, 샘플의 특성이 최대 255개의 값 중에 하나라는 의미다.
-# 원래는 훈련 샘플 수만큼 다른 특성값이 존재한다.
+# 이 기법은 훈련 샘플의 특성값을 `max_bins` 개의 구간으로 분류한다.
+# 즉, 샘플의 특성이 최대 `max_bins` 개의 값 중에 하나라는 의미다.
+# `max_bins=255`가 기본값이며 255보다 큰 값의 정수를 지정할 수 없다.
 # 
 # 이렇게 하면 결정트리의 CART 알고리즘이 적용될 때 최적의 임곗값을 결정할 때
 # 확인해야 하는 경우의 수가 매우 작아지기에 수 백배 이상 빠르게 학습된다.
 # 또한 특성값이 모두 정수이기에 메모리도 보다 효율적으로 사용한다. 
 # 실제로 하나의 결정트리 모델의 훈련 시간 복잡도는 원래 $O(n\times m \times \log(m))$ 이지만
-# 히스토그램 방식을 사용하면 $O(n\times m)$ 로 줄어든다.
-# 이유는 특성값을 정렬할 필요가 없어지기 때문이다.
-# 물론 모델의 정확도는 떨어진다. 하지만 경우에 따라 과대적합을 방지하는 규제 역할도 수행한다.
+# 히스토그램 방식을 사용하면 $O(b \times m)$ 로 줄어든다.
+# 여기서 `b`는 실제로 사용된 구간의 수를 가리킨다.
+# 물론 모델의 정확도는 떨어지며, 경우에 따라 과대적합을 방지하는 규제 역할도 수행한다.
+# 하지만 과소적합을 유발할 수도 있다.
 
 # **사이킷런의 히스토그램 그레이디언트 부스팅 모델**
 # 
