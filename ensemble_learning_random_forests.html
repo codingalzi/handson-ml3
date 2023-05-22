@@ -1029,14 +1029,35 @@ oob 평가를 자동으로 실행한다.
 </section>
 <section id="xgboost">
 <h3><span class="section-number">7.6.2. </span>XGBoost<a class="headerlink" href="#xgboost" title="Permalink to this heading">#</a></h3>
-<p>장점</p>
+<p>XGBoost는 Extreme Gradient Boosting의 줄임말이며, 표현 그대로 그레이디언트 부스팅 기법을 속도와 성능 면에서
+극단적으로 최적화한 모델이다.
+그레이디언트 부스팅 모델과의 차이점은 다음과 같다.</p>
 <ul class="simple">
-<li><p>결측치 다룰 수 있음.</p>
-<ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">missing</span></code> 하이퍼파라미터 활용</p></li>
+<li><p>결정트리 학습에 사용되는 노드 분할을 통해 낮춰야 하는 비용함수가 다르다.</p></li>
+<li><p>불순도 대신  mse, logloss 등 모델 훈련의 목적에 맞는 손실 함수 사용한다.
+무엇보다도 결정트리의 노드 분할에 필요한 시간이 획기적으로 줄어든다.</p></li>
+<li><p>이와 더불어 생성되는 결정트리의 복잡도도 비용함수에 추가된다.
+따라서 최종적으로 생성되는 모델에 사용되는 결정트리의 복잡도를 가능한한 낮추도록 유도된다.</p></li>
 </ul>
-</li>
-</ul>
+<p>보다 자세한 내용은 XGBoost의 공식 문서인
+<a class="reference external" href="https://xgboost.readthedocs.io/en/stable/tutorials/model.html">Introduction to Boosted Trees</a>를 참고한다.</p>
+<p>XGBoost 모델은 또한 훈련 속도가 빠르고 대용량 데이터셋을 이용한 훈련에도 용이하다.
+이와 더불어 결측치를 포함한 데이터셋으로도 훈련이 가능하며, GPU를 활용할 수도 있다.</p>
+<p><strong>XGBoost 사용법</strong></p>
+<p>XGBoost 모델은 사이킷런 라이브러리에 포함되지 않아서 pip 파이썬 패키지 관리자를 추가로 설치해야 한다.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install xgboost
+</pre></div>
+</div>
+<p>회귀 모델인 <code class="docutils literal notranslate"><span class="pre">XGBRegressor</span></code>와 분류 모델인 <code class="docutils literal notranslate"><span class="pre">XGBClassifier</span></code> 를 지원하며
+사용법은 그레이디언트 부스팅과 유사하다.
+아래 코드는 <code class="docutils literal notranslate"><span class="pre">XGBRegressor</span></code> 모델을 훈련시키는 코드이다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">xgboost</span>
+<span class="n">xgb_reg</span> <span class="o">=</span> <span class="n">xgboost</span><span class="o">.</span><span class="n">XGBRegressor</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">xgb_reg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span>
+            <span class="n">eval_set</span><span class="o">=</span><span class="p">[(</span><span class="n">X_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">)],</span> 
+            <span class="n">early_stopping_rounds</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
 </section>
 </section>
 <section id="id14">
