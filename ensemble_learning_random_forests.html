@@ -67,7 +67,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'ensemble_learning_random_forests';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="8. 차원축소" href="dimensionality_reduction.html" />
+    <link rel="next" title="8. 차원 축소" href="dimensionality_reduction.html" />
     <link rel="prev" title="6. 결정트리" href="decision_trees.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -153,7 +153,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="svm.html">5. 서포트 벡터 머신</a></li>
 <li class="toctree-l1"><a class="reference internal" href="decision_trees.html">6. 결정트리</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">7. 앙상블 학습과 랜덤 포레스트</a></li>
-<li class="toctree-l1"><a class="reference internal" href="dimensionality_reduction.html">8. 차원축소</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dimensionality_reduction.html">8. 차원 축소</a></li>
 <li class="toctree-l1"><a class="reference internal" href="unsupervised_learning.html">9. 비지도 학습</a></li>
 </ul>
 
@@ -600,7 +600,6 @@ document.write(`
     <span class="k">return</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">binom</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="mf">0.4999</span><span class="p">),</span> <span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
 <p><strong>함수 설명</strong></p>
 <p><code class="docutils literal notranslate"><span class="pre">binom.cdf(int(n*0.4999),</span> <span class="pre">n,</span> <span class="pre">p)</span></code>는 <code class="docutils literal notranslate"><span class="pre">p</span></code>의 확률로 정답을 맞추는 예측기를 <code class="docutils literal notranslate"><span class="pre">n</span></code>번
 독립적으로 실행했을 때 <code class="docutils literal notranslate"><span class="pre">n/2</span></code>번 미만으로 정답을 맞출 확률을 계산한다.
@@ -628,8 +627,6 @@ document.write(`
 경우에 따라 오히려 성능이 하락할 수 있다.
 모델들의 독립성을 높이기 위해 매우 다른 알고리즘을 사용하는 다른 종류의
 모델을 사용할 수도 있다.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
 </div>
 </section>
 <section id="id6">
@@ -1111,7 +1108,7 @@ oob 평가를 자동으로 실행한다.
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">8. </span>차원축소</p>
+        <p class="prev-next-title"><span class="section-number">8. </span>차원 축소</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
