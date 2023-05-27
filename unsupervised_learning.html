@@ -450,22 +450,30 @@ document.write(`
 <li><p>DBSCAN</p></li>
 <li><p>가우시안 혼합</p></li>
 </ul>
+<p><strong>슬라이드</strong></p>
+<p>본문 내용을 요약한
+<a class="reference external" href="https://github.com/codingalzi/handson-ml3/raw/master/slides/slides-unsupervised_learning-1.pdf">슬라이드 1부</a>와
+<a class="reference external" href="https://github.com/codingalzi/handson-ml3/raw/master/slides/slides-unsupervised_learning-2.pdf">슬라이드 2부</a>를
+다운로드할 수 있다.</p>
 <section id="id2">
 <h2><span class="section-number">9.1. </span>군집화<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
 <p><strong>군집과 군집화</strong></p>
 <p><strong>군집</strong><font size='2'>cluster</font>은 유사한 대상들의 모음을 가리킨다.
-예를 들어, 산이나 공원에서 볼 수 있는 이름은 모르지만 동일 품종의 꽃으로 이루어진 군집 등을
-생각하면 된다.
-<strong>군집화</strong><font size='2'>clustering</font>는 대상들을 나누어 군집을
-형성하는 것을 말한다.</p>
+예를 들어, 산이나 공원에서 볼 수 있는 이름 모르는 동일 품종의 꽃으로 이루어진 군집을 생각할 수 있다.
+<strong>군집화</strong><font size='2'>clustering</font>는 뭔지 모를 어떤 기준으로 대상을 여러 개의 군집으로
+나누는 과정을 가리킨다.</p>
 <p><strong>분류 대 군집화</strong></p>
 <p>각 샘플에 하나의 그룹을 할당한다는 점에서 유사하다.
-하지만 군집화는 군집이 미리 레이블(타깃)로 지정되지 않고 예측기 스스로 적절한 군집을
-찾아내야 한다는 점에서 다르다.</p>
+분류는 미리 지정된 레이블(타깃)을 최대한 정확하게 예측하는 과정을 의미하지만
+군집화는 미리 지정된 레이블(타깃)이 없음에도 불구하고 예측기 스스로 찾아낸 특정 기준을 이용해서
+여러 개의 군집으로 나누는 과정을 가리킨다.</p>
 <p>아래 왼쪽 그림은 붓꽃의 꽃잎 길이와 너비를 특성으로 사용해서 품종을 분류한 결과를
 보여주지만, 왼쪽 그림은 군집화의 결과를 보여준다.
 분류는 세 개의 품종을 매우 잘 분류하지만 군집은 세토사 군집과 나머지 군집으로 구분할 뿐이다.</p>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-01.png" width="600"/></div><p>반면에 <strong>가우시안 혼합 모델</strong><font size='2'>Gaussian Mixture Model</font>(GMM)을
+<ul class="simple">
+<li><p>수정 사항: 오른쪽 그림도 세모와 동그라미 사용해서 구분하고 아래 그림처럼 범례도 추가할 것.</p></li>
+</ul>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-01.png" width="100%"/></div><p>반면에 <strong>가우시안 혼합 모델</strong><font size='2'>Gaussian Mixture Model</font>(GMM)을
 꽃잎의 길이와 너비 뿐만 아니라
 꽃받침의 길이와 너비 특성까지 적용항 붓꽃 데이터셋에 대해 적용하면
 세 개의 군집을 매우 정확하게 생성한다.</p>
