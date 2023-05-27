@@ -67,7 +67,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'unsupervised_learning';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="8. 차원축소" href="dimensionality_reduction.html" />
+    <link rel="prev" title="8. 차원 축소" href="dimensionality_reduction.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -152,7 +152,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="svm.html">5. 서포트 벡터 머신</a></li>
 <li class="toctree-l1"><a class="reference internal" href="decision_trees.html">6. 결정트리</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ensemble_learning_random_forests.html">7. 앙상블 학습과 랜덤 포레스트</a></li>
-<li class="toctree-l1"><a class="reference internal" href="dimensionality_reduction.html">8. 차원축소</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dimensionality_reduction.html">8. 차원 축소</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">9. 비지도 학습</a></li>
 </ul>
 
@@ -394,6 +394,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">9.4.4. 이상치 탐지와 특이치 탐지를 위한 다른 알고리즘</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">9.5. 연습문제</a></li>
 </ul>
             </nav>
         </div>
@@ -477,6 +478,9 @@ document.write(`
 </section>
 <section id="k">
 <h2><span class="section-number">9.2. </span>K-평균<a class="headerlink" href="#k" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>참고: <a class="reference external" href="https://codingalzi.github.io/handson-ml3/end2end_ml_project.html#id18">2장</a>에서 사용된 <code class="docutils literal notranslate"><span class="pre">ClusterSimilarity</span></code> 클래스 다시 활용할 것.</p></li>
+</ul>
 <p>각 군집의 중심인 센트로이드<font size='2'>centroid</font>을 찾고
 각 샘플에 대해 가장 가까운 센트로이드를 중심으로 군집을 형성하는 기법이다.</p>
 <p><strong>예제: 사이킷런의 <code class="docutils literal notranslate"><span class="pre">KMeans</span></code> 모델</strong></p>
@@ -898,6 +902,13 @@ KMeans 모델의 기본 알고리즘으로 사용된다.</p>
 </ul>
 </section>
 </section>
+<section id="id12">
+<h2><span class="section-number">9.5. </span>연습문제<a class="headerlink" href="#id12" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="https://codingalzi.github.io/handson-ml3/end2end_ml_project.html#id18">2장</a>에서 정의한
+<code class="docutils literal notranslate"><span class="pre">ClusterSimilarity</span></code>에 사용된 <code class="docutils literal notranslate"><span class="pre">KMeans</span></code> 모델의 <code class="docutils literal notranslate"><span class="pre">n_cluster</span></code> 인자의 최적값을 확인하라.</p></li>
+</ol>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -937,7 +948,7 @@ KMeans 모델의 기본 알고리즘으로 사용된다.</p>
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">8. </span>차원축소</p>
+        <p class="prev-next-title"><span class="section-number">8. </span>차원 축소</p>
       </div>
     </a>
 </div></div>
@@ -974,6 +985,7 @@ KMeans 모델의 기본 알고리즘으로 사용된다.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">9.4.4. 이상치 탐지와 특이치 탐지를 위한 다른 알고리즘</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">9.5. 연습문제</a></li>
 </ul>
   </nav></div>
 
