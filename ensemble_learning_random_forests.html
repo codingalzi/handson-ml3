@@ -3,11 +3,11 @@
 <!DOCTYPE html>
 
 
-<html lang="en" >
+<html >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
     <title>7. 앙상블 학습과 랜덤 포레스트 &#8212; 핸즈온 머신러닝(3판)</title>
   
@@ -45,7 +45,6 @@
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
@@ -70,7 +69,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="next" title="8. 차원 축소" href="dimensionality_reduction.html" />
     <link rel="prev" title="6. 결정트리" href="decision_trees.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:language" content="None"/>
   </head>
   
   
@@ -242,7 +241,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       <li><a href="https://github.com/codingalzi/handson-ml3" target="_blank"
    class="btn btn-sm btn-source-repository-button dropdown-item"
-   title="Source repository"
+   title="소스 저장소"
    data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
@@ -259,7 +258,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       <li><a href="https://github.com/codingalzi/handson-ml3/issues/new?title=Issue%20on%20page%20%2Fensemble_learning_random_forests.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
-   title="Open an issue"
+   title="이슈 열기"
    data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
@@ -280,7 +279,7 @@ const thebe_selector_output = ".output, .cell_output"
 
 
 <div class="dropdown dropdown-download-buttons">
-  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="이 페이지 다운로드">
     <i class="fas fa-download"></i>
   </button>
   <ul class="dropdown-menu">
@@ -289,7 +288,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       <li><a href="_sources/ensemble_learning_random_forests.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
-   title="Download source file"
+   title="소스 파일 다운로드"
    data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
@@ -307,7 +306,7 @@ const thebe_selector_output = ".output, .cell_output"
       <li>
 <button onclick="window.print()"
   class="btn btn-sm btn-download-pdf-button dropdown-item"
-  title="Print to PDF"
+  title="PDF로 인쇄"
   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
@@ -327,7 +326,7 @@ const thebe_selector_output = ".output, .cell_output"
 
 <button onclick="toggleFullScreen()"
   class="btn btn-sm btn-fullscreen-button"
-  title="Fullscreen mode"
+  title="전체 화면으로보기"
   data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
   
@@ -375,33 +374,28 @@ document.write(`
         <div id="jb-print-toc">
             
             <div>
-                <h2> Contents </h2>
+                <h2> 내용 </h2>
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">7.1. 소개</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">7.1.1. 앙상블 학습</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">7.1.2. 편향과 분산의 트레이드오프</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">7.1. 투표식 분류기</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">7.2. 배깅과 페이스팅</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">7.2.1. 사이킷런의 배깅과 페이스팅</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oob">7.2.2. oob 평가</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">7.2. 투표식 분류기</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">7.3. 배깅과 페이스팅</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">7.3.1. 사이킷런의 배깅과 페이스팅</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oob">7.3.2. oob 평가</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">7.3. 랜덤 패치와 랜덤 서브스페이스</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">7.4. 랜덤 포레스트</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">7.4.1. 엑스트라 트리</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">7.4.2. 특성 중요도</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">7.4. 랜덤 패치와 랜덤 서브스페이스</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">7.5. 랜덤 포레스트</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">7.5.1. 엑스트라 트리</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">7.5.2. 특성 중요도</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">7.5. 부스팅</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">7.5.1. 그레이디언트 부스팅</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#xgboost">7.5.2. XGBoost</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">7.6. 부스팅</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">7.6.1. 그레이디언트 부스팅</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#xgboost">7.6.2. XGBoost</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">7.7. 연습문제</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">7.6. 연습문제</a></li>
 </ul>
             </nav>
         </div>
@@ -414,7 +408,7 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="ch-ensemble">
-<span id="id1"></span><h1><span class="section-number">7. </span>앙상블 학습과 랜덤 포레스트<a class="headerlink" href="#ch-ensemble" title="Permalink to this heading">#</a></h1>
+<span id="id1"></span><h1><span class="section-number">7. </span>앙상블 학습과 랜덤 포레스트<a class="headerlink" href="#ch-ensemble" title="Permalink to this headline">#</a></h1>
 <p><strong>감사의 글</strong></p>
 <p>자료를 공개한 저자 오렐리앙 제롱과 강의자료를 지원한 한빛아카데미에게 진심어린 감사를 전합니다.</p>
 <p><strong>소스코드</strong></p>
@@ -426,10 +420,7 @@ document.write(`
 <a class="reference external" href="https://github.com/codingalzi/handson-ml3/raw/master/slides/slides-ensemble_learning_random_forests-1.pdf">슬라이드 1부</a>,
 <a class="reference external" href="https://github.com/codingalzi/handson-ml3/raw/master/slides/slides-ensemble_learning_random_forests-2.pdf">슬라이드 2부</a>를
 다운로드할 수 있다.</p>
-<section id="id2">
-<h2><span class="section-number">7.1. </span>소개<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
-<section id="id3">
-<h3><span class="section-number">7.1.1. </span>앙상블 학습<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
+<p><strong>소개</strong></p>
 <p><strong>앙상블 학습</strong><font size='2'>ensemble learning</font>은
 여러 개의 모델을 훈련시킨 결과를 이용하여 기법이며,
 대표적으로
@@ -442,8 +433,7 @@ document.write(`
 <li><p>부스팅 기법: 여러 개의 예측기를 순차적으로 훈련시킨 결과를 예측값으로 사용한다.
 보다 적은 편향를 갖는 모델을 구현한다.</p></li>
 </ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/bagging_boosting01.png" width="450"/></div><p><strong>앙상블 학습의 중요도</strong></p>
-<p>캐글<font size='2'>Kaggle</font> 경진대회에서 가장 좋은 성능을 내는 3 개의 모델은 다음과 같이 모두 앙상블 학습 모델이다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/bagging_boosting01.png" width="450"/></div><p>캐글<font size='2'>Kaggle</font> 경진대회에서 가장 좋은 성능을 내는 3 개의 모델은 다음과 같이 모두 앙상블 학습 모델이다.</p>
 <ul class="simple">
 <li><p>XGBoost</p></li>
 <li><p>랜덤 포레스트</p></li>
@@ -468,15 +458,12 @@ document.write(`
 </ul>
 </li>
 </ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/ensemble-benchmark.png" width="100%"/></div>
-<p><div style="text-align: center">&lt;그림 출처: <a href="https://livebook.manning.com/book/ensemble-methods-for-machine-learning/chapter-1/39">Ensemble Methods for Machine Learning</a>&gt;</div></p><p><strong>참고 문헌</strong></p>
-<p>앙상블 학습 모델의 성능 비교에 대한 보다 자세한 내용은 아래 논문을 참고한다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/ensemble-benchmark.png" width="80%"/></div>
+<p><div style="text-align: center">&lt;그림 출처: <a href="https://livebook.manning.com/book/ensemble-methods-for-machine-learning/chapter-1/39">Ensemble Methods for Machine Learning</a>&gt;</div></p><p>앙상블 학습 모델의 성능 비교에 대한 보다 자세한 내용은 아래 논문을 참고한다.</p>
 <ul class="simple">
 <li><p>R.S. Olson 외, <a class="reference external" href="https://arxiv.org/abs/1708.05070">Data-driven Advice for Applying Machine Learning to Bioinformatics Problems</a>, 2018.</p></li>
 </ul>
-</section>
-<section id="id4">
-<h3><span class="section-number">7.1.2. </span>편향과 분산의 트레이드오프<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
+<p><strong>편향과 분산의 트레이드오프</strong></p>
 <p>앙상블 학습의 핵심은 <strong>편향</strong><font size='2'>bias</font>과
 <strong>분산</strong><font size='2'>variance</font>을 최소화한 모델을 구현하는 것이다.</p>
 <ul class="simple">
@@ -503,10 +490,8 @@ document.write(`
 \text{평균제곱오차} \approx \text{편향}^2 + \text{분산}
 \]</div>
 </div>
-</section>
-</section>
-<section id="id5">
-<h2><span class="section-number">7.2. </span>투표식 분류기<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h2>
+<section id="id2">
+<h2><span class="section-number">7.1. </span>투표식 분류기<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
 <p>동일한 훈련 세트에 대해 여러 종류의 분류 모델을 이용한 앙상블 학습을 진행한 후에
 직접 또는 간접 투표를 통해 예측값을 결정한다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-01.png" width="500"/></div><p><strong>직접 투표</strong></p>
@@ -520,12 +505,12 @@ document.write(`
 <p><div style="text-align: center">&lt;그림 출처: <a href="https://www.kaggle.com/fengdanye/machine-learning-6-basic-ensemble-learning">Machine Learning 6 Basic Ensemble Learning</a>&gt;</div></p><div class="info admonition">
 <p class="admonition-title">직접 투표 대 간접 투표</p>
 <p>분류기 다섯개의 예측확률이 아래와 같은 경우  직접 투표 방시과 간접 투표 방식의 결과가 다르다.</p>
-<table class="table">
+<table class="colwidths-auto table">
 <thead>
-<tr class="row-odd"><th class="head text-center"><p>분류기</p></th>
-<th class="head text-center"><p>클래스1 예측 확률</p></th>
-<th class="head text-center"><p>클래스2 예측 확률</p></th>
-<th class="head text-center"><p>클래스3 예측 확률</p></th>
+<tr class="row-odd"><th class="text-center head"><p>분류기</p></th>
+<th class="text-center head"><p>클래스1 예측 확률</p></th>
+<th class="text-center head"><p>클래스2 예측 확률</p></th>
+<th class="text-center head"><p>클래스3 예측 확률</p></th>
 </tr>
 </thead>
 <tbody>
@@ -592,7 +577,7 @@ document.write(`
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">binom</span>
 
 <span class="k">def</span> <span class="nf">ensemble_win_proba</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    p: 예측기 성능. 즉, 예측값이 맞을 확률</span>
 <span class="sd">    n: 앙상블 크기, 즉 하나의 예측기를 독립적으로 사용한 횟수.</span>
 <span class="sd">    반환값: 다수결을 따를 때 성공할 확률. 이항 분포의 누적분포함수의 반환값.</span>
@@ -629,8 +614,8 @@ document.write(`
 모델을 사용할 수도 있다.</p>
 </div>
 </section>
-<section id="id6">
-<h2><span class="section-number">7.3. </span>배깅과 페이스팅<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h2>
+<section id="id3">
+<h2><span class="section-number">7.2. </span>배깅과 페이스팅<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h2>
 <p>배깅 기법은 하나의 훈련 세트의 다양한 부분집합을 이용하여
 동일한 모델 여러 개를 학습시키는 방식이다.
 부분집합을 임의로 선택할 때의 중복 허용 여부에 따라 앙상블 학습 방식이 달라진다.</p>
@@ -662,8 +647,8 @@ document.write(`
 따라서 보다 선호된다.
 보다 자세한 설명은
 <a class="reference external" href="https://scikit-learn.org/stable/auto_examples/ensemble/plot_bias_variance.html#sphx-glr-auto-examples-ensemble-plot-bias-variance-py">Single estimator versus bagging: bias-variance decomposition</a> 을 참고한다.</p>
-<section id="id7">
-<h3><span class="section-number">7.3.1. </span>사이킷런의 배깅과 페이스팅<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h3>
+<section id="id4">
+<h3><span class="section-number">7.2.1. </span>사이킷런의 배깅과 페이스팅<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h3>
 <p>사이킷런은 분류 모델인 <code class="docutils literal notranslate"><span class="pre">BaggingClassifier</span></code>와 회귀 모델인 <code class="docutils literal notranslate"><span class="pre">BaggingRegressor</span></code>을 지원한다.
 아래 코드에서 사용된 분류 모델의 하이퍼파라미터는 다음과 같다.</p>
 <ul class="simple">
@@ -695,7 +680,7 @@ document.write(`
 분산(결정 경계의 불규칙성)은 훨씬 덜하다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/homl07-06.png" width="600"/></div></section>
 <section id="oob">
-<h3><span class="section-number">7.3.2. </span>oob 평가<a class="headerlink" href="#oob" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">7.2.2. </span>oob 평가<a class="headerlink" href="#oob" title="Permalink to this headline">#</a></h3>
 <p>배깅 기법을 적용하면 하나의 모델 훈련에 선택되지 않은 훈련 샘플이 평균적으로
 전체 훈련셋의 37% 정도를 차지한다.
 이런 샘플을 oob(out-of-bag) 샘플이라 부른다.
@@ -713,11 +698,11 @@ oob 평가는 각각의 샘플에 대해 해당 샘플을 훈련에 사용하지
 적용할 때 예를 들어 아래 표와 같은 경우가 발생할 수 있다.
 표에 사용된 정수는 중복으로 뽑힌 횟수를 가리키며,
 각 샘플은 위치 인덱스로 구분한다.</p>
-<table class="table">
+<table class="colwidths-auto table">
 <thead>
-<tr class="row-odd"><th class="head text-center"><p></p></th>
-<th class="head text-center"><p>훈련 샘플(총 6개)</p></th>
-<th class="head text-center"><p>OOB 평가 샘플</p></th>
+<tr class="row-odd"><th class="text-center head"><p></p></th>
+<th class="text-center head"><p>훈련 샘플(총 6개)</p></th>
+<th class="text-center head"><p>OOB 평가 샘플</p></th>
 </tr>
 </thead>
 <tbody>
@@ -773,8 +758,8 @@ oob 평가를 자동으로 실행한다.
 <p>예를 들어, 첫째 훈련 샘플에 대한 oob 평가는 양성일 확률을 67.6% 정도로 평가한다.</p>
 </section>
 </section>
-<section id="id8">
-<h2><span class="section-number">7.4. </span>랜덤 패치와 랜덤 서브스페이스<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h2>
+<section id="id5">
+<h2><span class="section-number">7.3. </span>랜덤 패치와 랜덤 서브스페이스<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h2>
 <p>이미지 데이터의 경우처럼 특성이 매우 많은 경우 특성에 대해 중복선택 옵션을 지정할 수 있다.
 이를 통해 더 다양한 예측기를 만들게 되어 앙상블 학습 모델의 편향이 커지지만 분산은 보다 낮아진다.</p>
 <ul class="simple">
@@ -810,8 +795,8 @@ oob 평가를 자동으로 실행한다.
 <p>아래 세 개의 그림이 배깅, 랜덤 서브스페이스, 랜덤 패치 등 세 기법에 사용되는 훈련셋의 차이를 보여준다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch07/patches_vs_subspaces.png" width="100%"/></div>
 <p><div style="text-align: center">&lt;그림 출처: <a href="https://livebook.manning.com/concept/machine-learning/random-patch">Ensemble Methods for Machine Learning</a>&gt;</div></p></section>
-<section id="id9">
-<h2><span class="section-number">7.5. </span>랜덤 포레스트<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h2>
+<section id="id6">
+<h2><span class="section-number">7.4. </span>랜덤 포레스트<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h2>
 <p><strong>랜덤 포레스트</strong><font size='2'>random forest</font>는
 배깅 기법을 결정트리의 앙상블에 특화시킨 모델이다.
 배깅 기법 대신에 페이스팅 기법을 옵션으로 사용할 수도 있으며,
@@ -841,8 +826,8 @@ oob 평가를 자동으로 실행한다.
                   <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 </pre></div>
 </div>
-<section id="id10">
-<h3><span class="section-number">7.5.1. </span>엑스트라 트리<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h3>
+<section id="id7">
+<h3><span class="section-number">7.4.1. </span>엑스트라 트리<a class="headerlink" href="#id7" title="Permalink to this headline">#</a></h3>
 <p>랜덤 포레스트는 <span class="math notranslate nohighlight">\(\sqrt{n}\)</span> 개의 특성을 무작위로 선택하지만 선택된 특성의 임곗값은 모든 특성값에
 대해 확인한다.
 그런데 <code class="docutils literal notranslate"><span class="pre">DecisionTreeClassifier</span></code> 모델의 <code class="docutils literal notranslate"><span class="pre">splitter=&quot;random&quot;</span></code> 하이퍼파라미터를 사용하면
@@ -863,8 +848,8 @@ oob 평가를 자동으로 실행한다.
 </div>
 <p>랜덤 포레스트와 엑스트르 트리 두 모델의 성능은 기본적으로 비슷한 것으로 알려졌다.</p>
 </section>
-<section id="id11">
-<h3><span class="section-number">7.5.2. </span>특성 중요도<a class="headerlink" href="#id11" title="Permalink to this heading">#</a></h3>
+<section id="id8">
+<h3><span class="section-number">7.4.2. </span>특성 중요도<a class="headerlink" href="#id8" title="Permalink to this headline">#</a></h3>
 <p>어떤 특성의 중요도는 해당 특성을 사용한 마디가 평균적으로 불순도를 얼마나 감소시키는지를 측정한 값이다.
 즉, 불순도를 많이 줄이면 그만큼 중요도가 커진다.</p>
 <p><code class="docutils literal notranslate"><span class="pre">RandomForestClassifier</span></code> 모델은 훈련할 때마다 자동으로 모든 특성에 대해
@@ -878,10 +863,10 @@ oob 평가를 자동으로 실행한다.
 <p>붓꽃 데이터셋의 경우 특성별 상대적 중요도는 다음과 같이 꽃잎의 길이와 너비가 매우 중요하며,
 꽃받침의 길이와 너비 정보는 상대적으로 훨씬 덜 중요하다.
 지금까지 붓꽃 데이터셋을 사용할 때 꽃잎의 길이와 너비 두 개의 특성만을 사용한 이유가 여기에 있다.</p>
-<table class="table">
+<table class="colwidths-auto table">
 <thead>
-<tr class="row-odd"><th class="head text-left"><p>특성</p></th>
-<th class="head text-right"><p>상대적 중요도</p></th>
+<tr class="row-odd"><th class="text-left head"><p>특성</p></th>
+<th class="text-right head"><p>상대적 중요도</p></th>
 </tr>
 </thead>
 <tbody>
@@ -909,8 +894,8 @@ oob 평가를 자동으로 실행한다.
 </section>
 </div></section>
 </section>
-<section id="id12">
-<h2><span class="section-number">7.6. </span>부스팅<a class="headerlink" href="#id12" title="Permalink to this heading">#</a></h2>
+<section id="id9">
+<h2><span class="section-number">7.5. </span>부스팅<a class="headerlink" href="#id9" title="Permalink to this headline">#</a></h2>
 <p>성능이 약한 하나의 예측기로부터 출발하여 선형적으로 차례대로 강력한 성능의 예측기를
 만들어 가는 과정을 <strong>부스팅</strong><font size='2'>boosting</font>이라 한다.
 대표적으로 다음 세 기법이 사용된다.</p>
@@ -924,8 +909,8 @@ oob 평가를 자동으로 실행한다.
 훈련 시간이 훨씬 오래 걸릴 수 있는 단점을 갖는다.</p>
 <p>여기서는 부스팅 기법을 사용하면서 가장 성능이 좋은 모델을 학습시키는
 그레이디언트 부스팅 기법과 XGBoost 기법을 자세히 다룬다.</p>
-<section id="id13">
-<h3><span class="section-number">7.6.1. </span>그레이디언트 부스팅<a class="headerlink" href="#id13" title="Permalink to this heading">#</a></h3>
+<section id="id10">
+<h3><span class="section-number">7.5.1. </span>그레이디언트 부스팅<a class="headerlink" href="#id10" title="Permalink to this headline">#</a></h3>
 <p><strong>그레이디언트 부스팅</strong><font size='2'>Gradient Boosting</font> 기법은
 그레이디언트 부스팅 기법은 이전 예측기에 의해 생성된 <strong>잔차</strong><font size='2'>residual error</font>에 대해
 새로운 예측기를 학습시킨다.
@@ -1033,7 +1018,7 @@ oob 평가를 자동으로 실행한다.
 </div>
 </section>
 <section id="xgboost">
-<h3><span class="section-number">7.6.2. </span>XGBoost<a class="headerlink" href="#xgboost" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">7.5.2. </span>XGBoost<a class="headerlink" href="#xgboost" title="Permalink to this headline">#</a></h3>
 <p>XGBoost는 Extreme Gradient Boosting의 줄임말이며, 표현 그대로 그레이디언트 부스팅 기법을 속도와 성능 면에서
 극단적으로 최적화한 모델이다.
 그레이디언트 부스팅 모델과의 차이점은 다음과 같다.</p>
@@ -1050,7 +1035,7 @@ oob 평가를 자동으로 실행한다.
 이와 더불어 결측치를 포함한 데이터셋으로도 훈련이 가능하며, GPU를 활용할 수도 있다.</p>
 <p><strong>XGBoost 사용법</strong></p>
 <p>XGBoost 모델은 사이킷런 라이브러리에 포함되지 않아서 pip 파이썬 패키지 관리자를 추가로 설치해야 한다.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install xgboost
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>xgboost
 </pre></div>
 </div>
 <p>회귀 모델인 <code class="docutils literal notranslate"><span class="pre">XGBRegressor</span></code>와 분류 모델인 <code class="docutils literal notranslate"><span class="pre">XGBClassifier</span></code> 를 지원하며
@@ -1065,8 +1050,8 @@ oob 평가를 자동으로 실행한다.
 </div>
 </section>
 </section>
-<section id="id14">
-<h2><span class="section-number">7.7. </span>연습문제<a class="headerlink" href="#id14" title="Permalink to this heading">#</a></h2>
+<section id="id11">
+<h2><span class="section-number">7.6. </span>연습문제<a class="headerlink" href="#id11" title="Permalink to this headline">#</a></h2>
 <p>참고: <a class="reference external" href="https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_ensemble_learning_random_forests.ipynb">(실습) 앙상블 학습과 랜덤 포레스트</a></p>
 </section>
 </section>
@@ -1134,33 +1119,28 @@ oob 평가를 자동으로 실행한다.
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
+    <i class="fa-solid fa-list"></i> 내용
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">7.1. 소개</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">7.1.1. 앙상블 학습</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">7.1.2. 편향과 분산의 트레이드오프</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">7.1. 투표식 분류기</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">7.2. 배깅과 페이스팅</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">7.2.1. 사이킷런의 배깅과 페이스팅</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oob">7.2.2. oob 평가</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">7.2. 투표식 분류기</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">7.3. 배깅과 페이스팅</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">7.3.1. 사이킷런의 배깅과 페이스팅</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oob">7.3.2. oob 평가</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">7.3. 랜덤 패치와 랜덤 서브스페이스</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">7.4. 랜덤 포레스트</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">7.4.1. 엑스트라 트리</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">7.4.2. 특성 중요도</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">7.4. 랜덤 패치와 랜덤 서브스페이스</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">7.5. 랜덤 포레스트</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">7.5.1. 엑스트라 트리</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">7.5.2. 특성 중요도</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">7.5. 부스팅</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">7.5.1. 그레이디언트 부스팅</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#xgboost">7.5.2. XGBoost</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">7.6. 부스팅</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">7.6.1. 그레이디언트 부스팅</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#xgboost">7.6.2. XGBoost</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">7.7. 연습문제</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">7.6. 연습문제</a></li>
 </ul>
   </nav></div>
 
@@ -1175,7 +1155,7 @@ oob 평가를 자동으로 실행한다.
   <div class="footer-item">
     
 <p class="component-author">
-By 코딩알지
+으로 코딩알지
 </p>
 
   </div>
