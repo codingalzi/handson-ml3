@@ -3,11 +3,11 @@
 <!DOCTYPE html>
 
 
-<html lang="en" >
+<html >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
     <title>8. 차원 축소 &#8212; 핸즈온 머신러닝(3판)</title>
   
@@ -45,7 +45,6 @@
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
@@ -70,7 +69,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="next" title="9. 비지도 학습" href="unsupervised_learning.html" />
     <link rel="prev" title="7. 앙상블 학습과 랜덤 포레스트" href="ensemble_learning_random_forests.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:language" content="None"/>
   </head>
   
   
@@ -242,7 +241,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       <li><a href="https://github.com/codingalzi/handson-ml3" target="_blank"
    class="btn btn-sm btn-source-repository-button dropdown-item"
-   title="Source repository"
+   title="소스 저장소"
    data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
@@ -259,7 +258,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       <li><a href="https://github.com/codingalzi/handson-ml3/issues/new?title=Issue%20on%20page%20%2Fdimensionality_reduction.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
-   title="Open an issue"
+   title="이슈 열기"
    data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
@@ -280,7 +279,7 @@ const thebe_selector_output = ".output, .cell_output"
 
 
 <div class="dropdown dropdown-download-buttons">
-  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="이 페이지 다운로드">
     <i class="fas fa-download"></i>
   </button>
   <ul class="dropdown-menu">
@@ -289,7 +288,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       <li><a href="_sources/dimensionality_reduction.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
-   title="Download source file"
+   title="소스 파일 다운로드"
    data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
@@ -307,7 +306,7 @@ const thebe_selector_output = ".output, .cell_output"
       <li>
 <button onclick="window.print()"
   class="btn btn-sm btn-download-pdf-button dropdown-item"
-  title="Print to PDF"
+  title="PDF로 인쇄"
   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
@@ -327,7 +326,7 @@ const thebe_selector_output = ".output, .cell_output"
 
 <button onclick="toggleFullScreen()"
   class="btn btn-sm btn-fullscreen-button"
-  title="Fullscreen mode"
+  title="전체 화면으로보기"
   data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
   
@@ -375,7 +374,7 @@ document.write(`
         <div id="jb-print-toc">
             
             <div>
-                <h2> Contents </h2>
+                <h2> 내용 </h2>
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
@@ -410,7 +409,7 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="ch-dimensionalityreduction">
-<span id="id1"></span><h1><span class="section-number">8. </span>차원 축소<a class="headerlink" href="#ch-dimensionalityreduction" title="Permalink to this heading">#</a></h1>
+<span id="id1"></span><h1><span class="section-number">8. </span>차원 축소<a class="headerlink" href="#ch-dimensionalityreduction" title="Permalink to this headline">#</a></h1>
 <p><strong>감사의 글</strong></p>
 <p>자료를 공개한 저자 오렐리앙 제롱과 강의자료를 지원한 한빛아카데미에게 진심어린 감사를 전합니다.</p>
 <p><strong>소스코드</strong></p>
@@ -436,7 +435,7 @@ document.write(`
 사영 기법 알고리즘으로 PCA(주성분 분석)와 임의 사영<font size='2'>Random Projection</font>을,
 다양체 학습 알고리즘으로 LLE(국소적 선형 임베딩)를 소개한다.</p>
 <section id="id2">
-<h2><span class="section-number">8.1. </span>차원의 저주<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">8.1. </span>차원의 저주<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
 <p>벡터의 차원에 해당하는 특성 수가 아주 많은 경우, 훈련 샘플 사이의 거리가 매우 커서 과대적합 위험도가 커진다.
 이유는 새로운 샘플이 주어졌을 때 해당 샘플과 훈련셋에 포함된 샘플 사이의
 거리가 일반적으로 매우 멀어서 기존 값들을 이용한 추정이 매우 어렵기 때문이다.
@@ -445,12 +444,12 @@ document.write(`
 어런 현상을 <strong>차원의 저주</strong>라 부른다.</p>
 </section>
 <section id="id3">
-<h2><span class="section-number">8.2. </span>차원 축소 기법<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">8.2. </span>차원 축소 기법<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h2>
 <p>훈련 샘플이 고차원 공간의 일부인 저차원 부분공간에 가깝게 놓여 있는 경우가 일반적으로 발생한다.
 이런 경우 고차원의 데이터셋을 저차원의 데이터셋으로 변환시켜도 정보의 손실이 크지 않다.
 이것이 차원 축소 기법의 핵심이며 크게 사영 기법과 다양체 학습 기법으로 나뉜다.</p>
 <section id="id4">
-<h3><span class="section-number">8.2.1. </span>사영 기법<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">8.2.1. </span>사영 기법<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h3>
 <p><span class="math notranslate nohighlight">\(n\)</span>차원 데이터셋을 차원이 낮은 <span class="math notranslate nohighlight">\(d\)</span> 차원 데이터셋으로
 <strong>사영</strong><font size='2'>projection</font>하는 기법이다.
 아래 그림은
@@ -474,7 +473,7 @@ document.write(`
     </tr>
 </table></section>
 <section id="id5">
-<h3><span class="section-number">8.2.2. </span>다양체 학습 기법<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">8.2.2. </span>다양체 학습 기법<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h3>
 <p><strong>다양체</strong></p>
 <p>고차원 공간에서 저차원 공간을 접거나 비틀어서 생성할 수 있는 공간을
 <strong>다양체</strong><font size='2'>manifold</font>라 부른다.
@@ -496,7 +495,7 @@ document.write(`
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch08/homl08-08.png" width="600"/></div></section>
 </section>
 <section id="pca">
-<h2><span class="section-number">8.3. </span>PCA(주성분 분석)<a class="headerlink" href="#pca" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">8.3. </span>PCA(주성분 분석)<a class="headerlink" href="#pca" title="Permalink to this headline">#</a></h2>
 <p>훈련 데이터셋을 특정 초평면<font size='2'>hyperplane</font>에 사영하는 기법이다.
 초평면은 <strong>주성분 분석</strong><font size='2'>principal component analysis</font>(PCA)을
 이용하여 결정한다.
@@ -518,12 +517,12 @@ a_1 x_1 + a_2 x_2 + \cdots + a_n x_n + c = 0
 </ul>
 </div>
 <section id="id6">
-<h3><span class="section-number">8.3.1. </span>분산 보존<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">8.3.1. </span>분산 보존<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h3>
 <p>저차원으로 사영할 때 데이터셋의 분산이 최대한 유지되도록 축을 지정해야 한다.
 아래 그림에서 <span class="math notranslate nohighlight">\(c_1\)</span> 벡터가 위치한 실선 축으로 사영하는 경우가 분산을 최대한 보존한다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch08/homl08-09.png" width="500"/></div></section>
 <section id="svd">
-<h3><span class="section-number">8.3.2. </span>주성분과 특잇값 분해(SVD)<a class="headerlink" href="#svd" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">8.3.2. </span>주성분과 특잇값 분해(SVD)<a class="headerlink" href="#svd" title="Permalink to this headline">#</a></h3>
 <p>주성분은 다음 과정으로 차례대로 찾아야 한다.</p>
 <ul class="simple">
 <li><p>첫째 주성분: 분산을 최대한 보존하는 축</p></li>
@@ -567,7 +566,7 @@ a_1 x_1 + a_2 x_2 + \cdots + a_n x_n + c = 0
     </tr>
 </table></section>
 <section id="id7">
-<h3><span class="section-number">8.3.3. </span>적절한 차원<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">8.3.3. </span>적절한 차원<a class="headerlink" href="#id7" title="Permalink to this headline">#</a></h3>
 <p>설명된 분산 비율의 합이 95% 정도 되도록 하는 주성분들로 구성되도록
 차원을 정하는 것이 좋다.
 반면에 데이터 시각화가 목적인 경우엔 2개 또는 3개의 주성분만을 사용해야 한다.</p>
@@ -602,7 +601,7 @@ a_1 x_1 + a_2 x_2 + \cdots + a_n x_n + c = 0
 </div>
 </section>
 <section id="id8">
-<h3><span class="section-number">8.3.4. </span>PCA 활용 예제: 파일 압축<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">8.3.4. </span>PCA 활용 예제: 파일 압축<a class="headerlink" href="#id8" title="Permalink to this headline">#</a></h3>
 <p>파일 압축 용도로 PCA를 활용할 수 있다.
 MNIST 데이터셋의 경우 784차원을 154 차원으로 줄이면
 데이터셋의 크기가 원래의 20% 수준에 불과해져서
@@ -612,7 +611,7 @@ MNIST 데이터셋의 경우 784차원을 154 차원으로 줄이면
 왼쪽이 원본이고 오른쪽이 압축된 데이터를 재구성한 결과다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch08/homl08-11.png" width="400"/></div></section>
 <section id="id9">
-<h3><span class="section-number">8.3.5. </span>랜덤 PCA<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">8.3.5. </span>랜덤 PCA<a class="headerlink" href="#id9" title="Permalink to this headline">#</a></h3>
 <p>주성분 선택을 위해 사용되는 SVD 알고리즘을 확률적으로 작동하도록 만드는 기법이다.
 보다 빠르게 지정된 개수의 주성분에 대한 근삿값을 찾아준다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rnd_pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span> <span class="o">=</span> <span class="mi">154</span><span class="p">,</span> <span class="n">svd_solver</span><span class="o">=</span><span class="s2">&quot;randomized&quot;</span><span class="p">)</span>
@@ -621,7 +620,7 @@ MNIST 데이터셋의 경우 784차원을 154 차원으로 줄이면
 </div>
 </section>
 <section id="id10">
-<h3><span class="section-number">8.3.6. </span>점진적 PCA<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">8.3.6. </span>점진적 PCA<a class="headerlink" href="#id10" title="Permalink to this headline">#</a></h3>
 <p>훈련세트를 미니배치로 나눈 후 IPCA(Incremental PCA)에 하나씩 주입하는 모델이며,
 온라인 학습에 활용될 수 있다.
 단, 훈련에 <code class="docutils literal notranslate"><span class="pre">partial_fit()</span></code> 을 사용한다.</p>
@@ -655,7 +654,7 @@ MNIST 데이터셋의 경우 784차원을 154 차원으로 줄이면
 </section>
 </section>
 <section id="id11">
-<h2><span class="section-number">8.4. </span>임의 사영<a class="headerlink" href="#id11" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">8.4. </span>임의 사영<a class="headerlink" href="#id11" title="Permalink to this headline">#</a></h2>
 <p><strong>존슨-린덴슈트라우스 정리</strong></p>
 <p>존슨-린덴슈트라우스<font size='2'>Johnson-Lindenstrauss</font> 정리는
 고차원의 데이터를 적절한 크기의 저차원으로 임의로 사영하더라도
@@ -691,7 +690,7 @@ d \ge \frac{4 \log(m)}{\frac{1}{2} \varepsilon^2 - \frac{1}{3} \varepsilon^3}
 </div>
 </section>
 <section id="lle">
-<h2><span class="section-number">8.5. </span>LLE(국소적 선형 임베딩)<a class="headerlink" href="#lle" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">8.5. </span>LLE(국소적 선형 임베딩)<a class="headerlink" href="#lle" title="Permalink to this headline">#</a></h2>
 <p>대표적인 다양체 학습 기법이다.
 롤케이크 데이터셋의 경우처럼 전체적으론 비선형인 다양체이지만 국소적으로는 데이터가 선형적으로 연관되어
 있다는 가설을 이용한다.
@@ -710,7 +709,7 @@ d \ge \frac{4 \log(m)}{\frac{1}{2} \varepsilon^2 - \frac{1}{3} \varepsilon^3}
     </tr>
 </table></section>
 <section id="id12">
-<h2><span class="section-number">8.6. </span>부록: 기타 차원 축소 모델<a class="headerlink" href="#id12" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">8.6. </span>부록: 기타 차원 축소 모델<a class="headerlink" href="#id12" title="Permalink to this headline">#</a></h2>
 <p>사이킷런에서 제공하는 기타 차원 축소 모델은 다음과 같다.</p>
 <ul class="simple">
 <li><p>다차원 스케일링<font size='2'>Multidimensional Scaling</font>(MDS)</p></li>
@@ -723,7 +722,7 @@ d \ge \frac{4 \log(m)}{\frac{1}{2} \varepsilon^2 - \frac{1}{3} \varepsilon^3}
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch08/homl08-15.png" width="700"/></div><p>아래 그림은 롤케이크를 다양한 커널을 이용하여 커널 PCA로 2차원 데이터셋으로 변환한 결과를 보여준다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch08/homl08-16.png" width="730"/></div></section>
 <section id="id13">
-<h2><span class="section-number">8.7. </span>연습문제<a class="headerlink" href="#id13" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">8.7. </span>연습문제<a class="headerlink" href="#id13" title="Permalink to this headline">#</a></h2>
 <p>참고: <a class="reference external" href="https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_dimensionality_reduction.ipynb">(실습) 차원 축소</a></p>
 </section>
 </section>
@@ -791,7 +790,7 @@ d \ge \frac{4 \log(m)}{\frac{1}{2} \varepsilon^2 - \frac{1}{3} \varepsilon^3}
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
+    <i class="fa-solid fa-list"></i> 내용
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
@@ -828,7 +827,7 @@ d \ge \frac{4 \log(m)}{\frac{1}{2} \varepsilon^2 - \frac{1}{3} \varepsilon^3}
   <div class="footer-item">
     
 <p class="component-author">
-By 코딩알지
+으로 코딩알지
 </p>
 
   </div>
