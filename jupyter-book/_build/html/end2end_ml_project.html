@@ -1028,28 +1028,13 @@ document.write(`
         <span class="k">return</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;Cluster </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> similarity&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">)]</span>
 </pre></div>
 </div>
-<p>위 코드를 지금 이해할 필요는 없다.
-다만 <code class="docutils literal notranslate"><span class="pre">BaseEstimator</span></code>와 <code class="docutils literal notranslate"><span class="pre">TransformerMixin</span></code> 두 개의 클래스를 변환기를 선언할 때
-상속하도록 해야한다는 점은 기억한다.</p>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/custom-transformer.png" width="350"></div><div class="info admonition">
-<p class="admonition-title"><code class="docutils literal notranslate"><span class="pre">KMeans</span></code> 모델과 <code class="docutils literal notranslate"><span class="pre">rbf_kernel()</span></code> 함수</p>
-<p>위 클래스는 <code class="docutils literal notranslate"><span class="pre">KMeans</span></code> 모델과 <code class="docutils literal notranslate"><span class="pre">rbf_kernel()</span></code> 함수를 활용한다.</p>
-<p><strong><code class="docutils literal notranslate"><span class="pre">KMeans</span></code> 모델</strong></p>
-<p><a class="reference internal" href="unsupervised_learning.html#ch-unsupervisedlearning"><span class="std std-numref">9장</span></a> 비지도 학습에서 다룰 군집 알고리즘 모델이다.</p>
-<p><strong><code class="docutils literal notranslate"><span class="pre">rbf_kernel()</span></code> 함수</strong></p>
-<p>다음 가우스 RBF 함수를 활용한다.
-<span class="math notranslate nohighlight">\(\mathbf{p}\)</span> 는 특정 지점을 가리키며,
-<span class="math notranslate nohighlight">\(\mathbf{p}\)</span> 에서 조금만 멀어져도 함숫값이 급격히 작아진다.</p>
-<div class="math notranslate nohighlight">
-\[
-\phi(\mathbf{x},\mathbf{p}) = \exp \left( -\gamma \|\mathbf{x} - \mathbf{p} \|^2 \right)
-\]</div>
-<p>예를 들어 아래 이미지는 중간 주택 년수가 35년에서 멀어질 수록
-함숫값이 급격히 0에 가까워지는 것을 보여준다.
-하이퍼파라미터인 <strong>감마</strong>(<span class="math notranslate nohighlight">\(\gamma\)</span>, gamma)는 얼마나 빠르게 감소하도록 하는가를 결정한다.
-즉, 감마 값이 클 수록 보다 좁은 종 모양의 그래프가 그려진다.</p>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-rbf_kernel.jpg" width="400"></div>
-</div>
+<p><a class="reference internal" href="unsupervised_learning.html#ch-unsupervisedlearning"><span class="std std-numref">9장</span></a> 비지도 학습에서 위 코드를 자세히 설명한다.
+여기서는 다음 두 가지만을 기억한다.</p>
+<p>첫째, 변환기를 선언할 때 <code class="docutils literal notranslate"><span class="pre">BaseEstimator</span></code>와 <code class="docutils literal notranslate"><span class="pre">TransformerMixin</span></code> 두 개의 클래스를 상속해야 한다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/custom-transformer.png" width="350"></div>
+<br>
+<p>둘째, <code class="docutils literal notranslate"><span class="pre">get_feature_names_out()</span></code> 메서드를 재정의해서 변환기에 의해 새로 생성된 특성들의 이름을
+지정하는 방식을 설정해야 한다.</p>
 <div class="info admonition">
 <p class="admonition-title">하이퍼파라미터와 변환기 클래스 상속</p>
 <p>사이킷런 클래스의 <strong>하이퍼파라미터</strong><font size='2'>hyperparameter</font>는
