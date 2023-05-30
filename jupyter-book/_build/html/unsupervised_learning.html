@@ -3,11 +3,11 @@
 <!DOCTYPE html>
 
 
-<html >
+<html lang="en" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>9. 비지도 학습 &#8212; 핸즈온 머신러닝(3판)</title>
   
@@ -45,6 +45,7 @@
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
@@ -68,7 +69,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="8. 차원 축소" href="dimensionality_reduction.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="docsearch:language" content="None"/>
+  <meta name="docsearch:language" content="en"/>
   </head>
   
   
@@ -240,7 +241,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       <li><a href="https://github.com/codingalzi/handson-ml3" target="_blank"
    class="btn btn-sm btn-source-repository-button dropdown-item"
-   title="소스 저장소"
+   title="Source repository"
    data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
@@ -257,7 +258,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       <li><a href="https://github.com/codingalzi/handson-ml3/issues/new?title=Issue%20on%20page%20%2Funsupervised_learning.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
-   title="이슈 열기"
+   title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
@@ -278,7 +279,7 @@ const thebe_selector_output = ".output, .cell_output"
 
 
 <div class="dropdown dropdown-download-buttons">
-  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="이 페이지 다운로드">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
     <i class="fas fa-download"></i>
   </button>
   <ul class="dropdown-menu">
@@ -287,7 +288,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       <li><a href="_sources/unsupervised_learning.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
-   title="소스 파일 다운로드"
+   title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
@@ -305,7 +306,7 @@ const thebe_selector_output = ".output, .cell_output"
       <li>
 <button onclick="window.print()"
   class="btn btn-sm btn-download-pdf-button dropdown-item"
-  title="PDF로 인쇄"
+  title="Print to PDF"
   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
@@ -325,7 +326,7 @@ const thebe_selector_output = ".output, .cell_output"
 
 <button onclick="toggleFullScreen()"
   class="btn btn-sm btn-fullscreen-button"
-  title="전체 화면으로보기"
+  title="Fullscreen mode"
   data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
   
@@ -373,14 +374,14 @@ document.write(`
         <div id="jb-print-toc">
             
             <div>
-                <h2> 내용 </h2>
+                <h2> Contents </h2>
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">9.1. 분류 대 군집화</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#k">9.2. k-평균</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">9.2.1. k-평균 알고리즘</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">9.2.2. 센트로이드 초기화</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">9.2.2. 센트로이드 초기화 문제 해결 방안</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">9.2.3. 최적의 군집수</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">9.2.4. k-평균의 한계</a></li>
 </ul>
@@ -388,18 +389,17 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">9.3. 군집화 활용</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">9.3.1. 이미지 분할</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">9.3.2. 준지도 학습</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">9.3.3. 레이블 전파</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dbscan">9.4. DBSCAN</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">9.5. 가우스 혼합 모델</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">9.5.1. 가우스 혼합 모델 활용: 이상치 탐지</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">9.5.2. 가우션 혼합모델 군집수 지정</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">9.5.3. 베이즈 가우스 혼합 모델</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">9.5.4. 이상치 탐지와 특이치 탐지를 위한 다른 알고리즘</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">9.5. 가우스 혼합 모델</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">9.5.1. 가우스 혼합 모델 활용: 이상치 탐지</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">9.5.2. 가우션 혼합모델 군집수 지정</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">9.5.3. 베이즈 가우스 혼합 모델</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">9.5.4. 이상치 탐지와 특이치 탐지를 위한 다른 알고리즘</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">9.6. 연습문제</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">9.6. 연습문제</a></li>
 </ul>
             </nav>
         </div>
@@ -412,7 +412,7 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="ch-unsupervisedlearning">
-<span id="id1"></span><h1><span class="section-number">9. </span>비지도 학습<a class="headerlink" href="#ch-unsupervisedlearning" title="Permalink to this headline">#</a></h1>
+<span id="id1"></span><h1><span class="section-number">9. </span>비지도 학습<a class="headerlink" href="#ch-unsupervisedlearning" title="Permalink to this heading">#</a></h1>
 <p><strong>감사의 글</strong></p>
 <p>자료를 공개한 저자 오렐리앙 제롱과 강의자료를 지원한 한빛아카데미에게 진심어린 감사를 전합니다.</p>
 <p><strong>소스코드</strong></p>
@@ -442,23 +442,23 @@ document.write(`
 </li>
 <li><p>이상치 탐지: 정상 테이터와 이상치 구분</p>
 <ul>
-<li><p>생산라인에서 결함제품 탐지</p></li>
-<li><p>새로운 트렌드 찾기</p></li>
+<li><p>생산라인에서 결함 제품 탐지</p></li>
+<li><p>시계열데이터에서 새로운 트렌드 찾기</p></li>
 </ul>
 </li>
 <li><p>데이터 밀도 추정: 데이터셋의 확률 밀도를 추정</p>
 <ul>
-<li><p>이상치 분류</p></li>
+<li><p>이상치 분류: 밀도가 낮은 지역에 위치한 샘플</p></li>
 <li><p>데이터 시각화</p></li>
 <li><p>데이터 분석</p></li>
 </ul>
 </li>
 </ul>
 <section id="id2">
-<h2><span class="section-number">9.1. </span>분류 대 군집화<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">9.1. </span>분류 대 군집화<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
 <p><strong>군집</strong><font size='2'>cluster</font>은 유사한 대상들의 모음을 가리킨다.
 예를 들어, 산이나 공원에서 볼 수 있는 이름 모르는 동일 품종의 꽃으로 이루어진 군집을 생각할 수 있다.
-<strong>군집화</strong><font size='2'>clustering</font>는 뭔지 모를 어떤 기준으로 대상을 여러 개의 군집으로
+<strong>군집화</strong><font size='2'>clustering</font>는 특정 기준으로 대상을 여러 개의 군집으로
 나누는 과정을 가리킨다.</p>
 <p>분류와 군집화는 각 샘플에 하나의 그룹을 할당한다는 점에서 유사하다.
 하지만 분류는 미리 지정된 레이블(타깃)을 최대한 정확하게 예측하는 과정을 의미하는 반면에,
@@ -475,7 +475,7 @@ document.write(`
 <p><strong>예제: 붓꽃 데이터셋 군집화</strong></p>
 <p>아래 왼쪽 그림은 붓꽃의 꽃잎 길이와 너비를 특성으로 사용해서 품종을 분류한 결과를
 보여주지만, 오른쪽 그림은 어떤 품종인지는 모르지만
-노랑 동그라미아 검정 별표로 구분된 두 품종의 군집을 보여준다.
+노랑 동그라미아 검정 별표로 구분된 두 개의 군집을 보여준다.
 분류는 세 개의 품종을 매우 잘 분류하지만 군집은 세토사 군집과 나머지 군집으로 구분할 뿐이다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-01.png" width="80%"/></div><p>반면에 <strong>가우스 혼합 모델</strong><font size='2'>Gaussian Mixture Model</font>(GMM)을
 꽃잎의 길이와 너비 뿐만 아니라
@@ -483,18 +483,17 @@ document.write(`
 세 개의 군집을 매우 정확하게 생성한다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-02.png" width="450"/></div></section>
 <section id="k">
-<h2><span class="section-number">9.2. </span>k-평균<a class="headerlink" href="#k" title="Permalink to this headline">#</a></h2>
-<ul class="simple">
-<li><p>참고: <a class="reference external" href="https://codingalzi.github.io/handson-ml3/end2end_ml_project.html#id18">2장</a>에서 사용된 <code class="docutils literal notranslate"><span class="pre">ClusterSimilarity</span></code> 클래스 다시 활용할 것.</p></li>
-</ul>
-<p>각 군집의 중심인 센트로이드<font size='2'>centroid</font>을 찾고
-각 샘플에 대해 가장 가까운 센트로이드를 중심으로 군집을 형성하는 기법이다.</p>
+<h2><span class="section-number">9.2. </span>k-평균<a class="headerlink" href="#k" title="Permalink to this heading">#</a></h2>
+<p>군집의 중심인 센트로이드<font size='2'>centroid</font> 몇 개를 찾은 다음
+각 센트로이드에 가깝게 위치한 샘플들로 구성된 군집을 형성하는 기법이다.</p>
 <p><strong>사이킷런의 <code class="docutils literal notranslate"><span class="pre">KMeans</span></code> 모델</strong></p>
 <p>아래 그림은 다섯 개의 샘플 덩어리로 이루어진 데이터셋을 보여준다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-03.png" width="450"/></div><p>위 데이터셋에 대해 다섯 개의 군집을 형성하는 k-평균 알고리즘은 다음과 같이 적용한다.
 군집 수를 몇 개로 지정하는 게 가장 좋은지는 미리 알 수 없다.
 나중에 몇 개의 군집이 적절한가를 판단하는 여러 방식을 살펴볼 것이다.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">k</span> <span class="o">=</span> <span class="mi">5</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
+
+<span class="n">k</span> <span class="o">=</span> <span class="mi">5</span>
 <span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">n_init</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 <span class="n">y_pred</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 </pre></div>
@@ -520,13 +519,13 @@ document.write(`
 <p><strong>보로노이 다이어그램</strong><font size='2'>Voronoi diagram</font>은
 평면을 특정 점(센트로이드)까지의 거리가 가장 가까운 점들의 집합으로 분할한 그림이다.
 점들이 군집을 잘 구성하는지 여부를 쉽게 확인할 수 있다.</p>
-<img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-04.png" width="450"/><p>왼쪽 상단 군집에 포함된 샘플들 중에서  군집 경계 근처에 있는 샘플들의 군집이 잘못 지정됐다.
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-04.png" width="450"/></div><p>왼쪽 상단 군집에 포함된 샘플들 중에서  군집 경계 근처에 있는 샘플들의 군집이 잘못 지정됐다.
 이유는 그 오른편에 위치한 군집의 직경이 보다 크기에 사실
 그 군집에 속해야 하는 샘플이 왼쪽 센트로이드와의 거리가 단지 보다 가깝다는 이유로 왼쪽 군집으로 판정되었다.
 이렇듯 군집의 직경이 서로 많이 다르면 군집화가 잘 작동하지 않을 수 있다.</p>
 <p><strong>하드 군집화 대 소프트 군집화</strong></p>
 <p>지금까지 살펴 보았듯이 k-평균 모델 객체의 labels_ 속성은 각 샘플에 대해 가장 가까운 센트로이드를 중심으로 하는 군집의 (작위적으로 지정된) 인덱스를 저장하며, 이를 이용하여 predict() 메서드는 샘플이 속하는 군집의 인덱스를 반환한다. 이런 방식의 군집화가 <strong>하드 군집화</strong>(hard clustering)이다.</p>
-<p>반면에 <strong>소프트 군집화</strong>(soft clustering)는 샘플과 각 군집 사이의 관계를 점수로 부여한다. 점수는 예를 들어 각 군집과 샘플사이의 거리 또는 5장에서 소개한 가우시안 방사기저 함수를 이용한 유사도 점수 등이 사용될 수 있다. k-평균 모델 객체의 transform() 메서드는 샘플과 각 센트로이드 사이의 (유클리드) 거리를 점수로 사용한다.</p>
+<p>반면에 <strong>소프트 군집화</strong>(soft clustering)는 샘플과 각 군집 사이의 관계를 점수로 부여한다. 점수는 예를 들어 각 군집과 샘플사이의 거리 또는 <a class="reference internal" href="end2end_ml_project.html#ch-end2end"><span class="std std-numref">2장</span></a>과 <a class="reference internal" href="svm.html#ch-svm"><span class="std std-numref">5장</span></a>에서 활용한 가우스 방사기저 함수를 이용한 유사도 점수 등이 사용될 수 있다. k-평균 모델 객체의 transform() 메서드는 샘플과 각 센트로이드 사이의 (유클리드) 거리를 점수로 사용한다.</p>
 <p>아래 코드는 다섯 개의 특성을 갖는 새로운 데이터로 변환하는 것을 보여준다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">kmeans</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_new</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 <span class="go">array([[2.81, 0.33, 2.9 , 1.49, 2.89],</span>
@@ -536,7 +535,7 @@ document.write(`
 </pre></div>
 </div>
 <section id="id3">
-<h3><span class="section-number">9.2.1. </span>k-평균 알고리즘<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h3>
+<h3><span class="section-number">9.2.1. </span>k-평균 알고리즘<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
 <p>먼저 몇 개의 군집으로 분류할지를 정하기 위해 k 값을 지정한다.
 그런 다음 k 개의 센트로이드를 무작위로 선택한 다음에
 센트로이드들의 위치가 수렴할 때까지 아래 과정을 반복한다.</p>
@@ -549,7 +548,7 @@ document.write(`
 아래 오른쪽 그림은 센트로이드 초기화가 다를 경우 최종 결과도 많이 다를 수 있음을 잘 보여준다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-06.png" width="750"/></div></section>
 <section id="id4">
-<h3><span class="section-number">9.2.2. </span>센트로이드 초기화<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h3>
+<h3><span class="section-number">9.2.2. </span>센트로이드 초기화 문제 해결 방안<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
 <p><strong>관성</strong></p>
 <p><strong>관성</strong><font size='2'>intertia</font>은 각 샘플과 가장 가까운 센트로이드와의 거리의 제곱의 합이며,
 각 군집이 센트로이드에 얼마나 가까이 모여있는가를 측정한다.
@@ -593,9 +592,7 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 <span class="n">minibatch_kmeans</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_memmap</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>군집수가 많아질 수록 k-평균보다 서너 배 정도 빠르게 훈련되지만, 성능은 조금 낮다.
-하지만 아래 왼쪽 그림에서 보면 군집수 k 가 커져도 성능 차이가 유지되지만
-성능 자체가 좋아지므로 두 모델의 상대적 성능 차이는 점점 벌어짐을 의미한다.</p>
+<p>군집수가 많아질 수록 k-평균보다 서너 배 정도 빠르게 훈련되지만, 성능은 조금 낮다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-07.png" width="700"/></div><div class="info admonition">
 <p class="admonition-title"><code class="docutils literal notranslate"><span class="pre">MiniBatchKMeans</span></code>와 <code class="docutils literal notranslate"><span class="pre">memmap</span></code> 클래스</p>
 <p><a class="reference internal" href="dimensionality_reduction.html#ch-dimensionalityreduction"><span class="std std-numref">8장</span></a>에서 점진적 PCA를 소개하면서 언급한
@@ -603,7 +600,7 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 </div>
 </section>
 <section id="id5">
-<h3><span class="section-number">9.2.3. </span>최적의 군집수<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h3>
+<h3><span class="section-number">9.2.3. </span>최적의 군집수<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
 <p>군집수가 적절하지 않으면 좋지 않은 모델로 수렴할 수 있다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-08.png" width="700"/></div><p><strong>방법 1: 관성과 군집수</strong></p>
 <p>군집수 k가 증가할 수록 관성은 기본적으로 줄어들기에 관성만으로 모델을 평가할 수는 없다.
@@ -645,7 +642,7 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 이런 기준으로 볼 때 <code class="docutils literal notranslate"><span class="pre">k=5</span></code> 가 가장 좋은 모델이다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-12.png" width="700"/></div></section>
 <section id="id6">
-<h3><span class="section-number">9.2.4. </span>k-평균의 한계<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h3>
+<h3><span class="section-number">9.2.4. </span>k-평균의 한계<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h3>
 <p>첫째, 최적의 모델을 구하기 위해 여러 번 학습해야 한다.</p>
 <p>둘째, 군집수를 미리 지정해야 한다.</p>
 <p>셋째, 군집의 크기나, 샘플의 밀도가 다르거나, 원형이 아닐 경우 잘 작동하지 않는다.
@@ -655,9 +652,9 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-13.png" width="600"/></div></section>
 </section>
 <section id="id7">
-<h2><span class="section-number">9.3. </span>군집화 활용<a class="headerlink" href="#id7" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">9.3. </span>군집화 활용<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h2>
 <section id="id8">
-<h3><span class="section-number">9.3.1. </span>이미지 분할<a class="headerlink" href="#id8" title="Permalink to this headline">#</a></h3>
+<h3><span class="section-number">9.3.1. </span>이미지 분할<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h3>
 <p>이미지 분할은 보통 다음 세 가지 중에 하나를 가리킨다.</p>
 <ul class="simple">
 <li><p>시맨틱 분할</p></li>
@@ -676,7 +673,7 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 색상 분할을 시도한 결과를 보여준다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-14.png" width="80%"/></div></section>
 <section id="id9">
-<h3><span class="section-number">9.3.2. </span>준지도 학습<a class="headerlink" href="#id9" title="Permalink to this headline">#</a></h3>
+<h3><span class="section-number">9.3.2. </span>준지도 학습<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h3>
 <p><strong>준지도 학습</strong><font size='2'>semi-supervised learning</font>은
 레이블이 있는 데이터가 적고, 레이블이 없는 데이터가 많을 때 활용한다.</p>
 <div class="proof example admonition" id="example-0">
@@ -687,9 +684,7 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 </div><p>예를 들어, 미니 MNIST 데이터셋을 50개의 군집으로 나눈 후 각 군집에서
 센트로이드에 가장 가까운 샘플 50개를 대표 이미지로 선정한다.
 선정된 50개 샘플만을 이용하여 분류 모델을 훈련해도 84.9%의 정확도가 달성된다.</p>
-</section>
-<section id="id10">
-<h3><span class="section-number">9.3.3. </span>레이블 전파<a class="headerlink" href="#id10" title="Permalink to this headline">#</a></h3>
+<p><strong>레이블 전파</strong></p>
 <p>대표 이미지의 레이블을 해당 군집의 모든 샘플로 전파하는
 기법을 <strong>레이블 전파</strong><font size='2'>label propagation</font>라 한다.
 레이블 전파를 이용하여 예를 들어 미니 MNIST 데이터셋의 50개 군집의 대표 이미지의 레이블을 각 군집의 전체 샘플에 전파한 다음에
@@ -702,10 +697,10 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 <li><p><code class="docutils literal notranslate"><span class="pre">LabelPropagation</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">SelfTrainingClassifier</span></code></p></li>
 </ul>
-<p><strong>액티브 러닝</strong></p>
+<p><strong>준지도 학습과 능동 학습</strong></p>
 <p>모델의 성능을 보다 높이기 위한 다음 단계로
-<strong>액티브 러닝</strong><font size='2'>Active Learning</font> 기법을 적용할 수 있다.
-액티브 러닝은 기존에 훈련된 모델의 약점을 보완하려는 목적으로
+<strong>능동 학습</strong><font size='2'>Active Learning</font> 기법을 적용할 수 있다.
+능동 학습은 기존에 훈련된 모델의 약점을 보완하려는 목적으로
 일부 샘플을 사람이 직접 확인해서 라벨을 지정하는 과정을 모델의 성능이 더 이상
 개선되지 않을 때까지 반복한다.</p>
 <p>다양한 샘플 선택 전략이 알려져 있지만 <strong>불확실성 샘플링</strong><font size='2'>uncertainty sammpling</font> 전략이
@@ -717,7 +712,7 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 </section>
 </section>
 <section id="dbscan">
-<h2><span class="section-number">9.4. </span>DBSCAN<a class="headerlink" href="#dbscan" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">9.4. </span>DBSCAN<a class="headerlink" href="#dbscan" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
 <li><p>연속적인 밀집 지역을 하나의 군집으로 설정.</p></li>
 </ul>
@@ -804,8 +799,8 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 <li><p>스펙트럼 군집</p></li>
 </ul>
 </section>
-<section id="id11">
-<h2><span class="section-number">9.5. </span>가우스 혼합 모델<a class="headerlink" href="#id11" title="Permalink to this headline">#</a></h2>
+<section id="id10">
+<h2><span class="section-number">9.5. </span>가우스 혼합 모델<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
 <li><p>데이터셋이 여러 개의 혼합된 가우스 분포를 따르는 샘플들로 구성되었다고 가정.</p></li>
 <li><p>가우스 분포 = 정규분포</p></li>
@@ -890,14 +885,14 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 </ul>
 </li>
 </ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-20.png" width="600"/></div><section id="id12">
-<h3><span class="section-number">9.5.1. </span>가우스 혼합 모델 활용: 이상치 탐지<a class="headerlink" href="#id12" title="Permalink to this headline">#</a></h3>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-20.png" width="600"/></div><section id="id11">
+<h3><span class="section-number">9.5.1. </span>가우스 혼합 모델 활용: 이상치 탐지<a class="headerlink" href="#id11" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
 <li><p>밀도가 임곗값보다 낮은 지역에 있는 샘플을 이상치로 간주 가능.</p></li>
 </ul>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-21.png" width="500"/></div></section>
-<section id="id13">
-<h3><span class="section-number">9.5.2. </span>가우션 혼합모델 군집수 지정<a class="headerlink" href="#id13" title="Permalink to this headline">#</a></h3>
+<section id="id12">
+<h3><span class="section-number">9.5.2. </span>가우션 혼합모델 군집수 지정<a class="headerlink" href="#id12" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
 <li><p>k-평균에서 사용했던 관성 또는 실루엣 점수 사용 불가.</p>
 <ul>
@@ -936,8 +931,8 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 <li><p><span class="math notranslate nohighlight">\(k=3\)</span>이 최적으로 보임.</p></li>
 </ul>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-22.png" width="600"/></div></section>
-<section id="id14">
-<h3><span class="section-number">9.5.3. </span>베이즈 가우스 혼합 모델<a class="headerlink" href="#id14" title="Permalink to this headline">#</a></h3>
+<section id="id13">
+<h3><span class="section-number">9.5.3. </span>베이즈 가우스 혼합 모델<a class="headerlink" href="#id13" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
 <li><p>베이즈 확률통계론 활용</p></li>
 </ul>
@@ -989,8 +984,8 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 </li>
 </ul>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-23.png" width="700"/></div></section>
-<section id="id15">
-<h3><span class="section-number">9.5.4. </span>이상치 탐지와 특이치 탐지를 위한 다른 알고리즘<a class="headerlink" href="#id15" title="Permalink to this headline">#</a></h3>
+<section id="id14">
+<h3><span class="section-number">9.5.4. </span>이상치 탐지와 특이치 탐지를 위한 다른 알고리즘<a class="headerlink" href="#id14" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
 <li><p>PCA</p></li>
 <li><p>Fast-MCD</p></li>
@@ -1000,8 +995,8 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 </ul>
 </section>
 </section>
-<section id="id16">
-<h2><span class="section-number">9.6. </span>연습문제<a class="headerlink" href="#id16" title="Permalink to this headline">#</a></h2>
+<section id="id15">
+<h2><span class="section-number">9.6. </span>연습문제<a class="headerlink" href="#id15" title="Permalink to this heading">#</a></h2>
 <ol class="arabic simple">
 <li><p><a class="reference external" href="https://codingalzi.github.io/handson-ml3/end2end_ml_project.html#id18">2장</a>에서 정의한
 <code class="docutils literal notranslate"><span class="pre">ClusterSimilarity</span></code>에 사용된 <code class="docutils literal notranslate"><span class="pre">KMeans</span></code> 모델의 <code class="docutils literal notranslate"><span class="pre">n_cluster</span></code> 인자의 최적값을 확인하라.</p></li>
@@ -1063,14 +1058,14 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> 내용
+    <i class="fa-solid fa-list"></i> Contents
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">9.1. 분류 대 군집화</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#k">9.2. k-평균</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">9.2.1. k-평균 알고리즘</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">9.2.2. 센트로이드 초기화</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">9.2.2. 센트로이드 초기화 문제 해결 방안</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">9.2.3. 최적의 군집수</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">9.2.4. k-평균의 한계</a></li>
 </ul>
@@ -1078,18 +1073,17 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">9.3. 군집화 활용</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">9.3.1. 이미지 분할</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">9.3.2. 준지도 학습</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">9.3.3. 레이블 전파</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dbscan">9.4. DBSCAN</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">9.5. 가우스 혼합 모델</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">9.5.1. 가우스 혼합 모델 활용: 이상치 탐지</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">9.5.2. 가우션 혼합모델 군집수 지정</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">9.5.3. 베이즈 가우스 혼합 모델</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">9.5.4. 이상치 탐지와 특이치 탐지를 위한 다른 알고리즘</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">9.5. 가우스 혼합 모델</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">9.5.1. 가우스 혼합 모델 활용: 이상치 탐지</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">9.5.2. 가우션 혼합모델 군집수 지정</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">9.5.3. 베이즈 가우스 혼합 모델</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">9.5.4. 이상치 탐지와 특이치 탐지를 위한 다른 알고리즘</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">9.6. 연습문제</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">9.6. 연습문제</a></li>
 </ul>
   </nav></div>
 
@@ -1104,7 +1098,7 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
   <div class="footer-item">
     
 <p class="component-author">
-으로 코딩알지
+By 코딩알지
 </p>
 
   </div>
