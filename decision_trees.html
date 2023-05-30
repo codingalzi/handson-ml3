@@ -3,11 +3,11 @@
 <!DOCTYPE html>
 
 
-<html >
+<html lang="en" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>6. 결정트리 &#8212; 핸즈온 머신러닝(3판)</title>
   
@@ -45,6 +45,7 @@
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
@@ -69,7 +70,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="next" title="7. 앙상블 학습과 랜덤 포레스트" href="ensemble_learning_random_forests.html" />
     <link rel="prev" title="5. 서포트 벡터 머신" href="svm.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="docsearch:language" content="None"/>
+  <meta name="docsearch:language" content="en"/>
   </head>
   
   
@@ -241,7 +242,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       <li><a href="https://github.com/codingalzi/handson-ml3" target="_blank"
    class="btn btn-sm btn-source-repository-button dropdown-item"
-   title="소스 저장소"
+   title="Source repository"
    data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
@@ -258,7 +259,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       <li><a href="https://github.com/codingalzi/handson-ml3/issues/new?title=Issue%20on%20page%20%2Fdecision_trees.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
-   title="이슈 열기"
+   title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
@@ -279,7 +280,7 @@ const thebe_selector_output = ".output, .cell_output"
 
 
 <div class="dropdown dropdown-download-buttons">
-  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="이 페이지 다운로드">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
     <i class="fas fa-download"></i>
   </button>
   <ul class="dropdown-menu">
@@ -288,7 +289,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       <li><a href="_sources/decision_trees.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
-   title="소스 파일 다운로드"
+   title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
@@ -306,7 +307,7 @@ const thebe_selector_output = ".output, .cell_output"
       <li>
 <button onclick="window.print()"
   class="btn btn-sm btn-download-pdf-button dropdown-item"
-  title="PDF로 인쇄"
+  title="Print to PDF"
   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
@@ -326,7 +327,7 @@ const thebe_selector_output = ".output, .cell_output"
 
 <button onclick="toggleFullScreen()"
   class="btn btn-sm btn-fullscreen-button"
-  title="전체 화면으로보기"
+  title="Fullscreen mode"
   data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
   
@@ -374,7 +375,7 @@ document.write(`
         <div id="jb-print-toc">
             
             <div>
-                <h2> 내용 </h2>
+                <h2> Contents </h2>
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
@@ -410,7 +411,7 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="ch-decisiontrees">
-<span id="id1"></span><h1><span class="section-number">6. </span>결정트리<a class="headerlink" href="#ch-decisiontrees" title="Permalink to this headline">#</a></h1>
+<span id="id1"></span><h1><span class="section-number">6. </span>결정트리<a class="headerlink" href="#ch-decisiontrees" title="Permalink to this heading">#</a></h1>
 <p><strong>감사의 글</strong></p>
 <p>자료를 공개한 저자 오렐리앙 제롱과 강의자료를 지원한 한빛아카데미에게 진심어린 감사를 전합니다.</p>
 <p><strong>소스코드</strong></p>
@@ -431,9 +432,9 @@ document.write(`
 <a class="reference external" href="https://github.com/codingalzi/handson-ml3/raw/master/slides/slides-decision_trees.pdf">슬라이드</a>를
 다운로드할 수 있다.</p>
 <section id="id2">
-<h2><span class="section-number">6.1. </span>결정트리 훈련과 활용<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">6.1. </span>결정트리 훈련과 활용<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
 <section id="id3">
-<h3><span class="section-number">6.1.1. </span>결정트리 훈련<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h3>
+<h3><span class="section-number">6.1.1. </span>결정트리 훈련<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
 <p>아래 코드는 붓꽃 데이터셋을 대상으로 사이킷런의 <code class="docutils literal notranslate"><span class="pre">DecisionTreeClassifier</span></code> 모델을 훈련시킨다.
 특성은 꽃잎의 길이와 너비만을 사용하여 세 개의 품종으로 분류하는 다중 클래스 모델을 훈련시킨다.
 <code class="docutils literal notranslate"><span class="pre">max_depth</span></code>는 결정트리의 최대 깊이 지정하는 하이퍼파라미터이며 허용되는 최대 가지치기 횟수를 지정하며,
@@ -452,7 +453,7 @@ document.write(`
 </div>
 </section>
 <section id="id4">
-<h3><span class="section-number">6.1.2. </span>결정트리 시각화<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h3>
+<h3><span class="section-number">6.1.2. </span>결정트리 시각화<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
 <p>사이킷런의 <code class="docutils literal notranslate"><span class="pre">export_graphviz()</span></code> 함수를 이용하여 학습된 결정트리를 그래프로 시각화한다.
 또한 pdf, png 등 많은 종류의 파일로 변환이 가능하다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch06/homl06-01.png" width="400"/></div><p>결정트리의 각 노드에 포함된 속성은 다음과 같다.</p>
@@ -492,7 +493,7 @@ document.write(`
 \[G_4 = 1 - (0/54)^2 - (49/54)^2 - (5/54)^2 = 0.168\]</div>
 </section>
 <section id="id5">
-<h3><span class="section-number">6.1.3. </span>클래스 예측<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h3>
+<h3><span class="section-number">6.1.3. </span>클래스 예측<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
 <p>트리의 노드<font size='2'>node</font>는 가지 분할이 시작되는 지점이며 세 종류로 나뉜다.</p>
 <ul class="simple">
 <li><p>노드<font size='2'>node</font>: 가지 분할이 시작되는 지점이며 부모 노드와 자식노드를 가질 수 있다.</p></li>
@@ -522,7 +523,7 @@ document.write(`
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch06/homl06-02a.png" width="500"/></div><p>graphviz를 이용한 결과는 다음과 같다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch06/homl06-02c.png" width="630"/></div></section>
 <section id="id6">
-<h3><span class="section-number">6.1.4. </span>클래스 확률 추정<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h3>
+<h3><span class="section-number">6.1.4. </span>클래스 확률 추정<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h3>
 <p>주어진 샘플이 어떤 클래스에 속할 확률은 다음과 같이 계산된다.</p>
 <ul class="simple">
 <li><p>먼저, 해당 샘플이 포함되는 리프 노드를 확인한다.</p></li>
@@ -548,7 +549,7 @@ document.write(`
 </section>
 </section>
 <section id="cart">
-<h2><span class="section-number">6.2. </span>CART 알고리즘<a class="headerlink" href="#cart" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">6.2. </span>CART 알고리즘<a class="headerlink" href="#cart" title="Permalink to this heading">#</a></h2>
 <p><strong>CART<font size='2'>Classification and Regression Tree</font> 분류 알고리즘</strong></p>
 <p>각 노드에서 아래 비용함수를 최소화 하는 특성 <span class="math notranslate nohighlight">\(k\)</span>와 해당 특성의 임곗값 <span class="math notranslate nohighlight">\(t_k\)</span>를 결정해서 분할하는 과정을
 반복한다.</p>
@@ -573,7 +574,7 @@ J(k, t_k) = \frac{m_\text{left}}{m}\, G_\text{left} + \frac{m_\text{right}}{m}\,
 하지만 탐욕적 기법은 일반적으로 적절한 성능의 해를 찾아준다.</p>
 </div>
 <section id="id7">
-<h3><span class="section-number">6.2.1. </span>CART 알고리즘의 시간복잡도<a class="headerlink" href="#id7" title="Permalink to this headline">#</a></h3>
+<h3><span class="section-number">6.2.1. </span>CART 알고리즘의 시간복잡도<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h3>
 <p>최적의 결정트리를 찾는 문제는 <span class="math notranslate nohighlight">\(O(\exp(m))\)</span> 복잡도를 갖는
 동시에 NP-완전<font size='2'>NP-complete</font>이다.
 따라서 매우 작은 훈련 세트에 대해서도 제대로 적용하기 어렵다.</p>
@@ -590,7 +591,7 @@ J(k, t_k) = \frac{m_\text{left}}{m}\, G_\text{left} + \frac{m_\text{right}}{m}\,
 실제로 각 노드에서 하나의 특성만 분류기준으로 사용되기에 특성 수와 무관하게 이진트리의 경로를 추적할 수 있다.</p>
 </section>
 <section id="vs">
-<h3><span class="section-number">6.2.2. </span>지니 불순도 vs. 엔트로피<a class="headerlink" href="#vs" title="Permalink to this headline">#</a></h3>
+<h3><span class="section-number">6.2.2. </span>지니 불순도 vs. 엔트로피<a class="headerlink" href="#vs" title="Permalink to this heading">#</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">DecisionTreeClassifier</span></code>의 <code class="docutils literal notranslate"><span class="pre">criterion</span></code> 하이퍼파라미터의 값을 <code class="docutils literal notranslate"><span class="pre">'entropy'</span></code> 로 지정하면
 지니 불순도 대신에 샘플들의 <strong>무질서</strong> 정도를 측정하는 엔트로피<font size='2'>entropy</font>가
 노드를 분할하는 기준으로 사용된다.</p>
@@ -610,7 +611,7 @@ J(k, t_k) = \frac{m_\text{left}}{m}\, G_\text{left} + \frac{m_\text{right}}{m}\,
 </div>
 </section>
 <section id="id8">
-<h3><span class="section-number">6.2.3. </span>규제 하이퍼파라미터<a class="headerlink" href="#id8" title="Permalink to this headline">#</a></h3>
+<h3><span class="section-number">6.2.3. </span>규제 하이퍼파라미터<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h3>
 <p><strong>비파라미터 모델 vs. 파라미터 모델</strong></p>
 <p>결정트리 모델은 데이터에 대한 어떤 가정도 하지 않는다.
 예를 들어, 노드를 분할할 때 어떤 제한도 가해지지 않으며,
@@ -627,10 +628,10 @@ J(k, t_k) = \frac{m_\text{left}}{m}\, G_\text{left} + \frac{m_\text{right}}{m}\,
 가장 많이 사용되는 규제는 다음과 같다.
 <code class="docutils literal notranslate"><span class="pre">min_</span></code> 을 접두사로 갖는 하이퍼파라미터는 값을 키우는 경우,
 <code class="docutils literal notranslate"><span class="pre">max_</span></code> 를 접두사로 갖는 하이퍼파라미터는 값을 감소시키는 경우 규제가 강해진다.</p>
-<table class="colwidths-auto table">
+<table class="table">
 <thead>
-<tr class="row-odd"><th class="text-left head"><p>하이퍼파라미터</p></th>
-<th class="text-left head"><p>기능</p></th>
+<tr class="row-odd"><th class="head text-left"><p>하이퍼파라미터</p></th>
+<th class="head text-left"><p>기능</p></th>
 </tr>
 </thead>
 <tbody>
@@ -672,7 +673,7 @@ J(k, t_k) = \frac{m_\text{left}}{m}\, G_\text{left} + \frac{m_\text{right}}{m}\,
 </div></section>
 </section>
 <section id="id9">
-<h2><span class="section-number">6.3. </span>회귀 결정트리<a class="headerlink" href="#id9" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">6.3. </span>회귀 결정트리<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h2>
 <p>결정트리를 회귀 용도로 사용할 수 있다.
 대표적으로 사이킷런의 <code class="docutils literal notranslate"><span class="pre">DecisionTreeRegressor</span></code> 클래스가 예측기 모델 학습에 사용된다.</p>
 <p>예를 들어, 잡음이 포함된 2차 함수 형태의 데이터셋을 이용하여 결정트리 회귀 모델을 훈련시켜 보자.</p>
@@ -729,9 +730,9 @@ J(k, t_k) &amp;= \frac{m_\text{left}}{m}\, \text{MSE}_\text{left} + \frac{m_\tex
 일반화 성능이 훨씬 결정트리의 예측값을 보여준다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch06/homl06-06.png" width="600"/></div></section>
 <section id="id10">
-<h2><span class="section-number">6.4. </span>결정트리 단점<a class="headerlink" href="#id10" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">6.4. </span>결정트리 단점<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h2>
 <section id="id11">
-<h3><span class="section-number">6.4.1. </span>훈련셋  회전 민감도<a class="headerlink" href="#id11" title="Permalink to this headline">#</a></h3>
+<h3><span class="section-number">6.4.1. </span>훈련셋  회전 민감도<a class="headerlink" href="#id11" title="Permalink to this heading">#</a></h3>
 <p>결정트리 알고리즘은 단순하지만 매우 뛰어난 성능을 갖지만 몇 가지 단점을 갖는다.</p>
 <p>먼저 결정트리는 항상 축에 수직인 분할을 사용한다.
 따라서 훈련셋에 회전을 조금만 가해도 결정 경계가 많이 달라진다.
@@ -754,7 +755,7 @@ J(k, t_k) &amp;= \frac{m_\text{left}}{m}\, \text{MSE}_\text{left} + \frac{m_\tex
 </div>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch06/homl06-08d.png"/></div></section>
 <section id="id12">
-<h3><span class="section-number">6.4.2. </span>높은 분산<a class="headerlink" href="#id12" title="Permalink to this headline">#</a></h3>
+<h3><span class="section-number">6.4.2. </span>높은 분산<a class="headerlink" href="#id12" title="Permalink to this heading">#</a></h3>
 <p>결정트리는 꽤 높은 분산을 갖는다.
 즉, 훈련셋이나 하이퍼파라미터가 조금만 달라져도 완전히 다른 결정트리가 훈련될 수 있다.
 심지어 동일한 모델을 훈련시켜도 많이 다른 결정트리가 생성되기도 한다.
@@ -767,7 +768,7 @@ J(k, t_k) &amp;= \frac{m_\text{left}}{m}\, \text{MSE}_\text{left} + \frac{m_\tex
 </section>
 </section>
 <section id="id13">
-<h2><span class="section-number">6.5. </span>연습문제<a class="headerlink" href="#id13" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">6.5. </span>연습문제<a class="headerlink" href="#id13" title="Permalink to this heading">#</a></h2>
 <p>참고: <a class="reference external" href="https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_decision_trees.ipynb">(실습) 결정트리</a></p>
 </section>
 </section>
@@ -835,7 +836,7 @@ J(k, t_k) &amp;= \frac{m_\text{left}}{m}\, \text{MSE}_\text{left} + \frac{m_\tex
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> 내용
+    <i class="fa-solid fa-list"></i> Contents
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
@@ -873,7 +874,7 @@ J(k, t_k) &amp;= \frac{m_\text{left}}{m}\, \text{MSE}_\text{left} + \frac{m_\tex
   <div class="footer-item">
     
 <p class="component-author">
-으로 코딩알지
+By 코딩알지
 </p>
 
   </div>
