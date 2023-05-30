@@ -417,7 +417,7 @@ document.write(`
 <p>자료를 공개한 저자 오렐리앙 제롱과 강의자료를 지원한 한빛아카데미에게 진심어린 감사를 전합니다.</p>
 <p><strong>소스코드</strong></p>
 <p>본문 내용의 일부를 파이썬으로 구현한 내용은
-<a class="reference external" href="https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/notebooks/code_unsupervised_learning.ipynb">(구글코랩) 비지도 학브</a>에서 확인할 수 있다.</p>
+<a class="reference external" href="https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/notebooks/code_unsupervised_learning.ipynb">(구글코랩) 비지도 학습</a>에서 확인할 수 있다.</p>
 <p><strong>슬라이드</strong></p>
 <p>본문 내용을 요약한
 <a class="reference external" href="https://github.com/codingalzi/handson-ml3/raw/master/slides/slides-unsupervised_learning-1.pdf">슬라이드 1부</a>와
@@ -491,6 +491,7 @@ document.write(`
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-03.png" width="450"/></div><p>위 데이터셋에 대해 다섯 개의 군집을 형성하는 k-평균 알고리즘은 다음과 같이 적용한다.
 군집 수를 몇 개로 지정하는 게 가장 좋은지는 미리 알 수 없다.
 나중에 몇 개의 군집이 적절한가를 판단하는 여러 방식을 살펴볼 것이다.</p>
+<p>아래 코드에서 <code class="docutils literal notranslate"><span class="pre">X</span></code>는 위 산점도에 포함된 데이터 샘플들로 구성된 훈련셋을 가리킨다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
 
 <span class="n">k</span> <span class="o">=</span> <span class="mi">5</span>
@@ -525,14 +526,82 @@ document.write(`
 이렇듯 군집의 직경이 서로 많이 다르면 군집화가 잘 작동하지 않을 수 있다.</p>
 <p><strong>하드 군집화 대 소프트 군집화</strong></p>
 <p>지금까지 살펴 보았듯이 k-평균 모델 객체의 labels_ 속성은 각 샘플에 대해 가장 가까운 센트로이드를 중심으로 하는 군집의 (작위적으로 지정된) 인덱스를 저장하며, 이를 이용하여 predict() 메서드는 샘플이 속하는 군집의 인덱스를 반환한다. 이런 방식의 군집화가 <strong>하드 군집화</strong>(hard clustering)이다.</p>
-<p>반면에 <strong>소프트 군집화</strong>(soft clustering)는 샘플과 각 군집 사이의 관계를 점수로 부여한다. 점수는 예를 들어 각 군집과 샘플사이의 거리 또는 <a class="reference internal" href="end2end_ml_project.html#ch-end2end"><span class="std std-numref">2장</span></a>과 <a class="reference internal" href="svm.html#ch-svm"><span class="std std-numref">5장</span></a>에서 활용한 가우스 방사기저 함수를 이용한 유사도 점수 등이 사용될 수 있다. k-평균 모델 객체의 transform() 메서드는 샘플과 각 센트로이드 사이의 (유클리드) 거리를 점수로 사용한다.</p>
-<p>아래 코드는 다섯 개의 특성을 갖는 새로운 데이터로 변환하는 것을 보여준다.</p>
+<p>반면에 <strong>소프트 군집화</strong>(soft clustering)는 샘플과 각 군집 사이의 관계를 점수로 부여한다. 점수는 예를 들어 각 군집과 샘플사이의 거리 또는 <a class="reference internal" href="end2end_ml_project.html#ch-end2end"><span class="std std-numref">2장</span></a>과 <a class="reference internal" href="svm.html#ch-svm"><span class="std std-numref">5장</span></a>에서 활용한 가우스 방사 기저 함수를 이용한 유사도 점수 등이 사용될 수 있다.</p>
+<p>여기서 사용하는 사이킷런의 <code class="docutils literal notranslate"><span class="pre">KMeans</span></code> 모델의 <code class="docutils literal notranslate"><span class="pre">transform()</span></code> 메서드는 샘플과 각 센트로이드 사이의 (유클리드) 거리를 점수로 사용한다 (아래 코드 참고).</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">kmeans</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_new</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 <span class="go">array([[2.81, 0.33, 2.9 , 1.49, 2.89],</span>
 <span class="go">       [5.81, 2.8 , 5.85, 4.48, 5.84],</span>
 <span class="go">       [1.21, 3.29, 0.29, 1.69, 1.71],</span>
 <span class="go">       [0.73, 3.22, 0.36, 1.55, 1.22]])</span>
 </pre></div>
+</div>
+<p>반면에 <a class="reference internal" href="end2end_ml_project.html#ch-end2end"><span class="std std-numref">2장</span></a>에서 <code class="docutils literal notranslate"><span class="pre">Kmeans</span></code> 모델을 상속하는 형식으로 정의된 <code class="docutils literal notranslate"><span class="pre">ClusterSimilarity</span></code> 클래스의
+<code class="docutils literal notranslate"><span class="pre">transform()</span></code> 메서드는 가우스 방사 기저 함수인 <code class="docutils literal notranslate"><span class="pre">rbf_kernel()</span></code> 함수를 이용하여 각 샘플에 대해 모든 센트로이드들과의
+유사도 점수를 계산한다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ClusterSimilarity</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">,</span> <span class="n">TransformerMixin</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_clusters</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span> <span class="o">=</span> <span class="n">n_clusters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gamma</span> <span class="o">=</span> <span class="n">gamma</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">random_state</span> <span class="o">=</span> <span class="n">random_state</span>
+
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sample_weight</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span> <span class="c1"># sample_weight: 샘플별로 가중치 적용</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kmeans_</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">,</span> <span class="n">n_init</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">random_state</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kmeans_</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">sample_weight</span><span class="o">=</span><span class="n">sample_weight</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span>  <span class="c1"># 항상 self 반환</span>
+
+    <span class="c1"># 구역 데이터 샘플과 각 센트로이드 사이의 유사도 측정</span>
+    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">rbf_kernel</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">kmeans_</span><span class="o">.</span><span class="n">cluster_centers_</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">gamma</span><span class="p">)</span>
+    
+<span class="n">cluster_simil</span> <span class="o">=</span> <span class="n">ClusterSimilarity</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># 구역별 중앙 주택 가격을 샘플 가중치로 지정한 후에 군집화 실행. </span>
+<span class="c1"># 즉, 비싼 주택 가격을 갖는 구역을 중요시하며 따라서 센트로이드로 지정될 가능성을 높임.</span>
+<span class="c1"># transform() 메서드는 각 샘플과 10개의 센트로이드 사이의 유사도 계산</span>
+
+<span class="n">similarities</span> <span class="o">=</span> <span class="n">cluster_simil</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">housing</span><span class="p">[[</span><span class="s2">&quot;latitude&quot;</span><span class="p">,</span> <span class="s2">&quot;longitude&quot;</span><span class="p">]],</span> <span class="n">sample_weight</span><span class="o">=</span><span class="n">housing_labels</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>처음 5 개 샘플과 각 센트로이드에 대한 유사도 점수는 다음과 같다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">similarities</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">array([[0.  , 0.14, 0.  , 0.  , 0.  , 0.08, 0.  , 0.99, 0.  , 0.6 ],</span>
+<span class="go">       [0.63, 0.  , 0.99, 0.  , 0.  , 0.  , 0.04, 0.  , 0.11, 0.  ],</span>
+<span class="go">       [0.  , 0.29, 0.  , 0.  , 0.01, 0.44, 0.  , 0.7 , 0.  , 0.3 ],</span>
+<span class="go">       [0.65, 0.  , 0.21, 0.  , 0.  , 0.  , 0.51, 0.  , 0.  , 0.  ],</span>
+<span class="go">       [0.86, 0.  , 0.89, 0.  , 0.  , 0.  , 0.14, 0.  , 0.03, 0.  ]])</span>
+</pre></div>
+</div>
+<div class="info admonition">
+<p class="admonition-title">함수</p>
+<p><code class="docutils literal notranslate"><span class="pre">rbf_kernel()</span></code> 는 <strong>가우스 방사 기저 함수</strong><font size='2'>Gaussian radial basis function</font>를
+가리키며 다음과 같이 정의된다.
+특정 지점을 가리키는 랜드마크<font size='2'>landmark</font>인 <span class="math notranslate nohighlight">\(\mathbf{m}\)</span>으로부터 조금만 멀어져도
+함숫값이 급격히 작아진다.</p>
+<div class="math notranslate nohighlight">
+\[
+\phi(\mathbf{x},\mathbf{m}) = \exp \left( -\gamma \|\mathbf{x} - \mathbf{m} \|^2 \right)
+\]</div>
+<p>하이퍼파라미터인 <strong>감마</strong>(<span class="math notranslate nohighlight">\(\gamma\)</span>, gamma)는 데이터 샘플이 랜드마크로부터 멀어질 때
+가우스 RBF 함수의 반환값이 얼마나 빠르게 0에 수렴하도록 하는가를 결정한다.
+감마 값이 클 수록 랜드마크로부터 조금만 멀어져도 보다 빠르게 0에 수렴한다.
+따라서 가우스 RBF 함수의 그래프가 보다 좁은 종 모양을 띤다.</p>
+<p>아래 그래프는 감마가 1일 때와 0.01 때의 차이를 명확하게 보여준다.
+즉 랜드마크인 <span class="math notranslate nohighlight">\(\mathbf{m}=\)</span> 0으로부터 거리가 멀어질 때 감마가 1이면 매우 급격하게 함숫값이 0으로 줄어든다.
+즉, 랜드마크로부터 조금만 멀어저도 유사도가 매우 약해진다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/rbf_kernel.png" width="400"></div>
+<br>
+<p>예를 들어, 유사도를 도심 상권의 발달 정도로 해석할 때 도시 중심으로 조금만 멀어져도
+상권이 좋지 않음을 의미한다. 대표적으로 소도시의 상권을 잘 반영한다.
+반면에 서울의 경우 도시 중심으로부터 조금 떨어져 있다 하더라도 상권이 충분히 잘 발달되어 있을 수 있다.
+따라서 그런 경우에는 감마를 0.01처럼 작게 지정해야 한다.</p>
+<p><code class="docutils literal notranslate"><span class="pre">ClusterSimilarity</span></code> 클래스의 <code class="docutils literal notranslate"><span class="pre">transform()</span></code> 메서드 또한 비슷한 방식으로 유사도를 계산한다.
+이유는 샘플과 주택 가격이 비싼 센트로이드 구역 사이의 가우스 방사 기저 함숫값을 유사도로 사용하기 때문이다.</p>
+<p>실제로 <code class="docutils literal notranslate"><span class="pre">fit()</span></code> 함수를 이용하여 군집화 정보를 계산할 때 비싼 가격의 주택이 모여 있는 구역에
+보다 높은 가중치를 주기에 그런 구역이 군집의 센트로이드로 선택될 가능성이 높아진다.
+각각의 센트로이드를 랜드마크로 보았을 때 주택 가격이 높은 센트로이드에 가깝게 위치한 구역일 수록
+주택 가격이 상대적으로 비싼 게 일반적이다. 즉, 유사도가 높다고 볼 수 있다.
+그런데 위 코드에서는 감마(<code class="docutils literal notranslate"><span class="pre">gamma</span></code>)를 1로 지정하였기에 센트로이드에 정말로 가까운 구역에 대해서만
+높은 유사도를 부여한다.</p>
 </div>
 <section id="id3">
 <h3><span class="section-number">9.2.1. </span>k-평균 알고리즘<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
