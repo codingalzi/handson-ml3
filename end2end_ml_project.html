@@ -1026,15 +1026,33 @@ document.write(`
     
     <span class="k">def</span> <span class="nf">get_feature_names_out</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;Cluster </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> similarity&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">)]</span>
+
+<span class="n">cluster_simil</span> <span class="o">=</span> <span class="n">ClusterSimilarity</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">similarities</span> <span class="o">=</span> <span class="n">cluster_simil</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">housing</span><span class="p">[[</span><span class="s2">&quot;latitude&quot;</span><span class="p">,</span> <span class="s2">&quot;longitude&quot;</span><span class="p">]],</span> <span class="n">sample_weight</span><span class="o">=</span><span class="n">housing_labels</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference internal" href="unsupervised_learning.html#ch-unsupervisedlearning"><span class="std std-numref">9장</span></a> 비지도 학습에서 위 코드를 자세히 설명한다.
-여기서는 다음 두 가지만을 기억한다.</p>
+<p>위 코드에 대한 설명은 <a class="reference internal" href="unsupervised_learning.html#ch-unsupervisedlearning"><span class="std std-numref">9장</span></a> 비지도 학습에서 자세히 다룬다.
+여기서는 대신 다음 세 가지만을 기억한다.</p>
 <p>첫째, 변환기를 선언할 때 <code class="docutils literal notranslate"><span class="pre">BaseEstimator</span></code>와 <code class="docutils literal notranslate"><span class="pre">TransformerMixin</span></code> 두 개의 클래스를 상속해야 한다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/custom-transformer.png" width="350"></div>
-<br>
-<p>둘째, <code class="docutils literal notranslate"><span class="pre">get_feature_names_out()</span></code> 메서드를 재정의해서 변환기에 의해 새로 생성된 특성들의 이름을
+<br><p>둘째, <code class="docutils literal notranslate"><span class="pre">get_feature_names_out()</span></code> 메서드를 재정의해서 변환기에 의해 새로 생성된 특성들의 이름을
 지정하는 방식을 설정해야 한다.</p>
+<p>셋째, <code class="docutils literal notranslate"><span class="pre">ClusterSimilarity</span></code> 변환기를 이용하여 얻어진 군집 특성을 이용하면
+아래 그림과 같은 결과를 얻을 수 있다.</p>
+<ul class="simple">
+<li><p>모든 구역을 10개의 군집으로 쪼갠다.</p></li>
+<li><p>🗙는 각 군집의 중심 구역을 나타낸다.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">transform()</span></code> 메서드는 각 샘플에 대해 10개의 센트로이드와의 유사도 점수를 계산해서 반환한다.</p></li>
+</ul>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-cluster.jpg" width="550"></div><p>처음 5 개 샘플과 각 센트로이드에 대한 유사도 점수는 다음과 같다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">similarities</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">array([[0.  , 0.14, 0.  , 0.  , 0.  , 0.08, 0.  , 0.99, 0.  , 0.6 ],</span>
+<span class="go">       [0.63, 0.  , 0.99, 0.  , 0.  , 0.  , 0.04, 0.  , 0.11, 0.  ],</span>
+<span class="go">       [0.  , 0.29, 0.  , 0.  , 0.01, 0.44, 0.  , 0.7 , 0.  , 0.3 ],</span>
+<span class="go">       [0.65, 0.  , 0.21, 0.  , 0.  , 0.  , 0.51, 0.  , 0.  , 0.  ],</span>
+<span class="go">       [0.86, 0.  , 0.89, 0.  , 0.  , 0.  , 0.14, 0.  , 0.03, 0.  ]])</span>
+</pre></div>
+</div>
 <div class="info admonition">
 <p class="admonition-title">하이퍼파라미터와 변환기 클래스 상속</p>
 <p>사이킷런 클래스의 <strong>하이퍼파라미터</strong><font size='2'>hyperparameter</font>는
@@ -1051,13 +1069,7 @@ document.write(`
 <p>반면에 <code class="docutils literal notranslate"><span class="pre">TransformerMixin</span></code> 클래스를 상속하는 이유 <code class="docutils literal notranslate"><span class="pre">fit_transform()</span></code>
 메서드가 자동으로 상속되기 때문이다.</p>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">ClusterSimilarity</span></code> 변환기를 이용하여 얻어진 군집 특성을 이용하면
-아래 그림과 같은 결과를 얻을 수 있다.</p>
-<ul class="simple">
-<li><p>모든 구역을 10개의 군집으로 분류한다.</p></li>
-<li><p>🗙는 각 군집의 중심 구역을 나타낸다.</p></li>
-</ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-cluster.jpg" width="550"></div></section>
+</section>
 </section>
 <section id="id19">
 <h3><span class="section-number">2.5.6. </span>변환 파이프라인<a class="headerlink" href="#id19" title="Permalink to this heading">#</a></h3>
