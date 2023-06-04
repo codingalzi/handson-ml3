@@ -1044,6 +1044,7 @@ document.write(`
 <li><p>모든 구역을 10개의 군집으로 쪼갠다.</p></li>
 <li><p>🗙는 각 군집의 중심 구역을 나타낸다.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">transform()</span></code> 메서드는 각 샘플에 대해 10개의 센트로이드와의 유사도 점수를 계산해서 반환한다.</p></li>
+<li><p>색상은 센트로이드 구역과의 유사도를 가리킨다. 빨강색의 구역이 센트로이드 구역과의 유사도가 1에 가깝다.</p></li>
 </ul>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-cluster.jpg" width="550"></div><p>처음 5 개 샘플과 각 센트로이드에 대한 유사도 점수는 다음과 같다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">similarities</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
