@@ -526,7 +526,8 @@ document.write(`
 이렇듯 군집의 직경이 서로 많이 다르면 군집화가 잘 작동하지 않을 수 있다.</p>
 <p><strong>하드 군집화 대 소프트 군집화</strong></p>
 <p>지금까지 살펴 보았듯이 k-평균 모델 객체의 labels_ 속성은 각 샘플에 대해 가장 가까운 센트로이드를 중심으로 하는 군집의 (작위적으로 지정된) 인덱스를 저장하며, 이를 이용하여 predict() 메서드는 샘플이 속하는 군집의 인덱스를 반환한다. 이런 방식의 군집화가 <strong>하드 군집화</strong>(hard clustering)이다.</p>
-<p>반면에 <strong>소프트 군집화</strong>(soft clustering)는 샘플과 각 군집 사이의 관계를 점수로 부여한다. 점수는 예를 들어 각 군집과 샘플사이의 거리 또는 <a class="reference internal" href="end2end_ml_project.html#ch-end2end"><span class="std std-numref">2장</span></a>과 <a class="reference internal" href="svm.html#ch-svm"><span class="std std-numref">5장</span></a>에서 활용한 가우스 방사 기저 함수를 이용한 유사도 점수 등이 사용될 수 있다.</p>
+<p><strong>소프트 군집화</strong>(soft clustering)는 샘플과 각 군집 사이의 관계를 점수로 부여한다. 점수는 예를 들어 각 군집과 샘플사이의 거리 또는 <a class="reference internal" href="end2end_ml_project.html#ch-end2end"><span class="std std-numref">2장</span></a>과 <a class="reference internal" href="svm.html#ch-svm"><span class="std std-numref">5장</span></a>에서 활용한 가우스 방사 기저 함수를 이용한 유사도 점수 등이 사용될 수 있다.
+생성된 점수는 데이터셋의 새로운 특성으로 지정되어 모델 훈련에 활용되기도 한다.</p>
 <p>여기서 사용하는 사이킷런의 <code class="docutils literal notranslate"><span class="pre">KMeans</span></code> 모델의 <code class="docutils literal notranslate"><span class="pre">transform()</span></code> 메서드는 샘플과 각 센트로이드 사이의 (유클리드) 거리를 점수로 사용한다 (아래 코드 참고).</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">kmeans</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_new</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 <span class="go">array([[2.81, 0.33, 2.9 , 1.49, 2.89],</span>
@@ -537,7 +538,8 @@ document.write(`
 </div>
 <p>반면에 <a class="reference internal" href="end2end_ml_project.html#ch-end2end"><span class="std std-numref">2장</span></a>에서 <code class="docutils literal notranslate"><span class="pre">Kmeans</span></code> 모델을 상속하는 형식으로 정의된 <code class="docutils literal notranslate"><span class="pre">ClusterSimilarity</span></code> 클래스의
 <code class="docutils literal notranslate"><span class="pre">transform()</span></code> 메서드는 가우스 방사 기저 함수인 <code class="docutils literal notranslate"><span class="pre">rbf_kernel()</span></code> 함수를 이용하여 각 샘플에 대해 모든 센트로이드들과의
-유사도 점수를 계산한다.</p>
+유사도 점수를 계산한다.
+계산된 점수는 캘리포니아 주택 가격 예측 모델의 훈련에 사용되도록 새로운 특성으로 추가되었다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ClusterSimilarity</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">,</span> <span class="n">TransformerMixin</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_clusters</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span> <span class="o">=</span> <span class="n">n_clusters</span>
@@ -559,7 +561,9 @@ document.write(`
 <span class="c1"># 즉, 비싼 주택 가격을 갖는 구역을 중요시하며 따라서 센트로이드로 지정될 가능성을 높임.</span>
 <span class="c1"># transform() 메서드는 각 샘플과 10개의 센트로이드 사이의 유사도 계산</span>
 
-<span class="n">similarities</span> <span class="o">=</span> <span class="n">cluster_simil</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">housing</span><span class="p">[[</span><span class="s2">&quot;latitude&quot;</span><span class="p">,</span> <span class="s2">&quot;longitude&quot;</span><span class="p">]],</span> <span class="n">sample_weight</span><span class="o">=</span><span class="n">housing_labels</span><span class="p">)</span>
+<span class="n">housing_labels</span> <span class="o">=</span> <span class="n">strat_train_set</span><span class="p">[</span><span class="s2">&quot;median_house_value&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">similarities</span> <span class="o">=</span> <span class="n">cluster_simil</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">housing</span><span class="p">[[</span><span class="s2">&quot;latitude&quot;</span><span class="p">,</span> <span class="s2">&quot;longitude&quot;</span><span class="p">]],</span> 
+                                           <span class="n">sample_weight</span><span class="o">=</span><span class="n">housing_labels</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>처음 5 개 샘플과 각 센트로이드에 대한 유사도 점수는 다음과 같다.</p>
@@ -614,7 +618,7 @@ document.write(`
 </ul>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-05.png" width="700"/></div><p><strong>무작위 초기화 문제</strong></p>
 <p>임의로 선택된 초기 센트로이드에 따라 매우 다른 모양과 성질의 군집이 생성될 수 있다.
-아래 오른쪽 그림은 센트로이드 초기화가 다를 경우 최종 결과도 많이 다를 수 있음을 잘 보여준다.</p>
+아래 오른쪽 그림은 센트로이드 초기화가 다르면 최종 결과가 많이 다를 수 있음을 잘 보여준다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-06.png" width="750"/></div></section>
 <section id="id4">
 <h3><span class="section-number">9.2.2. </span>센트로이드 초기화 문제 해결 방안<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
@@ -670,12 +674,15 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 </section>
 <section id="id5">
 <h3><span class="section-number">9.2.3. </span>최적의 군집수<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
-<p>군집수가 적절하지 않으면 좋지 않은 모델로 수렴할 수 있다.</p>
+<p>군집수가 적절하지 않으면 좋지 않은 모델로 수렴할 수 있다.
+5개의 군집이 적절한 데이터셋에 대해 왼쪽 그림처럼 3개의 센트로이다만 사용하거나,
+오른쪽 그램처럼 너무 많은 8개의 센트로이드를 사용하면 군집화가 적절하게
+진행되지 않는다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-08.png" width="700"/></div><p><strong>방법 1: 관성과 군집수</strong></p>
-<p>군집수 k가 증가할 수록 관성은 기본적으로 줄어들기에 관성만으로 모델을 평가할 수는 없다.
-하지만 관성이 더 이상 획기적으로 줄어들지 않는 지점을 군집수 후보로 선정할 수 있다.
+<p>군집수 k가 증가할 수록 관성은 기본적으로 줄어들기에 관성만으로 모델을 평가하기엔 부족하다.
+하지만 관성이 더 이상 획기적으로 줄어들지 않는 지점을 군집수 후보로 선정할 수는 있다.
 예를 들어 아래 그래프는 k가 1부터 9까지 변하는 동안 훈련된 모델의 관성을 측정하며,
-관성이 줄어드는 현상이 약화되는 k=4를 후보로 추천한다.</p>
+관성이 현격하게 줄어드는 현상이 약화되기 시작하는 k=4가 군집수 후보로 괜찮아 보인다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-09.png" width="600"/></div><p>이유는 군집이 네 개보다 작으면 별로이고, 4개보다 많아도 훨씬 좋아진다고 보기 어렵기 때문이다.
 하지만 4개의 군집으로 구성하려 하면 아래 그림과 같이 왼쪽 하단 두 개의 군집이 하나의 군집으로 처리될 수 있기에
 가장 좋은 군집화라고 말하기 어렵다.</p>
@@ -691,15 +698,15 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 </ul>
 <p>실루엣 계수는 -1과 1사이의 값이며, 다음 특성을 보여준다.</p>
 <ul class="simple">
-<li><p>1에 가까운 값: 적절한 군집에 포함됨.</p></li>
-<li><p>0에 가까운 값: 군집 경계에 위치</p></li>
-<li><p>-1에 가까운 값: 잘못된 군집에 포함됨</p></li>
+<li><p>1에 가까운 값: 적절한 군집에 포함됨. 이유는 <span class="math notranslate nohighlight">\(b\)</span>가 <span class="math notranslate nohighlight">\(a\)</span>보다 월등이 크기에 <span class="math notranslate nohighlight">\(\frac{b - a}{\max(a, b)}\)</span>가 <span class="math notranslate nohighlight">\(\frac{b}{b}\)</span>에 가까워짐.</p></li>
+<li><p>0에 가까운 값: 군집 경계에 위치. 이유는 <span class="math notranslate nohighlight">\(a \simeq b\)</span> 이기에 <span class="math notranslate nohighlight">\(\frac{b - a}{\max(a, b)}\)</span>가 <span class="math notranslate nohighlight">\(0\)</span>에 가까워짐.</p></li>
+<li><p>-1에 가까운 값: 잘못된 군집에 포함됨. 이유는 <span class="math notranslate nohighlight">\(a\)</span>가 <span class="math notranslate nohighlight">\(b\)</span>보다 월등이 크기에 <span class="math notranslate nohighlight">\(\frac{b - a}{\max(a, b)}\)</span>가 <span class="math notranslate nohighlight">\(\frac{-a}{a}\)</span>에 가까워짐.</p></li>
 </ul>
 <p>k=4가 여전히 매우 좋아 보인다.
 하지만 관성의 경우와는 달리 k=5도 역시 꽤 좋다는 것을 알 수 있다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-11.png" width="600"/></div><p><strong>방법 3: 실루엣 다이어그램과 군집수</strong></p>
-<p><strong>실루엣 다이어그램</strong>은 군집별로 실루엣 계수들의 모아 놓은 그래프다.
-군집별로 실루엣 계수를 내림차순으로 정렬하면 칼날 모양이 형성된다.</p>
+<p><strong>실루엣 다이어그램</strong>은 군집별로 실루엣 계수들을 모아 놓은 그래프다.
+군집별로 실루엣 계수를 내림차순으로 정렬하면 아래 그림에서처럼 여러 개의 칼날 모양이 군집별로 형성된다.</p>
 <ul class="simple">
 <li><p>칼날 두께: 군집에 포함된 샘플 수</p></li>
 <li><p>칼날 길이: 군집에 포함된 각 샘플의 실루엣 계수</p></li>
@@ -715,10 +722,11 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 <p>첫째, 최적의 모델을 구하기 위해 여러 번 학습해야 한다.</p>
 <p>둘째, 군집수를 미리 지정해야 한다.</p>
 <p>셋째, 군집의 크기나, 샘플의 밀도가 다르거나, 원형이 아닐 경우 잘 작동하지 않는다.
-예를 들어, 아래 그림에서 사용된 데이터 샘플들의 분포가 원형이 아니다.
-오른쪽의 관성이 보다 작지만 훨씬 나뿐 군집이 생성되었다.
+예를 들어, 아래 그림에 사용된 데이터 샘플들의 분포가 원형이 아니기에
+양쪽 그림에서 보여지는 군집화 모두 적절하지 않다.
+그리고 오른쪽 군집의 관성이 왼쪽 보다 작지만 군집화는 오히려 훨씬 나쁘다.
 데이터 분포가 타원형인 경우 이어서 소개하는 가우스 혼합 모델(GMM)이 매우 잘 작동한다.</p>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-13.png" width="600"/></div></section>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-13.png" width="800"/></div></section>
 </section>
 <section id="id7">
 <h2><span class="section-number">9.3. </span>군집화 활용<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h2>
@@ -752,7 +760,7 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 </section>
 </div><p>예를 들어, 미니 MNIST 데이터셋을 50개의 군집으로 나눈 후 각 군집에서
 센트로이드에 가장 가까운 샘플 50개를 대표 이미지로 선정한다.
-선정된 50개 샘플만을 이용하여 분류 모델을 훈련해도 84.9%의 정확도가 달성된다.</p>
+그러면 선정된 50개 샘플만을 이용하여 분류 모델을 훈련해도 84.9%의 정확도가 달성된다.</p>
 <p><strong>레이블 전파</strong></p>
 <p>대표 이미지의 레이블을 해당 군집의 모든 샘플로 전파하는
 기법을 <strong>레이블 전파</strong><font size='2'>label propagation</font>라 한다.
@@ -770,8 +778,8 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 <p>모델의 성능을 보다 높이기 위한 다음 단계로
 <strong>능동 학습</strong><font size='2'>Active Learning</font> 기법을 적용할 수 있다.
 능동 학습은 기존에 훈련된 모델의 약점을 보완하려는 목적으로
-일부 샘플을 사람이 직접 확인해서 라벨을 지정하는 과정을 모델의 성능이 더 이상
-개선되지 않을 때까지 반복한다.</p>
+모델이 예측에 어려움을 겪는 일부 샘플의 라벨을 새롭게 지정해서 모델의 성능을 개선하는 기법이다.
+또한 이 과정을 모델의 성능이 더 이상 개선되지 않을 때까지 반복한다.</p>
 <p>다양한 샘플 선택 전략이 알려져 있지만 <strong>불확실성 샘플링</strong><font size='2'>uncertainty sammpling</font> 전략이
 가장 많이 사용되며, 아래 과정을 훈련 성능이 더 이상 개선되지 않을 때까지 반복한다.</p>
 <ol class="arabic simple">
