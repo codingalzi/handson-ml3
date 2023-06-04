@@ -391,15 +391,19 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">9.3.2. 준지도 학습</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dbscan">9.4. DBSCAN</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">9.5. 가우스 혼합 모델</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">9.5.1. 가우스 혼합 모델 활용: 이상치 탐지</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">9.5.2. 가우션 혼합모델 군집수 지정</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">9.5.3. 베이즈 가우스 혼합 모델</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">9.5.4. 이상치 탐지와 특이치 탐지를 위한 다른 알고리즘</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dbscan">9.4. DBSCAN</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">9.4.1. 사이킷런의 DBSCAN 모델</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">9.4.2. 기타 군집 알고리즘</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">9.6. 연습문제</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">9.5. 가우스 혼합 모델</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">9.5.1. 가우스 혼합 모델 활용: 이상치 탐지</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">9.5.2. 가우션 혼합모델 군집수 지정</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">9.5.3. 베이즈 가우스 혼합 모델</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">9.5.4. 이상치 탐지와 특이치 탐지를 위한 다른 알고리즘</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">9.6. 연습문제</a></li>
 </ul>
             </nav>
         </div>
@@ -793,94 +797,167 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 </section>
 <section id="dbscan">
 <h2><span class="section-number">9.4. </span>DBSCAN<a class="headerlink" href="#dbscan" title="Permalink to this heading">#</a></h2>
+<p>DBSCAN(density-based spatial clustering of applications with noise) 알고리즘은
+데이터 샘플들의 밀도가 높게 연속적으로 이어진 지역을 군집으로 지정한다.
+알고리즘이 작동하는 방식은 다음과 같다.</p>
 <ul class="simple">
-<li><p>연속적인 밀집 지역을 하나의 군집으로 설정.</p></li>
+<li><p>각 샘플에 대해 <span class="math notranslate nohighlight">\(\varepsilon\)</span>-<strong>이웃</strong>에 자신을 포함하여 몇 개의 샘플이 있는지 확인한다.
+<span class="math notranslate nohighlight">\(\varepsilon\)</span>-<strong>이웃</strong>은 샘플을 중심으로 반경이 <span class="math notranslate nohighlight">\(\varepsilon\)</span>인 지역을 가리킨다.</p></li>
+<li><p>어떤 샘플의 <span class="math notranslate nohighlight">\(\varepsilon\)</span>-이웃 안에 <code class="docutils literal notranslate"><span class="pre">min_samples</span></code> 개수 이상의 샘플이 존재한다는 해당 샘플을
+<strong>핵심 샘플</strong><font size='2'>core instance</font>라 부른다.</p></li>
+<li><p>핵심 샘플의 <span class="math notranslate nohighlight">\(\varepsilon\)</span>-이웃에 포함된 샘플은 모두 동일한 군집에 속한다.
+<span class="math notranslate nohighlight">\(\varepsilon\)</span>-이웃에 포함된 다른 샘플 또한 핵심 샘플인 경우 해당 샘플의 <span class="math notranslate nohighlight">\(\varepsilon\)</span>-이웃에
+포함된 샘플도 모두 동일한 군집에 속한다.
+즉, 군집이 핵심 샘플들의 <span class="math notranslate nohighlight">\(\varepsilon\)</span>-이웃으로 이뤄진다.</p></li>
+<li><p>핵심 샘플이 아니면서 동시에 <span class="math notranslate nohighlight">\(\varepsilon\)</span>-이웃에 자신 이외의 다른 샘플이 없다면
+그런 샘플은 이상치로 간주된다.</p></li>
 </ul>
-<p><strong>사이킷런의 DBSCAN 모델</strong></p>
-<ul class="simple">
-<li><p>두 개의 하이퍼파라미터 사용</p>
-<ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">eps</span></code>: <span class="math notranslate nohighlight">\(\varepsilon\)</span>-이웃 범위</p>
-<ul>
-<li><p>주어진 기준값 <span class="math notranslate nohighlight">\(\varepsilon\)</span> 반경 내에 위치한 샘플</p></li>
-</ul>
-</li>
-<li><p><code class="docutils literal notranslate"><span class="pre">min_samples</span></code>: <span class="math notranslate nohighlight">\(\varepsilon\)</span> 반경 내에 위치하는 이웃의 수</p></li>
-</ul>
-</li>
-</ul>
-<p><strong>핵심샘플과 군집</strong></p>
-<ul class="simple">
-<li><p>핵심샘플: <span class="math notranslate nohighlight">\(\varepsilon\)</span> 반경 내에 자신을 포함해서 <code class="docutils literal notranslate"><span class="pre">min-samples</span></code>개의 이웃을 갖는 샘플</p></li>
-<li><p>군집: 핵심샘플로 이루어진 이웃들로 구성된 그룹</p></li>
-</ul>
-<p><strong>이상치</strong></p>
-<ul class="simple">
-<li><p>핵심샘플이 아니면서 동시에 핵심샘플의 이웃도 아닌 샘플.</p></li>
-</ul>
-<p><strong>예제:</strong> 반달모양 데이터 활용</p>
-<hr class="docutils" />
+<p>DBSCAN 알고리즘은 모든 군집이 밀도가 낮은 지역으로 구분될 때 잘 작동한다.</p>
+<section id="id10">
+<h3><span class="section-number">9.4.1. </span>사이킷런의 DBSCAN 모델<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h3>
+<p>앞서 설명한 <span class="math notranslate nohighlight">\(\varepsilon\)</span>-이웃의 반경과 <code class="docutils literal notranslate"><span class="pre">min_samples</span></code> 두 개의 하이퍼파라미터를 사용한다.</p>
+<p><strong>예제: 초승달 데이터 군집화</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">DBSCAN</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_moons</span>
 
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_moons</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
 <span class="n">dbscan</span> <span class="o">=</span> <span class="n">DBSCAN</span><span class="p">(</span><span class="n">eps</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">min_samples</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 <span class="n">dbscan</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 </pre></div>
 </div>
-<hr class="docutils" />
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-16.png" width="600"/></div><p><strong>DBSCAN과 예측</strong></p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">predict()</span></code> 메서드 지원하지 않음.</p></li>
-<li><p>이유: <code class="docutils literal notranslate"><span class="pre">KNeighborsClassifier</span></code> 등 보다 좋은 성능의 분류 알고리즘 활용 가능.</p></li>
-<li><p>아래 코드: 핵심샘플 대상 훈련.</p></li>
-</ul>
-<hr class="docutils" />
+<p><strong>군집 라벨</strong></p>
+<p>DBSCAN 모델이 찾은 군집 정보는 0, 1, 2, … 등 정수 인덱스로 표기되며
+각 샘들의 군집 정보는 <code class="docutils literal notranslate"><span class="pre">labels_</span></code> 속성에 저장된다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dbscan</span><span class="o">.</span><span class="n">labels_</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+<span class="go">array([ 0,  2, -1, -1,  1,  0,  0,  0,  2,  5])</span>
+</pre></div>
+</div>
+<p>핵심 샘플들의 인덱스는 <code class="docutils literal notranslate"><span class="pre">core_sample_indices_</span></code> 속성에 저장된다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dbscan</span><span class="o">.</span><span class="n">core_sample_indices_</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+<span class="go">array([ 0,  4,  5,  6,  7,  8, 10, 11, 12, 13])</span>
+</pre></div>
+</div>
+<p>핵심 샘플로 구성된 데이터셋은 <code class="docutils literal notranslate"><span class="pre">components_</span></code> 속성에 저장된다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dbscan</span><span class="o">.</span><span class="n">components_</span>
+<span class="go">array([[-0.02137124,  0.40618608],</span>
+<span class="go">       [-0.84192557,  0.53058695],</span>
+<span class="go">       [ 0.58930337, -0.32137599],</span>
+<span class="go">       ...,</span>
+<span class="go">       [ 1.66258462, -0.3079193 ],</span>
+<span class="go">       [-0.94355873,  0.3278936 ],</span>
+<span class="go">       [ 0.79419406,  0.60777171]])</span>
+</pre></div>
+</div>
+<p><strong>군집화 결과</strong></p>
+<p>아래 그림은 <span class="math notranslate nohighlight">\(\varepsilon\)</span>-이웃의 반경을 0.05로 할 때(왼쪽)와 0.2로 할 때(오른쪽)의 차이를 보여준다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-16.png" width="800"/></div>
+<br><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>특징</p></th>
+<th class="head text-center"><p>왼쪽 그림(이웃 반경 0.05)</p></th>
+<th class="head text-center"><p>오른쪽 그림(이웃 반경 0.2)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p>군집수</p></td>
+<td class="text-center"><p>2개 초과</p></td>
+<td class="text-center"><p>2개</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>이상치(빨강 🗙)</p></td>
+<td class="text-center"><p>많음</p></td>
+<td class="text-center"><p>없음</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>DBSCAN과 예측</strong></p>
+<p>DBSCAN 모델은 <code class="docutils literal notranslate"><span class="pre">predict()</span></code> 메서드를 지원하지 않는다. 즉, 새로운 샘플에 대한 군집 예측을 지원하지 않는다.
+반면에 <code class="docutils literal notranslate"><span class="pre">fit_predict()</span></code> 메서드는 지원하여 훈련셋에 대한 군집 인덱스는 예측한다.
+<code class="docutils literal notranslate"><span class="pre">predict()</span></code> 메서드를 지원하지 않는 이유는
+더 좋은 성능의 분류기를 대신 이용할 수 있기 때문이다.
+예를 들어 아래 코드는 <code class="docutils literal notranslate"><span class="pre">KNeighborsClassifier</span></code> 분류 모델을 핵심 샘플들을 이용하여
+지도학습을 진행한다.</p>
+<p>아래 코드에서 <code class="docutils literal notranslate"><span class="pre">dbscan</span></code>은 <code class="docutils literal notranslate"><span class="pre">eps=0.2</span></code>로 훈련된 모델을 가리킨다.
+즉, 위 오른쪽 그림에서 사용된 DBSCAN 모델이다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsClassifier</span>
 
 <span class="n">knn</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
 <span class="n">knn</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">dbscan</span><span class="o">.</span><span class="n">components_</span><span class="p">,</span> <span class="n">dbscan</span><span class="o">.</span><span class="n">labels_</span><span class="p">[</span><span class="n">dbscan</span><span class="o">.</span><span class="n">core_sample_indices_</span><span class="p">])</span>
 </pre></div>
 </div>
-<hr class="docutils" />
+<p>주의사항: 위 코드는 핵심 샘플만 이용해서 훈련하지만 당연히 모든 샘플을 이용할 수도 있다.</p>
+<p><code class="docutils literal notranslate"><span class="pre">knn</span></code>은 분류 모델이기에 당연히 새로운 데이터 샘플에 대해 클래스를 예측하거나
+클래스별 확률을 예측할 수 있다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">X_new</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">knn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_new</span><span class="p">)</span>
+<span class="go">array([1, 0, 1, 0])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">knn</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_new</span><span class="p">)</span>
+<span class="go">array([[0.18, 0.82],</span>
+<span class="go">       [1. , 0. ],</span>
+<span class="go">       [0.12, 0.88],</span>
+<span class="go">       [1. , 0. ]])</span>
+</pre></div>
+</div>
+<p><strong>결정 경계</strong></p>
+<p>아래 그림은 <code class="docutils literal notranslate"><span class="pre">knn</span></code> 모델을 이용하여 두 개의 그룹을 분류하는 결정 경계를 보여준다.
+파랑 덧셈 기호 +는 이전 코드에서 지정한 새 데이터 샘플 4 개를 가리킨다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-17a.png" width="450"/></div><p>그런데 빨강 동그라미로 감싸진 두 샘플은 사실 이상치로 취급되어야 한다.
+이유는 다른 데이터들로부터 너무 멀리 떨어져 있기 때문이다.</p>
+<p>그런데 앞서 이웃 반경 하이퍼파라미터를 <code class="docutils literal notranslate"><span class="pre">eps=0.2</span></code>로 훈련된 DBSCAN 모델은
+이상치를 전혀 지정하지 않는다.
+이런 경우 <code class="docutils literal notranslate"><span class="pre">knn</span></code> 모델의 <code class="docutils literal notranslate"><span class="pre">kneighbors()</span></code> 메서드를 이용하여 예측값을 수정할 수 있다</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 가장 가까운 훈련셋 샘플 하나씩 선택</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">y_dist</span><span class="p">,</span> <span class="n">y_pred_idx</span> <span class="o">=</span> <span class="n">knn</span><span class="o">.</span><span class="n">kneighbors</span><span class="p">(</span><span class="n">X_new</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># 선택된 훈련셋 샘플과 동일한 군집으로 지정</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">y_pred</span> <span class="o">=</span> <span class="n">dbscan</span><span class="o">.</span><span class="n">labels_</span><span class="p">[</span><span class="n">dbscan</span><span class="o">.</span><span class="n">core_sample_indices_</span><span class="p">][</span><span class="n">y_pred_idx</span><span class="p">]</span>
+
+<span class="c1"># 선택된 훈련세 샘플과의 거리가 0.2보다 큰 경우 이상치로 지정. -1은 이상치를 가리킴.</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">y_pred</span><span class="p">[</span><span class="n">y_dist</span> <span class="o">&gt;</span> <span class="mf">0.2</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">y_pred</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+<span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
 <ul class="simple">
-<li><p>이후 새로운 샘플에 대한 예측 가능</p></li>
-<li><p>아래 그림은 새로운 4개의 샘플에 대한 예측을 보여줌.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">kneighbors()</span></code> 메서드의 반환값: <code class="docutils literal notranslate"><span class="pre">X_new</span></code>에 속한 4개의 데이터 샘플 각각에 대해
+가장 가까운 훈련셋 샘플 하나씩 선택한 다음 거리와 훈련셋 샘플의 인덱스를 반환한다.
+훈련셋 샘플을 하나씩만 선택하는 이유는 <code class="docutils literal notranslate"><span class="pre">n_neighbors=1</span></code> 키워드 인자가 사용됐기 때문이다.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">X_new</span></code>에 속한 4개의 데이터 샘플 각각을 선택된 훈련셋 샘플과 동일한 군집으로 할당한다.
+단, 훈련셋 샘플과의 거리가 0.2 보다 크면 이상치로 처리한다.
+군집 인덱스가 -1이면 이상치로 처리된다.</p></li>
 </ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-17.png" width="450"/></div><p><strong>이상치 판단</strong></p>
+<p><strong>DBSCAN의 장단점</strong></p>
+<p>장점은 다음과 같다.</p>
 <ul class="simple">
-<li><p>위 예제에서, 두 군집으로부터 일정거리 이상 떨어진 샘플을 이상치로 간주 가능.</p></li>
-<li><p>예를 들어, 양편 끝쪽에 위치한 두 개의 샘플이 이상치로 간주될 수 있음.</p></li>
+<li><p>단 2개의 하이퍼파라미터만을 사용하는 단순하지만 매우 강력한 알고리즘이다.</p></li>
+<li><p>군집의 모양과 개수에 상관없이 일반적으로 잘 작동한다.</p></li>
+<li><p>이상치에 별로 민감하지 않다. 즉, 이상치가 있어도 군집을 잘 생성한다.</p></li>
 </ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-17a.png" width="450"/></div><p><strong>DBSCAN의 장단점</strong></p>
+<p>반면에 단점은 다음과 같다.</p>
 <ul class="simple">
-<li><p>매우 간단하면서 매우 강력한 알고리즘.</p>
-<ul>
-<li><p>하이퍼파라미터: 단 2개</p></li>
-</ul>
-</li>
-<li><p>군집의 모양과 개수에 상관없음.</p></li>
-<li><p>이상치에 안정적임.</p></li>
-<li><p>군깁 간의 밀집도가 크게 다르면 모든 군집 파악 불가능.</p></li>
-</ul>
-<p><strong>계산복잡도</strong></p>
-<ul class="simple">
-<li><p>시간복잡도: 약 <span class="math notranslate nohighlight">\(O(m\, \log m)\)</span>. 단, <span class="math notranslate nohighlight">\(m\)</span>은 샘플 수</p></li>
-<li><p>공간복잡도: 사이킷런의 DBSCAN 모델은 <span class="math notranslate nohighlight">\(O(m^2)\)</span>의 메모리 요구.</p>
-<ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">eps</span></code>가 커질 경우.</p></li>
-</ul>
-</li>
-</ul>
-<p><strong>기타 군집 알고리즘</strong></p>
-<ul class="simple">
-<li><p>응집 군집(병합 군집, agglomerative clustering)</p></li>
-<li><p>BIRCH</p></li>
-<li><p>평균-이동</p></li>
-<li><p>유사도 전파</p></li>
-<li><p>스펙트럼 군집</p></li>
+<li><p>군집들의 밀도가 서로 크게 다르거나 두 군집 사이의 영역의 밀도가 충분히 낮지 않으면
+서로 다른 군집을 제대로 분리하지 못할 수도 있다.</p></li>
+<li><p>알고리즘의 시간복잡도가 <span class="math notranslate nohighlight">\(O(m^2 n)\)</span>이기에 대용량 훈련셋을 이용한 훈련은 어렵다.</p></li>
 </ul>
 </section>
-<section id="id10">
-<h2><span class="section-number">9.5. </span>가우스 혼합 모델<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h2>
+<section id="id11">
+<h3><span class="section-number">9.4.2. </span>기타 군집 알고리즘<a class="headerlink" href="#id11" title="Permalink to this heading">#</a></h3>
+<p>군집의 밀도가 서로 다른 경우 계층 DBSCAN 군집화를 지원하는 <code class="docutils literal notranslate"><span class="pre">HDBSCAN</span></code> 모델이 보다 잘 작동한다.
+그런데 <code class="docutils literal notranslate"><span class="pre">HDBSCAN</span></code> 모델은 사이킷런에서 정식으로 지원되지 않기에 추가 설치해서 사용해야 한다.
+보다 자세한 사항은 <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.SpectralClustering.html">HDBSCAN 군집화 라이브러리 공식 문서</a>를
+참고한다.</p>
+<p>사이킷런 라이브러리가 제공하는 기타 군집 알고리즘은 다음과 같다.
+각 모델의 사용법은 공식 문서를 참고한다.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.AgglomerativeClustering.html">Agglomerative clustering</a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.Birch.html">BIRCH</a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.MeanShift.html">Mean-shift</a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.AffinityPropagation.html">Affinity propagation</a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.SpectralClustering.html">Spectral clustering</a></p></li>
+</ul>
+</section>
+</section>
+<section id="id12">
+<h2><span class="section-number">9.5. </span>가우스 혼합 모델<a class="headerlink" href="#id12" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
 <li><p>데이터셋이 여러 개의 혼합된 가우스 분포를 따르는 샘플들로 구성되었다고 가정.</p></li>
 <li><p>가우스 분포 = 정규분포</p></li>
@@ -965,14 +1042,14 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 </ul>
 </li>
 </ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-20.png" width="600"/></div><section id="id11">
-<h3><span class="section-number">9.5.1. </span>가우스 혼합 모델 활용: 이상치 탐지<a class="headerlink" href="#id11" title="Permalink to this heading">#</a></h3>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-20.png" width="600"/></div><section id="id13">
+<h3><span class="section-number">9.5.1. </span>가우스 혼합 모델 활용: 이상치 탐지<a class="headerlink" href="#id13" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
 <li><p>밀도가 임곗값보다 낮은 지역에 있는 샘플을 이상치로 간주 가능.</p></li>
 </ul>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-21.png" width="500"/></div></section>
-<section id="id12">
-<h3><span class="section-number">9.5.2. </span>가우션 혼합모델 군집수 지정<a class="headerlink" href="#id12" title="Permalink to this heading">#</a></h3>
+<section id="id14">
+<h3><span class="section-number">9.5.2. </span>가우션 혼합모델 군집수 지정<a class="headerlink" href="#id14" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
 <li><p>k-평균에서 사용했던 관성 또는 실루엣 점수 사용 불가.</p>
 <ul>
@@ -1011,8 +1088,8 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 <li><p><span class="math notranslate nohighlight">\(k=3\)</span>이 최적으로 보임.</p></li>
 </ul>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-22.png" width="600"/></div></section>
-<section id="id13">
-<h3><span class="section-number">9.5.3. </span>베이즈 가우스 혼합 모델<a class="headerlink" href="#id13" title="Permalink to this heading">#</a></h3>
+<section id="id15">
+<h3><span class="section-number">9.5.3. </span>베이즈 가우스 혼합 모델<a class="headerlink" href="#id15" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
 <li><p>베이즈 확률통계론 활용</p></li>
 </ul>
@@ -1064,8 +1141,8 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 </li>
 </ul>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-23.png" width="700"/></div></section>
-<section id="id14">
-<h3><span class="section-number">9.5.4. </span>이상치 탐지와 특이치 탐지를 위한 다른 알고리즘<a class="headerlink" href="#id14" title="Permalink to this heading">#</a></h3>
+<section id="id16">
+<h3><span class="section-number">9.5.4. </span>이상치 탐지와 특이치 탐지를 위한 다른 알고리즘<a class="headerlink" href="#id16" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
 <li><p>PCA</p></li>
 <li><p>Fast-MCD</p></li>
@@ -1075,8 +1152,8 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 </ul>
 </section>
 </section>
-<section id="id15">
-<h2><span class="section-number">9.6. </span>연습문제<a class="headerlink" href="#id15" title="Permalink to this heading">#</a></h2>
+<section id="id17">
+<h2><span class="section-number">9.6. </span>연습문제<a class="headerlink" href="#id17" title="Permalink to this heading">#</a></h2>
 <ol class="arabic simple">
 <li><p><a class="reference external" href="https://codingalzi.github.io/handson-ml3/end2end_ml_project.html#id18">2장</a>에서 정의한
 <code class="docutils literal notranslate"><span class="pre">ClusterSimilarity</span></code>에 사용된 <code class="docutils literal notranslate"><span class="pre">KMeans</span></code> 모델의 <code class="docutils literal notranslate"><span class="pre">n_cluster</span></code> 인자의 최적값을 확인하라.</p></li>
@@ -1155,15 +1232,19 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">9.3.2. 준지도 학습</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dbscan">9.4. DBSCAN</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">9.5. 가우스 혼합 모델</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">9.5.1. 가우스 혼합 모델 활용: 이상치 탐지</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">9.5.2. 가우션 혼합모델 군집수 지정</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">9.5.3. 베이즈 가우스 혼합 모델</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">9.5.4. 이상치 탐지와 특이치 탐지를 위한 다른 알고리즘</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dbscan">9.4. DBSCAN</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">9.4.1. 사이킷런의 DBSCAN 모델</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">9.4.2. 기타 군집 알고리즘</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">9.6. 연습문제</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">9.5. 가우스 혼합 모델</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">9.5.1. 가우스 혼합 모델 활용: 이상치 탐지</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">9.5.2. 가우션 혼합모델 군집수 지정</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">9.5.3. 베이즈 가우스 혼합 모델</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">9.5.4. 이상치 탐지와 특이치 탐지를 위한 다른 알고리즘</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">9.6. 연습문제</a></li>
 </ul>
   </nav></div>
 
