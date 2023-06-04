@@ -561,7 +561,7 @@ document.write(`
 <span class="c1"># 즉, 비싼 주택 가격을 갖는 구역을 중요시하며 따라서 센트로이드로 지정될 가능성을 높임.</span>
 <span class="c1"># transform() 메서드는 각 샘플과 10개의 센트로이드 사이의 유사도 계산</span>
 
-<span class="n">housing_labels</span> <span class="o">=</span> <span class="n">strat_train_set</span><span class="p">[</span><span class="s2">&quot;median_house_value&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">housing_labels</span> <span class="o">=</span> <span class="n">strat_train_set</span><span class="p">[</span><span class="s2">&quot;median_house_value&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="c1"># 중앙 주택 가격</span>
 <span class="n">similarities</span> <span class="o">=</span> <span class="n">cluster_simil</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">housing</span><span class="p">[[</span><span class="s2">&quot;latitude&quot;</span><span class="p">,</span> <span class="s2">&quot;longitude&quot;</span><span class="p">]],</span> 
                                            <span class="n">sample_weight</span><span class="o">=</span><span class="n">housing_labels</span><span class="p">)</span>
 </pre></div>
@@ -575,8 +575,11 @@ document.write(`
 <span class="go">       [0.86, 0.  , 0.89, 0.  , 0.  , 0.  , 0.14, 0.  , 0.03, 0.  ]])</span>
 </pre></div>
 </div>
-<div class="info admonition">
-<p class="admonition-title">함수</p>
+<p>아래 그림에서 🗙는 각 군집의 중심 구역을 나타내며,
+색상은 센트로이드 구역과의 유사도를 가리킨다.
+빨강색의 구역이 센트로이드 구역과의 유사도가 1에 가깝다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-cluster.jpg" width="550"></div><div class="info admonition">
+<p class="admonition-title">가우스 방사 기저 함수</p>
 <p><code class="docutils literal notranslate"><span class="pre">rbf_kernel()</span></code> 는 <strong>가우스 방사 기저 함수</strong><font size='2'>Gaussian radial basis function</font>를
 가리키며 다음과 같이 정의된다.
 특정 지점을 가리키는 랜드마크<font size='2'>landmark</font>인 <span class="math notranslate nohighlight">\(\mathbf{m}\)</span>으로부터 조금만 멀어져도
