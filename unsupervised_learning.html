@@ -397,10 +397,11 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">9.5. 가우스 혼합 모델</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">9.5.1. 가우스 혼합 모델 활용: 이상치 탐지</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">9.5.2. 가우션 혼합모델 군집수 지정</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">9.5.3. 베이즈 가우스 혼합 모델</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">9.5.4. 이상치 탐지와 특이치 탐지를 위한 다른 알고리즘</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gmm">9.5.1. GMM 활용</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">9.5.2. 이상치 탐지</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">9.5.3. 군집수 지정</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">9.5.4. 베이즈 가우스 혼합 모델</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">9.5.5. 이상치 탐지와 특이치 탐지를 위한 다른 알고리즘</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">9.6. 연습문제</a></li>
@@ -960,206 +961,198 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 </section>
 <section id="id12">
 <h2><span class="section-number">9.5. </span>가우스 혼합 모델<a class="headerlink" href="#id12" title="Permalink to this heading">#</a></h2>
+<p>가우스 혼합 모델<font size='2'>Gaussian mixture model</font> (GMM)은
+데이터셋이 여러 개의 혼합된 가우스 분포를 따르는 샘플들로 구성되었다고 가정한다.</p>
+<p><strong>가우스 분포</strong></p>
+<p>데이터셋에 포함된 데이터들의 확률분포가 아래 그림에 있는 곡선들처럼 종 모양의 (정규분포) 확률밀도함수를
+가질 경우 가우스 분포를 따른다라고 말한다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-18.png" width="400"/></div><p>예를 들어 아래 그림에 있는 데이터셋은 서로 다른 세 개의 가우스 분포를 따르는 세 개의 데이터 군집들의 혼합으로 구성된다.
+세 개의 가우스 분포의 평균값, 표준편차, 샘플의 개수가 모두 다르며, 그에따라
+각각의 군집을 나타내는 타원의 모양, 위치, 타원 내의 데이터 밀도 등이 모두 다르다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-13.png" width="600"/></div><p>임의의 데이터셋이 어떤 가우스 분포들의 혼합으로 이뤄졌는지를 알아내서 그에 따른
+군집을 형성해야 한다.
+하지만 일반적으로는 가우스 분포를 따른다는 보장도 없기에 다양한 군집 알고리즘을 활용해서
+가장 좋은 알고리즘을 선택해야 한다.</p>
+<p>여기서는 데이터셋이 여러 개의 가우스 분포로 혼합된 분포를 따른다고 가정하면서
+가우스 혼합 모델의 작동 방식을 살펴 본다.</p>
+<section id="gmm">
+<h3><span class="section-number">9.5.1. </span>GMM 활용<a class="headerlink" href="#gmm" title="Permalink to this heading">#</a></h3>
+<p>아래 코드는 위 그림에서 사용된 데이터셋에 대해
+가우스 혼합 모델(GMM)을 훈련 시켜서 데이터셋에 포함된 군집 각각을 특징 짓는 가우스 분포를 찾는다.</p>
 <ul class="simple">
-<li><p>데이터셋이 여러 개의 혼합된 가우스 분포를 따르는 샘플들로 구성되었다고 가정.</p></li>
-<li><p>가우스 분포 = 정규분포</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GaussianMixture</span></code>: 가우스 혼합 모델</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">n_components</span></code>: k-평균 모델의 경우처럼 군집수는 미리 지정해야 함.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">n_init</span></code>: k-평균 모델의 경우처럼 군집의 파라미터(평균값, 공분산 등)를 무작위로 선택한 후
+좋은 군집으로 수렴할 때까지 학습시킴. 아래 모델은 10번 시도.</p></li>
 </ul>
-<p><strong>정규분포 소개</strong></p>
-<ul class="simple">
-<li><p>종 모양의 확률밀도함수를 갖는 확률분포</p></li>
-</ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-18.png" width="400"/></div><p><strong>군집</strong></p>
-<ul class="simple">
-<li><p>하나의 가우스 분포에서 생생된 모든 샘플들의 그룹</p></li>
-<li><p>일반적으로 타원형 모양.</p></li>
-</ul>
-<p><strong>예제</strong></p>
-<ul class="simple">
-<li><p>아래 그림에서처럼 일반적으로 모양, 크기, 밀집도, 방향이 다름.</p></li>
-<li><p>따라서 각 샘플이 어떤 정규분포를 따르는지를 파악하는 게 핵심.</p></li>
-</ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-13.png" width="600"/></div><p><strong>GMM 활용</strong></p>
-<ul class="simple">
-<li><p>위 데이터셋에 <code class="docutils literal notranslate"><span class="pre">GaussianMixture</span></code> 모델 적용</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">n_components</span></code>: 군집수 지정</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">n_init</span></code>: 모델 학습 반복 횟수.</p>
-<ul>
-<li><p>파라미터(평균값, 공분산 등)를 무작위로 추정한 후 수렴할 때까지 학습시킴.</p></li>
-</ul>
-</li>
-</ul>
-<hr class="docutils" />
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.mixture</span> <span class="kn">import</span> <span class="n">GaussianMixture</span>
 
 <span class="n">gm</span> <span class="o">=</span> <span class="n">GaussianMixture</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_init</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 <span class="n">gm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 </pre></div>
 </div>
-<hr class="docutils" />
+<p>학습된 모델을 이용하여 아래 그림을 그릴 수 있다.</p>
 <ul class="simple">
-<li><p>아래 그림은 학습된 모델을 보여줌.</p>
-<ul>
-<li><p>군집 평균, 결정 경계, 밀도 등고선</p></li>
+<li><p>군집 평균: 🗙 표시</p></li>
+<li><p>결정 경계: 빨강 파선</p></li>
+<li><p>밀도 등고선: 진한 파랑색에 가까울 수록 데이터 밀도 높음</p></li>
 </ul>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-19.png" width="600"/></div><p>위 모델이 찾은 세 군집의 분포는 다음과 같다.</p>
+<ul>
+<li><p>군집별 가중치: 군집별 데이터 수의 상대적 비율 가리킴</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">gm</span><span class="o">.</span><span class="n">weights_</span>
+<span class="go">array([0.39025715, 0.40007391, 0.20966893])</span>
+</pre></div>
+</div>
 </li>
 </ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-19.png" width="500"/></div><p><strong>GMM 모델 규제</strong></p>
-<ul class="simple">
-<li><p>특성수가 크거나, 군집수가 많거나, 샘플이 적은 경우 최적 모델 학습 어려움.</p></li>
-<li><p>공분산(covariance)에 규제를 가해서 학습을 도와줄 수 있음.</p>
 <ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">covariance_type</span></code> 설정.</p></li>
-</ul>
+<li><p>군집별 평균값</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">gm</span><span class="o">.</span><span class="n">means_</span>
+<span class="go">array([[ 0.05131611, 0.07521837],</span>
+<span class="go">       [-1.40763156, 1.42708225],</span>
+<span class="go">       [ 3.39893794, 1.05928897]])</span>
+</pre></div>
+</div>
 </li>
 </ul>
-<p><strong>covariance_type 옵션값</strong></p>
-<ul class="simple">
-<li><p>full</p>
 <ul>
-<li><p>아무런 제한 없음.</p></li>
-<li><p>기본값임.</p></li>
-</ul>
+<li><p>군집별 공분산</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[[</span> <span class="mf">0.68799922</span><span class="p">,</span> <span class="mf">0.79606357</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mf">0.79606357</span><span class="p">,</span> <span class="mf">1.21236106</span><span class="p">]],</span>
+       <span class="p">[[</span> <span class="mf">0.63479409</span><span class="p">,</span> <span class="mf">0.72970799</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mf">0.72970799</span><span class="p">,</span> <span class="mf">1.1610351</span> <span class="p">]],</span>
+       <span class="p">[[</span> <span class="mf">1.14833585</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.03256179</span><span class="p">],</span>
+        <span class="p">[</span><span class="o">-</span><span class="mf">0.03256179</span><span class="p">,</span> <span class="mf">0.95490931</span><span class="p">]]])</span>
+</pre></div>
+</div>
 </li>
 </ul>
+<p><strong>하드/소프트 군집화</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">predict()</span></code> 메서드는 샘플이 속하는 군집을,
+<code class="docutils literal notranslate"><span class="pre">predict_proba()</span></code> 메서드는 샘플이 각 군집에 속할 상대적 확률을 계산한다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">gm</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="go">array([0, 0, 1, ..., 2, 2, 2])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gm</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">array([[0.977, 0. , 0.023],</span>
+<span class="go">       [0.983, 0.001, 0.016],</span>
+<span class="go">       [0. , 1. , 0. ],</span>
+<span class="go">       ...,</span>
+<span class="go">       [0. , 0. , 1. ],</span>
+<span class="go">       [0. , 0. , 1. ],</span>
+<span class="go">       [0. , 0. , 1. ]])</span>
+</pre></div>
+</div>
+<p><strong>데이터 밀도 측정</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">score_samples()</span></code> 메서드는 임의의 위치에서의 확률 밀도의 로그값을 예측한다.
+값이 클 수록 높은 밀도를 나타낸다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">gm</span><span class="o">.</span><span class="n">score_samples</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">array([-2.61, -3.57, -3.33, ..., -3.51, -4.4 , -3.81])</span>
+</pre></div>
+</div>
+<p><strong>GMM 모델 공분산 규제</strong></p>
+<p>데이터셋의 차원이 크거나, 군집수가 많거나, 샘플이 적은 경우 최적의 군집화가 어려울 수 있다.
+이런 경우엔 공분산 유형을 지정해서 학습을 도와줄 수 있다.
+이를 위해 <code class="docutils literal notranslate"><span class="pre">covariance_type</span></code> 하이퍼파라미터를 <code class="docutils literal notranslate"><span class="pre">full</span></code> 대신 다른 값을 지정한다.
+사용할 수 있는 값은 다음과 같다.</p>
 <ul class="simple">
-<li><p>spherical</p>
-<ul>
-<li><p>군집이 원형이라 가정.</p></li>
-<li><p>지름(분산)은 다를 수 있음.</p></li>
+<li><p>full: 공분산에 아무런 아무런 제한 없음. 기본값으로 지정됨.</p></li>
+<li><p>spherical: 군집이 원형이라 가정. 지름(분산)은 다를 수 있음.</p></li>
+<li><p>diag: 어떤 타원형도 가능. 단. 타원의 축이 좌표축과 평행하다고 가정.</p></li>
+<li><p>tied: 모든 군집이 동일 모양, 동일 크기, 동일 방향을 갖는 타원형이라고 가정.</p></li>
 </ul>
-</li>
-</ul>
+<p>아래 왼쪽 그림은 <code class="docutils literal notranslate"><span class="pre">&quot;tied&quot;</span></code>를, 오른쪽 그림은 <code class="docutils literal notranslate"><span class="pre">&quot;spherical&quot;</span></code>을 <code class="docutils literal notranslate"><span class="pre">covariance_type</span></code>으로 지정한 결과를 보여준다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-20.png" width="650"/></div><p><strong>GMM 알고리즘 시간 복잡도</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">GaussianMixture</span></code> 모델의 훈련 시간은 데이터셋의 크기 <span class="math notranslate nohighlight">\(m\)</span>, 차원(특성 수) <span class="math notranslate nohighlight">\(n\)</span>,
+군집 수 <span class="math notranslate nohighlight">\(k\)</span>, 그리고 공분산 규제 방식에 의존한다.</p>
 <ul class="simple">
-<li><p>diag</p>
-<ul>
-<li><p>어떤 타원형도 가능.</p></li>
-<li><p>단. 타원의 축이 좌표축과 평행하다고 가정.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'spherical'</span></code> 또는 <code class="docutils literal notranslate"><span class="pre">'diag'</span></code> 방식: <span class="math notranslate nohighlight">\(O(k m n)\)</span></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'tied'</span></code> 또는 <code class="docutils literal notranslate"><span class="pre">'full'</span></code> 방식: <span class="math notranslate nohighlight">\(O(k m n^2 + k n^3)\)</span></p></li>
 </ul>
-</li>
-</ul>
-<ul class="simple">
-<li><p>tied</p>
-<ul>
-<li><p>모든 군집의 동일 모양, 동일 크기, 동일 방향을 갖는다고 가정.</p></li>
-</ul>
-</li>
-</ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-20.png" width="600"/></div><section id="id13">
-<h3><span class="section-number">9.5.1. </span>가우스 혼합 모델 활용: 이상치 탐지<a class="headerlink" href="#id13" title="Permalink to this heading">#</a></h3>
-<ul class="simple">
-<li><p>밀도가 임곗값보다 낮은 지역에 있는 샘플을 이상치로 간주 가능.</p></li>
-</ul>
+</section>
+<section id="id13">
+<h3><span class="section-number">9.5.2. </span>이상치 탐지<a class="headerlink" href="#id13" title="Permalink to this heading">#</a></h3>
+<p>데이터 확률 밀도가 지정된 임곗값보다 낮은 지역에 있는 샘플을 이상치로 간주할 수 있다.
+임곗값은 상황에 따라 다르게 지정된다.</p>
+<p>예를 들어, 제품이 결함을 가질 확률이 2%로 알려진 경우 임곗값은 2%로 정할 수 있다.
+따라서 군집화 결과 2% 보다 낮은 확률 밀도의 지역에 위치한 샘플은 결함이 있을 가능성이 높다.
+기대했던 것보다 결함율이 낮거나 높은지에 딸 임곗값을 낮추거나 높혀야 한다.</p>
+<p>아래 그림은 확률 밀도가 2% 이하인 지역에 위치한 샘플을 별표(★)를 이용하여 이상치로 표시하였다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">densities</span> <span class="o">=</span> <span class="n">gm</span><span class="o">.</span><span class="n">score_samples</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">density_threshold</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">densities</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">anomalies</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">densities</span> <span class="o">&lt;</span> <span class="n">density_threshold</span><span class="p">]</span>
+</pre></div>
+</div>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-21.png" width="500"/></div></section>
 <section id="id14">
-<h3><span class="section-number">9.5.2. </span>가우션 혼합모델 군집수 지정<a class="headerlink" href="#id14" title="Permalink to this heading">#</a></h3>
-<ul class="simple">
-<li><p>k-평균에서 사용했던 관성 또는 실루엣 점수 사용 불가.</p>
+<h3><span class="section-number">9.5.3. </span>군집수 지정<a class="headerlink" href="#id14" title="Permalink to this heading">#</a></h3>
+<p>적절한 군집수를 미리 지정해야 하는데 일반적으로 미리 알 수 없다.
+앞서 k-평균에서 사용했던 관성 또는 실루엣 점수 방식은 사용할 수 없다.
+대신에 <strong>이론적 정보 기준</strong><font size='2'>theoretical information criterion</font>을
+최소화 하는 모델을 생성하는 군집수를 선택한다.</p>
+<p>이론적 정보 기준으로 보통 다음 두 기준 중 하나를 사용하며,
+값이 작을 수록 좋은 모델로 간주된다.</p>
 <ul>
-<li><p>군집이 타원형일 때 값이 일정하지 않기 때문.</p></li>
-</ul>
-</li>
-</ul>
-<ul class="simple">
-<li><p>대신에 <strong>이론적 정보 기준</strong> 을 최소화 하는 모델 선택 가능.</p></li>
-</ul>
-<p><strong>이론적 정보 기준</strong></p>
-<ul>
-<li><p>BIC: Bayesian information criterion</p>
+<li><p>BIC(Bayesian information criterion):</p>
 <div class="math notranslate nohighlight">
 \[ \log(m)\, p - 2 \log (\hat L)\]</div>
 </li>
-</ul>
-<ul>
-<li><p>AIC: Akaike information criterion</p>
+<li><p>AIC(Akaike information criterion):</p>
 <div class="math notranslate nohighlight">
 \[ 2\, p - 2 \log (\hat L)\]</div>
 </li>
 </ul>
+<p>위 식에 사용된 기호의 의미는 다음과 같다.</p>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(m\)</span>: 샘플 수</p></li>
-<li><p><span class="math notranslate nohighlight">\(p\)</span>: 모델이 학습해야 할 파라미터 수</p></li>
-<li><p><span class="math notranslate nohighlight">\(\hat L\)</span>: 모델의 가능도 함수의 최댓값</p></li>
+<li><p><span class="math notranslate nohighlight">\(m\)</span>: 데이터셋 크기</p></li>
+<li><p><span class="math notranslate nohighlight">\(p\)</span>: 모델이 학습해야 할 파라미터 수, 즉 모델의 복자도를 가리킴.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat L\)</span>: 모델의 가능도 함숫값을 최댓값</p></li>
 </ul>
-<ul class="simple">
-<li><p>학습해야 할 파라미터가 많을 수록 벌칙이 가해짐.</p></li>
-<li><p>데이터에 잘 학습하는 모델일 수록 보상을 더해줌.</p></li>
-</ul>
-<p><strong>군집수와 정보조건</strong></p>
-<ul class="simple">
-<li><p>아래 그림은 군집수 <span class="math notranslate nohighlight">\(k\)</span>와 AIC, BIC의 관계를 보여줌.</p></li>
-<li><p><span class="math notranslate nohighlight">\(k=3\)</span>이 최적으로 보임.</p></li>
-</ul>
+<p>두 식 모두 의미하는 바는 동일하다.
+첫째, 각 군집의 평균값, 표준편차 등 모델이 학습해야 할 파라미터가 많을 수록 벌칙이 가해진다.
+둘째, 데이터셋에 잘 들어맞는 군집화 모델이 학습될 수록  잘 학습하는 모델일 수록 기준값을 낮춘다.</p>
+<p><strong>군집수와 이론적 정보 기준</strong></p>
+<p>아래 그림은 위 데이터셋에 대해 군집수 <span class="math notranslate nohighlight">\(k\)</span>와 AIC, BIC의 관계를 보여주며, <span class="math notranslate nohighlight">\(k=3\)</span>이 최적임을 확인해준다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-22.png" width="600"/></div></section>
 <section id="id15">
-<h3><span class="section-number">9.5.3. </span>베이즈 가우스 혼합 모델<a class="headerlink" href="#id15" title="Permalink to this heading">#</a></h3>
-<ul class="simple">
-<li><p>베이즈 확률통계론 활용</p></li>
-</ul>
-<p><strong>BayesianGaussianMixture 모델</strong></p>
-<ul class="simple">
-<li><p>최적의 군집수를 자동으로 찾아줌.</p></li>
-<li><p>단, 최적의 군집수보다 큰 수를 <code class="docutils literal notranslate"><span class="pre">n_components</span></code>에 전달해야 함.</p>
-<ul>
-<li><p>즉, 군집에 대한 최소한의 정보를 알고 있다고 가정.</p></li>
-</ul>
-</li>
-<li><p>자동으로 불필요한 군집 제거</p></li>
-</ul>
-<hr class="docutils" />
+<h3><span class="section-number">9.5.4. </span>베이즈 가우스 혼합 모델<a class="headerlink" href="#id15" title="Permalink to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">BayesianGaussianMixture</span></code> 모델은 군집수를 미리 지정하지 않아도 적절한 군집수를 찾아준다.
+단, <code class="docutils literal notranslate"><span class="pre">n_components</span></code> 하이퍼파라미터를 이용하여 가능한 최대 군집수를 충분히 크게 지정해줘야 한다.
+그러면 훈련중에 자동으로 불필요한 군집에 0 또는 0에 매우 가까운 가중치를 지정하는 방식으로
+해당 군집을 무시하도록 한다.</p>
+<p>예를 들어 아래 코드는 최대 군집수를 10으로 지정하고 베이즈 가우스 혼합 모델을 훈련시킨다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.mixture</span> <span class="kn">import</span> <span class="n">BayesianGaussianMixture</span>
 
 <span class="n">bgm</span> <span class="o">=</span> <span class="n">BayesianGaussianMixture</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">n_init</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 <span class="n">bgm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 </pre></div>
 </div>
-<hr class="docutils" />
-<ul class="simple">
-<li><p>결과는 군집수 3개를 사용한 이전 결과와 거의 동일.</p></li>
-<li><p>군집수 확인 가능</p></li>
-</ul>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">bgm</span><span class="o">.</span><span class="n">weights_</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<p><code class="docutils literal notranslate"><span class="pre">weights_</span></code> 속성에 저장된 군집별 가중치를 확인하면 앞서 확인한 군집별 가중치 결과와 동일하게
+세 개의 군집에 대해 4:2:4 비율로 가중치를 주며 나머지 7개의 군집에 대한 가중치는 모두 0으로 처리되었다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">bgm</span><span class="o">.</span><span class="n">weights_</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 <span class="go">array([0.4 , 0.21, 0.4 , 0.  , 0.  , 0.  , 0.  , 0.  , 0.  , 0.  ])</span>
 </pre></div>
 </div>
-<p><strong>사전 믿음</strong></p>
-<ul class="simple">
-<li><p>군집수가 어느 정도일까를 나타내는 지수</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">weight_concentration_prior</span></code> 하이퍼파라미터</p>
-<ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">n_components</span></code>에 설정된 군집수에 대한 규제로 사용됨.</p></li>
-<li><p>작은 값이면 특정 군집의 가중치를 0에 가깝게 만들어 군집수를 줄이도록 함.</p></li>
-<li><p>즉, 큰 값일 수록 <code class="docutils literal notranslate"><span class="pre">n_components</span></code>에 설정된 군집수가 유지되도록 함.</p></li>
-</ul>
-</li>
-</ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-24.png" width="600"/></div><p><strong>가우스 혼합 모델의 장단점</strong></p>
-<ul class="simple">
-<li><p>타원형 군집에 잘 작동.</p></li>
-<li><p>하지만 다른 모양을 가진 데이터셋에서는 성능 좋지 않음.</p></li>
-<li><p>예제: 달모양 데이터에 적용하는 경우</p>
-<ul>
-<li><p>억지로 타원을 찾으려 시도함.</p></li>
-</ul>
-</li>
-</ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-23.png" width="700"/></div></section>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-19a.png" width="500"/></div><p><strong>(베이즈) 가우스 혼합 모델의 장단점</strong></p>
+<p>타원형 군집으로 이뤄진 데이터셋에 대해 매우 잘 작동한다.
+하지만 다른 모양을 가진 데이터셋에서는 성능이 좋지 않다.
+예를 들어 초승달 데이터셋(그림 왼쪽)에 베이트 가우스 혼합 모델을 적용하면
+아래 오른쪽 그림에서처럼 억지로 타원형 군집으로 맞추기 위해 필요 이상의 군집을 사용한다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-23.png" width="800"/></div></section>
 <section id="id16">
-<h3><span class="section-number">9.5.4. </span>이상치 탐지와 특이치 탐지를 위한 다른 알고리즘<a class="headerlink" href="#id16" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">9.5.5. </span>이상치 탐지와 특이치 탐지를 위한 다른 알고리즘<a class="headerlink" href="#id16" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
-<li><p>PCA</p></li>
 <li><p>Fast-MCD</p></li>
-<li><p>아이솔레이션 포레스트</p></li>
-<li><p>LOF</p></li>
-<li><p>one-class SVM</p></li>
+<li><p>Isolation forest</p></li>
+<li><p>Local outlier factor (LOF)</p></li>
+<li><p>One-class SVM</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">inverse_transform()</span></code> 메서드를 지원하는 PCA 등의 차원 축소 알고리즘: 이상치의 경우 재구성 오류가 크다는 성질 이용</p></li>
 </ul>
 </section>
 </section>
 <section id="id17">
 <h2><span class="section-number">9.6. </span>연습문제<a class="headerlink" href="#id17" title="Permalink to this heading">#</a></h2>
-<ol class="arabic simple">
-<li><p><a class="reference external" href="https://codingalzi.github.io/handson-ml3/end2end_ml_project.html#id18">2장</a>에서 정의한
-<code class="docutils literal notranslate"><span class="pre">ClusterSimilarity</span></code>에 사용된 <code class="docutils literal notranslate"><span class="pre">KMeans</span></code> 모델의 <code class="docutils literal notranslate"><span class="pre">n_cluster</span></code> 인자의 최적값을 확인하라.</p></li>
-</ol>
+<p>참고: <a class="reference external" href="https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_unsupervised_learning.ipynb">(실습) 비지도 학습</a></p>
 </section>
 </section>
 
@@ -1240,10 +1233,11 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">9.5. 가우스 혼합 모델</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">9.5.1. 가우스 혼합 모델 활용: 이상치 탐지</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">9.5.2. 가우션 혼합모델 군집수 지정</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">9.5.3. 베이즈 가우스 혼합 모델</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">9.5.4. 이상치 탐지와 특이치 탐지를 위한 다른 알고리즘</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gmm">9.5.1. GMM 활용</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">9.5.2. 이상치 탐지</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">9.5.3. 군집수 지정</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">9.5.4. 베이즈 가우스 혼합 모델</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">9.5.5. 이상치 탐지와 특이치 탐지를 위한 다른 알고리즘</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">9.6. 연습문제</a></li>
