@@ -1116,57 +1116,29 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-22.png" width="600"/></div></section>
 <section id="id15">
 <h3><span class="section-number">9.5.4. </span>베이즈 가우스 혼합 모델<a class="headerlink" href="#id15" title="Permalink to this heading">#</a></h3>
-<ul class="simple">
-<li><p>베이즈 확률통계론 활용</p></li>
-</ul>
-<p><strong>BayesianGaussianMixture 모델</strong></p>
-<ul class="simple">
-<li><p>최적의 군집수를 자동으로 찾아줌.</p></li>
-<li><p>단, 최적의 군집수보다 큰 수를 <code class="docutils literal notranslate"><span class="pre">n_components</span></code>에 전달해야 함.</p>
-<ul>
-<li><p>즉, 군집에 대한 최소한의 정보를 알고 있다고 가정.</p></li>
-</ul>
-</li>
-<li><p>자동으로 불필요한 군집 제거</p></li>
-</ul>
-<hr class="docutils" />
+<p><code class="docutils literal notranslate"><span class="pre">BayesianGaussianMixture</span></code> 모델은 군집수를 미리 지정하지 않아도 적절한 군집수를 찾아준다.
+단, <code class="docutils literal notranslate"><span class="pre">n_components</span></code> 하이퍼파라미터를 이용하여 가능한 최대 군집수를 충분히 크게 지정해줘야 한다.
+그러면 훈련중에 자동으로 불필요한 군집에 0 또는 0에 매우 가까운 가중치를 지정하는 방식으로
+해당 군집을 무시하도록 한다.</p>
+<p>예를 들어 아래 코드는 최대 군집수를 10으로 지정하고 베이즈 가우스 혼합 모델을 훈련시킨다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.mixture</span> <span class="kn">import</span> <span class="n">BayesianGaussianMixture</span>
 
 <span class="n">bgm</span> <span class="o">=</span> <span class="n">BayesianGaussianMixture</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">n_init</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 <span class="n">bgm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 </pre></div>
 </div>
-<hr class="docutils" />
-<ul class="simple">
-<li><p>결과는 군집수 3개를 사용한 이전 결과와 거의 동일.</p></li>
-<li><p>군집수 확인 가능</p></li>
-</ul>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">bgm</span><span class="o">.</span><span class="n">weights_</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<p><code class="docutils literal notranslate"><span class="pre">weights_</span></code> 속성에 저장된 군집별 가중치를 확인하면 앞서 확인한 군집별 가중치 결과와 동일하게
+세 개의 군집에 대해 4:2:4 비율로 가중치를 주며 나머지 7개의 군집에 대한 가중치는 모두 0으로 처리되었다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">bgm</span><span class="o">.</span><span class="n">weights_</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 <span class="go">array([0.4 , 0.21, 0.4 , 0.  , 0.  , 0.  , 0.  , 0.  , 0.  , 0.  ])</span>
 </pre></div>
 </div>
-<p><strong>사전 믿음</strong></p>
-<ul class="simple">
-<li><p>군집수가 어느 정도일까를 나타내는 지수</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">weight_concentration_prior</span></code> 하이퍼파라미터</p>
-<ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">n_components</span></code>에 설정된 군집수에 대한 규제로 사용됨.</p></li>
-<li><p>작은 값이면 특정 군집의 가중치를 0에 가깝게 만들어 군집수를 줄이도록 함.</p></li>
-<li><p>즉, 큰 값일 수록 <code class="docutils literal notranslate"><span class="pre">n_components</span></code>에 설정된 군집수가 유지되도록 함.</p></li>
-</ul>
-</li>
-</ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-24.png" width="600"/></div><p><strong>가우스 혼합 모델의 장단점</strong></p>
-<ul class="simple">
-<li><p>타원형 군집에 잘 작동.</p></li>
-<li><p>하지만 다른 모양을 가진 데이터셋에서는 성능 좋지 않음.</p></li>
-<li><p>예제: 달모양 데이터에 적용하는 경우</p>
-<ul>
-<li><p>억지로 타원을 찾으려 시도함.</p></li>
-</ul>
-</li>
-</ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-23.png" width="700"/></div></section>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-19a.png" width="500"/></div><p><strong>(베이즈) 가우스 혼합 모델의 장단점</strong></p>
+<p>타원형 군집으로 이뤄진 데이터셋에 대해 매우 잘 작동한다.
+하지만 다른 모양을 가진 데이터셋에서는 성능이 좋지 않다.
+예를 들어 초승달 데이터셋(그림 왼쪽)에 베이트 가우스 혼합 모델을 적용하면
+아래 오른쪽 그림에서처럼 억지로 타원형 군집으로 맞추기 위해 필요 이상의 군집을 사용한다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-23.png" width="800"/></div></section>
 <section id="id16">
 <h3><span class="section-number">9.5.5. </span>이상치 탐지와 특이치 탐지를 위한 다른 알고리즘<a class="headerlink" href="#id16" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
@@ -1180,10 +1152,7 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 </section>
 <section id="id17">
 <h2><span class="section-number">9.6. </span>연습문제<a class="headerlink" href="#id17" title="Permalink to this heading">#</a></h2>
-<ol class="arabic simple">
-<li><p><a class="reference external" href="https://codingalzi.github.io/handson-ml3/end2end_ml_project.html#id18">2장</a>에서 정의한
-<code class="docutils literal notranslate"><span class="pre">ClusterSimilarity</span></code>에 사용된 <code class="docutils literal notranslate"><span class="pre">KMeans</span></code> 모델의 <code class="docutils literal notranslate"><span class="pre">n_cluster</span></code> 인자의 최적값을 확인하라.</p></li>
-</ol>
+<p>참고: <a class="reference external" href="https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_unsupervised_learning.ipynb">(실습) 비지도 학습</a></p>
 </section>
 </section>
 
