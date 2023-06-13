@@ -902,32 +902,7 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 <p>아래 그림은 <code class="docutils literal notranslate"><span class="pre">knn</span></code> 모델을 이용하여 두 개의 그룹을 분류하는 결정 경계를 보여준다.
 파랑 덧셈 기호 <font color='blue' size='4'>+</font>는 이전 코드에서 지정한 <code class="docutils literal notranslate"><span class="pre">X_new</span></code> 어레이에 포함된 데이터 샘플 4 개를 가리킨다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-17a.png" width="450"/></div><p>그런데 빨강 동그라미로 감싸진 두 샘플은 사실 이상치로 취급되어야 한다.
-이유는 다른 데이터들로부터 너무 멀리 떨어져 있기 때문이다.
-그런데 앞서 이웃 반경 하이퍼파라미터를 <code class="docutils literal notranslate"><span class="pre">eps=0.2</span></code>로 훈련된 DBSCAN 모델은
-이상치를 전혀 지정하지 않는다.</p>
-<p>이런 경우 <code class="docutils literal notranslate"><span class="pre">knn</span></code> 모델의 <code class="docutils literal notranslate"><span class="pre">kneighbors()</span></code> 메서드를 이용하여 예측값을 수정할 필요가 있다.
-다음은 아래 코드를 설명한다.</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">knn.kneighbors(X_new,</span> <span class="pre">n_neighbors=1)</span></code>의 반환값: <code class="docutils literal notranslate"><span class="pre">X_new</span></code>에 속한 4개의 데이터 샘플 각각에 대해
-가장 가까운 훈련셋 샘플을 하나씩 선택한 후에 각 샘플과 선택된 훈련셋 샘플의 거리와
-훈련셋 샘플의 인덱스로 구성된 튜플.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">n_neighbors=1</span></code> 키워드 인자: 훈련셋 샘플을 하나씩만 선택하도록 지정.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">X_new</span></code>에 속한 4개의 데이터 샘플 각각을 선택된 훈련셋 샘플과 동일한 군집으로 할당한다.
-단, 훈련셋 샘플과의 거리가 0.2 보다 크면 이상치로 처리한다.
-군집 인덱스가 -1이면 이상치로 처리된다.</p></li>
-</ul>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 가장 가까운 훈련셋 샘플 하나씩 선택</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">y_dist</span><span class="p">,</span> <span class="n">y_pred_idx</span> <span class="o">=</span> <span class="n">knn</span><span class="o">.</span><span class="n">kneighbors</span><span class="p">(</span><span class="n">X_new</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-
-<span class="c1"># 선택된 훈련셋 샘플과 동일한 군집으로 지정</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">y_pred</span> <span class="o">=</span> <span class="n">dbscan</span><span class="o">.</span><span class="n">labels_</span><span class="p">[</span><span class="n">dbscan</span><span class="o">.</span><span class="n">core_sample_indices_</span><span class="p">][</span><span class="n">y_pred_idx</span><span class="p">]</span>
-
-<span class="c1"># 선택된 훈련세 샘플과의 거리가 0.2보다 큰 경우 이상치로 지정. -1은 이상치를 가리킴.</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">y_pred</span><span class="p">[</span><span class="n">y_dist</span> <span class="o">&gt;</span> <span class="mf">0.2</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">y_pred</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
-<span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-</pre></div>
-</div>
+이유는 다른 데이터들로부터 너무 멀리 떨어져 있기 때문이다.</p>
 <p><strong>DBSCAN의 장단점</strong></p>
 <p>장점은 다음과 같다.</p>
 <ul class="simple">
@@ -1043,8 +1018,8 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 <span class="go">       [0. , 0. , 1. ]])</span>
 </pre></div>
 </div>
-<p><strong>데이터 밀도 측정</strong></p>
-<p><code class="docutils literal notranslate"><span class="pre">score_samples()</span></code> 메서드는 임의의 위치에서의 확률 밀도의 로그값을 예측한다.
+<p><strong>데이터 확률 밀도 측정</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">score_samples()</span></code> 메서드는 임의의 위치에서의 확률 밀도의 로그값을 측정한다.
 값이 클 수록 높은 밀도를 나타낸다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">gm</span><span class="o">.</span><span class="n">score_samples</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 <span class="go">array([-2.61, -3.57, -3.33, ..., -3.51, -4.4 , -3.81])</span>
