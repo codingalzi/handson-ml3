@@ -19,12 +19,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
 
   
-  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -39,8 +39,9 @@
     <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
@@ -76,6 +77,15 @@ const thebe_selector_output = ".output, .cell_output"
   
   
   <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
   
   <input type="checkbox"
           class="sidebar-toggle"
@@ -132,6 +142,7 @@ const thebe_selector_output = ".output, .cell_output"
   
 
 <a class="navbar-brand logo" href="#">
+  
   
   
   
@@ -338,10 +349,10 @@ const thebe_selector_output = ".output, .cell_output"
 
 <script>
 document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
 `);
 </script>
@@ -349,7 +360,7 @@ document.write(`
 <script>
 document.write(`
   <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
@@ -401,7 +412,8 @@ document.write(`
 <li><p>인공지능: 사고<font size='2'>thinking</font>, 학습<font size='2'>learning</font> 등
 인간의 지적능력을 컴퓨터가 모방하는 기술 또는 관련 연구</p></li>
 <li><p>머신러닝: 컴퓨터가 데이터로부터 스스로 정보를 추출하도록 하는 기법 또는 관련 연구</p></li>
-<li><p>딥러닝: 심층 신경망을 이용하여 복잡한 비선형 문제를 해결하는 머신러닝 기법 또는 관련 연구</p></li>
+<li><p>딥러닝: 심층 신경망을 이용하여 컴퓨터 비전, 자연어 처리, 게임, 자율 주행  등 보다 복잡한
+문제를 해결하는 머신러닝 기법 또는 관련 연구</p></li>
 </ul>
 <p>역사적 관점에서 바라본 인공지능, 머신러닝, 딥러닝의 관계는 다음과 같다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/datapy/master/jupyter-book//images/ai-ml-relation2.png" style="width:600px;"></div>
@@ -411,9 +423,9 @@ document.write(`
 <p>프로그래밍 실습에 사용되는 파이썬<font size='2'>Python</font>은 현재 데이터 분석 및 머신러닝 분야에서
 가장 많이 사용되는 프로그래밍언어이다.</p>
 <p>또한 수 많은 프로그래밍언어 중에서 현재 가장 많이 사람들 사이에서 회자되고 있다.
-아래 사진은 2023년 2월 기준 인터넷 검색 엔진에서 언급된 빈도를 측정한
+아래 사진은 2024년 2월 기준 인터넷 검색 엔진에서 언급된 빈도를 측정한
 <a class="reference external" href="https://www.tiobe.com/tiobe-index/">TIOBE Index</a>의 상위 결과를 보여준다.</p>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/datapy/master/jupyter-book/images/tiobe-index.jpg" style="width:750px"></div><p><strong>파이썬 주요 라이브러리</strong></p>
+<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/pybook/master/jupyter-book/images/tiobe-index.jpg" style="width:750px"></div></p><p><strong>파이썬 주요 라이브러리</strong></p>
 <p>파이썬이 데이터 과학 분야에서 인기가 높은 이유는 다음과 같다.</p>
 <ul class="simple">
 <li><p>범용 프로그래밍언어</p></li>
@@ -440,7 +452,7 @@ document.write(`
 </ul>
 </li>
 </ul>
-<p><a class="reference external" href="https://survey.stackoverflow.co/2022/">Stack Overflow 개발자 설문조사 2022</a>에 따르면
+<p><a class="reference external" href="https://survey.stackoverflow.co/2023/">Stack Overflow 개발자 설문조사 2023</a>에 따르면
 개발자로서 가장 배우고 싶어하는 라이브러리로 파이썬의 데이터과학 관련 라이브러리가
 높은 우선 순위를 갖는다.
 여기서는 머신러닝의 기본 모델과 훈련을 지원하는 사이킷런<font size='2'>scikit-learn</font>을 주로 다룬다.</p>
@@ -473,11 +485,10 @@ document.write(`
 
               
               
-                <footer class="bd-footer-article">
-                  
-<div class="footer-article-items footer-article__inner">
-  
-    <div class="footer-article-item"><!-- Previous / next buttons -->
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="right-next"
        href="ml_landscape.html"
@@ -488,10 +499,7 @@ document.write(`
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
-</div></div>
-  
 </div>
-
                 </footer>
               
             </div>
@@ -540,8 +548,8 @@ By 코딩알지
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+  <script src="_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
 
   <footer class="bd-footer">
   </footer>
