@@ -641,8 +641,9 @@ document.write(`
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/feature-histogram.png" width="600px"></div></section>
 <section id="id8">
 <h3><span class="section-number">2.3.2. </span>훈련셋과 테스트셋<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h3>
-<p>모델 학습 시작 이전에 준비된 데이터셋을 <strong>훈련셋</strong>과 <strong>테스트셋</strong>으로 구분해야 한다.
-테스트셋은 훈련 과정중에 전혀 사용되지 않으며 보통 전체 데이터셋의 20% 정도 이하로
+<p>모델 학습 시작 이전에 준비된 데이터셋을 <strong>훈련셋</strong>과 <strong>테스트셋</strong>으로 구분해야 한다.</p>
+<p><div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/train-test-validation.jpg?raw=true" style="width:400px;"></div></p>
+<p>테스트셋은 훈련 과정중에 전혀 사용되지 않으며 보통 전체 데이터셋의 20% 정도 이하로
 선택하며, 전체 데이터셋의 크기에 따라 테스트셋의 크기가 너무 크지 않게
 비율을 적절히 조절한다.</p>
 <p>테스트셋에 대한 정보는 절대로 모델 훈련에 이용하지 않는다.
