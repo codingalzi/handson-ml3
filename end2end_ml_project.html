@@ -403,7 +403,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">2.4.3. 데이터 시각화</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">2.5. 데이터 정제와 전처리</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">2.5. 데이터 준비: 정제와 전처리</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">2.5.1. 데이터 정제</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">2.5.2. 범주형 특성 전처리: 원-핫 인코딩</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">2.5.3. 수치형 특성 전처리: 크기 조정</a></li>
@@ -606,7 +606,8 @@ Pandas 데이터프레임으로 변환하여 반환한다.
 훈련셋의 일부는 훈련 중에 훈련의 진척 정도를 측정하는 <strong>검증</strong><font size="2">valdation</font> 용도로 활용된다.</p>
 <p><div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/train-test-validation.jpg?raw=true" style="width:400px;"></div></p><p>데이터셋을 훈련셋과 데이터셋으로 나눌 때 보통 계층 샘플링을 사용한다.</p>
 <p><strong>계층 샘플링</strong></p>
-<p>각 계층별로 적절한 샘플을 추출하는 기법이 <strong>계층 샘플링</strong><font size="2">stratified sampling</font>이다.
+<p>각 계층별로 적절한 양의 샘플을 추출하는 기법이 <strong>계층 샘플링</strong><font size="2">stratified sampling</font>이다.
+계층은 유사한 성질의 데이터로 구성된 그룹이며,
 계층 샘플링을 사용해야 하는 이유는 계층별로 충분한 크기의 샘플이 훈련셋으로 추출되어야
 훈련 과정에서 편향이 발생하지 않기 때문이다.
 예를 들어, 특정 소득 구간에 포함된 샘플이 과하게 적거나 과하게 많으면 해당 계층의 중요도가
@@ -616,7 +617,7 @@ Pandas 데이터프레임으로 변환하여 반환한다.
 이유는 여기서 훈련시키고자 하는 모델이 구역별 주택 중위가격을 예측하는 모델인데
 아무래도 중위 주택가격이 구역에 사는 가구의 중위소득과 밀접하게 연관되어 있을 것이기 때문이다.</p>
 <p>먼저 구역별 중위소득 특성을 대상으로 히스토그램을 그려보면
-대부분 구역의 중위소득이 1.5~6.0, 즉 15,000에서 60,000 달러 사이인 것을 알 수 있다.
+대부분 구역의 중위소득이 1.5 ~ 6.0, 즉 15,000에서 60,000 달러 사이인 것을 알 수 있다.
 <code class="docutils literal notranslate"><span class="pre">hist()</span></code> 메서드를 특성에 대해 적용하면 하나의 히스토그램을 그린다.</p>
 <p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-08.png" width="600"></div></p><p>따라서 중위소득 구간을 아래처럼 5개로 구분한 다음에 계층 샘플링을 이용하여
 훈련셋과 테스트셋을 구분하면 좋을 것 같아 보인다.</p>
@@ -721,12 +722,12 @@ Pandas 데이터프레임으로 변환하여 반환한다.
 <p>데이터 시각화는 지금까지와는 달리 이제부터는 훈련셋만을 대상으로 진행한다.
 일반적으로 테스트셋에 대한 데이터 탐색은 너무 깊이 하지 않는다.
 머신러닝 모델의 훈련을 종료한 후에 실전 테스트 용도로 활용되는 테스트셋에 대해
-너무 많은 정보를 많이 알면 이를 이용하여 훈련을 달리할 수 있다.
+너무 많은 정보를 많이 알게 되면 이를 이용하여 훈련을 달리할 수 있다.
 하지만 그러면 제대로 된 실전 테스트를 진행할 수 없게 되어
 훈련된 모델의 실전 성능을 정확히 파악하기 어렵다.</p>
 <p><strong>지리적 데이터 시각화</strong></p>
 <p>먼저 데이터의 지리적 분포를 시각화한다.
-즉, 경도와 위도 정보를 이용하여 구역을 산포도로 나타내면 인구의 밀집 정도를 확인할 수 있다.
+즉, 경도와 위도 정보를 이용하여 구역 정보를 산포도로 나타내면 인구의 밀집 정도를 확인할 수 있다.
 예를 들어, 샌프란시스코의 Bay Area, LA, 샌디에고 등 유명 대도시의 특정 구역이 높은 인구 밀도를 갖는다.</p>
 <p>데이터프레임의 <code class="docutils literal notranslate"><span class="pre">plot()</span></code> 메서드는 다양한 종류의 그래프를 그린다.
 <code class="docutils literal notranslate"><span class="pre">kind</span></code> 매개변수의 키워드 인자를 <code class="docutils literal notranslate"><span class="pre">&quot;scatter&quot;</span></code>로 지정하면 산점도를 그린다.
@@ -746,7 +747,6 @@ Pandas 데이터프레임으로 변환하여 반환한다.
              <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
              <span class="n">sharex</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
              <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 <p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-10a.png" width="600"></div></p><p>아래 그림은 산점도와 캘리포니아 주의 실제 지도를 합친 결과이다.</p>
@@ -792,7 +792,7 @@ Pandas 데이터프레임으로 변환하여 반환한다.
 </section>
 </section>
 <section id="id11">
-<h2><span class="section-number">2.5. </span>데이터 정제와 전처리<a class="headerlink" href="#id11" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">2.5. </span>데이터 준비: 정제와 전처리<a class="headerlink" href="#id11" title="Permalink to this heading">#</a></h2>
 <p>머신러닝 모델 훈련에 사용되는 알고리즘을 이용하려면
 적재된 데이터셋을 데이터 정제와 전처리 과정을 수행해서
 바로 모델 훈련에 사용될 수 있도록 해야 한다.
@@ -1576,7 +1576,7 @@ RMSE의 음숫값을 선택하는 이유는 RMSE가 낮을 수록 좋은 모델�
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">2.4.3. 데이터 시각화</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">2.5. 데이터 정제와 전처리</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">2.5. 데이터 준비: 정제와 전처리</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">2.5.1. 데이터 정제</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">2.5.2. 범주형 특성 전처리: 원-핫 인코딩</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">2.5.3. 수치형 특성 전처리: 크기 조정</a></li>
