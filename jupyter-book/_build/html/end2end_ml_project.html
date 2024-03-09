@@ -640,20 +640,29 @@ Pandas 데이터프레임으로 변환하여 반환한다.
 </tr>
 </tbody>
 </table>
-<p>5 개의 구간으로 구분하는 <code class="docutils literal notranslate"><span class="pre">&quot;income_cat&quot;</span></code> 특성을 추가한 후에 데이터 분포를 살펴보면 다음과 같다.</p>
+<p>먼저 언급된 5 개의 구간으로 구분하는 <code class="docutils literal notranslate"><span class="pre">&quot;income_cat&quot;</span></code> 특성을 추가한다.
+<code class="docutils literal notranslate"><span class="pre">pd.cut()</span></code> 함수는 특성과 구간 구분이 주어지면 각 구간에 해당하는 특성값들에 지정된 레이블을 할당하는
+형식으로 새로운 특성값들을 만들어 낸다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">housing</span><span class="p">[</span><span class="s2">&quot;income_cat&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">housing</span><span class="p">[</span><span class="s2">&quot;median_income&quot;</span><span class="p">],</span>
                                <span class="n">bins</span><span class="o">=</span><span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">,</span> <span class="mf">6.</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">],</span>
                                <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
 </pre></div>
 </div>
-<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-08a.png" width="600"></div></p><p><code class="docutils literal notranslate"><span class="pre">&quot;income_cat&quot;</span></code> 특성에 사용된 값들의 분포 비율에 맞춰 훈련셋과 테스트셋을 8대 2로 아래와 구분한다.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">strat_train_set</span><span class="p">,</span> <span class="n">strat_test_set</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">housing</span><span class="p">,</span> 
+<p><code class="docutils literal notranslate"><span class="pre">income_cat</span></code> 특성에 따른 데이터 분포는 다음과 같다.</p>
+<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-08a.png" width="600"></div></p><p>이제 <code class="docutils literal notranslate"><span class="pre">&quot;income_cat&quot;</span></code> 특성에 사용된 값들의 분포 비율을 반영하면서
+훈련셋과 테스트셋을 8대 2로 나눈다.
+사이킷런의 <code class="docutils literal notranslate"><span class="pre">train_test_split()</span></code> 함수는 데이터프레임에 속한 샘플을
+지정된 비율로 두 개의 데이터프레임으로 나눌 때
+계층 샘플링을 지원한다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="n">strat_train_set</span><span class="p">,</span> <span class="n">strat_test_set</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">housing</span><span class="p">,</span> 
                                                    <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> 
                                                    <span class="n">stratify</span><span class="o">=</span><span class="n">housing</span><span class="p">[</span><span class="s2">&quot;income_cat&quot;</span><span class="p">],</span> 
                                                    <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>그러면 무작위 추출 방식과는 달리 계층별 샘플의 비율을 거의 동일하게 유지함을 확인할 수 있다.</p>
+<p>계층 샘플링은 무작위 샘플링보다 계층별 샘플의 비율을 훨씬 잘 유지함을 아래 표가 확인해준다.</p>
 <table class="table">
 <thead>
 <tr class="row-odd"><th class="head text-center"><p>소득 구간</p></th>
