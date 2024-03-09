@@ -756,18 +756,7 @@ Pandas 데이터프레임으로 변환하여 반환한다.
 </pre></div>
 </div>
 <p>주택 중위가격 특성과 다른 특성 사이의 선형 상관관계를 나타내는 상관계수는 다음과 같다.</p>
-<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-12.png" width="500"></div></p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">median_house_value</span>    <span class="mf">1.000000</span>
-<span class="n">median_income</span>         <span class="mf">0.688380</span>
-<span class="n">total_rooms</span>           <span class="mf">0.137455</span>
-<span class="n">housing_median_age</span>    <span class="mf">0.102175</span>
-<span class="n">households</span>            <span class="mf">0.071426</span>
-<span class="n">total_bedrooms</span>        <span class="mf">0.054635</span>
-<span class="n">population</span>           <span class="o">-</span><span class="mf">0.020153</span>
-<span class="n">longitude</span>            <span class="o">-</span><span class="mf">0.050859</span>
-<span class="n">latitude</span>             <span class="o">-</span><span class="mf">0.139584</span>
-</pre></div>
-</div>
-<p>상관계수는 -1에서 1 사이의 값으로 표현된다.</p>
+<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-12.png" width="500"></div></p><p>상관계수는 -1에서 1 사이의 값으로 표현된다.</p>
 <ul class="simple">
 <li><p>1에 가까울 수록: 강한 양의 선형 상관관계</p></li>
 <li><p>-1에 가까울 수록: 강한 음의 선형 상관관계</p></li>
@@ -778,18 +767,17 @@ Pandas 데이터프레임으로 변환하여 반환한다.
 <p>상관계수가 0이라는 것은 선형 상관관계가 없다는 의미이지 서로 아무런 상관관계가 없다는 말이 아니다.
 또한 선형계수가 1이라 하더라도 두 특성이 1대 1로 의존한다는 의미도 아님을
 아래 그림이 잘 보여준다.</p>
-<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-14.png" width="400"></div></p>
+<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-14.png" width="500"></div></p>
 <p>&lt;그림 출처: <a class="reference external" href="https://en.wikipedia.org/wiki/Pearson_correlation_coefficient">위키백과</a>&gt;</p>
 </div>
 <p>주택 중위가격과 중위소득의 상관계수가 0.68로 가장 높다.
 이는 중위소득이 올라가면 주택 중위가격도 상승하는 경향이 있음을 의미한다.
 하지만 아래 산점도의 점들이 너무 넓게 퍼져 있어서 완벽한 선형관계와는 거리가 멀다.</p>
-<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-13.png" width="400"></div></p><p>위 산점도를 볼 때 다음 사항들에 주의해야 한다.</p>
+<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-13.png" width="600"></div></p><p>위 산점도를 보면 아래 설명처럼 이상한 부분이 있다.
+그런 데이터는 모델 훈련에 도움이 되지 않아 제거하는 것이 일반적으로 좋지만 여기서는 그대로 두고 사용한다.</p>
 <ul class="simple">
 <li><p>50만 달러에서 보이는 수평선은 가격을 제한한 결과로 보여진다.</p></li>
 <li><p>45만, 35만, 28만, 그 아래 정도에서도 수평선이 존재하는데 이유는 알려지지 않았다.</p></li>
-<li><p>이처럼 이상한 성질을 모델이 형태를 학습하지 못하도록 해당 구역을 제거하는 것이
-일반적으로 좋다. 하지만 여기서는 그대로 두고 사용한다.</p></li>
 </ul>
 <p>경우에 따라 기존의 특성을 조합해서 새로운 특성을 활용할 수도 있다.
 예를 들어 구역별 방의 총 개수와 침실의 총 개수 대신 아래 특성이 보다 유용해 보인다.</p>
