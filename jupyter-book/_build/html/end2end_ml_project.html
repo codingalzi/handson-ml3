@@ -541,10 +541,10 @@ Pandas 데이터프레임으로 변환하여 반환한다.
 다양한 메서드를 이용하여 훑어본다.</p>
 <p><strong><code class="docutils literal notranslate"><span class="pre">head()</span></code> 메서드</strong></p>
 <p>데이터프레임에 포함된 처음 5개 샘플을 보여준다.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">housing</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">housing</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
-<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-05.png" width="1000"></div></p><p><strong><code class="docutils literal notranslate"><span class="pre">info()</span></code> 메서드</strong></p>
+<p><div align="left"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-05.png" width="1000"></div></p><p><strong><code class="docutils literal notranslate"><span class="pre">info()</span></code> 메서드</strong></p>
 <p>데이터셋의 정보를 요약해서 보여준다.</p>
 <ul class="simple">
 <li><p>구역 수: 20,640개.</p></li>
@@ -558,37 +558,51 @@ Pandas 데이터프레임으로 변환하여 반환한다.
 </li>
 <li><p>방의 총 개수를 뜻하는 <code class="docutils literal notranslate"><span class="pre">total_bedrooms</span></code> 특성은 207개의 null 값, 즉 결측치 포함.</p></li>
 </ul>
-<p><div align="left"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-05a.png" width="400"></div></p><p><strong>범주형 특성 탐색</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">housing</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><div align="left"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-05a.png" width="350"></div></p><p><strong>범주형 특성 탐색</strong></p>
 <p>‘해안 근접도’는 5개의 범주로 구분된다.
 <code class="docutils literal notranslate"><span class="pre">valule_counts()</span></code> 메서드는 사용된 특성값과 각각의 특성값이 사용된 횟수를 확인해준다.</p>
-<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-05b.png" width="350"></div></p><p>각 특성값의 의미는 다음과 같다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">housing</span><span class="p">[</span><span class="s2">&quot;ocean_proximity&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><div align="left"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-05b.png" width="250"></div></p><p>각 특성값의 의미는 다음과 같다.</p>
+<style>
+td,th {
+  font-size: 13px
+}
+</style>
 <table class="table">
 <thead>
-<tr class="row-odd"><th class="head"><p>특성값</p></th>
-<th class="head"><p>설명</p></th>
+<tr class="row-odd"><th class="head text-left"><p>특성값</p></th>
+<th class="head text-left"><p>설명</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>&lt;1H OCEAN</p></td>
-<td><p>해안에서 1시간 이내</p></td>
+<tr class="row-even"><td class="text-left"><p>&lt;1H OCEAN</p></td>
+<td class="text-left"><p>해안에서 1시간 이내</p></td>
 </tr>
-<tr class="row-odd"><td><p>INLAND</p></td>
-<td><p>내륙</p></td>
+<tr class="row-odd"><td class="text-left"><p>INLAND</p></td>
+<td class="text-left"><p>내륙</p></td>
 </tr>
-<tr class="row-even"><td><p>NEAR OCEAN</p></td>
-<td><p>해안 근처</p></td>
+<tr class="row-even"><td class="text-left"><p>NEAR OCEAN</p></td>
+<td class="text-left"><p>해안 근처</p></td>
 </tr>
-<tr class="row-odd"><td><p>NEAR BAY</p></td>
-<td><p>샌프란시스코의 Bay Area 구역</p></td>
+<tr class="row-odd"><td class="text-left"><p>NEAR BAY</p></td>
+<td class="text-left"><p>샌프란시스코의 Bay Area 구역</p></td>
 </tr>
-<tr class="row-even"><td><p>ISLAND</p></td>
-<td><p>섬</p></td>
+<tr class="row-even"><td class="text-left"><p>ISLAND</p></td>
+<td class="text-left"><p>섬</p></td>
 </tr>
 </tbody>
 </table>
 <p><strong>수치형 특성 탐색</strong></p>
 <p><code class="docutils literal notranslate"><span class="pre">describe()</span></code> 메서드는 수치형 특성들의 정보를 요약해서 보여준다.</p>
-<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/housing-describe.png"></div></p><p><strong>수치형 특성별 히스토그램</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">housing</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><div align="left"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/housing-describe.png" width="100%"></div></p><p><strong>수치형 특성별 히스토그램</strong></p>
 <p><code class="docutils literal notranslate"><span class="pre">hist()</span></code> 메서드가 수치형 특성별로 히스토그램을 그린다.
 아래 9개의 히스토그램으로부터 다음 정보를 얻을 수 있다.</p>
 <ul class="simple">
@@ -598,7 +612,10 @@ Pandas 데이터프레임으로 변환하여 반환한다.
 <li><p>일부 특성은 값을 제한한 것으로 보인다.
 예를 들어 <code class="docutils literal notranslate"><span class="pre">housing_median_age</span></code>, <code class="docutils literal notranslate"><span class="pre">median_house_value</span></code> 등의 특성값 상한값이 임의로 지정되어 잘린 것처럼 보인다.</p></li>
 </ul>
-<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/feature-histogram.png" width="1000px"></div></p></section>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">housing</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+</pre></div>
+</div>
+<p><div align="left"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/feature-histogram.png" width="100%"></div></p></section>
 <section id="id9">
 <h3><span class="section-number">2.4.2. </span>훈련셋과 테스트셋<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h3>
 <p>모델 훈련을 시작하기 전에 준비된 데이터셋을 보통 <strong>훈련셋</strong><font size='2'>training set</font>과
@@ -622,8 +639,16 @@ Pandas 데이터프레임으로 변환하여 반환한다.
 <p>먼저 구역별 중위소득 특성을 대상으로 히스토그램을 그려보면
 대부분 구역의 중위소득이 1.5 ~ 6.0, 즉 15,000에서 60,000 달러 사이인 것을 알 수 있다.
 <code class="docutils literal notranslate"><span class="pre">hist()</span></code> 메서드를 특성에 대해 적용하면 하나의 히스토그램을 그린다.</p>
-<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-08.png" width="600"></div></p><p>따라서 중위소득 구간을 아래처럼 5개로 구분한 다음에 계층 샘플링을 이용하여
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">housing</span><span class="p">[</span><span class="s1">&#39;median_income&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><div align="left"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-08.png" width="400"></div></p><p>따라서 중위소득 구간을 아래처럼 5개로 구분한 다음에 계층 샘플링을 이용하여
 훈련셋과 테스트셋을 구분하면 좋을 것 같아 보인다.</p>
+<style>
+td,th {
+  font-size: 13px
+}
+</style>
 <table class="table">
 <thead>
 <tr class="row-odd"><th class="head text-center"><p>구간</p></th>
@@ -657,7 +682,12 @@ Pandas 데이터프레임으로 변환하여 반환한다.
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">income_cat</span></code> 특성에 따른 데이터 분포는 다음과 같다.</p>
-<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-08a.png" width="600"></div></p><p>이제 <code class="docutils literal notranslate"><span class="pre">&quot;income_cat&quot;</span></code> 특성에 사용된 값들의 분포 비율을 반영하면서
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">housing</span><span class="p">[</span><span class="s2">&quot;income_cat&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">rot</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">grid</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Income category&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Number of districts&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><div align="left"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-08a.png" width="400"></div></p><p>이제 <code class="docutils literal notranslate"><span class="pre">&quot;income_cat&quot;</span></code> 특성에 사용된 값들의 분포 비율을 반영하면서
 훈련셋과 테스트셋을 8대 2로 나눈다.
 사이킷런의 <code class="docutils literal notranslate"><span class="pre">train_test_split()</span></code> 함수는 데이터프레임에 속한 샘플을
 지정된 비율로 두 개의 데이터프레임으로 나눌 때
@@ -671,14 +701,17 @@ Pandas 데이터프레임으로 변환하여 반환한다.
 </pre></div>
 </div>
 <p>계층 샘플링이 무작위 샘플링보다 계층별 샘플의 비율을 훨씬 잘 유지함을 아래 표가 확인해준다.</p>
+<style>
+td,th {
+  font-size: 13px
+}
+</style>
 <table class="table">
 <thead>
 <tr class="row-odd"><th class="head text-center"><p>소득 구간</p></th>
 <th class="head text-right"><p>전체(%)</p></th>
 <th class="head text-right"><p>계층 샘플링(%)</p></th>
 <th class="head text-right"><p>무작위 샘플링(%)</p></th>
-<th class="head text-right"><p>계층 샘플링 오류율</p></th>
-<th class="head text-right"><p>무작위 샘플링 오류율(%)</p></th>
 </tr>
 </thead>
 <tbody>
@@ -686,36 +719,26 @@ Pandas 데이터프레임으로 변환하여 반환한다.
 <td class="text-right"><p>3.98</p></td>
 <td class="text-right"><p>4.00</p></td>
 <td class="text-right"><p>4.24</p></td>
-<td class="text-right"><p>0.36</p></td>
-<td class="text-right"><p>6.45</p></td>
 </tr>
 <tr class="row-odd"><td class="text-center"><p>2</p></td>
 <td class="text-right"><p>31.88</p></td>
 <td class="text-right"><p>31.88</p></td>
 <td class="text-right"><p>30.74</p></td>
-<td class="text-right"><p>-0.02</p></td>
-<td class="text-right"><p>-3.59</p></td>
 </tr>
 <tr class="row-even"><td class="text-center"><p>3</p></td>
 <td class="text-right"><p>35.06</p></td>
 <td class="text-right"><p>35.05</p></td>
 <td class="text-right"><p>34.52</p></td>
-<td class="text-right"><p>-0.01</p></td>
-<td class="text-right"><p>-1.53</p></td>
 </tr>
 <tr class="row-odd"><td class="text-center"><p>4</p></td>
 <td class="text-right"><p>17.63</p></td>
 <td class="text-right"><p>17.64</p></td>
 <td class="text-right"><p>18.41</p></td>
-<td class="text-right"><p>0.03</p></td>
-<td class="text-right"><p>4.42</p></td>
 </tr>
 <tr class="row-even"><td class="text-center"><p>5</p></td>
 <td class="text-right"><p>11.44</p></td>
 <td class="text-right"><p>11.43</p></td>
 <td class="text-right"><p>12.09</p></td>
-<td class="text-right"><p>-0.08</p></td>
-<td class="text-right"><p>5.63</p></td>
 </tr>
 </tbody>
 </table>
@@ -752,14 +775,17 @@ Pandas 데이터프레임으로 변환하여 반환한다.
              <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
 </pre></div>
 </div>
-<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-10a.png" width="600"></div></p><p>아래 그림은 산점도와 캘리포니아 주의 실제 지도를 합친 결과이다.</p>
-<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-11.png" width="600"></div></p><p><strong>상관관계</strong></p>
+<p><div align="left"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-10a.png" width="600"></div></p><p>아래 그림은 산점도와 캘리포니아 주의 실제 지도를 합친 결과이다.</p>
+<p><div align="left"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-11.png" width="600"></div></p><p><strong>상관관계</strong></p>
 <p>데이터프레임의 <code class="docutils literal notranslate"><span class="pre">corr()</span></code> 메서드는 수치형 특성들 사이의 선형 상관계수를 계산한다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">corr_matrix</span> <span class="o">=</span> <span class="n">housing</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>주택 중위가격 특성과 다른 특성 사이의 선형 상관관계를 나타내는 상관계수는 다음과 같다.</p>
-<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-12.png" width="500"></div></p><p>상관계수는 -1에서 1 사이의 값으로 표현된다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">corr_matrix</span><span class="p">[</span><span class="s2">&quot;median_house_value&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><div align="left"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-12.png" width="300"></div></p><p>상관계수는 -1에서 1 사이의 값으로 표현된다.</p>
 <ul class="simple">
 <li><p>1에 가까울 수록: 강한 양의 선형 상관관계</p></li>
 <li><p>-1에 가까울 수록: 강한 음의 선형 상관관계</p></li>
@@ -776,7 +802,10 @@ Pandas 데이터프레임으로 변환하여 반환한다.
 <p>주택 중위가격과 중위소득의 상관계수가 0.68로 가장 높다.
 이는 중위소득이 올라가면 주택 중위가격도 상승하는 경향이 있음을 의미한다.
 하지만 아래 산점도의 점들이 너무 넓게 퍼져 있어서 완벽한 선형관계와는 거리가 멀다.</p>
-<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-13.png" width="600"></div></p><p>위 산점도를 보면 아래 설명처럼 이상한 부분이 있다.
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">housing</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;scatter&quot;</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;median_income&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;median_house_value&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">grid</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><div align="left"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-13.png" width="400"></div></p><p>위 산점도를 보면 아래 설명처럼 이상한 부분이 있다.
 그런 데이터는 모델 훈련에 도움이 되지 않아 제거하는 것이 일반적으로 좋지만 여기서는 그대로 두고 사용한다.</p>
 <ul class="simple">
 <li><p>50만 달러에서 보이는 수평선은 가격을 제한한 결과로 보여진다.</p></li>
@@ -796,35 +825,23 @@ Pandas 데이터프레임으로 변환하여 반환한다.
 </section>
 <section id="id11">
 <h2><span class="section-number">2.5. </span>데이터 준비: 정제와 전처리<a class="headerlink" href="#id11" title="Permalink to this heading">#</a></h2>
-<p>머신러닝 모델 훈련에 사용되는 알고리즘을 이용하려면
-적재된 데이터셋을 데이터 정제와 전처리 과정을 수행해서
-바로 모델 훈련에 사용될 수 있도록 해야 한다.
-또한 모든 과정을 자동화할 수 있어야 한다.</p>
+<p>데이터 탐색을 마친 후에 앞서 확인한 지도학습 회귀 모델의 훈련에
+적절한 데이터를 준비하도록 한다.
+이를 위해 적재된 데이터셋에 대해 정제와 전처리 과정을 수행한다.</p>
 <p>데이터 정제는 결측치 처리, 이상치 및 노이즈 데이터 제거 등을 의미한다.
-캘리포니아 주택 가격 데이터셋은 구역별 방 총 개수(<code class="docutils literal notranslate"><span class="pre">total_rooms</span></code>) 특성에서
-결측치가 일부 포함되어 있지만 이상치 또는 노이즈 데이터는 없다.</p>
-<p>데이터 전처리<font size='2'>preprocessing</font>는 수치형 특성과 범주형 특성을 구분하여 수행한다.</p>
+캘리포니아 주택가격 데이터셋은 구역별 방 총 개수(<code class="docutils literal notranslate"><span class="pre">total_rooms</span></code>) 특성에서
+결측치가 일부 포함되어 있지만 이상치 또는 노이즈는 포함하지 않는다.</p>
+<p>데이터 전처리<font size='2'>preprocessing</font>는 수치형 특성과 범주형 특성을 구분하여 수행한다.
+가장 기본적인 전처리는 다음과 같다.</p>
 <ul class="simple">
-<li><p>범주형 특성 전처리 과정</p>
-<ul>
-<li><p>원-핫-인코딩</p></li>
+<li><p>범주형 특성 전처리: 원-핫-인코딩</p></li>
+<li><p>수치형 특성 전처리: 특성 크기조정과 특성 조합</p></li>
 </ul>
-</li>
-<li><p>수치형 특성에 대한 전처리</p>
-<ul>
-<li><p>특성 크기 조정</p></li>
-<li><p>특성 조합</p></li>
-</ul>
-</li>
-</ul>
-<p>데이터 정제와 전처리의 모든 과정은 데이터셋에 포함된 샘플을 한꺼번에 변환한다.
-따라서 모든 변환 과정을 자동화는
-<strong>파이프라인</strong><font size="2">pipeline</font> 기법을 활용할 수 있어야 한다.</p>
-<p><strong>파이프라인</strong></p>
-<ul class="simple">
-<li><p>여러 사이킷런 API를 묶어 순차적으로 처리하는 사이킷런 API</p></li>
-<li><p>여러 과정을 한 번에 엮어서 수행하도록 하는 도구</p></li>
-</ul>
+<p>데이터 정제와 전처리의 모든 과정은 데이터셋에 포함된 모든 샘플을
+대상으로 동시에 진행되며
+다양한 종류의 <strong>변환기</strong> API를 순차적으로 적용하는
+<strong>파이프라인</strong><font size="2">pipeline</font>을 구현하여
+모든 과정을 자동화 할 수 있다.</p>
 <p><strong>사이킷런 API 활용</strong></p>
 <p>사이킷런<font size="2">Scikit-Learn</font>이 제공하는
 모든 API는 간단하게 합성할 수 있다.
@@ -1047,12 +1064,12 @@ Pandas 데이터프레임으로 변환하여 반환한다.
 <li><p>색상은 센트로이드 구역과의 유사도를 가리킨다. 빨강색의 구역이 센트로이드 구역과의 유사도가 1에 가깝다.</p></li>
 </ul>
 <p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-cluster.jpg" width="550"></div></p><p>처음 5 개 샘플과 각 센트로이드에 대한 유사도 점수는 다음과 같다.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">similarities</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="go">array([[0.  , 0.14, 0.  , 0.  , 0.  , 0.08, 0.  , 0.99, 0.  , 0.6 ],</span>
-<span class="go">       [0.63, 0.  , 0.99, 0.  , 0.  , 0.  , 0.04, 0.  , 0.11, 0.  ],</span>
-<span class="go">       [0.  , 0.29, 0.  , 0.  , 0.01, 0.44, 0.  , 0.7 , 0.  , 0.3 ],</span>
-<span class="go">       [0.65, 0.  , 0.21, 0.  , 0.  , 0.  , 0.51, 0.  , 0.  , 0.  ],</span>
-<span class="go">       [0.86, 0.  , 0.89, 0.  , 0.  , 0.  , 0.14, 0.  , 0.03, 0.  ]])</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">similarities</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">array</span><span class="p">([[</span><span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.14</span><span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.08</span><span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.99</span><span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.6</span> <span class="p">],</span>
+       <span class="p">[</span><span class="mf">0.63</span><span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.99</span><span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.04</span><span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.11</span><span class="p">,</span> <span class="mf">0.</span>  <span class="p">],</span>
+       <span class="p">[</span><span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.29</span><span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.44</span><span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.7</span> <span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.3</span> <span class="p">],</span>
+       <span class="p">[</span><span class="mf">0.65</span><span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.21</span><span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.51</span><span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.</span>  <span class="p">],</span>
+       <span class="p">[</span><span class="mf">0.86</span><span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.89</span><span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.14</span><span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.</span>  <span class="p">]])</span>
 </pre></div>
 </div>
 <div class="info admonition">
