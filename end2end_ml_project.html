@@ -746,7 +746,12 @@ td,th {
 <section id="id10">
 <h3><span class="section-number">2.4.3. </span>데이터 시각화<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h3>
 <p>데이터 시각화는 지금까지와는 달리 이제부터는 훈련셋만을 대상으로 진행한다.
-일반적으로 테스트셋에 대한 데이터 탐색은 너무 깊이 하지 않는다.
+아래 코드는 <code class="docutils literal notranslate"><span class="pre">housing</span></code> 변수가 가리키는 데이터프레임을 전체 데이터셋에서
+계층 샘플링을 이용하여 생성된 훈련셋의 복사본으로 변경한다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">housing</span> <span class="o">=</span> <span class="n">strat_train_set</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>일반적으로 테스트셋에 대한 데이터 탐색은 너무 깊이 하지 않는다.
 머신러닝 모델의 훈련을 종료한 후에 실전 테스트 용도로 활용되는 테스트셋에 대해
 너무 많은 정보를 많이 알게 되면 이를 이용하여 훈련을 달리할 수 있다.
 하지만 그러면 제대로 된 실전 테스트를 진행할 수 없게 되어
@@ -822,50 +827,56 @@ td,th {
 </section>
 <section id="id11">
 <h2><span class="section-number">2.5. </span>데이터 준비: 정제와 전처리<a class="headerlink" href="#id11" title="Permalink to this heading">#</a></h2>
-<p>데이터 탐색을 마친 후에 앞서 확인한 지도학습 회귀 모델의 훈련에
-적절한 데이터를 준비하도록 한다.
-이를 위해 적재된 데이터셋에 대해 정제와 전처리 과정을 수행한다.</p>
-<p>데이터 정제는 결측치 처리, 이상치 및 노이즈 데이터 제거 등을 의미한다.
+<p>데이터 탐색을 통해 확인한 지도학습 회귀 모델을 훈련시키기 위해 먼저
+적절한 훈련용 데이터를 준비해야 한다.
+데이터 준비는 일반적으로 데이터 정제와 데이터 전처리 과정으로 이뤄진다.</p>
+<p><strong>데이터 정제</strong></p>
+<p>일반적으로 결측치 처리, 이상치와 노이즈 제거를 의미한다.
 캘리포니아 주택가격 데이터셋은 구역별 방 총 개수(<code class="docutils literal notranslate"><span class="pre">total_rooms</span></code>) 특성에서
 결측치가 일부 포함되어 있지만 이상치 또는 노이즈는 포함하지 않는다.</p>
-<p>데이터 전처리<font size='2'>preprocessing</font>는 수치형 특성과 범주형 특성을 구분하여 수행한다.
-가장 기본적인 전처리는 다음과 같다.</p>
+<p><strong>데이터 전처리</strong></p>
+<p>수치형 특성과 범주형 특성을 구분하여 수행한다.
+캘리포니아 주택가격 데이터셋에 대한 아래 전처리를 진행한다.</p>
 <ul class="simple">
 <li><p>범주형 특성 전처리: 원-핫-인코딩</p></li>
 <li><p>수치형 특성 전처리: 특성 크기조정과 특성 조합</p></li>
 </ul>
-<p>데이터 정제와 전처리의 모든 과정은 데이터셋에 포함된 모든 샘플을
-대상으로 동시에 진행되며
-다양한 종류의 <strong>변환기</strong> API를 순차적으로 적용하는
-<strong>파이프라인</strong><font size="2">pipeline</font>을 구현하여
-모든 과정을 자동화 할 수 있다.</p>
 <p><strong>사이킷런 API 활용</strong></p>
-<p>사이킷런<font size="2">Scikit-Learn</font>이 제공하는
-모든 API는 간단하게 합성할 수 있다.
-이점을 이해하려면 먼저 사이킷런이 제공하는 API의 유형을 구분해야 한다.
-사이킷런의 API는 크게 세 종류의 API로 나뉜다.</p>
+<p>데이터 정제와 전처리의 모든 과정은 데이터셋에 포함된 모든 샘플을
+대상으로 동시에 진행된다.
+또한 사이킷런<font size="2">Scikit-Learn</font>이 제공하는
+다양한 종류의 <strong>변환기</strong><font size='2'>transformer</font> API를 순차적으로 적용하는
+<strong>파이프라인</strong><font size="2">pipeline</font>을 구현하여
+모든 과정을 자동화할 수 있다.</p>
+<p>사이킷런의 API는 크게 세 종류로 나뉜다.</p>
 <ul class="simple">
-<li><p>추정기<font size="2">estimator</font>: <code class="docutils literal notranslate"><span class="pre">fit()</span></code> 메서드를 제공하는 클래스의 객체</p>
+<li><p>추정기<font size="2">estimator</font>: <code class="docutils literal notranslate"><span class="pre">fit()</span></code> 메서드를 지원하는 객체</p></li>
+<li><p>변환기<font size="2">transformer</font>: <code class="docutils literal notranslate"><span class="pre">fit()</span></code> 메서드와 <code class="docutils literal notranslate"><span class="pre">transform()</span></code> 메서드 지원</p></li>
+<li><p>예측기<font size="2">predictor</font>:  <code class="docutils literal notranslate"><span class="pre">fit()</span></code> 메서드와 <code class="docutils literal notranslate"><span class="pre">predict()</span></code> 메서드 지원</p></li>
+</ul>
+<p>세 메서드의 역할은 다음과 같다.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">fit()</span></code> 메서드</p>
 <ul>
-<li><p>주어진 데이터로부터 필요한 정보인 파라미터<font size='2'>parameter</font> 계산</p></li>
-<li><p>계산된 파라미터를 객체 내부의 속성<font size='2'>attribute</font>으로 저장</p></li>
-<li><p>반환값: 계산된 파라미터를 속성으로 갖는 객체</p></li>
+<li><p>데이터셋이 주어졌을 때 데이터셋으로부터 필요한 정보를 추출하여 객체의 속성으로 저장 후 해당 객체를 반환.
+즉, 객체의 속성을 업데이트.</p></li>
 </ul>
 </li>
 </ul>
 <ul class="simple">
-<li><p>변환기<font size="2">transformer</font></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">transform()</span></code> 메서드</p>
 <ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">fit()</span></code> 가 계산한 값을 이용하여 데이터셋을 변환하는 <code class="docutils literal notranslate"><span class="pre">transform()</span></code> 메서드 지원.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">fit()</span></code> 메서드와 <code class="docutils literal notranslate"><span class="pre">transform()</span></code> 메서드를 연속해서 호출하는 <code class="docutils literal notranslate"><span class="pre">fit_transform()</span></code> 메서드 지원.</p></li>
+<li><p>데이터셋이 주어졌을 때 <code class="docutils literal notranslate"><span class="pre">fit()</span></code> 메서드가 계산한 정보를 이용하여 데이터셋을 변환.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fit()</span></code> 메서드를 먼저 호출한 후에 <code class="docutils literal notranslate"><span class="pre">transform()</span></code> 메서드를 호출해야 함.</p></li>
+<li><p>이를 위해 <code class="docutils literal notranslate"><span class="pre">fit_transform()</span></code> 메서드를 활용하기도 함.</p></li>
 </ul>
 </li>
 </ul>
 <ul class="simple">
-<li><p>예측기<font size="2">predictor</font></p>
+<li><p><code class="docutils literal notranslate"><span class="pre">predict()</span></code> 메서드</p>
 <ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">fit()</span></code> 가 계산한 값을 이용하여 예측에 활용하는 <code class="docutils literal notranslate"><span class="pre">predict()</span></code> 메서드 지원.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">predict()</span></code> 메서드가 예측한 값의 성능을 측정하는 <code class="docutils literal notranslate"><span class="pre">score()</span></code> 메서드 지원.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fit()</span></code> 가 계산한 값을 이용하여 예측값 계산</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">predict()</span></code> 메서드가 예측한 값의 성능을 측정하는 <code class="docutils literal notranslate"><span class="pre">score()</span></code> 메서드도 일반적으로 함께 지원됨.</p></li>
 <li><p>일부 예측기는 예측값의 신뢰도를 평가하는 기능도 제공</p></li>
 </ul>
 </li>
