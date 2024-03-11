@@ -561,7 +561,7 @@ Pandas 데이터프레임으로 변환하여 반환한다.
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">housing</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
 </pre></div>
 </div>
-<p><div align="left"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-05a.png" width="350"></div></p><p><strong>범주형 특성 탐색</strong></p>
+<p><div align="left"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-05a.png" width="350"></div></p><p><strong>범주형 특성 탐색: <code class="docutils literal notranslate"><span class="pre">valule_counts()</span></code> 메서드</strong></p>
 <p>‘해안 근접도’는 5개의 범주로 구분된다.
 <code class="docutils literal notranslate"><span class="pre">valule_counts()</span></code> 메서드는 사용된 특성값과 각각의 특성값이 사용된 횟수를 확인해준다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">housing</span><span class="p">[</span><span class="s2">&quot;ocean_proximity&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
@@ -598,7 +598,7 @@ td,th {
 </tbody>
 </table>
 <p><strong>수치형 특성 탐색</strong></p>
-<p><code class="docutils literal notranslate"><span class="pre">describe()</span></code> 메서드는 수치형 특성들의 정보를 요약해서 보여준다.</p>
+<p><code class="docutils literal notranslate"><span class="pre">describe()</span></code> 메서드는 평균값, 표준편차, 사분범위 등 수치형 특성들의 정보를 요약해서 보여준다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">housing</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -766,12 +766,12 @@ td,th {
              <span class="n">x</span><span class="o">=</span><span class="s2">&quot;longitude&quot;</span><span class="p">,</span> 
              <span class="n">y</span><span class="o">=</span><span class="s2">&quot;latitude&quot;</span><span class="p">,</span> 
              <span class="n">grid</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-             <span class="n">s</span><span class="o">=</span><span class="n">housing</span><span class="p">[</span><span class="s2">&quot;population&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">100</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;population&quot;</span><span class="p">,</span>
+             <span class="n">s</span><span class="o">=</span><span class="n">housing</span><span class="p">[</span><span class="s2">&quot;population&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">100</span><span class="p">,</span> 
+             <span class="n">label</span><span class="o">=</span><span class="s2">&quot;population&quot;</span><span class="p">,</span>
              <span class="n">c</span><span class="o">=</span><span class="s2">&quot;median_house_value&quot;</span><span class="p">,</span> 
              <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;jet&quot;</span><span class="p">,</span> 
              <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
              <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
-             <span class="n">sharex</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
              <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -805,12 +805,9 @@ td,th {
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">housing</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;scatter&quot;</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;median_income&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;median_house_value&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">grid</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><div align="left"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-13.png" width="400"></div></p><p>위 산점도를 보면 아래 설명처럼 이상한 부분이 있다.
-그런 데이터는 모델 훈련에 도움이 되지 않아 제거하는 것이 일반적으로 좋지만 여기서는 그대로 두고 사용한다.</p>
-<ul class="simple">
-<li><p>50만 달러에서 보이는 수평선은 가격을 제한한 결과로 보여진다.</p></li>
-<li><p>45만, 35만, 28만, 그 아래 정도에서도 수평선이 존재하는데 이유는 알려지지 않았다.</p></li>
-</ul>
+<p><div align="left"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-13.png" width="400"></div></p><p>위 산점도를 보면 50만 달러에서 보이는 수평선은 가격을 제한한 결과로 보여진다.
+그렇게 인위적으로 조작된 데이터는 모델 훈련에 도움이 되지 않아
+제거하는 것이 일반적으로 좋지만 여기서는 그대로 두고 사용한다.</p>
 <p>경우에 따라 기존의 특성을 조합해서 새로운 특성을 활용할 수도 있다.
 예를 들어 구역별 방의 총 개수와 침실의 총 개수 대신 아래 특성이 보다 유용해 보인다.</p>
 <ul class="simple">
