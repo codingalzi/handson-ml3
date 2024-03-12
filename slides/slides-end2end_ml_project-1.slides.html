@@ -7670,7 +7670,7 @@ main {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <ul>
-<li>특성 10개: 경도, 위도, 주택 건물 중위연령, 방의 총 개수, 침실 총 개수, 인구, 가구 수, 중위소득, 주택 중위가격, 해안 근접도</li>
+<li>특성 10개: 경도, 위도, 주택 건물 중위연령, 총 방 수, 총 침실 수, 인구, 가구 수, 중위소득, 주택 중위가격, 해안 근접도</li>
 </ul>
 </div>
 </div>
@@ -8023,10 +8023,10 @@ main {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <ul>
-<li>20,640개 구역별로 총 10개의 조사 항목.</li>
+<li>20,640개 구역별로 10개의 특성 조사.</li>
 <li>해안 근접도를 뜻하는 <code>ocean_proximity</code> 특성은 <strong>범주형</strong><font size="2">categorical</font>이고 
   나머지는 <strong>수치형</strong><font size="2">numerical</font> 특성임.</li>
-<li>방의 총 개수를 뜻하는 <code>total_bedrooms</code> 특성은 207개의 null 값, 즉 결측치 포함.</li>
+<li>총 방 수를 뜻하는 <code>total_bedrooms</code> 특성은 207개의 null 값, 즉 결측치 포함.</li>
 </ul>
 </div>
 </div>
@@ -8912,7 +8912,7 @@ main {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <ul>
-<li>구역별 방의 총 개수와 침실의 총 개수 대신 아래 특성이 보다 유용함<ul>
+<li>구역별 총 방 수와 총 침실 수 대신 아래 특성이 보다 유용함<ul>
 <li>가구당 방 개수(<code>rooms_per_household</code>)</li>
 <li>방 하나당 침실 개수(<code>bedrooms_per_room</code>)</li>
 <li>가구당 인원(<code>population_per_household</code>)</li>
