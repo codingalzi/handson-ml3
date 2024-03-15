@@ -19,12 +19,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=c5ced968eda925caa686" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=c5ced968eda925caa686" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=c5ced968eda925caa686" rel="stylesheet" />
 
   
-  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=c5ced968eda925caa686" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -39,9 +39,9 @@
     <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
-  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=c5ced968eda925caa686" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=c5ced968eda925caa686" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=c5ced968eda925caa686"></script>
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
@@ -404,7 +404,7 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">2.5. 데이터 준비: 정제와 전처리</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">2.5.1. 데이터 정제</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">2.5.1. 데이터 정제: 결측치 처리</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">2.5.2. 범주형 특성 전처리: 원-핫 인코딩</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">2.5.3. 수치형 특성 전처리: 크기 조정</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">2.5.4. 사용자 정의 변환기</a><ul class="nav section-nav flex-column">
@@ -903,22 +903,7 @@ td,th {
 </li>
 </ul>
 <section id="id12">
-<h3><span class="section-number">2.5.1. </span>데이터 정제<a class="headerlink" href="#id12" title="Permalink to this heading">#</a></h3>
-<p><strong>입력 데이터셋과 타깃 데이터셋</strong></p>
-<p>계층 샘플링으로 얻어진  훈련셋 <code class="docutils literal notranslate"><span class="pre">strat_train_set</span></code> 을
-다시 입력 데이터셋 과 타깃 데이터셋으로 구분한다.</p>
-<ul>
-<li><p>입력 데이터셋: 주택 중위가격 특성이 제거된 훈련셋</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">housing</span> <span class="o">=</span> <span class="n">strat_train_set</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;median_house_value&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-</pre></div>
-</div>
-</li>
-<li><p>타깃 데이터셋: 주택 중위가격 특성으로만 구성된 훈련셋</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">housing_labels</span> <span class="o">=</span> <span class="n">strat_train_set</span><span class="p">[</span><span class="s2">&quot;median_house_value&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-</pre></div>
-</div>
-</li>
-</ul>
+<h3><span class="section-number">2.5.1. </span>데이터 정제: 결측치 처리<a class="headerlink" href="#id12" title="Permalink to this heading">#</a></h3>
 <p>입력 데이터셋의 총 침실 수(<code class="docutils literal notranslate"><span class="pre">total_bedrooms</span></code>) 특성에 168개 구역의 값이 <code class="docutils literal notranslate"><span class="pre">NaN</span></code>(Not a Number)로 표시되어 있다.
 즉, 일부 구역에 대한 총 방 수 정보가 누락되었다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">null_rows_idx</span> <span class="o">=</span> <span class="n">housing</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -938,11 +923,41 @@ td,th {
 <span class="n">housing</span><span class="p">[</span><span class="s2">&quot;total_bedrooms&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">median</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/null-value02.png" width="100%"></div></p></section>
+<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/null-value02.png" width="100%"></div></p><p>부적절한 데이터를 처리하는 데이터 정제과정이 끝나면
+모델 훈련에 적합한 데이터셋을 준비하는 전처리 과정을 진행한다.
+하지만 데이터 전처리를 진행하기 전에 먼저
+훈련셋을 다시 입력 데이터셋과 타깃 데이터셋으로 구분한다.
+이유는 입력 데이터셋과 타깃 데이터셋에 대한 전처리 과정이 일반적으로 때문이다.</p>
+<p><strong>입력 데이터셋과 타깃 데이터셋</strong></p>
+<p><strong>타깃</strong><font size='2'>target</font> 데이터셋은
+모델이 훈련 중에 가능한 정확하계 예측해야 하는 값으로 구성되며,
+여기서는 구역별 주택 중위가격을 타깃으로 지정한다.
+즉, 앞으로 다룰 모델은 주어진 구역의 주택 중위가격을
+최대한 정확하게 예측하도록 훈련된다.</p>
+<p>반면에 입력 데이터셋은 타깃으로 지정된 값을 예측하는 데에 필요한 정보로 구성된 데이터셋이다.
+여기서는 구역별 주택 중위가격을 제외한 나머지 특성들로 구성된 데이터셋을
+입력 데이터셋으로 사용한다.
+따라서 주택 중위가격이 제외된 구역의 다른 정보가 입력되면 해당 구역의 주택 중위가격을 예측하도록
+모델이 훈련된다.</p>
+<p>정리하면 다음과 같이 계층 샘플링으로 얻어진 훈련셋 <code class="docutils literal notranslate"><span class="pre">strat_train_set</span></code> 을
+입력 데이터셋 과 타깃 데이터셋으로 구분한다.</p>
+<ul>
+<li><p>입력 데이터셋: 주택 중위가격 특성이 제거된 훈련셋</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">housing</span> <span class="o">=</span> <span class="n">strat_train_set</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;median_house_value&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>타깃 데이터셋: 주택 중위가격 특성으로만 구성된 훈련셋</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">housing_labels</span> <span class="o">=</span> <span class="n">strat_train_set</span><span class="p">[</span><span class="s2">&quot;median_house_value&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
 <section id="id13">
 <h3><span class="section-number">2.5.2. </span>범주형 특성 전처리: 원-핫 인코딩<a class="headerlink" href="#id13" title="Permalink to this heading">#</a></h3>
-<p>해안 근접도(<code class="docutils literal notranslate"><span class="pre">ocean_proximity</span></code>) 특성은 수가 아닌 5 개의 범주를 나타내는 문자열, 즉 텍스트 데이터를 값으로 사용한다.
-그런데 사이킷런의 머신러닝 모델은 일반적으로 텍스트 데이터를 다루지 못한다.</p>
+<p>해안 근접도 특성 <code class="docutils literal notranslate"><span class="pre">ocean_proximity</span></code>는 5 개의 범주를 나타내는 문자열을 값으로 사용한다.
+그런데 사이킷런의 머신러닝 모델은 일반적으로 문자열과 같은 텍스트 데이터를 다루지 못한다.</p>
 <p>가장 단순한 해결책으로 5 개의 범주를 정수로 변환할 수 있다.</p>
 <table class="table">
 <thead>
@@ -977,22 +992,29 @@ td,th {
 더미<font size="2">dummy</font> 특성을 활용한다.</p>
 <div class="info admonition">
 <p class="admonition-title">더미 특성</p>
-<p>컴퓨터 분야에서 더미, 영어로 dummy는 의미없는 변수, 특성, 영역, 회로 등을 가리킨다.
-여기서는 한 구역의 해안 근접도를 지정할 때 굳이 필요 없는 다른 값도 함께 고려한다는 의미로 사용한다.</p>
+<p>프로그래밍 분야에서 더미, 영어로 dummy는 의미 없는 값을 의미한다.
+여기서 더미 특성은 한 구역의 해안 근접도를 지정할 때 반드시 필요한 값은 아니지만 함께 고려하는 특성을
+가리키는 의미로 사용한다.</p>
 </div>
 <p>원-핫 인코딩을 적용하면 해안 근접도 특성을 삭제하고 대신 다섯 개의 범주 전부를
 새로운 특성으로 추가한다.
 또한 다섯 개의 특성에 사용되는 값은 다음 방식으로 지정된다.</p>
 <ul class="simple">
-<li><p>해당 카테고리의 특성값: 1</p></li>
+<li><p>삭제된 카테고리의 특성값: 1</p></li>
 <li><p>나머지 카테고리의 특성값: 0</p></li>
 </ul>
-<p>예를 들어, <code class="docutils literal notranslate"><span class="pre">INLAND</span></code>를 해안 근접도 특성값으로 갖던 샘플은 다음 모양의 특성값을 갖게 된다.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<p>예를 들어, <code class="docutils literal notranslate"><span class="pre">INLAND</span></code>를 해안 근접도 특성값으로 갖던 샘플은
+<code class="docutils literal notranslate"><span class="pre">INLAND</span></code>라는 <code class="docutils literal notranslate"><span class="pre">ocean_proximity</span></code> 특성 대신에
+다음 모양의 특성값을 갖게 된다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>리스트에 포함된 다섯 개 각각의 값은 차례대로 다음 특성에 해당하는 값을 가리킨다.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&#39;&lt;1H OCEAN&#39;, &#39;INLAND&#39;, &#39;ISLAND&#39;, &#39;NEAR BAY&#39;, &#39;NEAR OCEAN&#39;
 </pre></div>
 </div>
 <p>사이킷런의 <code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code> 변환기가 원-핫-인코딩을 지원하며
-해안 근접도를 변환한 결과는 아래 모양을 갖는다.</p>
+해안 근접도를 변환한 결과는 다음과 같다.</p>
 <p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/one_hot01.png" width="800"></div></p></section>
 <section id="id14">
 <h3><span class="section-number">2.5.3. </span>수치형 특성 전처리: 크기 조정<a class="headerlink" href="#id14" title="Permalink to this heading">#</a></h3>
@@ -1634,7 +1656,7 @@ RMSE의 음숫값을 선택하는 이유는 RMSE가 낮을 수록 좋은 모델�
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">2.5. 데이터 준비: 정제와 전처리</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">2.5.1. 데이터 정제</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">2.5.1. 데이터 정제: 결측치 처리</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">2.5.2. 범주형 특성 전처리: 원-핫 인코딩</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">2.5.3. 수치형 특성 전처리: 크기 조정</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">2.5.4. 사용자 정의 변환기</a><ul class="nav section-nav flex-column">
@@ -1706,8 +1728,8 @@ By 코딩알지
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
+  <script src="_static/scripts/bootstrap.js?digest=c5ced968eda925caa686"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=c5ced968eda925caa686"></script>
 
   <footer class="bd-footer">
   </footer>
