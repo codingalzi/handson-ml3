@@ -956,8 +956,8 @@ td,th {
 </section>
 <section id="id13">
 <h3><span class="section-number">2.5.2. </span>범주형 특성 전처리: 원-핫 인코딩<a class="headerlink" href="#id13" title="Permalink to this heading">#</a></h3>
-<p>해안 근접도(<code class="docutils literal notranslate"><span class="pre">ocean_proximity</span></code>) 특성은 수가 아닌 5 개의 범주를 나타내는 문자열, 즉 텍스트 데이터를 값으로 사용한다.
-그런데 사이킷런의 머신러닝 모델은 일반적으로 텍스트 데이터를 다루지 못한다.</p>
+<p>해안 근접도 특성 <code class="docutils literal notranslate"><span class="pre">ocean_proximity</span></code>는 5 개의 범주를 나타내는 문자열을 값으로 사용한다.
+그런데 사이킷런의 머신러닝 모델은 일반적으로 문자열과 같은 텍스트 데이터를 다루지 못한다.</p>
 <p>가장 단순한 해결책으로 5 개의 범주를 정수로 변환할 수 있다.</p>
 <table class="table">
 <thead>
@@ -992,22 +992,29 @@ td,th {
 더미<font size="2">dummy</font> 특성을 활용한다.</p>
 <div class="info admonition">
 <p class="admonition-title">더미 특성</p>
-<p>컴퓨터 분야에서 더미, 영어로 dummy는 의미없는 변수, 특성, 영역, 회로 등을 가리킨다.
-여기서는 한 구역의 해안 근접도를 지정할 때 굳이 필요 없는 다른 값도 함께 고려한다는 의미로 사용한다.</p>
+<p>프로그래밍 분야에서 더미, 영어로 dummy는 의미 없는 값을 의미한다.
+여기서 더미 특성은 한 구역의 해안 근접도를 지정할 때 반드시 필요한 값은 아니지만 함께 고려하는 특성을
+가리키는 의미로 사용한다.</p>
 </div>
 <p>원-핫 인코딩을 적용하면 해안 근접도 특성을 삭제하고 대신 다섯 개의 범주 전부를
 새로운 특성으로 추가한다.
 또한 다섯 개의 특성에 사용되는 값은 다음 방식으로 지정된다.</p>
 <ul class="simple">
-<li><p>해당 카테고리의 특성값: 1</p></li>
+<li><p>삭제된 카테고리의 특성값: 1</p></li>
 <li><p>나머지 카테고리의 특성값: 0</p></li>
 </ul>
-<p>예를 들어, <code class="docutils literal notranslate"><span class="pre">INLAND</span></code>를 해안 근접도 특성값으로 갖던 샘플은 다음 모양의 특성값을 갖게 된다.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<p>예를 들어, <code class="docutils literal notranslate"><span class="pre">INLAND</span></code>를 해안 근접도 특성값으로 갖던 샘플은
+<code class="docutils literal notranslate"><span class="pre">INLAND</span></code>라는 <code class="docutils literal notranslate"><span class="pre">ocean_proximity</span></code> 특성 대신에
+다음 모양의 특성값을 갖게 된다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>리스트에 포함된 다섯 개 각각의 값은 차례대로 다음 특성에 해당하는 값을 가리킨다.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&#39;&lt;1H OCEAN&#39;, &#39;INLAND&#39;, &#39;ISLAND&#39;, &#39;NEAR BAY&#39;, &#39;NEAR OCEAN&#39;
 </pre></div>
 </div>
 <p>사이킷런의 <code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code> 변환기가 원-핫-인코딩을 지원하며
-해안 근접도를 변환한 결과는 아래 모양을 갖는다.</p>
+해안 근접도를 변환한 결과는 다음과 같다.</p>
 <p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/one_hot01.png" width="800"></div></p></section>
 <section id="id14">
 <h3><span class="section-number">2.5.3. </span>수치형 특성 전처리: 크기 조정<a class="headerlink" href="#id14" title="Permalink to this heading">#</a></h3>
