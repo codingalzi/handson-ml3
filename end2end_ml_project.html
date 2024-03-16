@@ -935,14 +935,32 @@ td,th {
 <span class="n">housing_num</span> <span class="o">=</span> <span class="n">housing</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">])</span> <span class="c1"># 수치형 특성들만 선택</span>
 
 <span class="n">imputer</span> <span class="o">=</span> <span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;median&quot;</span><span class="p">)</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">imputer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">housing_num</span><span class="p">)</span>                   <span class="c1"># 결과는 np.array 자료형</span>
+<span class="n">imputer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">housing_num</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">imputer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">housing_num</span><span class="p">)</span>                   <span class="c1"># 결과는 np.array 자료형</span>
 
 <span class="c1"># 아래 테이블을 보여주기 위해 데이터프레임으로 변환.</span>
 <span class="n">housing_tr</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">housing_num</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">housing_num</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
 <span class="n">housing_tr</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">null_rows_idx</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
-<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/null-value02.png" width="100%"></div></p></section>
+<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/null-value02.png" width="100%"></div></p><p><strong>참고:</strong> 아래 코드 (1)의 두 줄 코드를 코드 (2)의 한 줄 코드로 대체할 수 있다.
+이유는 <code class="docutils literal notranslate"><span class="pre">fit_transform()</span></code> 메서드는 <code class="docutils literal notranslate"><span class="pre">fit()</span></code> 메서드와 <code class="docutils literal notranslate"><span class="pre">transform()</span></code> 메서드를 연속으로 호출하기 때문이다.</p>
+<ul>
+<li><p>코드 (1)</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">imputer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">housing_num</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">imputer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">housing_num</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<ul>
+<li><p>코드 (2)</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">imputer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">housing_num</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
 <section id="id12">
 <h3><span class="section-number">2.5.2. </span>입력 데이터셋과 타깃 데이터셋<a class="headerlink" href="#id12" title="Permalink to this heading">#</a></h3>
 <p>부적절한 데이터 샘플을 처리하는 데이터 정제 과정이 끝나면
@@ -1099,7 +1117,7 @@ min-max 스케일링을 실행한다.</p>
 그리고 이럴 때는 <code class="docutils literal notranslate"><span class="pre">fit()</span></code> 메서드를 사용할 필요가 없는데,
 이런 변환기는 <code class="docutils literal notranslate"><span class="pre">FunctionTransformer</span></code> 클래스의 인스턴스를 활용하여 간단하게 지정할 수 있다.</p>
 <p>여기서는 로그 변환과 비율 계산을 지원하는 두 개의 변환기를
-.<code class="docutils literal notranslate"><span class="pre">FunctionTransformer</span></code> 클래스의 인스턴스로 지정해서 활용한다.</p>
+<code class="docutils literal notranslate"><span class="pre">FunctionTransformer</span></code> 클래스의 인스턴스로 지정해서 활용한다.</p>
 <p><strong>로그 변환기</strong></p>
 <p>데이터셋이 두터운 꼬리 분포를 따르는 경우,
 즉 히스토그램이 지나치게 한쪽으로 편향된 경우
@@ -1107,16 +1125,13 @@ min-max 스케일링을 실행한다.</p>
 로그 함수를 적용하여 어느 정도 좌우 균형이 잡힌 분포로 변환할 것을 권장한다.
 아래 그림은 구역별 인구로 구성된 <code class="docutils literal notranslate"><span class="pre">population</span></code> 특성값에 로그함수를 적용할 때 분포가 보다 균형잡히는 것을 잘 보여준다.</p>
 <p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-log_app.jpg" width="600"></div></p><p>여기서는 로그 변환이 필요한 모든 특성에 대해 아래 형식의 로그 변환기를 적용한다.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">FunctionTransformer</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">,</span> <span class="n">feature_names_out</span><span class="o">=</span><span class="s2">&quot;one-to-one&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">FunctionTransformer</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>적용대상 특성은 다음과 같다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;total_bedrooms&quot;</span><span class="p">,</span> <span class="s2">&quot;total_rooms&quot;</span><span class="p">,</span> <span class="s2">&quot;population&quot;</span><span class="p">,</span> <span class="s2">&quot;households&quot;</span><span class="p">,</span> <span class="s2">&quot;median_income&quot;</span>
 </pre></div>
 </div>
-<p>로그 변환기를 지정할 때 사용되는 <code class="docutils literal notranslate"><span class="pre">feature_names_out=&quot;one-to-one&quot;</span></code>는 로그 변환되어 생성되는
-특성값들의 특성명을 이전 특성명과 동일하게 지정하라는 의미이다.
-보다 자세한 의미는 실제로 활용될 때 한 번 더 설명한다.</p>
 <p><strong>비율 계산 변환기</strong></p>
 <p>두 개의 특성 사이의 비율을 계산하여 새로운 특성을 생성하는 변환기 또한
 <code class="docutils literal notranslate"><span class="pre">FunctionTransformer</span></code>를 활용할 수 있다.</p>
@@ -1125,20 +1140,21 @@ min-max 스케일링을 실행한다.</p>
 </div>
 <p>비율 계산 변환기를 이용하여 아래 특성을 새롭게 생성할 수 있다.</p>
 <ul class="simple">
-<li><p>가구당 방 수(rooms for household)</p></li>
-<li><p>침실 비율(bedrooms for room)</p></li>
-<li><p>가구당 인원(population per household)</p></li>
+<li><p>침실 비율(bedrooms for room): <code class="docutils literal notranslate"><span class="pre">housing['total_bedrooms']</span> <span class="pre">/</span> <span class="pre">housing['total_rooms']</span></code></p></li>
+<li><p>가구당 방 수(rooms for household): <code class="docutils literal notranslate"><span class="pre">housing['total_bedrooms']</span> <span class="pre">/</span> <span class="pre">housing['households']</span></code></p></li>
+<li><p>가구당 인원(population per household): <code class="docutils literal notranslate"><span class="pre">housing['population']</span> <span class="pre">/</span> <span class="pre">housing['households']</span></code></p></li>
 </ul>
 </section>
 <section id="id13">
 <h3><span class="section-number">2.5.6. </span>군집 변환기: 사용자 정의 변환기<a class="headerlink" href="#id13" title="Permalink to this heading">#</a></h3>
-<p>데이터 준비 과정에서 경우에 따라 사용자가 직접 변환기를 구현해야할 필요가 있다.</p>
-<p><code class="docutils literal notranslate"><span class="pre">SimpleImputer</span></code> 변환기의 경우처럼
-먼저 <code class="docutils literal notranslate"><span class="pre">fit()</span></code> 메서드를 이용하여 평균값, 중위수 등을 계산한 다음에
-<code class="docutils literal notranslate"><span class="pre">transform()</span></code> 메서드를 적용할 수 있는 변환기는 해당 변환기 클래스를 직접 선언해야 한다.</p>
-<p>사이킷런의 다른 변환기와 호환이 되도록 하기 위해서는
-<code class="docutils literal notranslate"><span class="pre">fit()</span></code> 과 <code class="docutils literal notranslate"><span class="pre">transform()</span></code> 등 다양한 메서드를 모두 직접 구현해야 한다.
-예를 들어, 캘리포니아 주 20,640 개의 구역을 서로 가깝게 위치한 구역들로 묶어
+<p>데이터 준비 과정에서 경우에 따라 사용자가 직접 변환기를 구현해야할 필요가 있다.
+그런데 <code class="docutils literal notranslate"><span class="pre">SimpleImputer</span></code> 변환기의 경우처럼
+먼저 <code class="docutils literal notranslate"><span class="pre">fit()</span></code> 메서드를 이용하여 평균값, 중위수 등과 같은 정보를 데이터셋으로부터 계산한 다음에
+<code class="docutils literal notranslate"><span class="pre">transform()</span></code> 메서드를 적용할 수 있는 변환기는
+직접 클래스로 선언해야 한다.
+무엇보다도 사이킷런의 다른 변환기와 호환이 되도록 하기 위해서
+<code class="docutils literal notranslate"><span class="pre">fit()</span></code> 과 <code class="docutils literal notranslate"><span class="pre">transform()</span></code> 등 다양한 메서드를 모두 직접 구현해야 한다.</p>
+<p>여기서는 캘리포니아 주 20,640 개의 구역을 서로 가깝게 위치한 구역들로 묶어
 총 10개의 군집<font size='2'>cluster</font>으로 구분하는 변환기 클래스를
 다음과 같이 선언한다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.base</span> <span class="kn">import</span> <span class="n">BaseEstimator</span><span class="p">,</span> <span class="n">TransformerMixin</span>
@@ -1168,32 +1184,40 @@ min-max 스케일링을 실행한다.</p>
 </pre></div>
 </div>
 <p>위 코드에 대한 설명은 <a class="reference internal" href="unsupervised_learning.html#ch-unsupervisedlearning"><span class="std std-numref">9장</span></a> 비지도 학습에서 자세히 다룬다.
-여기서는 대신 다음 세 가지만을 기억한다.</p>
+여기서는 대신 다음 세 가지만을 기억해 두자.</p>
 <p>첫째, 변환기를 선언할 때 <code class="docutils literal notranslate"><span class="pre">BaseEstimator</span></code>와 <code class="docutils literal notranslate"><span class="pre">TransformerMixin</span></code> 두 개의 클래스를 상속해야 한다.</p>
 <p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/custom-transformer.png" width="350"></div></p>
-<br><p>둘째, <code class="docutils literal notranslate"><span class="pre">get_feature_names_out()</span></code> 메서드를 재정의해서 변환기에 의해 새로 생성된 특성들의 이름을
-지정하는 방식을 설정해야 한다.</p>
-<p>셋째, <code class="docutils literal notranslate"><span class="pre">ClusterSimilarity</span></code> 변환기를 이용하여 얻어진 군집 특성을 이용하면
-아래 그림과 같은 결과를 얻을 수 있다.</p>
+<br><p>둘째, <code class="docutils literal notranslate"><span class="pre">get_feature_names_out()</span></code> 메서드를 재정의해서 변환기에 의해 새로 생성된 특성들의 이름을 지정한다.</p>
+<p>셋째, <code class="docutils literal notranslate"><span class="pre">ClusterSimilarity</span></code> 변환기를 이용하여 얻어진 군집 특성을 이용하면 아래 결과를 얻을 수 있다.</p>
 <ul class="simple">
 <li><p>모든 구역을 10개의 군집으로 쪼갠다.</p></li>
-<li><p>🗙는 각 군집의 센트로이드<font size='2'>centroid</font>, 즉 중심 구역을 나타낸다.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">transform()</span></code> 메서드는 각 샘플에 대해 10개의 센트로이드와의 유사도 점수를 계산해서 반환한다.
 유사도를 계산할 때 주택 중위가격을 참고해서 주택 중위 가격이 비슷한 구역의 유사도를 보다 높게 평가하도록 유도한다.</p></li>
-<li><p>색상은 센트로이드 구역과의 유사도를 가리킨다. 빨강색의 구역이 센트로이드 구역과의 유사도가 1에 가깝다.</p></li>
 </ul>
-<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-cluster.jpg" width="550"></div></p><p>처음 5 개 샘플과 각 센트로이드에 대한 유사도 점수는 다음과 같다.
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cluster_simil</span> <span class="o">=</span> <span class="n">ClusterSimilarity</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">similarities</span> <span class="o">=</span> <span class="n">cluster_simil</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">housing</span><span class="p">[[</span><span class="s2">&quot;latitude&quot;</span><span class="p">,</span> <span class="s2">&quot;longitude&quot;</span><span class="p">]],</span>
+                                           <span class="n">sample_weight</span><span class="o">=</span><span class="n">housing_labels</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>처음 5 개 샘플과 각 센트로이드에 대한 유사도 점수는 다음과 같다.
 예를 들어 첫째 샘플의 경우 7번 인덱스의 값이 0.99로 가장 큰데,
 이는 첫째 샘플이 8번째 군집의 센트로이드와 가장 유사함을 의미한다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">similarities</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">array</span><span class="p">([[</span><span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.14</span><span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.08</span><span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.99</span><span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.6</span> <span class="p">],</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span><span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.14</span><span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.08</span><span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.99</span><span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.6</span> <span class="p">],</span>
        <span class="p">[</span><span class="mf">0.63</span><span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.99</span><span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.04</span><span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.11</span><span class="p">,</span> <span class="mf">0.</span>  <span class="p">],</span>
        <span class="p">[</span><span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.29</span><span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.44</span><span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.7</span> <span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.3</span> <span class="p">],</span>
        <span class="p">[</span><span class="mf">0.65</span><span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.21</span><span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.51</span><span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.</span>  <span class="p">],</span>
        <span class="p">[</span><span class="mf">0.86</span><span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.89</span><span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.14</span><span class="p">,</span> <span class="mf">0.</span>  <span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.</span>  <span class="p">]])</span>
 </pre></div>
 </div>
-</section>
+<p>아래 그래프를 위 결과를 이용하여 그릴 수 있다.</p>
+<ul class="simple">
+<li><p>🗙는 각 군집의 센트로이드<font size='2'>centroid</font>, 즉 각 군집의 중심 구역을 표시한다.</p></li>
+<li><p>색상은 센트로이드 구역과의 유사도를 가리킨다. 빨강색의 구역이 센트로이드 구역과의 유사도가 1에 가깝다.</p></li>
+</ul>
+<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-cluster.jpg" width="550"></div></p></section>
 </section>
 <section id="id14">
 <h2><span class="section-number">2.6. </span>변환 파이프라인<a class="headerlink" href="#id14" title="Permalink to this heading">#</a></h2>
@@ -1280,7 +1304,7 @@ min-max 스케일링을 실행한다.</p>
     <span class="k">return</span> <span class="n">X</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">/</span> <span class="n">X</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="c1"># 1번 특성에 대한 0번 특성의 비율율</span>
 
 <span class="k">def</span> <span class="nf">ratio_name</span><span class="p">(</span><span class="n">function_transformer</span><span class="p">,</span> <span class="n">feature_names_in</span><span class="p">):</span>
-    <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;ratio&quot;</span><span class="p">]</span>  <span class="c1"># 새로 생성되는 특성 이름에 추가</span>
+    <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;ratio&quot;</span><span class="p">]</span>  <span class="c1"># 새로 생성되는 특성값들의 특성명</span>
 
 <span class="k">def</span> <span class="nf">ratio_pipeline</span><span class="p">():</span>
     <span class="k">return</span> <span class="n">make_pipeline</span><span class="p">(</span>
@@ -1289,6 +1313,9 @@ min-max 스케일링을 실행한다.</p>
         <span class="n">StandardScaler</span><span class="p">())</span>
 </pre></div>
 </div>
+<p>로그 변환기를 지정할 때 사용되는 <code class="docutils literal notranslate"><span class="pre">feature_names_out=ratio_name</span></code>은 로그 변환되어 생성되는
+특성값들의 특성명을 <code class="docutils literal notranslate"><span class="pre">ratio_name()</span></code> 함수의 반환값을 이용하여 지정하라는 의미이다.
+보다 자세한 의미는 실제로 활용될 때 한 번 더 설명한다.</p>
 <p>(2) 로그 변환기</p>
 <p>데이터 분포가 두터운 꼬리를 갖는 특성을 대상으로 로그 함수를 적용하는 변환기를 지정한다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">log_pipeline</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
@@ -1297,6 +1324,9 @@ min-max 스케일링을 실행한다.</p>
     <span class="n">StandardScaler</span><span class="p">())</span>
 </pre></div>
 </div>
+<p>로그 변환기를 지정할 때 사용되는 <code class="docutils literal notranslate"><span class="pre">feature_names_out=&quot;one-to-one&quot;</span></code>는 로그 변환되어 생성되는
+특성값들의 특성명을 이전 특성명과 동일하게 지정하라는 의미이다.
+보다 자세한 의미는 실제로 활용될 때 한 번 더 설명한다.</p>
 <p>(3) 군집 변환기</p>
 <p>구역의 위도와 경도를 이용하여 구역들의 군집 정보를 새로운 특성으로 추가하는 변환기를 지정한다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cluster_simil</span> <span class="o">=</span> <span class="n">ClusterSimilarity</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
