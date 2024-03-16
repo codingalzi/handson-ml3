@@ -1374,7 +1374,38 @@ min-max 스케일링을 실행한다.</p>
     <span class="n">remainder</span><span class="o">=</span><span class="n">default_num_pipeline</span><span class="p">)</span>          <span class="c1"># 주택 중위연령(housing_median_age) 대상</span>
 </pre></div>
 </div>
-</section>
+<p>아래 코드는 위 변환기를 이용하여 정제와 전처리를 입력 데이터셋의 모든 특성에 대해 특성별로 실행한다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">housing_prepared</span> <span class="o">=</span> <span class="n">preprocessing</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">housing</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>변환된 데이터셋의 특성은 총 24개이며 다음과 같다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">housing_prepared</span> <span class="o">=</span> <span class="n">preprocessing</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">housing</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([</span><span class="s1">&#39;bedrooms__ratio&#39;</span><span class="p">,</span> <span class="s1">&#39;rooms_per_house__ratio&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;people_per_house__ratio&#39;</span><span class="p">,</span> <span class="s1">&#39;log__total_bedrooms&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;log__total_rooms&#39;</span><span class="p">,</span> <span class="s1">&#39;log__population&#39;</span><span class="p">,</span> <span class="s1">&#39;log__households&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;log__median_income&#39;</span><span class="p">,</span> <span class="s1">&#39;geo__Cluster 0 similarity&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;geo__Cluster 1 similarity&#39;</span><span class="p">,</span> <span class="s1">&#39;geo__Cluster 2 similarity&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;geo__Cluster 3 similarity&#39;</span><span class="p">,</span> <span class="s1">&#39;geo__Cluster 4 similarity&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;geo__Cluster 5 similarity&#39;</span><span class="p">,</span> <span class="s1">&#39;geo__Cluster 6 similarity&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;geo__Cluster 7 similarity&#39;</span><span class="p">,</span> <span class="s1">&#39;geo__Cluster 8 similarity&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;geo__Cluster 9 similarity&#39;</span><span class="p">,</span> <span class="s1">&#39;cat__ocean_proximity_&lt;1H OCEAN&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;cat__ocean_proximity_INLAND&#39;</span><span class="p">,</span> <span class="s1">&#39;cat__ocean_proximity_ISLAND&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;cat__ocean_proximity_NEAR BAY&#39;</span><span class="p">,</span> <span class="s1">&#39;cat__ocean_proximity_NEAR OCEAN&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;remainder__housing_median_age&#39;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>변환된 데이터셋을 데이터프레임으로 표현하면 다음과 같다.
+특성이 24개로 너무 많아서 아래 그림에서는 6개의 특성만 보여준다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">housing_prepared_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">housing_prepared</span><span class="p">,</span>
+                                   <span class="n">columns</span><span class="o">=</span><span class="n">preprocessing</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">(),</span>
+                                   <span class="n">index</span><span class="o">=</span><span class="n">housing</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+
+<span class="n">housing_prepared_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/housing-transformed.png" width="100%"></div></p></section>
 </section>
 <section id="id16">
 <h2><span class="section-number">2.7. </span>모델 선택과 훈련<a class="headerlink" href="#id16" title="Permalink to this heading">#</a></h2>
