@@ -412,8 +412,10 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">2.5.6. 군집 변환기: 사용자 정의 변환기</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">2.6. 변환 파이프라인</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">2.6.1. 캘리포니아 데이터셋 변환 파이프라인</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">2.6. 파이프라인</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pipeline">2.6.1. <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> 클래스</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#columntransformer">2.6.2. <code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> 클래스</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">2.6.3. 캘리포니아 데이터셋 변환 파이프라인</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">2.7. 모델 선택과 훈련</a><ul class="nav section-nav flex-column">
@@ -1220,97 +1222,105 @@ min-max 스케일링을 실행한다.</p>
 <p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/homl02-cluster.jpg" width="550"></div></p></section>
 </section>
 <section id="id14">
-<h2><span class="section-number">2.6. </span>변환 파이프라인<a class="headerlink" href="#id14" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">2.6. </span>파이프라인<a class="headerlink" href="#id14" title="Permalink to this heading">#</a></h2>
 <p>모든 전처리 단계가 정확한 순서대로 진행되어야 한다.
 이를 위해 사이킷런의 <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> 클래스를 이용하여 여러 변환기를 순서대로
-실행하는 변환기 파이프라인을 활용한다.</p>
-<p><strong><code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> 클래스 활용</strong></p>
+실행하는 변환기 파이프라인을 생성해서 활용한다.</p>
+<section id="pipeline">
+<h3><span class="section-number">2.6.1. </span><code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> 클래스<a class="headerlink" href="#pipeline" title="Permalink to this heading">#</a></h3>
 <p>예를 들어, 수치형 특성을 대상으로 결측치를 중위수로 채우는 정제와
 표준화를 연속적으로 실행하는 파이프라인은 다음과 같이 정의한다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">num_pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([(</span><span class="s2">&quot;impute&quot;</span><span class="p">,</span> <span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;median&quot;</span><span class="p">)),</span>
                          <span class="p">(</span><span class="s2">&quot;standardize&quot;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">())])</span>
 </pre></div>
 </div>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> 객체를 생성할 때 사용되는 인자는 이름과 추정기로 이루어진 쌍들의 리스트이다.</p></li>
-<li><p>마지막 추정기를 제외한 나머지 추정기는 모두 변환기다.
-즉, 마지막 추정기는 <code class="docutils literal notranslate"><span class="pre">fit()</span></code> 메서드만 지원해도 되지만
-나머지는 <code class="docutils literal notranslate"><span class="pre">fit_transform()</span></code> 메서드가 지원되는 변환기어야 한다.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">num_pipeline.fit()</span></code> 를 호출하면
-마지막 변환기 까지는 <code class="docutils literal notranslate"><span class="pre">fit_transform()</span></code> 메소드가 연속적으로 호출되고
-마지막 변환기의 <code class="docutils literal notranslate"><span class="pre">fit()</span></code> 메서드 최종 호출된다.</p></li>
-<li><p>파이프라인으로 정의된 추정기의 유형은 마지막 추정기의 유형과 동일하다.
-따라서 <code class="docutils literal notranslate"><span class="pre">num_pipeline</span></code> 은 변환기다.</p></li>
-</ul>
-<p><strong><code class="docutils literal notranslate"><span class="pre">make_pipeline()</span></code> 함수 활용</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> 인스턴스를 생성할 때 추정기명과 추정기로 이루어진 쌍들의 리스트를
+이용한다.
+단, 마지막 추정기를 제외한 나머지 추정기는 모두
+<code class="docutils literal notranslate"><span class="pre">fit_transform()</span></code> 메서드를 지원하는 변환기어야 한다.</p>
+<p>파이프라인으로 정의된 추정기의 유형은 마지막 추정기의 유형과 동일하다.
+따라서 <code class="docutils literal notranslate"><span class="pre">num_pipeline</span></code> 은 변환기다.</p>
+<p><code class="docutils literal notranslate"><span class="pre">num_pipeline.fit()</span></code> 를 호출하면 마지막 추정기 이전까지의 변환기에 대해서는
+<code class="docutils literal notranslate"><span class="pre">fit_transform()</span></code> 메소드가 연속적으로 호출되고,
+마지막 변환기의 <code class="docutils literal notranslate"><span class="pre">fit()</span></code> 메서드 최종 호출된다.</p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">make_pipeline()</span></code> 함수</strong></p>
 <p>파이프라인에 포함되는 변환기의 이름이 중요하지 않다면 <code class="docutils literal notranslate"><span class="pre">make_pipeline()</span></code> 함수를 이용하여
-<code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> 객체를 생성할 수 있다. 이름은 자동으로 지정된다.</p>
-<p>위 파이프라인과 동일한 파이프라인 객체를 다음과 같이 생성할 수 있다.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">make_pipeline</span><span class="p">(</span><span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;median&quot;</span><span class="p">),</span> 
-              <span class="n">StandardScaler</span><span class="p">())</span>
+<code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> 객체를 생성할 수 있다. 이름은 자동으로 지정된다.
+위 파이프라인과 동일한 파이프라인 객체를 다음과 같이 생성할 수 있다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">num_pipeline</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;median&quot;</span><span class="p">),</span> 
+                             <span class="n">StandardScaler</span><span class="p">())</span>
 </pre></div>
 </div>
-<p><strong><code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> 클래스 활용</strong></p>
-<p><code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> 클래스는 특성별로 전처리를 지정할 수 있다.
-이 기능을 이용하여 수치형 특성과 범주형 특성을 구분해서
-전처리하는 통합 파이프라인을 다음과 같이 구성할 수 있다.</p>
-<ul class="simple">
-<li><p>수치형 특성: <code class="docutils literal notranslate"><span class="pre">num_pipeline</span></code> 변환기</p></li>
-<li><p>범주형 특성: <code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code> 변환기</p></li>
-</ul>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">num_attribs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;longitude&quot;</span><span class="p">,</span> <span class="s2">&quot;latitude&quot;</span><span class="p">,</span> <span class="s2">&quot;housing_median_age&quot;</span><span class="p">,</span> <span class="s2">&quot;total_rooms&quot;</span><span class="p">,</span>
+</section>
+<section id="columntransformer">
+<h3><span class="section-number">2.6.2. </span><code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> 클래스<a class="headerlink" href="#columntransformer" title="Permalink to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> 클래스는 특성별로
+파이프라인 변환기를 지정하여 특성별 전처리를 실행할 수 있다.
+예를 들어, 수치형 특성엔 <code class="docutils literal notranslate"><span class="pre">num_pipeline</span></code> 변환기를, 범주형 특성엔 <code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code> 변환기를 적용하는
+변환기를 다음과 같이 구현할 수 있다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 수치형 특성 리스트 지정</span>
+<span class="n">num_attribs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;longitude&quot;</span><span class="p">,</span> <span class="s2">&quot;latitude&quot;</span><span class="p">,</span> <span class="s2">&quot;housing_median_age&quot;</span><span class="p">,</span> <span class="s2">&quot;total_rooms&quot;</span><span class="p">,</span>
                <span class="s2">&quot;total_bedrooms&quot;</span><span class="p">,</span> <span class="s2">&quot;population&quot;</span><span class="p">,</span> <span class="s2">&quot;households&quot;</span><span class="p">,</span> <span class="s2">&quot;median_income&quot;</span><span class="p">]</span>
+<span class="c1"># 범주형 특성 리스트 지정</span>
 <span class="n">cat_attribs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ocean_proximity&quot;</span><span class="p">]</span>
 
+<span class="c1"># 범주형 특성 변환 파이프라인</span>
 <span class="n">cat_pipeline</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
     <span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;most_frequent&quot;</span><span class="p">),</span>
     <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">handle_unknown</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">))</span>
 
+<span class="c1"># 전체 특성 변환기</span>
 <span class="n">preprocessing</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">([</span>
     <span class="p">(</span><span class="s2">&quot;num&quot;</span><span class="p">,</span> <span class="n">num_pipeline</span><span class="p">,</span> <span class="n">num_attribs</span><span class="p">),</span>
-    <span class="p">(</span><span class="s2">&quot;cat&quot;</span><span class="p">,</span> <span class="n">cat_pipeline</span><span class="p">,</span> <span class="n">cat_attribs</span><span class="p">),</span>
-<span class="p">])</span>
+    <span class="p">(</span><span class="s2">&quot;cat&quot;</span><span class="p">,</span> <span class="n">cat_pipeline</span><span class="p">,</span> <span class="n">cat_attribs</span><span class="p">)])</span>
 </pre></div>
 </div>
-<p><strong><code class="docutils literal notranslate"><span class="pre">make_column_selector()</span></code> 함수 활용</strong></p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">make_column_selector()</span></code> 함수</strong></p>
 <p>파이프라인에 포함되는 각 변환기를 적용할 특성을 일일이 나열하는 일이 어려울 수 있다.
 이때 지정된 자료형을 사용하는 특성들만을 뽑아주는 <code class="docutils literal notranslate"><span class="pre">make_column_selector()</span></code> 함수를
 유용하게 활용할 수 있다.</p>
-<p>위 <code class="docutils literal notranslate"><span class="pre">preprocessing</span></code> 변환기를 아래와 같이 정의할 수 있다.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">make_column_selector(dtype_include=np.number)</span></code>: 수치형 특성 모두 선택</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">make_column_selector(dtype_include=object)</span></code>: 범주형 특성 모두 선택</p></li>
+</ul>
+<p>따라서 위 <code class="docutils literal notranslate"><span class="pre">preprocessing</span></code> 변환기를 아래와 같이 정의할 수 있다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">preprocessing</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">([</span>
     <span class="p">(</span><span class="s2">&quot;num&quot;</span><span class="p">,</span> <span class="n">num_pipeline</span><span class="p">,</span> <span class="n">make_column_selector</span><span class="p">(</span><span class="n">dtype_include</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">)),</span>
     <span class="p">(</span><span class="s2">&quot;cat&quot;</span><span class="p">,</span> <span class="n">cat_pipeline</span><span class="p">,</span> <span class="n">make_column_selector</span><span class="p">(</span><span class="n">dtype_include</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
 <span class="p">])</span>
 </pre></div>
 </div>
-<p><strong><code class="docutils literal notranslate"><span class="pre">make_column_transformer()</span></code> 함수 활용</strong></p>
-<p><code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> 파이프라인에 포함되는 변환기의 이름이 중요하지 않다면
-<code class="docutils literal notranslate"><span class="pre">make_column_transformer()</span></code> 함수를 이용할 수 있으며,
-<code class="docutils literal notranslate"><span class="pre">make_pipeline()</span></code> 함수와 유사하게 작동한다.</p>
-<p>위 <code class="docutils literal notranslate"><span class="pre">preprocessing</span></code> 변환기를 아래와 같이 정의할 수 있다.</p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">make_column_transformer()</span></code> 함수</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> 인스턴스에 포함되는 파이프라인의 이름이 중요하지 않다면
+<code class="docutils literal notranslate"><span class="pre">make_column_transformer()</span></code> 함수를 이용할 수 있다.
+사용 방식은 <code class="docutils literal notranslate"><span class="pre">make_pipeline()</span></code> 함수와 유사하다.</p>
+<p>예를 들어 앞서의 <code class="docutils literal notranslate"><span class="pre">preprocessing</span></code> 변환기를 아래와 같이 정의할 수 있다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">preprocessing</span> <span class="o">=</span> <span class="n">make_column_transformer</span><span class="p">(</span>
     <span class="p">(</span><span class="n">num_pipeline</span><span class="p">,</span> <span class="n">make_column_selector</span><span class="p">(</span><span class="n">dtype_include</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">)),</span>
     <span class="p">(</span><span class="n">cat_pipeline</span><span class="p">,</span> <span class="n">make_column_selector</span><span class="p">(</span><span class="n">dtype_include</span><span class="o">=</span><span class="nb">object</span><span class="p">)),</span>
 <span class="p">)</span>
 </pre></div>
 </div>
+</section>
 <section id="id15">
-<h3><span class="section-number">2.6.1. </span>캘리포니아 데이터셋 변환 파이프라인<a class="headerlink" href="#id15" title="Permalink to this heading">#</a></h3>
-<p>다음 변환기를 모아 캘리포니아 데이터셋 전용 변환 파이프라인을 생성할 수 있다.</p>
+<h3><span class="section-number">2.6.3. </span>캘리포니아 데이터셋 변환 파이프라인<a class="headerlink" href="#id15" title="Permalink to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> 클래스와 <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> 클래스를 이용하여
+캘리포니아 주택가격 데이터의 입력 데이터셋을 한꺼번에 변환하는
+변환기를 다음 네 개의 변환기를 이용하여 구현한다.</p>
 <p>(1) 비율 변환기</p>
 <p>가구당 방 수, 침실 비율, 가구당 인원 등
-비율을 사용하는 특성을 새로 추가할 때 사용되는 변화기를 생성하는 함수를 정의한다.</p>
+비율을 사용하는 특성을 새로 추가할 때 사용되는 변환기를 다음과 같이 정의한다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">column_ratio</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">X</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">/</span> <span class="n">X</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="c1"># 1번 특성에 대한 0번 특성의 비율율</span>
 
 <span class="k">def</span> <span class="nf">ratio_name</span><span class="p">(</span><span class="n">function_transformer</span><span class="p">,</span> <span class="n">feature_names_in</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;ratio&quot;</span><span class="p">]</span>  <span class="c1"># 새로 생성되는 특성값들의 특성명</span>
 
-<span class="k">def</span> <span class="nf">ratio_pipeline</span><span class="p">():</span>
-    <span class="k">return</span> <span class="n">make_pipeline</span><span class="p">(</span>
-        <span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;median&quot;</span><span class="p">),</span>
-        <span class="n">FunctionTransformer</span><span class="p">(</span><span class="n">column_ratio</span><span class="p">,</span> <span class="n">feature_names_out</span><span class="o">=</span><span class="n">ratio_name</span><span class="p">),</span>
-        <span class="n">StandardScaler</span><span class="p">())</span>
+<span class="n">ratio_pipeline</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
+    <span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;median&quot;</span><span class="p">),</span>
+    <span class="n">FunctionTransformer</span><span class="p">(</span><span class="n">column_ratio</span><span class="p">,</span> <span class="n">feature_names_out</span><span class="o">=</span><span class="n">ratio_name</span><span class="p">),</span>
+    <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 <p>로그 변환기를 지정할 때 사용되는 <code class="docutils literal notranslate"><span class="pre">feature_names_out=ratio_name</span></code>은 로그 변환되어 생성되는
@@ -1321,7 +1331,8 @@ min-max 스케일링을 실행한다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">log_pipeline</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
     <span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;median&quot;</span><span class="p">),</span>
     <span class="n">FunctionTransformer</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">,</span> <span class="n">feature_names_out</span><span class="o">=</span><span class="s2">&quot;one-to-one&quot;</span><span class="p">),</span>
-    <span class="n">StandardScaler</span><span class="p">())</span>
+    <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 <p>로그 변환기를 지정할 때 사용되는 <code class="docutils literal notranslate"><span class="pre">feature_names_out=&quot;one-to-one&quot;</span></code>는 로그 변환되어 생성되는
@@ -1334,29 +1345,73 @@ min-max 스케일링을 실행한다.</p>
 </div>
 <p>(4) 기본 변환기</p>
 <p>특별한 변환이 필요 없는 경우에도 기본적으로 결측치 문제 해결과 스케일을 조정하는 변환기를 사용한다.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">default_num_pipeline</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;median&quot;</span><span class="p">),</span>
-                                     <span class="n">StandardScaler</span><span class="p">())</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">default_num_pipeline</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
+    <span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;median&quot;</span><span class="p">),</span>
+    <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 <p><strong>종합</strong></p>
-<p>앞서 언급된 모든 변환기를 특성별로 알아서 처리하는 변환기는 다음과 같다.</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">remainder=default_num_pipeline</span></code>: 언급되지 않은 특성을 처리하는 변환기를 지정한다.
-삭제를 의미하는 <code class="docutils literal notranslate"><span class="pre">drop</span></code> 이 기본값이며 이외에 <code class="docutils literal notranslate"><span class="pre">passthrough</span></code> 는 변환하지 않는 것을 의미한다.</p></li>
-</ul>
+<p>앞서 언급된 모든 변환기를 특성별로 적용하는 변환기를
+<code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> 클래스를 이용하여 정의한다.</p>
+<p><code class="docutils literal notranslate"><span class="pre">remainder=default_num_pipeline</span></code>는
+그때까지 언급되지 않은 나머지 특성들을 처리하는 변환기를
+키워드 인자로 지정한다.
+<code class="docutils literal notranslate"><span class="pre">remainder</span></code> 매개변수의 키워드 인자로 나머지 특성을 삭제하는 것을 지정하는
+<code class="docutils literal notranslate"><span class="pre">drop</span></code> 이 기본값이며, 그 이외에 <code class="docutils literal notranslate"><span class="pre">passthrough</span></code>는 나머지 특성은
+변환하지 않고 그대로 두어야 함을 의미한다.</p>
+<p>아래 코드에서는 주택 중위연령을 가리키는 <code class="docutils literal notranslate"><span class="pre">housing_median_age</span></code> 특성에는
+기본 변환기를 적용한다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">preprocessing</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">([</span>
-        <span class="p">(</span><span class="s2">&quot;bedrooms&quot;</span><span class="p">,</span> <span class="n">ratio_pipeline</span><span class="p">(),</span> <span class="p">[</span><span class="s2">&quot;total_bedrooms&quot;</span><span class="p">,</span> <span class="s2">&quot;total_rooms&quot;</span><span class="p">]),</span>    <span class="c1"># 침실 비율</span>
-        <span class="p">(</span><span class="s2">&quot;rooms_per_house&quot;</span><span class="p">,</span> <span class="n">ratio_pipeline</span><span class="p">(),</span> <span class="p">[</span><span class="s2">&quot;total_rooms&quot;</span><span class="p">,</span> <span class="s2">&quot;households&quot;</span><span class="p">]),</span> <span class="c1"># 가구당 방 수</span>
-        <span class="p">(</span><span class="s2">&quot;people_per_house&quot;</span><span class="p">,</span> <span class="n">ratio_pipeline</span><span class="p">(),</span> <span class="p">[</span><span class="s2">&quot;population&quot;</span><span class="p">,</span> <span class="s2">&quot;households&quot;</span><span class="p">]),</span> <span class="c1"># 가구당 인원</span>
+        <span class="p">(</span><span class="s2">&quot;bedrooms&quot;</span><span class="p">,</span> <span class="n">ratio_pipeline</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;total_bedrooms&quot;</span><span class="p">,</span> <span class="s2">&quot;total_rooms&quot;</span><span class="p">]),</span>      <span class="c1"># 침실 비율</span>
+        <span class="p">(</span><span class="s2">&quot;rooms_per_house&quot;</span><span class="p">,</span> <span class="n">ratio_pipeline</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;total_rooms&quot;</span><span class="p">,</span> <span class="s2">&quot;households&quot;</span><span class="p">]),</span>   <span class="c1"># 가구당 방 수</span>
+        <span class="p">(</span><span class="s2">&quot;people_per_house&quot;</span><span class="p">,</span> <span class="n">ratio_pipeline</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;population&quot;</span><span class="p">,</span> <span class="s2">&quot;households&quot;</span><span class="p">]),</span>   <span class="c1"># 가구당 인원</span>
         <span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">,</span> <span class="n">log_pipeline</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;total_bedrooms&quot;</span><span class="p">,</span> <span class="s2">&quot;total_rooms&quot;</span><span class="p">,</span> <span class="s2">&quot;population&quot;</span><span class="p">,</span> <span class="c1"># 로그 변환</span>
                                <span class="s2">&quot;households&quot;</span><span class="p">,</span> <span class="s2">&quot;median_income&quot;</span><span class="p">]),</span>
         <span class="p">(</span><span class="s2">&quot;geo&quot;</span><span class="p">,</span> <span class="n">cluster_simil</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;latitude&quot;</span><span class="p">,</span> <span class="s2">&quot;longitude&quot;</span><span class="p">]),</span>                    <span class="c1"># 구역별 군집 정보</span>
         <span class="p">(</span><span class="s2">&quot;cat&quot;</span><span class="p">,</span> <span class="n">cat_pipeline</span><span class="p">,</span> <span class="n">make_column_selector</span><span class="p">(</span><span class="n">dtype_include</span><span class="o">=</span><span class="nb">object</span><span class="p">)),</span>    <span class="c1"># 범주형 특성 전처리</span>
     <span class="p">],</span>
-    <span class="n">remainder</span><span class="o">=</span><span class="n">default_num_pipeline</span><span class="p">)</span>          <span class="c1"># 남은 특성인 주택 건물 중위연령(housing_median_age) 대상</span>
+    <span class="n">remainder</span><span class="o">=</span><span class="n">default_num_pipeline</span><span class="p">)</span>          <span class="c1"># 주택 중위연령(housing_median_age) 대상</span>
 </pre></div>
 </div>
-</section>
+<p>아래 코드는 위 변환기를 이용하여 정제와 전처리를 입력 데이터셋의 모든 특성에 대해 특성별로 실행한다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">housing_prepared</span> <span class="o">=</span> <span class="n">preprocessing</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">housing</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>변환된 데이터셋의 특성은 총 24개이며 다음과 같다.</p>
+<ul class="simple">
+<li><p>비율 변환기 적용: 3개의 새로운 특성 생성.</p></li>
+<li><p>위도와 경도: 10개의 특성으로 변환. 2개의 특성을 빼고 10개 특성 새로 추가.</p></li>
+<li><p>해안근접도: 5개의 특성으로 변환. 1개의 특성을 빼고 10개 특성 추가.</p></li>
+<li><p>나머지 특성은 새로운 특성을 추가로 생성하지는 않음.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">housing_prepared</span> <span class="o">=</span> <span class="n">preprocessing</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">housing</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([</span><span class="s1">&#39;bedrooms__ratio&#39;</span><span class="p">,</span> <span class="s1">&#39;rooms_per_house__ratio&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;people_per_house__ratio&#39;</span><span class="p">,</span> <span class="s1">&#39;log__total_bedrooms&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;log__total_rooms&#39;</span><span class="p">,</span> <span class="s1">&#39;log__population&#39;</span><span class="p">,</span> <span class="s1">&#39;log__households&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;log__median_income&#39;</span><span class="p">,</span> <span class="s1">&#39;geo__Cluster 0 similarity&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;geo__Cluster 1 similarity&#39;</span><span class="p">,</span> <span class="s1">&#39;geo__Cluster 2 similarity&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;geo__Cluster 3 similarity&#39;</span><span class="p">,</span> <span class="s1">&#39;geo__Cluster 4 similarity&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;geo__Cluster 5 similarity&#39;</span><span class="p">,</span> <span class="s1">&#39;geo__Cluster 6 similarity&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;geo__Cluster 7 similarity&#39;</span><span class="p">,</span> <span class="s1">&#39;geo__Cluster 8 similarity&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;geo__Cluster 9 similarity&#39;</span><span class="p">,</span> <span class="s1">&#39;cat__ocean_proximity_&lt;1H OCEAN&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;cat__ocean_proximity_INLAND&#39;</span><span class="p">,</span> <span class="s1">&#39;cat__ocean_proximity_ISLAND&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;cat__ocean_proximity_NEAR BAY&#39;</span><span class="p">,</span> <span class="s1">&#39;cat__ocean_proximity_NEAR OCEAN&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;remainder__housing_median_age&#39;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>변환된 데이터셋을 데이터프레임으로 표현하면 다음과 같다.
+특성이 24개로 너무 많아서 아래 그림에서는 6개의 특성만 보여준다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">housing_prepared_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">housing_prepared</span><span class="p">,</span>
+                                   <span class="n">columns</span><span class="o">=</span><span class="n">preprocessing</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">(),</span>
+                                   <span class="n">index</span><span class="o">=</span><span class="n">housing</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+
+<span class="n">housing_prepared_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/housing-transformed.png" width="100%"></div></p></section>
 </section>
 <section id="id16">
 <h2><span class="section-number">2.7. </span>모델 선택과 훈련<a class="headerlink" href="#id16" title="Permalink to this heading">#</a></h2>
@@ -1744,8 +1799,10 @@ RMSE의 음숫값을 선택하는 이유는 RMSE가 낮을 수록 좋은 모델�
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">2.5.6. 군집 변환기: 사용자 정의 변환기</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">2.6. 변환 파이프라인</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">2.6.1. 캘리포니아 데이터셋 변환 파이프라인</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">2.6. 파이프라인</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pipeline">2.6.1. <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> 클래스</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#columntransformer">2.6.2. <code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> 클래스</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">2.6.3. 캘리포니아 데이터셋 변환 파이프라인</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">2.7. 모델 선택과 훈련</a><ul class="nav section-nav flex-column">
