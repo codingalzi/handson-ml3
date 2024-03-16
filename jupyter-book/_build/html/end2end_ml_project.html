@@ -1379,6 +1379,12 @@ min-max 스케일링을 실행한다.</p>
 </pre></div>
 </div>
 <p>변환된 데이터셋의 특성은 총 24개이며 다음과 같다.</p>
+<ul class="simple">
+<li><p>비율 변환기 적용: 3개의 새로운 특성 생성.</p></li>
+<li><p>위도와 경도: 10개의 특성으로 변환. 2개의 특성을 빼고 10개 특성 새로 추가.</p></li>
+<li><p>해안근접도: 5개의 특성으로 변환. 1개의 특성을 빼고 10개 특성 추가.</p></li>
+<li><p>나머지 특성은 새로운 특성을 추가로 생성하지는 않음.</p></li>
+</ul>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">housing_prepared</span> <span class="o">=</span> <span class="n">preprocessing</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">housing</span><span class="p">)</span>
 </pre></div>
 </div>
