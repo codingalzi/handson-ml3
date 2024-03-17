@@ -882,6 +882,13 @@ td,th {
 그런 다음 사이킷런 API를 연동하여 정제와 전처리 전 과정을
 파이프라인<font size='2'>pipeline</font>으로 구성하여
 자동화는 방식까지 소개한다.</p>
+<div class="note admonition">
+<p class="admonition-title">API란?</p>
+<p>API는 영어로 Application Programming Interface, 즉 응용 프로그래밍 인터페이스의 줄임말이다.
+간단하게 말해 API는 응용 프로그램을 가리킨다.
+프로그래밍 분야에서는 함수, 클래스, 모듈 등 프로그램 구현에 유용한 도구를 총칭하는 용어로,
+특히 여기서는 사이킷런 라이브러리에 포함된 클래스, 메서드, 함수를 가리키는 의미로 사용된다.</p>
+</div>
 <section id="api">
 <h3><span class="section-number">2.5.1. </span>사이킷런 API<a class="headerlink" href="#api" title="Permalink to this heading">#</a></h3>
 <p>데이터 정제와 전처리의 모든 과정은 데이터셋에 포함된 모든 샘플을
@@ -1271,7 +1278,9 @@ min-max 스케일링을 실행한다.</p>
 <p>파이프라인에 포함되는 변환기의 이름이 중요하지 않다면 <code class="docutils literal notranslate"><span class="pre">make_pipeline()</span></code> 함수를 이용하여
 <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> 객체를 생성할 수 있다. 이름은 자동으로 지정된다.
 위 파이프라인과 동일한 파이프라인 객체를 다음과 같이 생성할 수 있다.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">num_pipeline</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;median&quot;</span><span class="p">),</span> 
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+
+<span class="n">num_pipeline</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;median&quot;</span><span class="p">),</span> 
                              <span class="n">StandardScaler</span><span class="p">())</span>
 </pre></div>
 </div>
