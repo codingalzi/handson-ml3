@@ -438,11 +438,12 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">2.8. 모델 미세 조정</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">2.8.1. 그리드 탐색</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">2.8.2. 랜덤 탐색</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id22">2.8.3. 최적 모델 활용</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id22">2.8.3. 앙상블 학습</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id23">2.8.4. 최적 모델 활용</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id23">2.9. 최적 모델 저장과 활용</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id24">2.10. 연습문제</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id24">2.9. 최적 모델 저장과 활용</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id25">2.10. 연습문제</a></li>
 </ul>
             </nav>
         </div>
@@ -1227,6 +1228,10 @@ min-max 스케일링을 실행한다.</p>
 <p>위 코드에 대한 설명은 <a class="reference internal" href="unsupervised_learning.html#ch-unsupervisedlearning"><span class="std std-numref">9장</span></a> 비지도 학습에서 자세히 다룬다.
 여기서는 대신 다음 세 가지만을 기억해 두자.</p>
 <p>첫째, 변환기를 선언할 때 <code class="docutils literal notranslate"><span class="pre">BaseEstimator</span></code>와 <code class="docutils literal notranslate"><span class="pre">TransformerMixin</span></code> 두 개의 클래스를 상속해야 한다.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">BaseEstimator</span></code> 클래스 상속: 하이퍼파라미터를 조정을 자동화할 때 필요한 <code class="docutils literal notranslate"><span class="pre">get_params()</span></code>, <code class="docutils literal notranslate"><span class="pre">set_params()</span></code> 두 메서드 상속</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TransformerMixin</span></code> 클래스 상속: <code class="docutils literal notranslate"><span class="pre">fit_transform()</span></code> 메서드 상속</p></li>
+</ul>
 <p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/custom-transformer.png" width="350"></div></p>
 <br><p>둘째, <code class="docutils literal notranslate"><span class="pre">get_feature_names_out()</span></code> 메서드를 재정의해서 변환기에 의해 새로 생성된 특성들의 이름을 지정한다.</p>
 <p>셋째, <code class="docutils literal notranslate"><span class="pre">ClusterSimilarity</span></code> 변환기를 이용하여 얻어진 군집 특성을 이용하면 아래 결과를 얻을 수 있다.</p>
@@ -1467,29 +1472,44 @@ min-max 스케일링을 실행한다.</p>
 <h2><span class="section-number">2.7. </span>모델 선택과 훈련<a class="headerlink" href="#id16" title="Link to this heading">#</a></h2>
 <p>훈련셋 준비가 완료된 상황에서 모델을 선택하고 훈련시키는 일이 남아 있다.</p>
 <p>사이킷런이 제공하는 예측기 모델을 사용하면 훈련은 기본적으로 간단하게 진행된다.
-여기서는 사이킷런이 제공하는 다양한 모델의 사용법과 차이점을 간단하게 살펴본다.
-각 모델의 자세한 특징과 상세 설명은 앞으로 차차 이루어질 것이다.</p>
-<div class="info admonition">
-<p class="admonition-title">전처리 포함 파이프라인 모델</p>
-<p>소개되는 모든 모델은 앞서 설명한 전처리 과정과 함께 하나의 파이프라인으로 묶여서 정의된다.
-따라서 테스트셋과 미래의 새로운 입력 데이터에 대해서도 전처리를 별도로 신경쓸 필요가 없다.</p>
-</div>
+여기서는 사이킷런이 제공하는 세 종류의 모델의 사용법과 결과의 차이를 간단하게 살펴본다.
+각 모델의 자세한 특징과 상세 설명은 이어지는 장에서 하나씩 다룬다.</p>
+<p><strong>주의사항:</strong> 여기서 소개되는 모든 예측기는 앞서 설명한 전처리 과정과 함께 하나의 파이프라인으로 묶여서 활용된다.</p>
 <section id="id17">
 <h3><span class="section-number">2.7.1. </span>모델 훈련과 평가<a class="headerlink" href="#id17" title="Link to this heading">#</a></h3>
-<p><strong>선형 회귀 모델 (<a class="reference internal" href="training_models.html#ch-trainingmodels"><span class="std std-numref">4장</span></a>)</strong></p>
+<p>사이킷런의 모델을 훈련시키고 모델의 훈련 결과를 평가하는 방식은 동일하다.
+여기서 언급하는 모델은 다음 세 종류이다.</p>
+<ul class="simple">
+<li><p>선형 회귀 모델 (<a class="reference internal" href="training_models.html#ch-trainingmodels"><span class="std std-numref">4장</span></a>)</p></li>
+<li><p>결정트리 회귀 모델 (<a class="reference internal" href="decision_trees.html#ch-decisiontrees"><span class="std std-numref">6장</span></a>)</p></li>
+<li><p>랜덤 포레스트 회귀 모델 (<a class="reference internal" href="ensemble_learning_random_forests.html#ch-ensemble"><span class="std std-numref">7장</span></a>)</p></li>
+</ul>
+<p><strong>선형 회귀 모델:</strong> 입력 데이터셋의 특성과 타깃 사이의 선형 관계를 훈련을 통해 학습한다.</p>
 <ul>
-<li><p>훈련 및 예측</p>
+<li><p>모델 지정</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
 
 <span class="n">lin_reg</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">preprocessing</span><span class="p">,</span> <span class="n">LinearRegression</span><span class="p">())</span>
-<span class="n">lin_reg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">housing</span><span class="p">,</span> <span class="n">housing_labels</span><span class="p">)</span>
-<span class="n">lin_reg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">housing</span><span class="p">)</span>
 </pre></div>
 </div>
 </li>
 </ul>
 <ul>
-<li><p>RMSE(평균 제곱근 오차)</p>
+<li><p>모델 훈련</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">lin_reg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">housing</span><span class="p">,</span> <span class="n">housing_labels</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<ul>
+<li><p>모델 활용</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">lin_reg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">housing</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<ul>
+<li><p>모델 성능 측정: RMSE(평균 제곱근 오차) 활용</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">lin_rmse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">housing_labels</span><span class="p">,</span> <span class="n">housing_predictions</span><span class="p">,</span>
                               <span class="n">squared</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
@@ -1497,94 +1517,198 @@ min-max 스케일링을 실행한다.</p>
 </li>
 </ul>
 <ul class="simple">
-<li><p>훈련 결과</p>
+<li><p>모델 훈련 평가</p>
 <ul>
-<li><p>RMSE(<code class="docutils literal notranslate"><span class="pre">lin_rmse</span></code>)가 68687.89 정도로 별로 좋지 않다.</p></li>
-<li><p>훈련된 모델이 훈련셋에 <strong>과소적합</strong> 되었다.</p></li>
-<li><p>보다 좋은 특성을 찾거나 더 강력한 모델을 적용해야 한다.</p></li>
+<li><p>RMSE(<code class="docutils literal notranslate"><span class="pre">lin_rmse</span></code>)가 68687.89 정도로 나쁨.</p></li>
+<li><p>훈련셋에 대한 성능이 낮은 경우 <strong>과소적합</strong> 현상이 발생했다고 말할 수 있음.</p></li>
+<li><p>보다 좋은 특성을 찾거나 더 강력한 모델을 적용해야 함.</p></li>
 </ul>
 </li>
 </ul>
-<p><strong>결정트리 회귀 모델 (<a class="reference internal" href="decision_trees.html#ch-decisiontrees"><span class="std std-numref">6장</span></a>)</strong></p>
-<p>결정트리 회귀 모델은 데이터에서 복잡한 비선형 관계를 학습할 때 사용한다.</p>
-<ul class="simple">
-<li><p>훈련 및 예측</p></li>
-</ul>
+<p><strong>결정트리 회귀 모델:</strong> 결정트리 회귀 모델은 데이터에서 복잡한 비선형 관계를 훈련을 통해 학습한다.</p>
+<ul>
+<li><p>모델 지정</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
 
 <span class="n">tree_reg</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">preprocessing</span><span class="p">,</span> <span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">))</span>
-<span class="n">tree_reg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">housing</span><span class="p">,</span> <span class="n">housing_labels</span><span class="p">)</span>
-<span class="n">housing_predictions</span> <span class="o">=</span> <span class="n">tree_reg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">housing</span><span class="p">)</span>
-
-<span class="n">tree_rmse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">housing_labels</span><span class="p">,</span> <span class="n">housing_predictions</span><span class="p">,</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<ul>
+<li><p>모델 훈련</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tree_reg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">housing</span><span class="p">,</span> <span class="n">housing_labels</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<ul class="simple">
+<li><p>모델 활용</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">housing_predictions</span> <span class="o">=</span> <span class="n">tree_reg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">housing</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>모델 성능 측정: RMSE 활용</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tree_rmse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">housing_labels</span><span class="p">,</span> <span class="n">housing_predictions</span><span class="p">,</span>
                               <span class="n">squared</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 <ul class="simple">
-<li><p>훈련 결과</p>
+<li><p>모델 훈련 평가</p>
 <ul>
-<li><p>RMSE(<code class="docutils literal notranslate"><span class="pre">tree_rmse</span></code>)가 0으로 완벽해 보인다.</p></li>
-<li><p>모델이 훈련셋에 심각하게 <strong>과대적합</strong> 되었음을 의미한다.</p></li>
-<li><p>실전 상황에서 RMSE가 0이 되는 것은 불가능하다.</p></li>
-<li><p>테스트셋에 대한 RMSE는 매우 높게 나온다.</p></li>
+<li><p>RMSE(<code class="docutils literal notranslate"><span class="pre">tree_rmse</span></code>)가 0으로 완벽해 보임.</p></li>
+<li><p>모델이 훈련셋에 심각하게 <strong>과대적합</strong> 되었음을 반영함.</p></li>
+<li><p>실전 상황에서 RMSE가 0이 되는 것은 불가능함.</p></li>
+<li><p>테스트셋에 대한 RMSE는 매우 높게 나옴.</p></li>
 </ul>
 </li>
 </ul>
-<p><strong>랜덤 포레스트 회귀 모델 (<a class="reference internal" href="ensemble_learning_random_forests.html#ch-ensemble"><span class="std std-numref">7장</span></a>)</strong></p>
-<p><strong>랜덤 포레스트</strong><font size="2">random forest</font> 회귀 모델은
+<p><strong>랜덤 포레스트 회귀 모델:</strong> 랜덤 포레스트<font size="2">random forest</font> 회귀 모델은
 여러 개의 결정트리를 동시에 훈련시킨 후
 각 모델의 예측값의 평균값 등을 이용하는 모델이다.
-각 모델은 교차 검증처럼 서로 다른 훈련셋을 대상으로 학습한다.</p>
-<p>사이킷런의 <code class="docutils literal notranslate"><span class="pre">RandomForestRegressor</span></code> 모델은 기본값으로 100개의 결정트리를 동시에 훈련시킨다.</p>
+각 모델은 서로 다른 훈련셋을 이용하여 훈련한다.</p>
+<ul class="simple">
+<li><p>모델 지정: 사이킷런의 <code class="docutils literal notranslate"><span class="pre">RandomForestRegressor</span></code> 모델은 기본값으로 100개의 결정트리를 동시에 훈련시킨다.</p></li>
+</ul>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestRegressor</span>
 
 <span class="n">forest_reg</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">preprocessing</span><span class="p">,</span>
                            <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">))</span>
 </pre></div>
 </div>
+<ul>
+<li><p>모델 훈련</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">forest_reg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">housing</span><span class="p">,</span> <span class="n">housing_labels</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<ul class="simple">
+<li><p>모델 활용</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">housing_predictions</span> <span class="o">=</span> <span class="n">forest_reg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">housing</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>모델 성능 측정: RMSE 활용</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">forest_rmse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">housing_labels</span><span class="p">,</span> <span class="n">housing_predictions</span><span class="p">,</span>
+                                 <span class="n">squared</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>모델 훈련 평가</p>
+<ul>
+<li><p>RMSE(<code class="docutils literal notranslate"><span class="pre">tree_rmse</span></code>)가 17474 정도로 선형회귀 모델 보다 헐씬 낮음.</p></li>
+<li><p>테스트셋에 대한 RMSE가 보다 높기는 함.</p></li>
+<li><p>하지만 결정트리 모델 보다 <strong>과대적합</strong> 현상이 매우 적게 발생함.</p></li>
+</ul>
+</li>
+</ul>
 </section>
 <section id="id18">
 <h3><span class="section-number">2.7.2. </span>교차 검증<a class="headerlink" href="#id18" title="Link to this heading">#</a></h3>
 <p><strong>교차 검증</strong><font size="2">cross validation</font>을 이용하여
-훈련중인 모델의 성능을 평가할 수 있다.</p>
-<p><strong>k-겹 교차 검증</strong></p>
+모델의 성능을 보다 객관적으로 평가할 수 있다.
+사이킷런에서 제공하는 <strong>k-겹 교차 검증</strong> 과정은 다음과 같다.</p>
+<ol class="arabic simple">
+<li><p>폴드 생성: 훈련셋을 <strong>폴드</strong><font size='2'>fold</font>라 불리는 k-개의 부분 집합으로 무작위로 분할</p></li>
+<li><p>모델 훈련: 총 k 번 훈련</p>
 <ul class="simple">
-<li><p>훈련셋을 <strong>폴드</strong><font size='2'>fold</font>라 불리는 k-개의 부분 집합으로 무작위로 분할한다.</p></li>
-<li><p>모델을 총 k 번 훈련한다.</p>
-<ul>
-<li><p>매 훈련마나다 하나의 폴드를 선택하여 검증 데이터셋으로 지정.</p></li>
+<li><p>매 훈련마나다 하나의 폴드를 선택하여 검증 데이터셋으로 지정</p></li>
 <li><p>나머지 (k-1) 개의 폴드를 대상으로 훈련</p></li>
 <li><p>매 훈련이 끝날 때마다 선택된 검증 데이터셋을 이용하여 모델 평가</p></li>
 <li><p>매번 다른 폴드 활용</p></li>
 </ul>
 </li>
-<li><p>최종평가는 k-번 평가 결과의 평균값을 활용한다.</p></li>
-</ul>
+<li><p>최종평가: k-번 훈련 평가 결과의 평균값 활용</p></li>
+</ol>
+<p>아래 그림은 5-겹 교차 검증을 묘사한다.</p>
 <p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/cross-val10.png" width="500"></div></p><p><strong>사이킷런의 <code class="docutils literal notranslate"><span class="pre">cross_val_score()</span></code> 함수</strong></p>
-<p><code class="docutils literal notranslate"><span class="pre">cross_val_score()</span></code> 함수는 k-겹 교차 검증 과정에서
+<p><code class="docutils literal notranslate"><span class="pre">cross_val_score()</span></code> 함수는 지정된 모델을 k-겹 교차 검증을 이용하여 평가한다.
 훈련중인 모델의 성능을 측정한다.</p>
-<p><code class="docutils literal notranslate"><span class="pre">scoring</span></code> 키워드 인자로 훈련중인 모델의 성능을 측정하는 <strong>효용함수</strong>를 지정한다.
-측정값은 높을 수록 좋은 성능으로 평가되기에 회귀 모델의 경우
-일반적으로 RMSE의 음숫값을 사용한다.
-이를 위해 <code class="docutils literal notranslate"><span class="pre">scoring=&quot;neg_mean_squared_error&quot;</span></code> 키워드 인자를 사용한다.
-RMSE의 음숫값을 선택하는 이유는 RMSE가 낮을 수록 좋은 모델이기 때문이다.</p>
-<p>아래 코드는 10 개의 폴드를 사용(<code class="docutils literal notranslate"><span class="pre">cv=10</span></code>)하여 결정트리 회귀 모델에 대한 교차 검증을 진행하고 평가한다.</p>
+<ul class="simple">
+<li><p>결정트리 회귀 모델에 대한 교차 검증: 아래 코드는 결정트리 모델에 대해 교차 검증을 실행하며,
+사용된 키워드 인자는 다음과 같다.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">scoring=&quot;neg_mean_squared_error&quot;</span></code>: 훈련중인 모델의 성능을 측정하는 <strong>효용함수</strong> 지정</p>
+<ul>
+<li><p>모델의 성능 측정값은 높을 수록 좋은 성능으로 평가되기에 회귀 모델의 경우 일반적으로 RMSE의 음숫값을 사용함.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cv=10</span></code>: 10-겹 교차 검증 진행</p></li>
+</ul>
+</li>
+</ul>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span>
 
 <span class="n">tree_rmses</span> <span class="o">=</span> <span class="o">-</span><span class="n">cross_val_score</span><span class="p">(</span><span class="n">tree_reg</span><span class="p">,</span> <span class="n">housing</span><span class="p">,</span> <span class="n">housing_labels</span><span class="p">,</span>
                               <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_root_mean_squared_error&quot;</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>래덤 포레스트 모델에 대한 교차 검증을 적용하면 폴드 수에 비례하여 훈련 시간이 더 오래 걸린다.</p>
+<p><code class="docutils literal notranslate"><span class="pre">cv=10</span></code> 설정에 의해 10 개의 폴드를 사용하며 매번 RMSE를 측정한다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">tree_rmses</span><span class="p">)</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">count</span>       <span class="mf">10.000000</span>
+<span class="n">mean</span>     <span class="mf">66868.027288</span>
+<span class="n">std</span>       <span class="mf">2060.966425</span>
+<span class="nb">min</span>      <span class="mf">63649.536493</span>
+<span class="mi">25</span><span class="o">%</span>      <span class="mf">65338.078316</span>
+<span class="mi">50</span><span class="o">%</span>      <span class="mf">66801.953094</span>
+<span class="mi">75</span><span class="o">%</span>      <span class="mf">68229.934454</span>
+<span class="nb">max</span>      <span class="mf">70094.778246</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">float64</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>선형회귀 모델에 대한 교차 검증: 결정트리 모델의 교차검증 보다 약간 나쁨.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">lin_rmses</span> <span class="o">=</span> <span class="o">-</span><span class="n">cross_val_score</span><span class="p">(</span><span class="n">lin_reg</span><span class="p">,</span> <span class="n">housing</span><span class="p">,</span> <span class="n">housing_labels</span><span class="p">,</span>
+                              <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_root_mean_squared_error&quot;</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">lin_rmses</span><span class="p">)</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">count</span>       <span class="mf">10.000000</span>
+<span class="n">mean</span>     <span class="mf">69858.018195</span>
+<span class="n">std</span>       <span class="mf">4182.205077</span>
+<span class="nb">min</span>      <span class="mf">65397.780144</span>
+<span class="mi">25</span><span class="o">%</span>      <span class="mf">68070.536263</span>
+<span class="mi">50</span><span class="o">%</span>      <span class="mf">68619.737842</span>
+<span class="mi">75</span><span class="o">%</span>      <span class="mf">69810.076342</span>
+<span class="nb">max</span>      <span class="mf">80959.348171</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">float64</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>랜덤 포레스트 회귀 모델에 대한 교차 검증:
+래덤 포레스트 모델에 대한 교차 검증을 적용하면 폴드 수에 비례하여 훈련 시간이 더 오래 걸리지만
+성능은 훨씬 좋음.</p></li>
+</ul>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">forest_rmses</span> <span class="o">=</span> <span class="o">-</span><span class="n">cross_val_score</span><span class="p">(</span><span class="n">forest_reg</span><span class="p">,</span> <span class="n">housing</span><span class="p">,</span> <span class="n">housing_labels</span><span class="p">,</span>
                                 <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_root_mean_squared_error&quot;</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">forest_rmses</span><span class="p">)</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">count</span>       <span class="mf">10.000000</span>
+<span class="n">mean</span>     <span class="mf">47019.561281</span>
+<span class="n">std</span>       <span class="mf">1033.957120</span>
+<span class="nb">min</span>      <span class="mf">45458.112527</span>
+<span class="mi">25</span><span class="o">%</span>      <span class="mf">46464.031184</span>
+<span class="mi">50</span><span class="o">%</span>      <span class="mf">46967.596354</span>
+<span class="mi">75</span><span class="o">%</span>      <span class="mf">47325.694987</span>
+<span class="nb">max</span>      <span class="mf">49243.765795</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">float64</span>
 </pre></div>
 </div>
 <div class="info admonition">
 <p class="admonition-title"><code class="docutils literal notranslate"><span class="pre">scoring</span></code> 키워드 인자</p>
-<p>교차 검증에 사용되는 모델의 종류에 따라 다양한 방식으로 모델의 성능을 측정할 수 있으며
-<code class="docutils literal notranslate"><span class="pre">scoring</span></code> 키워드 인자를 이용하여 지정한다.
-현재 사용 가능한 옵션값은 <a class="reference external" href="https://scikit-learn.org/stable/modules/model_evaluation.html">사이킷런의 Metrics and Scoring 문서</a>에서
+<p>교차 검증에서 모델의 성능 평가 기준을 지정하는 <code class="docutils literal notranslate"><span class="pre">scoring</span></code> 키워드 인자는
+사용되는 모델의 종류에 따라 다양하게 지정할 수 있다.
+현재 사용 가능한 평가 방식은
+<a class="reference external" href="https://scikit-learn.org/stable/modules/model_evaluation.html">사이킷런의 Metrics and Scoring 문서</a>에서
 확인할 수 있다.</p>
 </div>
 </section>
@@ -1604,7 +1728,7 @@ RMSE의 음숫값을 선택하는 이유는 RMSE가 낮을 수록 좋은 모델�
 <li><p>앙상블 학습</p></li>
 </ul>
 <div class="info admonition">
-<p class="admonition-title">하이퍼파라미터와 변환기 클래스 상속</p>
+<p class="admonition-title">하이퍼파라미터 대 파라리터</p>
 <p>사이킷런 클래스의 <strong>하이퍼파라미터</strong><font size='2'>hyperparameter</font>는
 해당 클래스의 객체를 생성할 때 사용되는 값을 가리킨다.
 반면에 <strong>파라미터</strong><font size='2'>parameter</font>는
@@ -1613,19 +1737,17 @@ RMSE의 음숫값을 선택하는 이유는 RMSE가 낮을 수록 좋은 모델�
 <p>사이킷런의 모든 클래스는 적절한
 <strong>하이퍼파라미터</strong><font size="2">hyperparameter</font>로 초기화되어 있으며
 데이터 변환과 값 예측에 필요한 모든 파라미터를 효율적으로 관리한다.</p>
-<p>변환기 클래스를 선언할 때 <code class="docutils literal notranslate"><span class="pre">BaseEstimator</span></code> 클래스를 상속하면
-하이퍼파라미터를 조정을 자동화할 때 필요한 <code class="docutils literal notranslate"><span class="pre">get_params()</span></code>, <code class="docutils literal notranslate"><span class="pre">set_params()</span></code> 두 메서드를
-함께 상속한다.</p>
-<p>반면에 <code class="docutils literal notranslate"><span class="pre">TransformerMixin</span></code> 클래스를 상속하는 이유 <code class="docutils literal notranslate"><span class="pre">fit_transform()</span></code>
-메서드가 자동으로 상속되기 때문이다.</p>
 </div>
 <section id="id20">
 <h3><span class="section-number">2.8.1. </span>그리드 탐색<a class="headerlink" href="#id20" title="Link to this heading">#</a></h3>
-<p>지정된 하이퍼파라미터의 모든 조합에 대해 교차 검증을 진행하여 최적의 하이퍼파라미터 조합을 찾는다.</p>
+<p>지정된 하이퍼파라미터의 모든 조합에 대해 교차 검증을 진행하여 최적의 하이퍼파라미터 조합을 찾는 기법이다.</p>
 <p><strong><code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code> 클래스</strong></p>
-<p>랜덤 포레스트 모델을 대상으로 그리드 탐색을 다음과 같이 실행하면
-총 (3x3 + 2x3 = 15) 가지의 모델의 성능을 확인한다.
-또한 3-겹 교차 검증(<code class="docutils literal notranslate"><span class="pre">cv=3</span></code>)을 진행하기에 모델 훈련을 총 45(=15x3)번 진행한다.</p>
+<p>아래 코드는 랜덤 포레스트 모델을 대상으로 그리드 탐색을 실행하며
+총 (3x3 + 2x3 = 15) 가지의 모델의 성능을 확인한다.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>(군집수 3 가지) * (최대 특성수 3 가지) + (군집수 2 가지) * (최대 특성수 3 가지)
+</pre></div>
+</div>
+<p>또한 3-겹 교차 검증(<code class="docutils literal notranslate"><span class="pre">cv=3</span></code>)을 진행하기에 모델 훈련을 총 45(=15x3)번 진행한다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">full_pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
     <span class="p">(</span><span class="s2">&quot;preprocessing&quot;</span><span class="p">,</span> <span class="n">preprocessing</span><span class="p">),</span>
     <span class="p">(</span><span class="s2">&quot;random_forest&quot;</span><span class="p">,</span> <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)),</span>
@@ -1647,17 +1769,17 @@ RMSE의 음숫값을 선택하는 이유는 RMSE가 낮을 수록 좋은 모델�
 </section>
 <section id="id21">
 <h3><span class="section-number">2.8.2. </span>랜덤 탐색<a class="headerlink" href="#id21" title="Link to this heading">#</a></h3>
-<p>그리드 탐색은 적은 수의 조합을 실험해볼 때만 유용하다.
-반면에 하이퍼파라미터의 탐색 공간이 크면 랜덤 탐색이 보다 유용하다.
-랜덤 탐색은 하이퍼라라미터 조합을 임의로 지정된 횟수만큼 진행한다.</p>
+<p>그리드 탐색은 적은 수의 하이퍼파라미터 조합을 실험해볼 때만 유용하다.
+반면에 하이퍼파라미터의 탐색 공간이 크면 랜덤 탐색이 보다 효율적으로
+최적의 하이퍼파라미터 조합을 찾아낸다.</p>
 <p><strong><code class="docutils literal notranslate"><span class="pre">RandomizedSearchCV</span></code> 클래스</strong></p>
 <p>아래 코드는 다음 두 하이퍼파라미터를 대상으로
-10번(<code class="docutils literal notranslate"><span class="pre">n_iter=10</span></code>) 지정된 구간 내에서 무작위 선택을 진행한다.</p>
+10번(<code class="docutils literal notranslate"><span class="pre">n_iter=10</span></code>) 무작위 선택을 지정된 범위 내에서 진행한다.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">preprocessing__geo__n_clusters</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">random_forest__max_features</span></code></p></li>
 </ul>
-<p>또한 3-겹 교차검증(<code class="docutils literal notranslate"><span class="pre">cv=3</span></code>)을 진행하기에 모델 훈련을 총 30(=10x30)번 진행한다.</p>
+<p>또한 3-겹 교차 검증(<code class="docutils literal notranslate"><span class="pre">cv=3</span></code>)을 진행하기에 모델 훈련을 총 30(=10x30)번 진행한다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">RandomizedSearchCV</span>
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">randint</span>
 
@@ -1671,11 +1793,9 @@ RMSE의 음숫값을 선택하는 이유는 RMSE가 낮을 수록 좋은 모델�
 <span class="n">rnd_search</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">housing</span><span class="p">,</span> <span class="n">housing_labels</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="info admonition">
-<p class="admonition-title">하이퍼파라리미터 무작위 선택</p>
+<p><strong>하이퍼파라리미터 무작위 선택</strong></p>
 <p>랜덤 탐색을 하려면 특정 옵션 변수갈들을 무작위로 선택해주는 확률분포 함수를 지정해야 한다.
-앞서 랜덤 탐색에서 사용한 옵션 변수와 확률분포는 다음과 같이
-이산 균등 분포를 사용하는 <code class="docutils literal notranslate"><span class="pre">randint()</span></code> 함수를 이용하였다.</p>
+이전 코드의 랜덤 탐색에서는 이산 균등 분포를 사용하는 <code class="docutils literal notranslate"><span class="pre">randint()</span></code> 함수를 이용하였다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;preprocessing__geo__n_clusters&#39;</span><span class="p">:</span> <span class="n">randint</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
 <span class="s1">&#39;random_forest__max_features&#39;</span><span class="p">:</span> <span class="n">randint</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
 </pre></div>
@@ -1683,28 +1803,26 @@ RMSE의 음숫값을 선택하는 이유는 RMSE가 낮을 수록 좋은 모델�
 <p>scipy는 이외에 다른 종류의 확률 분포 함수를 지원한다.
 예를 들어, 지정된 구간에서의 부동소수점을 선택해야 한다면
 연속 균등 분포 함수인 <code class="docutils literal notranslate"><span class="pre">scipy.stats.uniform(a,</span> <span class="pre">b)</span></code>를 이용할 수 있다.</p>
-</div>
-<div class="info admonition">
-<p class="admonition-title">기타 모델 미세 조정 도구</p>
+<p><strong>기타 모델 미세 조정 도구</strong></p>
 <p>다양한 방식의 모델 미세 조정에 대한 보다 자세한 정보는
 <a class="reference external" href="https://neptune.ai/blog/best-tools-for-model-tuning-and-hyperparameter-optimization">Best Tools for Model Tuning and Hyperparameter Optimization</a>을 참고할 수 있다.</p>
-</div>
-<p><strong>앙상블 학습</strong></p>
+</section>
+<section id="id22">
+<h3><span class="section-number">2.8.3. </span>앙상블 학습<a class="headerlink" href="#id22" title="Link to this heading">#</a></h3>
 <p>결정 트리 모델 하나보다 랜덤 포레스트처럼 여러 모델로 이루어진 모델이 보다 좋은 성능을 낼 수 있다.
 또한 최고 성능을 보이는 서로 다른 개별 모델을 조합하면 보다 좋은 성능을 얻을 수 있다.
 이렇게 성능이 좋은 여러 개의 모델을 함께 학습하여 예측값을 지정하는 방식을 앙상블 학습이라 하며,
 <a class="reference internal" href="ensemble_learning_random_forests.html#ch-ensemble"><span class="std std-numref">7장</span></a>에서 자세히 다룬다.</p>
 </section>
-<section id="id22">
-<h3><span class="section-number">2.8.3. </span>최적 모델 활용<a class="headerlink" href="#id22" title="Link to this heading">#</a></h3>
-<p>그리드 탐색 또는 랜덤 탐색을 통해 얻어진 최적의 모델을 분석해서 문제에 대한 통찰을 얻을 수 있다.
-예를 들어, 최적의 랜덤 포레스트 모델로부터 타깃 예측에 사용된 특성들의 상대적 중요도를 확인하여
-중요하지 않은 특성을 제외할 수 있다.</p>
+<section id="id23">
+<h3><span class="section-number">2.8.4. </span>최적 모델 활용<a class="headerlink" href="#id23" title="Link to this heading">#</a></h3>
+<p>모델 미세 조정을 통해 구한 최적의 모델을 분석해서 훈련에 사용된 데이터셋에 대한 중요한 통찰을 얻을 수 있다.
+예를 들어, 최적의 랜덤 포레스트 모델로부터 모델의 예측값에 영향을 주는 특성들의 상대적 중요도를 확인할 수 있다.</p>
 <p>캘리포니아 주택 가격 예측 모델의 경우 랜덤 탐색을 통해 찾아낸 최적의 모델에서
 <code class="docutils literal notranslate"><span class="pre">feature_importances_</span></code>를 확인하면 다음 정보를 얻는다.</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">log__median_income</span></code> 특성이 가장 중요하다.</p></li>
-<li><p>해안 근접도 특성 중에서 <code class="docutils literal notranslate"><span class="pre">INLAND</span></code> 특성만 중요하다.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">log__median_income</span></code> 특성이 해당 구역의 집값 예측이 가장 중요하다.</p></li>
+<li><p>해안 근접도 특성 중에서 특히 <code class="docutils literal notranslate"><span class="pre">INLAND</span></code> 특성이 집값 예측에 나름 중요한 역할을 수행한다.</p></li>
 </ul>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">final_model</span> <span class="o">=</span> <span class="n">rnd_search</span><span class="o">.</span><span class="n">best_estimator_</span>                                 <span class="c1"># 최적 모델</span>
 <span class="n">feature_importances</span> <span class="o">=</span> <span class="n">final_model</span><span class="p">[</span><span class="s2">&quot;random_forest&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">feature_importances_</span>  <span class="c1"># 특성뱔 상대적 중요도</span>
@@ -1737,8 +1855,8 @@ RMSE의 음숫값을 선택하는 이유는 RMSE가 낮을 수록 좋은 모델�
 </div>
 </section>
 </section>
-<section id="id23">
-<h2><span class="section-number">2.9. </span>최적 모델 저장과 활용<a class="headerlink" href="#id23" title="Link to this heading">#</a></h2>
+<section id="id24">
+<h2><span class="section-number">2.9. </span>최적 모델 저장과 활용<a class="headerlink" href="#id24" title="Link to this heading">#</a></h2>
 <p>최적의 모델을 훈련시키는 과정이 매우 길 수 있다.
 따라서 한 번 훈련된 좋은 모델은 저장해 놓고 필요할 때 불러와서 바로 사용할 수 있도록 해둔다.
 이 뿐만 아니라 업데이트된 모델이 적절하지 않은 경우 이전 모델로 되돌려야 하는 상황이 발생할 수도 있다.</p>
@@ -1757,8 +1875,8 @@ RMSE의 음숫값을 선택하는 이유는 RMSE가 낮을 수록 좋은 모델�
 </li>
 </ul>
 </section>
-<section id="id24">
-<h2><span class="section-number">2.10. </span>연습문제<a class="headerlink" href="#id24" title="Link to this heading">#</a></h2>
+<section id="id25">
+<h2><span class="section-number">2.10. </span>연습문제<a class="headerlink" href="#id25" title="Link to this heading">#</a></h2>
 <p>참고: <a class="reference external" href="https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_end2end_ml_project_1.ipynb">(실습) 머신러닝 프로젝트 처음부터 끝까지 1부</a> 와
 <a class="reference external" href="https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_end2end_ml_project_2.ipynb">(실습) 머신러닝 프로젝트 처음부터 끝까지 2부</a></p>
 </section>
@@ -1865,11 +1983,12 @@ RMSE의 음숫값을 선택하는 이유는 RMSE가 낮을 수록 좋은 모델�
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">2.8. 모델 미세 조정</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">2.8.1. 그리드 탐색</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">2.8.2. 랜덤 탐색</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id22">2.8.3. 최적 모델 활용</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id22">2.8.3. 앙상블 학습</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id23">2.8.4. 최적 모델 활용</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id23">2.9. 최적 모델 저장과 활용</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id24">2.10. 연습문제</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id24">2.9. 최적 모델 저장과 활용</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id25">2.10. 연습문제</a></li>
 </ul>
   </nav></div>
 
