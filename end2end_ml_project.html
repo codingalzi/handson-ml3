@@ -1728,7 +1728,7 @@ min-max 스케일링을 실행한다.</p>
 <li><p>앙상블 학습</p></li>
 </ul>
 <div class="info admonition">
-<p class="admonition-title">하이퍼파라미터 대 파라리터</p>
+<p class="admonition-title">하이퍼파라미터 vs. 파라리터</p>
 <p>사이킷런 클래스의 <strong>하이퍼파라미터</strong><font size='2'>hyperparameter</font>는
 해당 클래스의 객체를 생성할 때 사용되는 값을 가리킨다.
 반면에 <strong>파라미터</strong><font size='2'>parameter</font>는
@@ -1744,15 +1744,18 @@ min-max 스케일링을 실행한다.</p>
 <p><strong><code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code> 클래스</strong></p>
 <p>아래 코드는 랜덤 포레스트 모델을 대상으로 그리드 탐색을 실행하며
 총 (3x3 + 2x3 = 15) 가지의 모델의 성능을 확인한다.</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>(군집수 3 가지) * (최대 특성수 3 가지) + (군집수 2 가지) * (최대 특성수 3 가지)
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>(군집수 3 가지) * (최대특성수 3 가지) + (군집수 2 가지) * (최대특성수 3 가지)
 </pre></div>
 </div>
 <p>또한 3-겹 교차 검증(<code class="docutils literal notranslate"><span class="pre">cv=3</span></code>)을 진행하기에 모델 훈련을 총 45(=15x3)번 진행한다.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">full_pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
+
+<span class="n">full_pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
     <span class="p">(</span><span class="s2">&quot;preprocessing&quot;</span><span class="p">,</span> <span class="n">preprocessing</span><span class="p">),</span>
     <span class="p">(</span><span class="s2">&quot;random_forest&quot;</span><span class="p">,</span> <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)),</span>
 <span class="p">])</span>
 
+<span class="c1"># 3*3 + 2*3 조합 확인</span>
 <span class="n">param_grid</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">{</span><span class="s1">&#39;preprocessing__geo__n_clusters&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>
      <span class="s1">&#39;random_forest__max_features&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">]},</span>
@@ -1760,13 +1763,27 @@ min-max 스케일링을 실행한다.</p>
      <span class="s1">&#39;random_forest__max_features&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">]},</span>
 <span class="p">]</span>
 
+<span class="c1"># 3-겹 교차 검증 활용 훈련</span>
 <span class="n">grid_search</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">full_pipeline</span><span class="p">,</span> <span class="n">param_grid</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
                            <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;neg_root_mean_squared_error&#39;</span><span class="p">)</span>
 
 <span class="n">grid_search</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">housing</span><span class="p">,</span> <span class="n">housing_labels</span><span class="p">)</span>
 </pre></div>
 </div>
-</section>
+<p><strong>best_params_ 속성</strong></p>
+<p>그리드 탐색을 통해 찾아낸 최적의 하이퍼파라미터 조합은 다음과 같다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">grid_search</span><span class="o">.</span><span class="n">best_params_</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;preprocessing__geo__n_clusters&#39;</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span> <span class="s1">&#39;random_forest__max_features&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>best_estimator_ 속성</strong></p>
+<p>그리드 탐색을 통해 찾아낸 최적의 모델은 <code class="docutils literal notranslate"><span class="pre">best_estimator_</span></code> 속성에 저장된다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">grid_search</span><span class="o">.</span><span class="n">best_estimator_</span>
+</pre></div>
+</div>
+<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch02/best_estimator.jpg" width="100%"></div></p></section>
 <section id="id21">
 <h3><span class="section-number">2.8.2. </span>랜덤 탐색<a class="headerlink" href="#id21" title="Link to this heading">#</a></h3>
 <p>그리드 탐색은 적은 수의 하이퍼파라미터 조합을 실험해볼 때만 유용하다.
@@ -1783,9 +1800,11 @@ min-max 스케일링을 실행한다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">RandomizedSearchCV</span>
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">randint</span>
 
+<span class="c1"># 하이퍼파라미터 탐색 공간 지정</span>
 <span class="n">param_distribs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;preprocessing__geo__n_clusters&#39;</span><span class="p">:</span> <span class="n">randint</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">50</span><span class="p">),</span>
                   <span class="s1">&#39;random_forest__max_features&#39;</span><span class="p">:</span> <span class="n">randint</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">20</span><span class="p">)}</span>
 
+<span class="c1"># 10개의 하이퍼파라미터 무작위 선택, 3-겹 교차 검증 활용</span>
 <span class="n">rnd_search</span> <span class="o">=</span> <span class="n">RandomizedSearchCV</span><span class="p">(</span>
     <span class="n">full_pipeline</span><span class="p">,</span> <span class="n">param_distributions</span><span class="o">=</span><span class="n">param_distribs</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
     <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;neg_root_mean_squared_error&#39;</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -1793,7 +1812,18 @@ min-max 스케일링을 실행한다.</p>
 <span class="n">rnd_search</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">housing</span><span class="p">,</span> <span class="n">housing_labels</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><strong>하이퍼파라리미터 무작위 선택</strong></p>
+<p>랜덤 탐색을 통해 찾아낸 최적의 모델과 최적의 하이퍼파라미터 조합 확인방법은 그리드 탐색의 경우와 동일하다.</p>
+<ul class="simple">
+<li><p>군집수: 45개</p></li>
+<li><p>최대 특성수: 9개</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rnd_search</span><span class="o">.</span><span class="n">best_params_</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;preprocessing__geo__n_clusters&#39;</span><span class="p">:</span> <span class="mi">45</span><span class="p">,</span> <span class="s1">&#39;random_forest__max_features&#39;</span><span class="p">:</span> <span class="mi">9</span><span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>무작위 선택 확률분포 함수 활용</strong></p>
 <p>랜덤 탐색을 하려면 특정 옵션 변수갈들을 무작위로 선택해주는 확률분포 함수를 지정해야 한다.
 이전 코드의 랜덤 탐색에서는 이산 균등 분포를 사용하는 <code class="docutils literal notranslate"><span class="pre">randint()</span></code> 함수를 이용하였다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;preprocessing__geo__n_clusters&#39;</span><span class="p">:</span> <span class="n">randint</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
@@ -1810,8 +1840,8 @@ min-max 스케일링을 실행한다.</p>
 <section id="id22">
 <h3><span class="section-number">2.8.3. </span>앙상블 학습<a class="headerlink" href="#id22" title="Link to this heading">#</a></h3>
 <p>결정 트리 모델 하나보다 랜덤 포레스트처럼 여러 모델로 이루어진 모델이 보다 좋은 성능을 낼 수 있다.
-또한 최고 성능을 보이는 서로 다른 개별 모델을 조합하면 보다 좋은 성능을 얻을 수 있다.
-이렇게 성능이 좋은 여러 개의 모델을 함께 학습하여 예측값을 지정하는 방식을 앙상블 학습이라 하며,
+또한 최고 성능을 보이는 여러 개의 모델을 조합하면 보다 좋은 성능을 얻을 수 있다.
+이렇게 성능이 좋은 여러 개의 모델을 함께 학습하여 예측값을 지정하는 방식인 앙상블 학습에 대해
 <a class="reference internal" href="ensemble_learning_random_forests.html#ch-ensemble"><span class="std std-numref">7장</span></a>에서 자세히 다룬다.</p>
 </section>
 <section id="id23">
@@ -1821,18 +1851,21 @@ min-max 스케일링을 실행한다.</p>
 <p>캘리포니아 주택 가격 예측 모델의 경우 랜덤 탐색을 통해 찾아낸 최적의 모델에서
 <code class="docutils literal notranslate"><span class="pre">feature_importances_</span></code>를 확인하면 다음 정보를 얻는다.</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">log__median_income</span></code> 특성이 해당 구역의 집값 예측이 가장 중요하다.</p></li>
-<li><p>해안 근접도 특성 중에서 특히 <code class="docutils literal notranslate"><span class="pre">INLAND</span></code> 특성이 집값 예측에 나름 중요한 역할을 수행한다.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">log__median_income</span></code> 특성이 해당 구역의 집값 예측이 가장 중요함.</p></li>
+<li><p>해안 근접도 특성 중에서 특히 <code class="docutils literal notranslate"><span class="pre">INLAND</span></code> 특성이 집값 예측에 나름 중요한 역할을 수행함.</p></li>
 </ul>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">final_model</span> <span class="o">=</span> <span class="n">rnd_search</span><span class="o">.</span><span class="n">best_estimator_</span>                                 <span class="c1"># 최적 모델</span>
-<span class="n">feature_importances</span> <span class="o">=</span> <span class="n">final_model</span><span class="p">[</span><span class="s2">&quot;random_forest&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">feature_importances_</span>  <span class="c1"># 특성뱔 상대적 중요도</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 최적 모델</span>
+<span class="n">final_model</span> <span class="o">=</span> <span class="n">rnd_search</span><span class="o">.</span><span class="n">best_estimator_</span>
+<span class="c1"># 특성별 상대적 중요도</span>
+<span class="n">feature_importances</span> <span class="o">=</span> <span class="n">final_model</span><span class="p">[</span><span class="s2">&quot;random_forest&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">feature_importances_</span> 
 
 <span class="c1"># 중요도 내림차순 정렬</span>
 <span class="nb">sorted</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">feature_importances</span><span class="p">,</span>
            <span class="n">final_model</span><span class="p">[</span><span class="s2">&quot;preprocessing&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">()),</span>
            <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="p">[(</span><span class="mf">0.18694559869103852</span><span class="p">,</span> <span class="s1">&#39;log__median_income&#39;</span><span class="p">),</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">[(</span><span class="mf">0.18694559869103852</span><span class="p">,</span> <span class="s1">&#39;log__median_income&#39;</span><span class="p">),</span>
  <span class="p">(</span><span class="mf">0.0748194905715524</span><span class="p">,</span> <span class="s1">&#39;cat__ocean_proximity_INLAND&#39;</span><span class="p">),</span>
  <span class="p">(</span><span class="mf">0.06926417748515576</span><span class="p">,</span> <span class="s1">&#39;bedrooms_ratio__bedrooms_ratio&#39;</span><span class="p">),</span>
  <span class="p">(</span><span class="mf">0.05446998753775219</span><span class="p">,</span> <span class="s1">&#39;rooms_per_house__rooms_per_house&#39;</span><span class="p">),</span>
@@ -1843,14 +1876,27 @@ min-max 스케일링을 실행한다.</p>
  <span class="p">(</span><span class="mf">7.301686597099842e-05</span><span class="p">,</span> <span class="s1">&#39;cat__ocean_proximity_ISLAND&#39;</span><span class="p">)]</span>
 </pre></div>
 </div>
+<p><strong>주의사항:</strong> 모델이 전처리와 함게 하나의 파이프라인으로 묶여 있음에 주의한다.
+따라서 위 코드에서 사용된 <code class="docutils literal notranslate"><span class="pre">final_model[&quot;random_forest&quot;]</span></code>가 예측기를 가리킨다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">full_pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+    <span class="p">(</span><span class="s2">&quot;preprocessing&quot;</span><span class="p">,</span> <span class="n">preprocessing</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;random_forest&quot;</span><span class="p">,</span> <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)),</span>
+<span class="p">])</span>
+</pre></div>
+</div>
 <p><strong>테스트셋 활용 최종 평가</strong></p>
-<p>최고 성능 모델을 테스트셋에 적용하여 훈련된 모델의 성능을 최종 평가한다.</p>
+<p>최고 성능 모델을 테스트셋에 적용하여 훈련된 모델의 성능을 최종 평가한다.
+지금까지 확인한 모델 중에서 가장 좋은 성능을 보인다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">X_test</span> <span class="o">=</span> <span class="n">strat_test_set</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;median_house_value&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">y_test</span> <span class="o">=</span> <span class="n">strat_test_set</span><span class="p">[</span><span class="s2">&quot;median_house_value&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
 <span class="n">final_predictions</span> <span class="o">=</span> <span class="n">final_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
 
 <span class="n">final_rmse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">final_predictions</span><span class="p">,</span> <span class="n">squared</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">final_rmse</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="mf">41424.40026462184</span>
 </pre></div>
 </div>
 </section>
@@ -1863,7 +1909,8 @@ min-max 스케일링을 실행한다.</p>
 <p>모델의 저장과 불러오기는 <code class="docutils literal notranslate"><span class="pre">joblib</span></code> 모듈을 활용한다.</p>
 <ul>
 <li><p>저장하기</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">final_model</span><span class="p">,</span> <span class="s2">&quot;my_california_housing_model.pkl&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">joblib</span>
+<span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">final_model</span><span class="p">,</span> <span class="s2">&quot;my_california_housing_model.pkl&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </li>
