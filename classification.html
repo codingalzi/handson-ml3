@@ -1,12 +1,13 @@
 
+
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="./" >
+<html lang="en" data-content_root="" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>3. 분류 &#8212; 핸즈온 머신러닝(3판)</title>
   
@@ -28,36 +29,36 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b76e3c8a" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
-    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
-    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/proof.css?v=ca93fcec" />
-    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="_static/doctools.js?v=888ff710"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
-    <script src="_static/copybutton.js?v=f281be69"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script src="_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'classification';</script>
@@ -434,7 +435,7 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="ch-classification">
-<span id="id1"></span><h1><span class="section-number">3. </span>분류<a class="headerlink" href="#ch-classification" title="Link to this heading">#</a></h1>
+<span id="id1"></span><h1><span class="section-number">3. </span>분류<a class="headerlink" href="#ch-classification" title="Permalink to this heading">#</a></h1>
 <p><strong>감사의 글</strong></p>
 <p>자료를 공개한 저자 오렐리앙 제롱과 강의자료를 지원한 한빛아카데미에게 진심어린 감사를 전합니다.</p>
 <p><strong>소스코드</strong></p>
@@ -457,7 +458,7 @@ document.write(`
 <a class="reference external" href="https://github.com/codingalzi/handson-ml3/raw/master/slides/slides-classification-2.pdf">슬라이드 2부</a>,
 다운로드할 수 있다.</p>
 <section id="mnist">
-<h2><span class="section-number">3.1. </span>MNIST 데이터셋<a class="headerlink" href="#mnist" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">3.1. </span>MNIST 데이터셋<a class="headerlink" href="#mnist" title="Permalink to this heading">#</a></h2>
 <p>미국 고등학생과 인구조사국 직원들이 손으로 쓴 70,000개의 숫자 이미지로 구성된 데이터셋이다.
 사용된 0부터 9까지의 숫자는 모두 28x28 크기의 픽셀로 구성된 이미지 데이터이며,
 2차원 어레이가 아닌 길이가 784(28x28)인 1차원 어레이로 제공된다.</p>
@@ -489,7 +490,7 @@ document.write(`
 </ul>
 </section>
 <section id="id2">
-<h2><span class="section-number">3.2. </span>이진 분류기 훈련<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">3.2. </span>이진 분류기 훈련<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
 <p>10개의 클래스로 분류하는 다중 클래스 모델을 훈련하기 전에 먼저
 이미지 샘플이 숫자 5를 표현하는지 여부를 판단하는 이진 분류기를 훈련시킨다.
 이를 통해 분류기의 기본 훈련 과정과 성능 평가 방법을 알아본다.</p>
@@ -510,7 +511,7 @@ document.write(`
 </div>
 </section>
 <section id="id3">
-<h2><span class="section-number">3.3. </span>분류기 성능 측정<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">3.3. </span>분류기 성능 측정<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
 <p>분류기의 성능 측정 기준으로 보통 다음 세 가지를 사용한다.</p>
 <ul class="simple">
 <li><p>정확도</p></li>
@@ -518,7 +519,7 @@ document.write(`
 <li><p>ROC 곡선의 AUC</p></li>
 </ul>
 <section id="id4">
-<h3><span class="section-number">3.3.1. </span>교차 검증 활용 정확도 측정<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">3.3.1. </span>교차 검증 활용 정확도 측정<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
 <p>교차 검증을 이용하여 SGD 분류기의 성능을 측정한다.
 성능 측정 기준은 <strong>정확도</strong>다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cross_val_score</span><span class="p">(</span><span class="n">sgd_clf</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train_5</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;accuracy&quot;</span><span class="p">)</span>
@@ -530,9 +531,9 @@ document.write(`
 잘 보여주는 사례다.</p>
 </section>
 <section id="id5">
-<h3><span class="section-number">3.3.2. </span>오차 행렬, 정밀도, 재현율<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">3.3.2. </span>오차 행렬, 정밀도, 재현율<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
 <section id="id6">
-<h4><span class="section-number">3.3.2.1. </span>오차 행렬<a class="headerlink" href="#id6" title="Link to this heading">#</a></h4>
+<h4><span class="section-number">3.3.2.1. </span>오차 행렬<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h4>
 <p><strong>오차 행렬</strong><font size="2">confusion matrix</font>은 클래스별 예측 결과를 정리한 행렬이다.
 오차 행렬의 행은 실제 클래스를, 열은 예측된 클래스를 가리킨다.
 예를 들어, 숫자 5의 이미지 샘플을 3으로 잘못 예측한 횟수를 알고 싶다면
@@ -551,7 +552,7 @@ document.write(`
 </section>
 </div></section>
 <section id="id7">
-<h4><span class="section-number">3.3.2.2. </span>정밀도와 재현율<a class="headerlink" href="#id7" title="Link to this heading">#</a></h4>
+<h4><span class="section-number">3.3.2.2. </span>정밀도와 재현율<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h4>
 <p><strong>정밀도</strong></p>
 <p><strong>정밀도</strong><font size="2">precision</font>는 양성 예측의 정확도를 가리킨다.
 여기서는 숫자 5라고 예측된 값들 중에서 진짜로 5인 숫자들의 비율이다.</p>
@@ -592,7 +593,7 @@ document.write(`
 </ul>
 </section>
 <section id="id8">
-<h4><span class="section-number">3.3.2.3. </span>정밀도/재현율 트레이드오프<a class="headerlink" href="#id8" title="Link to this heading">#</a></h4>
+<h4><span class="section-number">3.3.2.3. </span>정밀도/재현율 트레이드오프<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h4>
 <p>정밀도와 재현율은 상호 반비례 관계다.
 따라서 정밀도와 재현율 사이의 적절한 비율을 유지하는 분류기를 찾아야 한다.
 정밀도와 재현율의 비율은 결정 임곗값에 의해 결정된다.</p>
@@ -649,7 +650,7 @@ document.write(`
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-05.png" width="400"/></div></section>
 </section>
 <section id="roc-auc">
-<h3><span class="section-number">3.3.3. </span>ROC 곡선의 AUC<a class="headerlink" href="#roc-auc" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">3.3.3. </span>ROC 곡선의 AUC<a class="headerlink" href="#roc-auc" title="Permalink to this heading">#</a></h3>
 <p><strong>수신기 조작 특성</strong><font size="2">receiver operating characteristic</font>(ROC) 곡선을 활용하여
 이진 분류기의 성능을 측정할 수 잇다.
 <strong>ROC</strong> 곡선은 <strong>거짓 양성 비율</strong><font size="2">false positive rate</font>(FPR)에 대한
@@ -680,7 +681,7 @@ ROC 곡선을 함께 그리면 다음과 같이 랜덤 포레스트 모델의 AU
 </div></section>
 </section>
 <section id="id9">
-<h2><span class="section-number">3.4. </span>다중 클래스 분류<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">3.4. </span>다중 클래스 분류<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h2>
 <p><strong>다중 클래스 분류</strong><font size="2">multiclass classification</font>는
 세 개 이상의 클래스로 샘플을 분류하며,
 <strong>다항 분류</strong><font size="2">multinomial classification</font>라고도 불린다.
@@ -750,7 +751,7 @@ ROC 곡선을 함께 그리면 다음과 같이 랜덤 포레스트 모델의 AU
 </div>
 </section>
 <section id="id10">
-<h2><span class="section-number">3.5. </span>오류 분석<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">3.5. </span>오류 분석<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h2>
 <p>그리드 탐색, 랜덤 탐색 등을 이용한 모델 튜닝 과정을 실행하여 최선의 모델을 찾았다고 가정한다.
 이제 오류 분석을 통해 모델을 좀 더 개선하고자 한다.</p>
 <p><strong>오차 행렬 활용</strong></p>
@@ -785,9 +786,9 @@ ROC 곡선을 함께 그리면 다음과 같이 랜덤 포레스트 모델의 AU
 이런 방식을 <strong>데이터 증식</strong><font size="2">data augmentation</font>이라 부른다.</p>
 </section>
 <section id="id11">
-<h2><span class="section-number">3.6. </span>다중 레이블 분류와 다중 출력 분류<a class="headerlink" href="#id11" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">3.6. </span>다중 레이블 분류와 다중 출력 분류<a class="headerlink" href="#id11" title="Permalink to this heading">#</a></h2>
 <section id="id12">
-<h3><span class="section-number">3.6.1. </span>다중 레이블 분류<a class="headerlink" href="#id12" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">3.6.1. </span>다중 레이블 분류<a class="headerlink" href="#id12" title="Permalink to this heading">#</a></h3>
 <p>다중 레이블 분류<font size='2'>multilabel classification</font>는
 각 훈련 샘플에 대해 여러 종류의 레이블 클래스와 관련된 분류 예측을 진행한다.
 예를 들어, MNIST 손글씨 사진이 가리키는 숫자가 7 이상인지 여부와 홀수인지 여부를
@@ -804,7 +805,7 @@ ROC 곡선을 함께 그리면 다음과 같이 랜덤 포레스트 모델의 AU
 </div>
 </section>
 <section id="id13">
-<h3><span class="section-number">3.6.2. </span>다중 출력 분류<a class="headerlink" href="#id13" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">3.6.2. </span>다중 출력 분류<a class="headerlink" href="#id13" title="Permalink to this heading">#</a></h3>
 <p>앞서 언급한 다중 레이블 분류는 7 이상인지 여부와 홀수인지 여부를 판단한다.
 즉, 각각의 질문에 대해 이진 분류를 진행한다.<br />
 반면에 <strong>다중 출력 다중 클래스 분류</strong>라고도 불리는
@@ -820,7 +821,7 @@ ROC 곡선을 함께 그리면 다음과 같이 랜덤 포레스트 모델의 AU
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-12.png" width="200"/></div></section>
 </section>
 <section id="id14">
-<h2><span class="section-number">3.7. </span>연습문제<a class="headerlink" href="#id14" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">3.7. </span>연습문제<a class="headerlink" href="#id14" title="Permalink to this heading">#</a></h2>
 <p>참고: <a class="reference external" href="https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_classification_1.ipynb">(실습) 분류 1</a> 과
 <a class="reference external" href="https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_classification_2.ipynb">(실습) 분류 2</a></p>
 </section>
