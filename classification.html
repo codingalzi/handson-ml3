@@ -403,10 +403,10 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mnist">3.1. MNIST 데이터셋</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">3.2. 이진 분류기</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">3.2. 이진 분류기: 숫자-5 감별기</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">3.3. 분류기 성능 측정</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">3.3.1. 교차 검증과 정확도</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">3.3.2. 오차 행렬</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">3.3.1. 오차 행렬</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">3.3.2. 정확도</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">3.3.3. 정밀도와 재현율</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">3.3.4. 정밀도/재현율 트레이드오프</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#roc-auc">3.3.5. ROC 곡선의 AUC</a></li>
@@ -451,33 +451,55 @@ document.write(`
 </ul>
 <p><strong>슬라이드</strong></p>
 <p>본문 내용을 요약한
-<a class="reference external" href="https://github.com/codingalzi/handson-ml3/raw/master/slides/slides-classification-1.pdf">슬라이드 1부</a>,
-<a class="reference external" href="https://github.com/codingalzi/handson-ml3/raw/master/slides/slides-classification-2.pdf">슬라이드 2부</a>,
+<a class="reference external" href="https://github.com/codingalzi/handson-ml3/raw/master/slides/slides-classification.pdf">슬라이드</a>를
 다운로드할 수 있다.</p>
 <section id="mnist">
 <h2><span class="section-number">3.1. </span>MNIST 데이터셋<a class="headerlink" href="#mnist" title="Permalink to this heading">#</a></h2>
-<p>미국의 고등학생과 인구조사국 직원들이 손으로 쓴 70,000개의 숫자 이미지로 구성된 데이터셋이다.
-사용된 0부터 9까지의 숫자는 모두 28x28 크기의 픽셀로 구성된 이미지 데이터이며,
-2차원 어레이가 아닌 길이가 784(28x28)인 1차원 어레이로 제공된다.</p>
+<p>미국의 고등학생과 인구조사국 직원들이 손으로 쓴 70,000개의 숫자 이미지로 구성된 데이터셋이다.</p>
+<p><code class="docutils literal notranslate"><span class="pre">sklearn.datasets</span></code> 제공 함수: 데이터셋을 다운로드하거나 생성하는 세 종류를 함수를 제공하며 접두사에 따라 용도가 다르다.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">fetch_*</span></code>: 다운로드 및 적재. <code class="docutils literal notranslate"><span class="pre">sklearn.utils.Bunch</span></code> 객체 반환.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">load_*</span></code>: 미니 데이터셋 적재. 다운로드 없음.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">make_*</span></code>:  데이터셋 임의 생성. 입력 데이터셋과 타깃 데이터셋으로 구분된 <code class="docutils literal notranslate"><span class="pre">(X,</span> <span class="pre">y)</span></code> 모양의 넘파이 어레이 생성.</p></li>
+</ul>
+<p><strong>데이터 불러오기</strong></p>
+<p>MNIST 데이터셋을 다운로드해서 <code class="docutils literal notranslate"><span class="pre">Bunch</span></code> 객체로 적재온다.
+<code class="docutils literal notranslate"><span class="pre">Bunch</span></code> 자료형은 사전 (<code class="docutils literal notranslate"><span class="pre">Dict</span></code>) 자료형의 일종이며
+<code class="docutils literal notranslate"><span class="pre">data</span></code>, <code class="docutils literal notranslate"><span class="pre">target</span></code> 등 머신러닝 모델 훈련에 사용될 데이터셋을 저장할 때 활용된다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_openml</span>
+
+<span class="n">mnist</span> <span class="o">=</span> <span class="n">fetch_openml</span><span class="p">(</span><span class="s1">&#39;mnist_784&#39;</span><span class="p">,</span> <span class="n">as_frame</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>입력 데이터셋과 타깃 데이터셋</strong></p>
+<p>사용된 0부터 9까지의 숫자는 모두 28x28 크기의 픽셀로 구성된 이미지 데이터다.
+하지만 2차원 어레이가 아닌 길이가 784(28x28)인 1차원 어레이로 제공된다.
+레이블 또한 정수가 아니라 <code class="docutils literal notranslate"><span class="pre">'0'</span></code>, <code class="docutils literal notranslate"><span class="pre">'1'</span></code>, …, <code class="docutils literal notranslate"><span class="pre">'9'</span></code>처럼 문자열로 지정되었다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">mnist</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">mnist</span><span class="o">.</span><span class="n">target</span>
+</pre></div>
+</div>
 <p>아래 이미지는 첫 손글씨 데이터를 28x28 모양으로 변환한 다음에 <code class="docutils literal notranslate"><span class="pre">pyplot.imshow()</span></code> 함수를 이용하여
 그려진 것이며 숫자 5를 가리키는 것으로 보인다. 실제로도 타깃은 숫자 5이다.</p>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/mnist_digit_5.jpg" width="250"/></div><p>손글씨 이미지 첫 100개는 다음과 같다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/mnist_digit_5.jpg" width="250"/></div><p>첫 100개의 손글씨 이미지는 다음과 같다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-01.png" width="400"/></div><p><strong>문제 정의</strong></p>
 <ul class="simple">
 <li><p>지도학습: 각 이미지가 담고 있는 숫자가 레이블로 지정됨.</p></li>
 <li><p>분류 모델: 이미지 데이터를 분석하여 0부터 9까지의 숫자로 분류</p>
 <ul>
 <li><p>이미지 그림을 총 10개의 클래스로 분류하는 <strong>다중 클래스 분류</strong><font size='2'>multiclass classification</font>.</p></li>
-<li><p><strong>다항 분류</strong><font size='2'>multinomial classification</font>라고도 불림</p></li>
 </ul>
 </li>
-<li><p>배치 또는 온라인 학습: 둘 다 가능</p>
-<ul>
-<li><p><strong>확률적 경사하강법</strong><font size='2'>stochastic gradient descent</font>(SGD):  배치와 온라인 학습 모두 지원</p></li>
-<li><p>랜덤 포레스트 분류기: 배치 학습</p></li>
+<li><p>배치 또는 온라인 학습: 둘 다 가능하지만 여기서는
+<strong>확률적 경사하강법</strong><font size='2'>stochastic gradient descent</font>(SGD)과
+랜덤 포레스트 분류기를 이용하여 배치 학습 실행</p></li>
 </ul>
-</li>
-</ul>
+<div class="note admonition">
+<p class="admonition-title">배치 학습 대 온라인 학습</p>
+<p>배치 학습은 빠르게 변하는 데이터에 적응할 필요가 없고 데이터셋의 크기도
+충분히 작아 데이터셋 전체를 컴퓨터 메모리에 적재한 상태애서 모델 훈련을 진행하는 기법을 가리킨다.
+반면에 온라인 학습은 데이터셋이 너무 크거나 실시간 학습이 필요한 경우
+데이터셋을 보충하면서 모델 훈련을 점차적으로 진행시키는 기법이다.</p>
+</div>
 <p><strong>훈련셋과 테스트셋</strong></p>
 <p>이미 6:1 의 비율로 훈련셋과 데이터셋으로 분류되어 있다.
 모든 샘플은 무작위로 잘 섞여 있어서 교차 검증에 문제없이 사용될 수 있다.</p>
@@ -485,26 +507,33 @@ document.write(`
 <li><p>훈련 세트(<code class="docutils literal notranslate"><span class="pre">X_train</span></code>): 앞쪽 60,000개 이미지</p></li>
 <li><p>테스트 세트(<code class="docutils literal notranslate"><span class="pre">X_test</span></code>): 나머지 10,000개의 이미지</p></li>
 </ul>
-</section>
-<section id="id2">
-<h2><span class="section-number">3.2. </span>이진 분류기<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
-<p><strong>숫자-5 감별기</strong></p>
-<p>10개의 클래스로 분류하는 다중 클래스 모델을 훈련하기 전에 먼저
-이미지 샘플이 숫자 5를 표현하는지 여부를 판단하는 이진 분류기를 훈련시킨다.
-이를 통해 분류기의 기본 훈련 과정과 성능 평가 방법을 알아본다.</p>
-<p>이진 분류기의 훈련을 위해 타깃 데이터셋(<code class="docutils literal notranslate"><span class="pre">y_train_5</span></code>)을 새로 설정한다.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y_train_5</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_train</span> <span class="o">==</span> <span class="s1">&#39;5&#39;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:</span><span class="mi">60000</span><span class="p">],</span> <span class="n">X</span><span class="p">[</span><span class="mi">60000</span><span class="p">:],</span> <span class="n">y</span><span class="p">[:</span><span class="mi">60000</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="mi">60000</span><span class="p">:]</span>
 </pre></div>
 </div>
+</section>
+<section id="id2">
+<h2><span class="section-number">3.2. </span>이진 분류기: 숫자-5 감별기<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<p>10개의 클래스로 분류하는 다중 클래스 모델을 훈련하기 전에 먼저
+이미지 샘플이 숫자 5를 표현하는지 여부를 판단하는 <strong>이진 분류기</strong>를 훈련시킨다.
+이를 통해 분류기의 기본 훈련 과정과 성능 평가 방법을 알아본다.</p>
+<p>이진 분류기인 숫자-5 감별기의 훈련을 위해 타깃 데이터셋(<code class="docutils literal notranslate"><span class="pre">y_train_5</span></code>)을 새로 설정한다.</p>
 <ul class="simple">
 <li><p>1: 숫자 5를 가리키는 이미지 레이블</p></li>
 <li><p>0: 숫자 5 이외의 수를 가리키는 이미지 레이블</p></li>
 </ul>
-<p>여기서 사용하는 모델은 <code class="docutils literal notranslate"><span class="pre">SGDClassifier</span></code> 클래스를 이용한다.
-<code class="docutils literal notranslate"><span class="pre">SGDClassifier</span></code> 분류기는 <strong>확률적 경사하강법</strong><font size='2'>stochastic gradient descent</font> 분류기라고 불린다.
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y_train_5</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_train</span> <span class="o">==</span> <span class="s1">&#39;5&#39;</span><span class="p">)</span>
+<span class="n">y_test_5</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_test</span> <span class="o">==</span> <span class="s1">&#39;5&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>먼저 <code class="docutils literal notranslate"><span class="pre">SGDClassifier</span></code> 클래스를 이용하여 숫자-5 감별기를 훈련시킨다.
+<code class="docutils literal notranslate"><span class="pre">SGDClassifier</span></code> 분류기는
+<strong>확률적 경사하강법</strong><font size='2'>stochastic gradient descent</font> 분류기라고도 불린다.
 한 번에 하나씩 훈련 샘플을 이용하여 훈련한 후 파라미터를 조정하기에
 매우 큰 데이터셋 처리와 온라인 학습에 적합하다.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sgd_clf</span> <span class="o">=</span> <span class="n">SGDClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">SGDClassifier</span>
+
+<span class="n">sgd_clf</span> <span class="o">=</span> <span class="n">SGDClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">sgd_clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train_5</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -517,53 +546,45 @@ document.write(`
 <li><p>ROC 곡선의 AUC</p></li>
 </ul>
 <section id="id4">
-<h3><span class="section-number">3.3.1. </span>교차 검증과 정확도<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
-<p>교차 검증을 이용하여 SGD 분류기의 성능을 측정한다.
-성능 측정 기준은 <strong>정확도</strong>를 사용한다.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cross_val_score</span><span class="p">(</span><span class="n">sgd_clf</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train_5</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;accuracy&quot;</span><span class="p">)</span>
+<h3><span class="section-number">3.3.1. </span>오차 행렬<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
+<p><strong>오차 행렬</strong><font size="2">confusion matrix</font>은 클래스별 예측 결과를 정리한 행렬이다.
+이진 분류기인 숫자-5 감별기에 대한 오차 행렬은 아래와 같은 (2, 2) 모양의 2차원 (넘파이) 어레이로 생성된다.</p>
+<p>아래 코드는 교차 검증을 이용하여 예측을 수행한 다음 이를 이용하여 오차 행렬을 생성한다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_predict</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">confusion_matrix</span>
+
+<span class="n">y_train_pred</span> <span class="o">=</span> <span class="n">cross_val_predict</span><span class="p">(</span><span class="n">sgd_clf</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train_5</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_train_5</span><span class="p">,</span> <span class="n">y_train_pred</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>정확도가 95% 정도로 매우 좋은 결과로 보인다.
-하지만 “무조건 5가 아니다” 라고 예측하는 모델도 90%의 정확도를 보인다.
-특정 범주에 속하는 데이터가 상대적으로 너무 많을 경우 정확도는 신뢰하기 어려운 평가 기준임을
-잘 보여주는 사례다.</p>
-</section>
-<section id="id5">
-<h3><span class="section-number">3.3.2. </span>오차 행렬<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
-<p><strong>오차 행렬</strong><font size="2">confusion matrix</font>은 클래스별 예측 결과를 정리한 행렬이다.
-오차 행렬의 행은 실제 클래스를, 열은 예측된 클래스를 가리킨다.
-예를 들어, 숫자 5의 이미지 샘플을 3으로 잘못 예측한 횟수를 알고 싶다면
-6행 4열, 즉, (5, 3) 인덱스에 위치한 값을 확인해야 한다.</p>
-<p>“숫자-5 감별기” 에 대한 오차 행렬은 아래와 같은 (2, 2) 모양의 2차원 (넘파이) 어레이로 생성된다.
-이는 타깃 값이 0과 1 두 개의 값으로만 구성되기 때문이다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span><span class="mi">53892</span><span class="p">,</span>   <span class="mi">687</span><span class="p">],</span>
        <span class="p">[</span> <span class="mi">1891</span><span class="p">,</span>  <span class="mi">3530</span><span class="p">]])</span>
 </pre></div>
 </div>
-<div class="proof example admonition" id="exp_confusion_matrix">
-<p class="admonition-title"><span class="caption-number">Example 3.1 </span> (오차 행렬)</p>
-<section class="example-content" id="proof-content">
-<p>아래 그림은 (2, 2) 모양의 오차 행렬을 맞춰야 하는 실제 타깃과 예측을 이용하여 보여준다.</p>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-02.png" width="400"/></div>
+<p>아래 그림은 숫자-5 감별기의 오차 행렬을 단순화하여 보여준다.</p>
+<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-02.png" width="400"/></div></p></section>
+<section id="id5">
+<h3><span class="section-number">3.3.2. </span>정확도<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
+<p><strong>정확도</strong><font size='2'>accuracy</font>는 레이블을 정확하기 맞힌 비율이다.</p>
+<div class="math notranslate nohighlight">
+\[\text{정확도} = \frac{TP+TN}{TP+FP+TN+FN} = \frac{3530 + 53892}{3530 + 687 + 53892 + 1891} = 0.957\]</div>
+<p>정확도가 96% 정도로 매우 좋은 결과로 보인다. 하지만 “무조건 5가 아니다” 라고 예측하는 모델도 90%의 정확도를 보인다. 특정 범주에 속하는 데이터가 상대적으로 너무 많을 경우 정확도는 신뢰하기 어려운 평가 기준임을 잘 보여주는 사례다.
+이런 경우엔 정확도 보다는 정밀도와 재현율을 이용하여 평가하는데 성능이 상대적으로 낮게 나온다. 특히 재현율의 성능이 매우 낮다.</p>
 </section>
-</div></section>
 <section id="id6">
 <h3><span class="section-number">3.3.3. </span>정밀도와 재현율<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h3>
-<p><strong>정밀도</strong></p>
 <p><strong>정밀도</strong><font size="2">precision</font>는 양성 예측의 정확도를 가리킨다.
 여기서는 숫자 5라고 예측된 값들 중에서 진짜로 5인 숫자들의 비율이다.</p>
 <div class="math notranslate nohighlight">
 \[\text{정밀도} = \frac{TP}{TP+FP} = \frac{3530}{3530 + 687} = 0.837\]</div>
-<p><strong>재현율</strong></p>
 <p>5인지 여부를 맞추는 모델의 예에서 확인했듯이 정밀도 하나만으로 분류기의 성능을 평가할 수는 없다.
 보다 구체적인 이유는 숫자 5를 가리키는 이미지 중에 숫자 5라고 판명된 비율인
 <strong>재현율</strong><font size="2">recall</font> 함께 고려해야 하기 때문이다.</p>
-<p>재현율은 양성 샘플에 대한 정확도, 즉, 분류기가 정확하게 감지한 양성 샘플의 비율이며,
-<strong>민감도</strong><font size="2">sensitivity</font> 또는
+<p><strong>재현율</strong><font size='2'>recall</font>은 양성 샘플에 대한 정확도, 즉, 분류기가 정확하게 감지한 양성 샘플의 비율이며,
 <strong>참 양성 비율</strong><font size="2">true positive rate</font>로도 불린다.</p>
 <div class="math notranslate nohighlight">
 \[\text{재현율} = \frac{TP}{TP+FN} = \frac{3530}{3530 + 1891} = 0.651\]</div>
-<p><strong>정밀도와 재현율의 중요도</strong></p>
+<p><strong>정밀도와 재현율의 상대적 중요도</strong></p>
 <p>모델 사용의 목적에 따라 정밀도와 재현율의 중요도가 다를 수 있다.</p>
 <ul class="simple">
 <li><p>재현율이 보다 중요한 경우: 암진단처럼 예측이 틀렸을 경우 큰 책임이 따르는 경우.</p>
@@ -584,26 +605,23 @@ document.write(`
 </section>
 <section id="id7">
 <h3><span class="section-number">3.3.4. </span>정밀도/재현율 트레이드오프<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h3>
-<p>정밀도와 재현율은 상호 반비례 관계다.
-따라서 정밀도와 재현율 사이의 적절한 비율을 유지하는 분류기를 찾아야 한다.
-정밀도와 재현율의 비율은 결정 임곗값에 의해 결정된다.</p>
-<p><strong>결정 함수와 결정 임곗값</strong></p>
 <p>분류기의 <strong>결정 함수</strong><font size="2">decision function</font>는 각 샘플에 대해 점수를 계산하며
-이 점수를 기준으로 분류기가 해당 샘플의 양성 또는 음성 여부를 판단한다.
-분류기는 주어진 샘플의 결정 함숫값이 지정된
-<strong>결정 임계값</strong><font size="2">decision threshold</font>보다
+이 점수가 <strong>결정 임계값</strong><font size="2">decision threshold</font>보다
 같거나 크면 양성, 아니면 음성으로 판단한다.
-예를 들어 <code class="docutils literal notranslate"><span class="pre">SGDClassifier</span></code>는 <code class="docutils literal notranslate"><span class="pre">decision_function()</span></code> 메서드를 결정 함수로 이용한다.
+예를 들어 <code class="docutils literal notranslate"><span class="pre">SGDClassifier</span></code>는 <code class="docutils literal notranslate"><span class="pre">decision_function()</span></code> 메서드를 결정 함수로 이용하며,
 결정 함숫값이 0보다 작으면 음성, 0보다 같거나 크면 양성으로 판정한다.</p>
-<p>정밀도와 재현율의 트레이드오프 관계는 다음과 같이 설명된다.</p>
+<p>정밀도와 재현율은 상호 반비례 관계이다.
+즉, 한쪽이 증가하면 다른쪽이 감소하는 <strong>트레이드오프</strong><font size='2'>tradeoff</font> 관계이다.
+따라서 정밀도와 재현율 사이의 적절한 비율을 유지하는 분류기를 찾아야 한다.
+정밀도와 재현율의 비율은 모델이 사용하는 <strong>결정 임곗값</strong>에 따라 달라진다.</p>
+<p>아래 예제가 정밀도와 재현율의 트레이드오프 관계를 잘 보여준다.</p>
 <ul class="simple">
 <li><p>결정 임곗값의 위치에 따라 정밀도와 재현율이 서로 다른 방향으로 움직인다.</p></li>
 <li><p>결정 임곗값이 클 수록 분류기의 정밀도는 올라가지만 재현율은 떨어진다.</p></li>
 <li><p>결정 임곗값이 작을 수록 분류기의 정밀도는 내려가지만 재현율은 올라간다.</p></li>
 </ul>
-<p>아래 예제가 정밀도와 재현율의 트레이드오프 관계를 잘 보여준다.</p>
 <div class="proof example admonition" id="exp_decision_threshold">
-<p class="admonition-title"><span class="caption-number">Example 3.2 </span> (정밀도와 재현율의 트레이드오프)</p>
+<p class="admonition-title"><span class="caption-number">Example 3.1 </span> (정밀도와 재현율의 트레이드오프)</p>
 <section class="example-content" id="proof-content">
 <p>아래 그림에서 세 개의 화살표 (a), (b), (c)는 서로 다른 결정 임곗값을 가리키며,
 화살표 윗쪽에 위치한 정밀도와 재현율은 해당 결정 임곗값을 기준으로
@@ -630,15 +648,32 @@ document.write(`
 </li>
 </ul>
 </section>
-</div><p><strong>결정 임곗값/정밀도/재현율 그래프</strong></p>
-<p>아래 그래프는 <code class="docutils literal notranslate"><span class="pre">SGDClassifier</span></code> 모델을 “숫자-5 감별기”로 훈련시킨 결과를 이용한다.
-그래프는 결정 임곗값을 변수로 해서 정밀도와 재현율의 변화를 보여준다.
-결정 임곗값이 클 때 정밀도가 순간적으로 떨어질 수 있지만 결국엔 계속해서 상승한다.</p>
-<ul class="simple">
-<li><p>정밀도는 90%, 재현율은 50% 정도가 되게 하는 경정 임곗값이 좋아보임.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">SGDClassifier</span></code> 는 0을 결정 임곗값으로 사용.</p></li>
-</ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-04.png" width="500"/></div><p><strong>정밀도/재현율 그래프</strong></p>
+</div><p><strong>결정 함수와 결정 임곗값</strong></p>
+<p>결정 함수를 이용해서 교차검증을 실행하면 각 샘플에 대한 결정 함수의 값으로 구성된 어레이가 생성된다.
+이를 위해 앞서 오차 행렬 생성에 사용된 <code class="docutils literal notranslate"><span class="pre">cross_val_predict()</span></code> 함수를
+<code class="docutils literal notranslate"><span class="pre">method=&quot;decision_function&quot;</span></code> 키워드 인자와 함께 호출한다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y_scores</span> <span class="o">=</span> <span class="n">cross_val_predict</span><span class="p">(</span><span class="n">sgd_clf</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train_5</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> 
+                             <span class="n">method</span><span class="o">=</span><span class="s2">&quot;decision_function&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>처음 10개 샘플에 대한 결정 함숫값은 다음과 같다. 첫째 샘플의 결정 함숫값만 양수이고 나머지 9개는 음수다. 따라서 첫째 샘플만 5로 판정되고 나머자 9개는 5가 아니다라고 판정된다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y_scores</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([</span>  <span class="mf">1200.93051237</span><span class="p">,</span> <span class="o">-</span><span class="mf">26883.79202424</span><span class="p">,</span> <span class="o">-</span><span class="mf">33072.03475406</span><span class="p">,</span> <span class="o">-</span><span class="mf">15919.5480689</span> <span class="p">,</span>
+       <span class="o">-</span><span class="mf">20003.53970191</span><span class="p">,</span> <span class="o">-</span><span class="mf">16652.87731528</span><span class="p">,</span> <span class="o">-</span><span class="mf">14276.86944263</span><span class="p">,</span> <span class="o">-</span><span class="mf">23328.13728948</span><span class="p">,</span>
+        <span class="o">-</span><span class="mf">5172.79611432</span><span class="p">,</span> <span class="o">-</span><span class="mf">13873.5025381</span> <span class="p">])</span>
+</pre></div>
+</div>
+<p><strong>결정 임곗값/정밀도/재현율 그래프</strong></p>
+<p>아래 그래프는 <code class="docutils literal notranslate"><span class="pre">SGDClassifier</span></code> 모델을 숫자-5 감별기로 훈련시킨 결과를 이용한다.
+그래프는 결정 임곗값을 독립 변수로 해서 정밀도와 재현율의 변화를 보여준다.
+결정 임곗값이 커질 때 정밀도가 순간적으로 떨어질 수 있지만 결국엔 계속해서 상승한다.</p>
+<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-04.png" width="500"/></div></p><p><code class="docutils literal notranslate"><span class="pre">SGDClassifier</span></code> 는 0을 결정 임곗값으로 사용하기에 정밀도는 84% 정도, 재현율은 65% 정도다.
+반면에 검정 수직 점선은 정밀도는 90%, 재현율은 50% 정도가 되게 하는 결정 임곗값을 보여준다.
+결정 임곗값을 변경하여 원하는 정밀도와 재현율을 갖는 숫자-5 감별기를 구현하려면 수동으로 분류기를 구현해야 한다.
+(<a class="reference external" href="https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/notebooks/code_classification.ipynb#scrollTo=cKfpQLyuCHkf">소스 코드</a> 참고)</p>
+<p><strong>정밀도/재현율 그래프</strong></p>
 <p>위 그래프를 재현율 대 정밀도 그래프로 변환하면 다음과 같다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-05.png" width="400"/></div></section>
 <section id="roc-auc">
@@ -648,9 +683,9 @@ document.write(`
 <strong>ROC</strong> 곡선은 <strong>거짓 양성 비율</strong><font size="2">false positive rate</font>(FPR)에 대한
 <strong>참 양성 비율</strong><font size="2">true positive rate</font>(TPR)의 관계를 나타내는 곡선이다.</p>
 <ul class="simple">
-<li><p>참 양성 비율(TPR) = 재현율</p></li>
+<li><p>참 양성 비율(TPR): 재현율의 다른 이름.</p></li>
 <li><p>거짓 양성 비율(FPR): 원래 음성인 샘플 중에서 양성이라고 잘못 분류된 샘플들의 비율.
-예를 들어, 5가 아닌 숫자중에서 5로 잘못 예측된 숫자의 비율</p></li>
+예를 들어, 5가 아닌 숫자중에서 5로 잘못 예측된 숫자의 비율.</p></li>
 </ul>
 <div class="math notranslate nohighlight">
 \[\text{FPR} = \frac{FP}{FP+TN}\]</div>
@@ -662,18 +697,18 @@ document.write(`
 <p>좋은 분류기는 재현율은 높으면서 거짓 양성 비율은 최대한 낮게 유지해야 한다.
 즉, ROC 곡선이 y축에 최대한 근접하도록 해야 하며,
 이는 ROC 곡선 아래의 면적, 즉 <strong>AUC</strong>(area under the curve)가 1에 가까울 수록 좋은 성능임을 의미한다.</p>
-<div class="proof example admonition" id="exp_SGD_RandomForest">
-<p class="admonition-title"><span class="caption-number">Example 3.3 </span> (SGD vs. 랜덤 포레스트)</p>
-<section class="example-content" id="proof-content">
 <p>MNIST 훈련 데이터셋으로 훈련된 <code class="docutils literal notranslate"><span class="pre">SGDClassifier</span></code> 와 <code class="docutils literal notranslate"><span class="pre">RandomForestClassifier</span></code>의
 ROC 곡선을 함께 그리면 다음과 같이 랜덤 포레스트 모델의 AUC가 보다 1에 가깝다.
 즉, 보다 성능이 좋다.</p>
-<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-07a.png" width="400"/></div></p>
-<p>정밀도 대 재현율 그래프로 비교해 보더라도
+<p>랜덤 포레스트 분류기는 <code class="docutils literal notranslate"><span class="pre">predict_proba()</span></code> 메서드를 결정 함수로 사용한다.
+<code class="docutils literal notranslate"><span class="pre">predict_proba()</span></code> 메서드는 입력 샘플에 대해 각 클래스에 속할 확률을 계산한다.
+여기서는 숫자-5가 아닌 경우(음성)와 숫자-5인 경우(양성)에 대한 확률값을 담은
+길이가 2인 튜플을 계산한다.
+양성으로 판정하는 기준값, 즉 결정 임계값은 0.5을 사용한다.
+즉 계산된 양성일 확률이 0.5보다 같거나 큰 경우 양성으로 판정한다.</p>
+<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-07a.png" width="400"/></div></p><p>정밀도 대 재현율 그래프로 비교해 보더라도
 <code class="docutils literal notranslate"><span class="pre">RandomForestClassifier</span></code> 가 훨씬 좋은 성능을 보임을 확인할 수 있다.</p>
-<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-07.png" width="400"/></div></p>
-</section>
-</div></section>
+<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-07.png" width="400"/></div></p></section>
 </section>
 <section id="id8">
 <h2><span class="section-number">3.4. </span>다중 클래스 분류<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h2>
@@ -715,7 +750,7 @@ ROC 곡선을 함께 그리면 다음과 같이 랜덤 포레스트 모델의 AU
 최종적으로 각 샘플에 대해 가장 많은 결투를 이긴 숫자가 해당 샘플의 예측값으로 사용된다.
 예를 들어, 어떤 샘플에 대해 숫자 1이 9번의 결투를 모두 이기면 숫자 1을 해당 샘플의 예측값으로 지정한다.</p>
 <div class="proof example admonition" id="exp_SVC">
-<p class="admonition-title"><span class="caption-number">Example 3.4 </span> (SVC 모델과 다중 클래스 분류)</p>
+<p class="admonition-title"><span class="caption-number">Example 3.2 </span> (SVC 모델과 다중 클래스 분류)</p>
 <section class="example-content" id="proof-content">
 <p>서포트 벡터 머신 분류기는 훈련 세트의 크기에 민감하다.
 따라서 작은 훈련 세트에서 많은 분류기를 훈련시키는 OvO를 이용하여
@@ -887,10 +922,10 @@ ROC 곡선을 함께 그리면 다음과 같이 랜덤 포레스트 모델의 AU
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mnist">3.1. MNIST 데이터셋</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">3.2. 이진 분류기</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">3.2. 이진 분류기: 숫자-5 감별기</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">3.3. 분류기 성능 측정</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">3.3.1. 교차 검증과 정확도</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">3.3.2. 오차 행렬</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">3.3.1. 오차 행렬</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">3.3.2. 정확도</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">3.3.3. 정밀도와 재현율</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">3.3.4. 정밀도/재현율 트레이드오프</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#roc-auc">3.3.5. ROC 곡선의 AUC</a></li>
