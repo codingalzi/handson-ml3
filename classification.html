@@ -715,25 +715,26 @@ ROC 곡선을 함께 그리면 다음과 같이 랜덤 포레스트 모델의 AU
 예를 들어, MNIST 손글씨 숫자 문제는 입력값이 주어지면
 0부터 9까지 10개의 범주로 분류하는 다중 클래스 모델을 훈련시키는 일이다.</p>
 <p><strong>다중 클래스 분류 지원 모델</strong></p>
-<p>아래 모델은 다중 클래스 분류를 기본으로 지원한다.</p>
+<p>아래 모델은 이진 분류와 다중 클래스 분류를 지원한다.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> 모델</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">RandomForestClassifier</span></code> 모델</p></li>
-</ul>
-<p>반면에 아래 모델은 이진 분류만 지원하지만, 필요에 따라
-다중 클래스 분류를 지원하도록 작동한다.</p>
-<ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">SGDClassifier</span></code> 모델</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">SVC</span></code> 모델</p></li>
 </ul>
+<p>이중에 <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> 모델은 딥러닝 모델에서도 많이 활용된다.</p>
+<ul class="simple">
+<li><p>이진 분류: 로지스틱 회귀 활용</p></li>
+<li><p>소프트맥스 회귀: 다중 클래스 분류</p></li>
+</ul>
+<p>자세한 내용은 <a class="reference internal" href="training_models.html#ch-trainingmodels"><span class="std std-numref">4장</span></a>에서 다룬다.</p>
 <p><strong>다중 클래스 분류 모델 교차 검증</strong></p>
 <p>숫자-5 감별기의 경우와는 달리
 0부터 9까지의 범주로 분류하는 다중 클래스 분류는
 각 숫자에 해당하는 데이터가 고르게 분포되어 있어서
 정확도를 기준으로 교차 검증을 진행해도 괜찮다.</p>
-<p>예를 들어, 다중 클래스 분류를 지원하는 <code class="docutils literal notranslate"><span class="pre">SGDClassifier</span></code> 모델에
-다음과 같이 교차 검증으로 정확도를 다음과 같이 계산하면
-86.7%의 정확도로 확인된다.
+<p>아래 코드를 이용하여 <code class="docutils literal notranslate"><span class="pre">SGDClassifier</span></code> 모델에 대해
+교차 검증으로 정확도를 계산하면 86.7% 정도로 확인된다.
 참고로 정밀도와 재현율을 교차 검증으로 확인하려면
 <code class="docutils literal notranslate"><span class="pre">scoring</span></code> 키워드의 인자로 <code class="docutils literal notranslate"><span class="pre">&quot;precision&quot;</span></code> 또는 <code class="docutils literal notranslate"><span class="pre">&quot;recall&quot;</span></code>을 지정한다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span>
@@ -741,6 +742,7 @@ ROC 곡선을 함께 그리면 다음과 같이 랜덤 포레스트 모델의 AU
 <span class="n">cross_val_score</span><span class="p">(</span><span class="n">sgd_clf</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;accuracy&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+<p><strong>스케일링의 중요성</strong></p>
 <p>하지만 표준화 스케일링만 해도 모델의 예측 정확도가 89.7% 까지 향상된다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
 
