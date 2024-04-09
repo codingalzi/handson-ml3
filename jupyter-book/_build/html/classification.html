@@ -441,7 +441,7 @@ document.write(`
 <li><p>분류기 성능 측정</p></li>
 <li><p>다중 클래스 분류</p></li>
 <li><p>오류 분석</p></li>
-<li><p>다중 레이블 분류</p></li>
+<li><p>다중 라벨 분류</p></li>
 </ul>
 <p><strong>슬라이드</strong></p>
 <p>본문 내용을 요약한
@@ -468,7 +468,7 @@ document.write(`
 </div>
 <p><strong>입력 데이터셋과 타깃 데이터셋</strong></p>
 <p>입력 데이터는 0부터 9까지의 숫자는 모두 28x28 크기의 1차원 어레이로,
-레이블 은 정수가 아니라 <code class="docutils literal notranslate"><span class="pre">'0'</span></code>, <code class="docutils literal notranslate"><span class="pre">'1'</span></code>, …, <code class="docutils literal notranslate"><span class="pre">'9'</span></code>처럼 문자열로 지정되었다.</p>
+라벨은 정수가 아니라 <code class="docutils literal notranslate"><span class="pre">'0'</span></code>, <code class="docutils literal notranslate"><span class="pre">'1'</span></code>, …, <code class="docutils literal notranslate"><span class="pre">'9'</span></code>처럼 문자열로 지정되었다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">mnist</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">mnist</span><span class="o">.</span><span class="n">target</span>
 </pre></div>
 </div>
@@ -477,7 +477,7 @@ document.write(`
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/mnist_digit_5.jpg" width="250"/></div><p>첫 100 개의 손글씨 이미지는 다음과 같다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-01.png" width="400"/></div><p><strong>문제 정의</strong></p>
 <ul class="simple">
-<li><p>지도학습: 각 이미지가 담고 있는 숫자가 레이블로 지정됨.</p></li>
+<li><p>지도학습: 각 이미지가 담고 있는 숫자가 라벨로 지정됨.</p></li>
 <li><p>모델: 이미지 데이터를 분석하여 0부터 9까지, 총 10개의 범주로
 분류하는 <strong>다중 클래스 분류</strong><font size='2'>multiclass classification</font>.</p></li>
 <li><p>실시간 훈련 여부: 배치 또는 온라인 학습 둘 다 가능하지만 여기서는
@@ -509,8 +509,8 @@ document.write(`
 이를 통해 분류기의 기본 훈련 과정과 성능 평가 방법을 알아본다.</p>
 <p>이진 분류기인 숫자-5 감별기의 훈련을 위해 타깃 데이터셋(<code class="docutils literal notranslate"><span class="pre">y_train_5</span></code>)을 새로 설정한다.</p>
 <ul class="simple">
-<li><p>1: 숫자 5를 가리키는 이미지 레이블</p></li>
-<li><p>0: 숫자 5 이외의 수를 가리키는 이미지 레이블</p></li>
+<li><p>1: 숫자 5를 가리키는 이미지 라벨</p></li>
+<li><p>0: 숫자 5 이외의 수를 가리키는 이미지 라벨</p></li>
 </ul>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y_train_5</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_train</span> <span class="o">==</span> <span class="s1">&#39;5&#39;</span><span class="p">)</span>
 <span class="n">y_test_5</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_test</span> <span class="o">==</span> <span class="s1">&#39;5&#39;</span><span class="p">)</span>
@@ -562,7 +562,7 @@ document.write(`
 <p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-02.png" width="400"/></div></p></section>
 <section id="id5">
 <h3><span class="section-number">3.3.2. </span>정확도<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
-<p><strong>정확도</strong><font size='2'>accuracy</font>는 레이블을 정확하기 맞힌 비율이다.</p>
+<p><strong>정확도</strong><font size='2'>accuracy</font>는 라벨을 정확하기 맞힌 비율이다.</p>
 <div class="math notranslate nohighlight">
 \[\text{정확도} = \frac{TP+TN}{TP+FP+TN+FN} = \frac{3530 + 53892}{3530 + 687 + 53892 + 1891} = 0.957\]</div>
 <p><strong>정확도의 한계</strong></p>
