@@ -1184,8 +1184,8 @@ J(\theta) =
 <p class="admonition-title">로그 손실 함수</p>
 <p>틀린 예측을 하면 로그 손실값이 매우 커진다.</p>
 <ul class="simple">
-<li><p>아래 왼쪽 그림: 샘플의 레이블이 1(양성)인데 예측 확률(<span class="math notranslate nohighlight">\(\hat p\)</span>)이 0에 가까운 경우 로그 손실이 매우 클 수 있음</p></li>
-<li><p>아래 오른쪽 그림: 샘플의 레이블이 0(음성)인데 예측 확률(<span class="math notranslate nohighlight">\(\hat p\)</span>)이 1에 가까운 경우 로그 손실이 매우 클 수 있음</p></li>
+<li><p>아래 왼쪽 그림: 샘플의 라벨이 1(양성)인데 예측 확률(<span class="math notranslate nohighlight">\(\hat p\)</span>)이 0에 가까운 경우 로그 손실이 매우 클 수 있음</p></li>
+<li><p>아래 오른쪽 그림: 샘플의 라벨이 0(음성)인데 예측 확률(<span class="math notranslate nohighlight">\(\hat p\)</span>)이 1에 가까운 경우 로그 손실이 매우 클 수 있음</p></li>
 </ul>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-12-10a.png" width="500"/></div>
 <p>훈련셋이 가우스 분포를 따른다는 전제하에 로그 손실 함수를 최소화하면
@@ -1203,7 +1203,7 @@ J(\theta) =
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">꽃받침</span> <span class="n">길이</span><span class="p">,</span> <span class="n">꽃받침</span> <span class="n">너비</span><span class="p">,</span> <span class="n">꽃잎</span> <span class="n">길이</span><span class="p">,</span> <span class="n">꽃잎</span> <span class="n">너비</span><span class="p">]</span>
 </pre></div>
 </div>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/datapy/master/jupyter-book//images/iris_petal-sepal.png" width="500"/></div><p>레이블은 0, 1, 2 중에 하나이며 각 숫자는 하나의 품종을 가리킨다.</p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/datapy/master/jupyter-book//images/iris_petal-sepal.png" width="500"/></div><p>라벨은 0, 1, 2 중에 하나이며 각 숫자는 하나의 품종을 가리킨다.</p>
 <ul class="simple">
 <li><p>0: Iris-Setosa(세토사)</p></li>
 <li><p>1: Iris-Versicolor(버시컬러)</p></li>
@@ -1218,7 +1218,7 @@ J(\theta) =
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">load_iris()</span></code> 함수는 데이터셋을 사전 자료형과 유사한 <code class="docutils literal notranslate"><span class="pre">Bunch</span></code> 자료형으로 불러온다.
 사용되는 키(key) 중에 <code class="docutils literal notranslate"><span class="pre">data</span></code> 키와 연결된 값이 4개의 특성으로 구성된 훈련셋 데이터프레임<font size='2'>DataFrame</font>이고
-<code class="docutils literal notranslate"><span class="pre">target</span></code> 키와 연결된 값이 레이블셋 시리즈<font size='2'>Series</font>이다.</p>
+<code class="docutils literal notranslate"><span class="pre">target</span></code> 키와 연결된 값이 라벨셋 시리즈<font size='2'>Series</font>이다.</p>
 <p>훈련셋의 처음 5개의 샘플은 다음과 같다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 <span class="go">     sepal length (cm) sepal width (cm) petal length (cm) petal width (cm)</span>
@@ -1229,7 +1229,7 @@ J(\theta) =
 <span class="go">4    5.0               3.6              1.4               0.2</span>
 </pre></div>
 </div>
-<p>레이블셋의 처음 5개의 샘플은 다음과 같이 모두 세토사 품종이다.</p>
+<p>라벨셋의 처음 5개의 샘플은 다음과 같이 모두 세토사 품종이다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">iris</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 <span class="go">0    0</span>
 <span class="go">1    0</span>
@@ -1252,7 +1252,7 @@ J(\theta) =
 이진 분류기를 훈련시켜 보자.
 문제를 단순화하기 위해 꽃잎의 너비 특성 하나만 이용하여 붓꽃의 품종을 판별한다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">[[</span><span class="s2">&quot;petal width (cm)&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>        <span class="c1"># 꽃잎 너비 특성만 데이터셋으로 사용</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">target_names</span><span class="p">[</span><span class="n">iris</span><span class="o">.</span><span class="n">target</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;virginica&#39;</span> <span class="c1"># 레이블 셋: 버지니카 품종이면 1, 아니면 0.</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">target_names</span><span class="p">[</span><span class="n">iris</span><span class="o">.</span><span class="n">target</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;virginica&#39;</span> <span class="c1"># 라벨셋: 버지니카 품종이면 1, 아니면 0.</span>
 <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span> <span class="c1"># 훈련셋:테스트셋 = 7.5:2.2</span>
 
 <span class="n">log_reg</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -1268,7 +1268,7 @@ J(\theta) =
 <br><p><strong>버지니카 품종 감지기: 꽃잎 길이와 너비 특성 활용</strong></p>
 <p>이번에는 꽃잎의 길이와 너비 두 특성을 이용하여 붓꽃의 품종을 판별하는 로지스틱 회귀 모델을 훈련한다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">[[</span><span class="s2">&quot;petal length (cm)&quot;</span><span class="p">,</span> <span class="s2">&quot;petal width (cm)&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span> <span class="c1"># 꽃잎 너비 특성만 데이터셋으로 사용</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">target_names</span><span class="p">[</span><span class="n">iris</span><span class="o">.</span><span class="n">target</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;virginica&#39;</span>               <span class="c1"># 레이블 셋: 버지니카 품종이면 1, 아니면 0.</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">target_names</span><span class="p">[</span><span class="n">iris</span><span class="o">.</span><span class="n">target</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;virginica&#39;</span>               <span class="c1"># 라벨셋: 버지니카 품종이면 1, 아니면 0.</span>
 <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span> <span class="c1"># 훈련셋:테스트셋 = 7.5:2.2</span>
 
 <span class="n">log_reg</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -1411,7 +1411,7 @@ s_0(\mathbf{x}^{(m_b-1)}) &amp; s_1(\mathbf{x}^{(m_b-1)}) &amp; s_2(\mathbf{x}^{
 \[
 \sigma(\mathbf{s}(\mathbf{x})) = [\hat p_0, \hat p_1, \dots, \hat p_{K-1}]
 \]</div>
-<p>소프트맥스 회귀 모델의 각 샘플에 대한 최종 예측 레이블은 추정 확률이 가장 높은 클래스로 선택된다.</p>
+<p>소프트맥스 회귀 모델의 각 샘플에 대한 최종 예측 라벨은 추정 확률이 가장 높은 클래스로 선택된다.</p>
 <div class="math notranslate nohighlight">
 \[
 \hat y 
@@ -1424,7 +1424,7 @@ s_0(\mathbf{x}^{(m_b-1)}) &amp; s_1(\mathbf{x}^{(m_b-1)}) &amp; s_2(\mathbf{x}^{
 \sigma(\mathbf{s}(\mathbf{X}_{batch})) = \sigma(\mathbf{X}_{batch} \, \Theta)
 \]</div>
 <p>단, <span class="math notranslate nohighlight">\(\sigma()\)</span> 함수가 행별로, 즉 샘플별로 작동한다고 가정한다.
-그리고 모든 샘플에 대한 최종 예측 레이블 계산은 다음과 같다.</p>
+그리고 모든 샘플에 대한 최종 예측 라벨 계산은 다음과 같다.</p>
 <div class="math notranslate nohighlight">
 \[
 \hat{\mathbf{y}} = \mathrm{np.argmax}(\sigma(\mathbf{X}_{batch} \, \Theta), \mathrm{axis}=1)
@@ -1442,7 +1442,7 @@ s_0(\mathbf{x}^{(m_b-1)}) &amp; s_1(\mathbf{x}^{(m_b-1)}) &amp; s_2(\mathbf{x}^{
 <ul>
 <li><p>크로스 엔트로피 비용 함수</p>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(y^{(i)}_k\)</span>: <span class="math notranslate nohighlight">\(i\)</span>-번째 샘플에 대한 원-핫 인코딩된 타깃(레이블)</p></li>
+<li><p><span class="math notranslate nohighlight">\(y^{(i)}_k\)</span>: <span class="math notranslate nohighlight">\(i\)</span>-번째 샘플에 대한 원-핫 인코딩된 타깃(라벨)</p></li>
 <li><p><span class="math notranslate nohighlight">\(\hat{p}_k^{(i)}\)</span>: <span class="math notranslate nohighlight">\(i\)</span>-번째 샘플이 클래스 <span class="math notranslate nohighlight">\(k\)</span>에 속할 확률 예측값<br><br></p></li>
 </ul>
 <div class="math notranslate nohighlight">
