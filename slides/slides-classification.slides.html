@@ -16392,6 +16392,233 @@ $$\text{정확도} = \frac{TP+TN}{TP+FP+TN+FN} = \frac{3530 + 53892}{3530 + 687 
 </div>
 </div>
 </div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="3.5.-%EC%98%A4%EB%A5%98-%EB%B6%84%EC%84%9D">3.5. &#50724;&#47448; &#48516;&#49437;<a class="anchor-link" href="#3.5.-%EC%98%A4%EB%A5%98-%EB%B6%84%EC%84%9D">&#182;</a></h2>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ul>
+<li>오류 분석을 통해 모델의 성능을 평가하고 개선시키는 방안을 모색해야 함.</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ul>
+<li>모델의 성능 평가: 오차 행렬 활용</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="%EB%8B%A4%EC%A4%91-%ED%81%B4%EB%9E%98%EC%8A%A4-%EB%B6%84%EB%A5%98-%EB%AA%A8%EB%8D%B8%EC%9D%98-%EC%98%A4%EC%B0%A8-%ED%96%89%EB%A0%AC">&#45796;&#51473; &#53364;&#47000;&#49828; &#48516;&#47448; &#47784;&#45944;&#51032; &#50724;&#52264; &#54665;&#47148;<a class="anchor-link" href="#%EB%8B%A4%EC%A4%91-%ED%81%B4%EB%9E%98%EC%8A%A4-%EB%B6%84%EB%A5%98-%EB%AA%A8%EB%8D%B8%EC%9D%98-%EC%98%A4%EC%B0%A8-%ED%96%89%EB%A0%AC">&#182;</a></h3>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_predict</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">ConfusionMatrixDisplay</span>
+
+<span class="n">y_train_pred</span> <span class="o">=</span> <span class="n">cross_val_predict</span><span class="p">(</span><span class="n">sgd_clf</span><span class="p">,</span> <span class="n">X_train_scaled</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">ConfusionMatrixDisplay</span><span class="o">.</span><span class="n">from_predictions</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">y_train_pred</span><span class="p">)</span>
+
+<span class="n">ConfusionMatrixDisplay</span><span class="o">.</span><span class="n">from_predictions</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">y_train_pred</span><span class="p">,</span> 
+    <span class="n">normalize</span><span class="o">=</span><span class="s2">&quot;true&quot;</span><span class="p">,</span> <span class="n">values_format</span><span class="o">=</span><span class="s2">&quot;.0%&quot;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-08.png" width="80%"/></div></p>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="%EC%98%A4%EC%B0%A8%EC%9C%A8-%ED%99%9C%EC%9A%A9">&#50724;&#52264;&#50984; &#54876;&#50857;<a class="anchor-link" href="#%EC%98%A4%EC%B0%A8%EC%9C%A8-%ED%99%9C%EC%9A%A9">&#182;</a></h3>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<div class="highlight"><pre><span></span><span class="n">sample_weight</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_train_pred</span> <span class="o">!=</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="n">ConfusionMatrixDisplay</span><span class="o">.</span><span class="n">from_predictions</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">y_train_pred</span><span class="p">,</span> 
+    <span class="n">sample_weight</span><span class="o">=</span><span class="n">sample_weight</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="s2">&quot;true&quot;</span><span class="p">,</span> <span class="n">values_format</span><span class="o">=</span><span class="s2">&quot;.0%&quot;</span><span class="p">)</span>
+
+<span class="n">ConfusionMatrixDisplay</span><span class="o">.</span><span class="n">from_predictions</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">y_train_pred</span><span class="p">,</span> 
+    <span class="n">sample_weight</span><span class="o">=</span><span class="n">sample_weight</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="s2">&quot;pred&quot;</span><span class="p">,</span> <span class="n">values_format</span><span class="o">=</span><span class="s2">&quot;.0%&quot;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-09.png" width="80%"/></div></p>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="%EA%B0%9C%EB%B3%84-%EC%98%A4%EB%A5%98-%ED%99%95%EC%9D%B8">&#44060;&#48324; &#50724;&#47448; &#54869;&#51064;<a class="anchor-link" href="#%EA%B0%9C%EB%B3%84-%EC%98%A4%EB%A5%98-%ED%99%95%EC%9D%B8">&#182;</a></h3>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch03/homl03-10.png" width="500"/></div>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%A6%9D%EC%8B%9D">&#45936;&#51060;&#53552; &#51613;&#49885;<a class="anchor-link" href="#%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%A6%9D%EC%8B%9D">&#182;</a></h3>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ul>
+<li>SGD 분류 모델: 선형 회귀를 사용하기에 특히나 성능이 좋지 않음.</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ul>
+<li>보다 좋은 성능의 모델을 사용할 필요 있음.</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ul>
+<li>하지만 기본적으로 보다 많은 훈련 이미지가 필요함.</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ul>
+<li>새로운 이미지를 구할 수 있으면 좋겠지만 일반적으로 매우 어려움.</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ul>
+<li>데이터 증식 활용: 기존의 이미지를 조금씩 회전하거나, 뒤집거나, 이동하는 방식 등으로 
+  보다 많은 이미지를 훈련셋에 포함시킬 수 있음.</li>
+</ul>
+
+</div>
+</div>
+</div>
 </div></section></section>
 </div>
 </div>
