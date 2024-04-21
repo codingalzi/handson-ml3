@@ -490,7 +490,7 @@ document.write(`
 <div class="math notranslate nohighlight">
 \[\hat y = \theta_0 + x_1 \cdot \theta_1 + \cdots + x_{24} \cdot \theta_{24}\]</div>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\hat y\)</span>: 예측된 구역의 주택 중위 가격</p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat y\)</span>: 예측된 주택 중위 가격</p></li>
 <li><p><span class="math notranslate nohighlight">\(x_i\)</span>: 구역의 <span class="math notranslate nohighlight">\(i\)</span> 번째 특성값(위도, 경도, 중간소득, 가구당 인원 등)</p></li>
 <li><p><span class="math notranslate nohighlight">\(\theta_0\)</span>: 편향</p></li>
 <li><p><span class="math notranslate nohighlight">\(\theta_i\)</span>: <span class="math notranslate nohighlight">\(i\)</span> 번째 특성에 대한 가중치. 단, <span class="math notranslate nohighlight">\(1 \le i \le 24\)</span>.</p></li>
@@ -656,7 +656,7 @@ document.write(`
 <p>선형 회귀 모델에 사용되는 편향과 가중치 파라미터처럼 모델 훈련중에 학습되는 값들을 가리킨다.
 모델 훈련을 통해 학습된 파라미터는 훈련된 모델 객체의 속성으로 저장된다.</p>
 <p><strong>배치 크기</strong><font size="2">batch size</font></p>
-<p>보다 좋은 파라미터 값으로 업데이트하기 위해 필요한 훈련 샘플의 개수를 가리킨다.
+<p>보다 좋은 파라미터 값으로 업데이트하기 위해 필요한 훈련 샘플의 수를 가리킨다.
 전체 데이터셋의 크기 <span class="math notranslate nohighlight">\(m\)</span>과 구분하기 위해 <span class="math notranslate nohighlight">\(m_b\)</span>로 표기하며, <span class="math notranslate nohighlight">\(m\)</span>보다 같거나 작아야 한다.
 파라미터 업데이트는 따라서 <span class="math notranslate nohighlight">\(m_b\)</span> 개의 훈련셋을 학습할 때마다 이뤄진다.</p>
 <p><strong>비용 함수</strong><font size="2">cost function</font></p>
@@ -669,7 +669,8 @@ document.write(`
 \frac 1 {m_b} \sum_{i=0}^{m_b-1} \big(\mathbf{x}^{(i)}\, \mathbf{\theta} - y^{(i)}\big)^2
 \]</div>
 <p><strong>전역/지역 최소값</strong><font size="2">global/local minimum</font></p>
-<p>비용 함수의 전역/지역 최소값이다.</p>
+<p>비용 함수의 전역/지역 최소값이다.
+예를 들어 선형 회귀 모델의 경우엔 평균 제곱 오차(MSE) 함수가 갖는 전역/지역 최소값을 가리킨다.</p>
 <p><strong>스텝</strong><font size='2'>step</font></p>
 <p>모델이 파라미터를 한 번 업데이트 하는 과정을 가리킨다.
 즉 배치 크기 <span class="math notranslate nohighlight">\(m_b\)</span> 만큼의 샘플에 대해 예측값을 계산한 후에
@@ -691,6 +692,8 @@ document.write(`
 <p>비용 함수를 최소화하는파라미터를 학습한 모델이며,
 최종적으로 훈련을 통해 얻고자 하는 모델이다.</p>
 <p><strong>비용 함수의 그레이디언트 벡터</strong><font size='2'>gradient vector</font></p>
+<p>함수의 그레이디언트 벡터는 방향과 크기에 대한 정보를 제공한다.
+그레이디언트가 가리키는 방향의 <strong>반대 방향</strong>으로 움직여야 가장 빠르게 전역 최솟값에 접근한다.</p>
 <p>예를 들어 <span class="math notranslate nohighlight">\(\textrm{MSE}\)</span>를 비용 함수로 사용하는 경우 <span class="math notranslate nohighlight">\(\textrm{MSE}(\mathbf{\theta})\)</span> 함수의 <span class="math notranslate nohighlight">\(\mathbf{\mathbf{\theta}}\)</span> 에
 대한 그레이디언트 벡터는 다음과 같다.</p>
 <div class="math notranslate nohighlight">
