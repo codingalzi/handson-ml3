@@ -15342,6 +15342,31 @@ $$
 </div>
 </div>
 </div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ul>
+<li>하이퍼파라미터</li>
+<li>파라미터</li>
+<li>배치 크기</li>
+<li>비용 함수</li>
+<li>전역/지역 최소값</li>
+<li>스텝</li>
+<li>학습률</li>
+<li>에포크</li>
+<li>스텝 크기</li>
+<li>최적 학습 모델</li>
+<li>비용 함수의 그레이디언트 벡터</li>
+<li>허용 오차</li>
+</ul>
+
+</div>
+</div>
+</div>
 </div></section></section><section><section>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
@@ -15495,9 +15520,10 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
-<li>사이킷런 모델: 배치 크기 선택 옵션 지원 없음.<ul>
-<li><code>LinearRegression</code>: $m_b = m$</li>
+<li>사이킷런 모델: 배치 크기 선택 옵션 지원 없으며 경사하강법을 적용하는 모든 모델의 배치 크기는 1임.<ul>
+<li><code>LinearRegression</code>: 경사하강법 사용하지 않음.</li>
 <li><code>SGDRegressor</code>: $m_b = 1$</li>
+<li><code>LogisticRegressor</code>: $m_b = 1$    </li>
 </ul>
 </li>
 </ul>
@@ -16873,7 +16899,7 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
-<li>다만 여기서는 비선형 데이터 분석을 선형 회귀 모델로 제대로 </li>
+<li>여기서는 다만 비선형 데이터 분석을 선형 회귀 모델로 제대로 예측할 수 없을 보여주기 위해 언급되었음.</li>
 </ul>
 
 </div>
