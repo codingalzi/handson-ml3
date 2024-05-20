@@ -50,6 +50,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .highlight .m { color: var(--jp-mirror-editor-number-color) } /* Literal.Number */
 .highlight .s { color: var(--jp-mirror-editor-string-color) } /* Literal.String */
 .highlight .ow { color: var(--jp-mirror-editor-operator-color); font-weight: bold } /* Operator.Word */
+.highlight .pm { color: var(--jp-mirror-editor-punctuation-color) } /* Punctuation.Marker */
 .highlight .w { color: var(--jp-mirror-editor-variable-color) } /* Text.Whitespace */
 .highlight .mb { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Bin */
 .highlight .mf { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Float */
@@ -14495,6 +14496,9 @@ a.anchor-link {
 .reveal {
   font-size: 160%;
 }
+.reveal table {
+  font-size: var(--jp-ui-font-size1);
+}
 .reveal pre {
   width: inherit;
   padding: 0.4em;
@@ -14538,6 +14542,23 @@ div.jp-OutputPrompt {
   margin: 5px 5px 0 0;
 }
 
+.reveal div.highlight {
+  margin: 0;
+}
+
+.reveal div.highlight > pre {
+  margin: 0;
+  width: 100%;
+  font-size: var(--jp-code-font-size);
+}
+
+.reveal div.jp-OutputArea-output > pre {
+  margin: 0;
+  width: 90%;
+  font-size: var(--jp-code-font-size);
+  box-shadow: none;
+}
+
 /* Reveal navigation controls */
 
 .reveal .controls .navigate-left,
@@ -14578,17 +14599,14 @@ div.jp-OutputPrompt {
 
 /* Scrollbars */
 
-::-webkit-scrollbar
-{
+::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
-::-webkit-scrollbar *
-{
-  background:transparent;
+::-webkit-scrollbar * {
+  background: transparent;
 }
-::-webkit-scrollbar-thumb
-{
+::-webkit-scrollbar-thumb {
   background: #727272 !important;
 }
 </style>
@@ -14615,12 +14633,12 @@ div.jp-OutputPrompt {
                 },
                 displayAlign: 'center',
                 CommonHTML: {
-                    linebreaks: { 
-                    automatic: true 
+                    linebreaks: {
+                    automatic: true
                     }
                 }
             });
-        
+
             MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
         }
     }
@@ -14770,7 +14788,11 @@ div.jp-OutputPrompt {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
-<li>결정트리 방식의 최대 장점: 데이터 전처리 거의 불필요. 필요한 경우도 존재(4절 참고).</li>
+<li>결정트리 방식의 최대 장점: 데이터 전처리 일반적으로 불필요. 필요한 경우도 존재.</li>
+<li>사이킷런의 <code>DecisionTreeClassifier</code> 모델 활용</li>
+<li>붓꽃 데이터 활용. 꽃잎의 길이와 너비 기준으로 분류.</li>
+<li><code>max_depth=2</code>: 결정트리의 최대 깊이 지정. 
+  여기서는 최대 2번의 데이터셋 분할 허용. 기본값은 <code>None</code>이며 무제한 데이터셋 분할 허용.</li>
 </ul>
 
 </div>
@@ -14783,12 +14805,6 @@ div.jp-OutputPrompt {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<ul>
-<li>사이킷런의 <code>DecisionTreeClassifier</code> 모델 활용</li>
-<li>붓꽃 데이터 활용. 꽃잎의 길이와 너비 기준으로 분류.</li>
-<li><code>max_depth=2</code>: 결정트리의 최대 깊이 지정. 
-  여기서는 최대 2번의 데이터셋 분할 허용. 기본값은 <code>None</code>이며 무제한 데이터셋 분할 허용.</li>
-</ul>
 <div class="highlight"><pre><span></span><span class="n">iris</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">(</span><span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">X_iris</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">[[</span><span class="s2">&quot;petal length (cm)&quot;</span><span class="p">,</span> <span class="s2">&quot;petal width (cm)&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
 <span class="n">y_iris</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">target</span>
@@ -14844,59 +14860,6 @@ div.jp-OutputPrompt {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="%ED%8A%B8%EB%A6%AC-%EA%B5%AC%EC%84%B1-%EC%9A%94%EC%86%8C">&#53944;&#47532; &#44396;&#49457; &#50836;&#49548;<a class="anchor-link" href="#%ED%8A%B8%EB%A6%AC-%EA%B5%AC%EC%84%B1-%EC%9A%94%EC%86%8C">&#182;</a></h3>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<ul>
-<li>노드(node): 가지 분할이 시작되는 지점</li>
-</ul>
-
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<ul>
-<li>루트 노드(root node): 맨 상단에 위치한 노드</li>
-</ul>
-
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<ul>
-<li>리프 노드(leaf node): 더 이상의 가지분할이 발생하지 않는 노드. 즉, 자식 노드가 없는 노드.</li>
-</ul>
-
-</div>
-</div>
-</div>
-</div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="%EA%B2%B0%EC%A0%95%ED%8A%B8%EB%A6%AC-%EB%85%B8%EB%93%9C%EC%9D%98-%EC%86%8D%EC%84%B1">&#44208;&#51221;&#53944;&#47532; &#45432;&#46300;&#51032; &#49549;&#49457;<a class="anchor-link" href="#%EA%B2%B0%EC%A0%95%ED%8A%B8%EB%A6%AC-%EB%85%B8%EB%93%9C%EC%9D%98-%EC%86%8D%EC%84%B1">&#182;</a></h3>
 </div>
 </div>
@@ -14909,9 +14872,157 @@ div.jp-OutputPrompt {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
-<li><code>gini</code>: 해당 노드의 지니 불순도 측정값<ul>
-<li>모든 샘플이 동일 클래스에 속하면 불순도가 0이 됨. 즉, <code>gini=0</code>.</li>
+<li><code>gini</code>: 노드의 지니 불순도</li>
 </ul>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ul>
+<li><code>samples</code>: 노드에 속하는 샘플수</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ul>
+<li><code>value</code>: 각각의 범주(클래스)에 속하면서 노드에 포함된 샘플 수. 타깃 정보 활용.</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ul>
+<li><code>class</code>: 가장 높은 비율을 차지하는 범주. 비율이 동일한 경우 낮은 인덱스의 범주 선택.</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="%ED%8A%B8%EB%A6%AC">&#53944;&#47532;<a class="anchor-link" href="#%ED%8A%B8%EB%A6%AC">&#182;</a></h3>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>트리<font size='2'>rooted tree</font>는 아래 성질을 만족하는
+노드<font size='2'>node</font>와 이음선<font size='2'>edge</font>들로 구성됨.</p>
+<ul>
+<li>루트로 사용되는 하나의 노드가 있음.</li>
+<li>루트를 제외한 모든 노드는 부모 노드로부터 오는 진입 이음선으로 연결됨.</li>
+<li>루트로부터 임의의 노트로 연결되는 경로가 유일하게 존재함.</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch06/treedef1.png" width="300"/></div></p>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="%ED%8A%B8%EB%A6%AC-%EA%B5%AC%EC%84%B1-%EC%9A%94%EC%86%8C">&#53944;&#47532; &#44396;&#49457; &#50836;&#49548;<a class="anchor-link" href="#%ED%8A%B8%EB%A6%AC-%EA%B5%AC%EC%84%B1-%EC%9A%94%EC%86%8C">&#182;</a></h3>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ul>
+<li>루트<font size='2'>root</font> 노드: 맨 상단에 위치한 노드. 부모 노드를 갖지 않음.</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ul>
+<li>잎<font size='2'>leaf</font> 노드: 더 이상의 가지분할이 발생하지 않는 노드. 자식 노드를 갖지 않음.</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="%EB%85%B8%EB%93%9C%EC%9D%98-%EC%9D%B8%EB%8D%B1%EC%8A%A4">&#45432;&#46300;&#51032; &#51064;&#45937;&#49828;<a class="anchor-link" href="#%EB%85%B8%EB%93%9C%EC%9D%98-%EC%9D%B8%EB%8D%B1%EC%8A%A4">&#182;</a></h3>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>노드의 인덱스는 깊이 우선 탐색<font size='2'>depth-first-search</font>(DFS) 방식으로 이루워짐.</p>
+<ul>
+<li><p>루트 노드에서 시작해서 갈 수 있는 한 가장 왼쪽 자식 노드로 탐색 진행</p>
+</li>
+<li><p>잎 노드에 다달한 경우 탐색 대상이 될 수 있는 자식 노드를 갖는 가장 가까운 조상 노드로 이동해서 깊이 우선 탐색 진행. 
+  단, 한 번 탐색한 자식 노드는 무시.</p>
 </li>
 </ul>
 
@@ -14925,39 +15036,7 @@ div.jp-OutputPrompt {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<ul>
-<li><code>samples</code>: 해당 노드에 포함된 샘플 수</li>
-</ul>
-
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<ul>
-<li><code>value</code>: 해당 노드에 포함된 샘플들의 실제 클래스별 개수. 타깃 정보 활용.</li>
-</ul>
-
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<ul>
-<li><code>class</code>: 각 클래스별 비율을 계산하여 가장 높은 비율에 해당하는 클래스 선정. 
-  동일한 비율이면 낮은 인덱스 선정</li>
-</ul>
-
+<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch06/depth-first-search.gif" width="500"/></div></p>
 </div>
 </div>
 </div>
@@ -14982,7 +15061,7 @@ div.jp-OutputPrompt {
 <ul>
 <li>$G_i$: $i$-번째 노드의 지니 불순도</li>
 </ul>
-$$G_i = 1 - \sum_{k=1}^{K} (p_{i,k})^2$$
+$$G_i = 1 - \sum_{k=0}^{K-1} (p_{i,k})^2$$
 </div>
 </div>
 </div>
@@ -14994,7 +15073,7 @@ $$G_i = 1 - \sum_{k=1}^{K} (p_{i,k})^2$$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
-<li>$p_{i,k}$는 $i$ 번째 노드에 있는 훈련 샘플 중 클래스 $k$에 속한 샘플의 비율. $K$는 클래스의 총 개수.</li>
+<li>$p_{i,k}$는 $i$ 번째 노드에 있는 훈련 샘플 중 범주 $k$에 속한 샘플의 비율. $K$는 범주의 개수.</li>
 </ul>
 
 </div>
@@ -15008,9 +15087,23 @@ $$G_i = 1 - \sum_{k=1}^{K} (p_{i,k})^2$$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
-<li>예제: 깊이 2의 왼편 노드 $G_4$ 의 지니 불순도</li>
+<li>예제: 깊이 2의 왼편 노드 $G_3$ 의 지니 불순도</li>
 </ul>
 $$G_4 = 1 - (0/54)^2 - (49/54)^2 - (5/54)^2 = 0.168$$
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ul>
+<li>예제: 깊이 1의 왼편 노드 $G_1$ 의 지니 불순도. 세토사 품종으로만 구성되었음.</li>
+</ul>
+$$G_1 = 1 - (55/55)^2 - (0/55)^2 - (0/55)^2 = 0$$
 </div>
 </div>
 </div>
@@ -15021,7 +15114,18 @@ $$G_4 = 1 - (0/54)^2 - (49/54)^2 - (5/54)^2 = 0.168$$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="%EC%98%88%EC%A0%9C:-%EA%B2%B0%EC%A0%95%ED%8A%B8%EB%A6%AC-%EC%98%88%EC%B8%A1">&#50696;&#51228;: &#44208;&#51221;&#53944;&#47532; &#50696;&#52769;<a class="anchor-link" href="#%EC%98%88%EC%A0%9C:-%EA%B2%B0%EC%A0%95%ED%8A%B8%EB%A6%AC-%EC%98%88%EC%B8%A1">&#182;</a></h3>
+<h3 id="%EB%B2%94%EC%A3%BC-%EC%98%88%EC%B8%A1">&#48276;&#51452; &#50696;&#52769;<a class="anchor-link" href="#%EB%B2%94%EC%A3%BC-%EC%98%88%EC%B8%A1">&#182;</a></h3>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="%EC%98%88%EC%A0%9C">&#50696;&#51228;<a class="anchor-link" href="#%EC%98%88%EC%A0%9C">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -15064,11 +15168,12 @@ $$G_4 = 1 - (0/54)^2 - (49/54)^2 - (5/54)^2 = 0.168$$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>아래 그림은 <code>max_depth=3</code>으로 지정해서 학습한 결정트리의 결졍경계를 보여준다.</p>
+<p>아래 그림은 <code>max_depth=3</code>으로 지정해서 학습한 결정트리의 결졍경계를 보여줌.</p>
 <ul>
-<li>1차 분할 기준: 꽃잎 길이 2.45cm</li>
-<li>2차 분할 기준: 꽃잎 너비 1.75cm</li>
-<li>3차 분할 기준: 꽃잎 길이 4.85cm와 4.95cm</li>
+<li>1차 분할 기준: 꽃잎 길이 2.45cm. 트리 깊이 0에서 진행됨.</li>
+<li>2차 분할 기준: 꽃잎 너비 1.75cm. 트리 깊이 1에서 진행됨.</li>
+<li>3차 분할 기준: 꽃잎 길이 4.95cm. 트리 깊이 2에서 진행됨.</li>
+<li>4차 분할 기준: 꽃잎 길이 4.85cm. 트리 깊이 2에서 진행됨.</li>
 </ul>
 
 </div>
@@ -15103,7 +15208,7 @@ $$G_4 = 1 - (0/54)^2 - (49/54)^2 - (5/54)^2 = 0.168$$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="%ED%81%B4%EB%9E%98%EC%8A%A4-%ED%99%95%EB%A5%A0-%EC%B6%94%EC%A0%95">&#53364;&#47000;&#49828; &#54869;&#47456; &#52628;&#51221;<a class="anchor-link" href="#%ED%81%B4%EB%9E%98%EC%8A%A4-%ED%99%95%EB%A5%A0-%EC%B6%94%EC%A0%95">&#182;</a></h3>
+<h3 id="%EB%B2%94%EC%A3%BC%EC%97%90-%EC%86%8D%ED%95%A0-%ED%99%95%EB%A5%A0">&#48276;&#51452;&#50640; &#49549;&#54624; &#54869;&#47456;<a class="anchor-link" href="#%EB%B2%94%EC%A3%BC%EC%97%90-%EC%86%8D%ED%95%A0-%ED%99%95%EB%A5%A0">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -15115,7 +15220,7 @@ $$G_4 = 1 - (0/54)^2 - (49/54)^2 - (5/54)^2 = 0.168$$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
-<li>주어진 샘플에 대해 예측된 노드에 속한 샘플들의 클래스별 비율</li>
+<li>주어진 샘플에 대해 예측된 노드에 속한 샘플들의 범주별 비율</li>
 </ul>
 
 </div>
@@ -15129,10 +15234,9 @@ $$G_4 = 1 - (0/54)^2 - (49/54)^2 - (5/54)^2 = 0.168$$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
-<li>예제: 꽃잎 길이와 너비가 각각 5cm, 1.5cm인 붓꽃에 대한 클래스 추정 확률은 깊이 2의 왼편 노드에 
-  포함된 샘플들의 클래스별 비율</li>
+<li><code>max_depth=2</code>로 훈련된 <code>tree_clf</code> 모델은 예를 들어
+  꽃잎 길이와 너비가 각각 5cm, 1.5cm인 붓꽃을 깊이 2의 왼편 잎 노드인 $G_3$에 포함시킴.</li>
 </ul>
-$$(0/54, 49/54, 5/54) = (0, 0.907, 0.093) \qquad\qquad (\text{세토사}, \text{버시컬러}, \text{버지니카})$$<p></p>
 
 </div>
 </div>
@@ -15145,7 +15249,21 @@ $$(0/54, 49/54, 5/54) = (0, 0.907, 0.093) \qquad\qquad (\text{세토사}, \text{
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
-<li><strong>참고:</strong> 동일한 노드에 속한 샘플에 대한 추정 확률은 언제나 동일</li>
+<li>$G_3$ 노드에 포함된 샘플들의 범주별 비율: (세토사, 버시컬러, 버지니카)</li>
+</ul>
+$$(0/54, 49/54, 5/54) = (0, 0.907, 0.093)$$
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ul>
+<li>버시컬러에 속할 확률이 90.7%로 가장 높기에 해당 샘플은 버시컬러로 예측됨.</li>
 </ul>
 
 </div>
@@ -15158,7 +15276,7 @@ $$(0/54, 49/54, 5/54) = (0, 0.907, 0.093) \qquad\qquad (\text{세토사}, \text{
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="%EC%98%88%EC%B8%A1%EA%B0%92">&#50696;&#52769;&#44050;<a class="anchor-link" href="#%EC%98%88%EC%B8%A1%EA%B0%92">&#182;</a></h3>
+<h3 id="predict_proba()-vs.-predict()"><code>predict_proba()</code> vs. <code>predict()</code><a class="anchor-link" href="#predict_proba()-vs.-predict()">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -15169,9 +15287,7 @@ $$(0/54, 49/54, 5/54) = (0, 0.907, 0.093) \qquad\qquad (\text{세토사}, \text{
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<ul>
-<li><code>predict_proba()</code> 메서드: 지정된 샘플의 클래스별 추정 확률을 계산</li>
-</ul>
+<p><code>predict_proba()</code> 메서드: 지정된 샘플의 범주별 추정 확률을 계산</p>
 <div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">tree_clf</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">([[</span><span class="mi">5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">]])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 <span class="n">array</span><span class="p">([[</span><span class="mf">0.</span>   <span class="p">,</span> <span class="mf">0.907</span><span class="p">,</span> <span class="mf">0.093</span><span class="p">]])</span>
 </pre></div>
@@ -15186,11 +15302,49 @@ $$(0/54, 49/54, 5/54) = (0, 0.907, 0.093) \qquad\qquad (\text{세토사}, \text{
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<ul>
-<li><code>predict()</code> 메서드: 품종 클래스를 예측하며, 가장 높은 추정 확률을 갖는 품종으로 지정.</li>
-</ul>
+<p><code>predict()</code> 메서드: 품종 범주를 예측하며, 가장 높은 추정 확률을 갖는 품종으로 지정.</p>
 <div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">tree_clf</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">([[</span><span class="mi">5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">]])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 <span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p><code>max_depth=3</code> 인 경우 다르게 예측됨</p>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">tree_clf_deeper</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">([[</span><span class="mi">5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">]])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">array</span><span class="p">([[</span><span class="mf">0.</span>   <span class="p">,</span> <span class="mf">0.333</span><span class="p">,</span> <span class="mf">0.667</span><span class="p">]])</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">tree_clf_deeper</span><span class="o">.</span><span class="n">predict</span><span class="p">([[</span><span class="mi">5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">]])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">])</span>
 </pre></div>
 
 </div>
@@ -15257,7 +15411,7 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
-<li>$J(k, t_k)$가 작을수록 불순도가 낮은 두 개의 부분집합으로 분할됨</li>
+<li>$J(k, t_k)$가 작을 수록 불순도가 낮은 두 개의 부분집합으로 분할됨</li>
 </ul>
 
 </div>
@@ -15339,7 +15493,7 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
-<li>즉, 매우 작은 훈련 세트에 대해서도 제대로 적용하기 어려움</li>
+<li>매우 작은 훈련셋에 대해서도 제대로 적용하기 어려움</li>
 </ul>
 
 </div>
@@ -15423,21 +15577,7 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
-<li><code>DecisionTreeClassifier</code>의 <code>presort=True</code> 옵션 설정: 훈련 세트를 먼저 정렬시킨 후 훈련 시작</li>
-</ul>
-
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<ul>
-<li>훈련 세트의 크기가 몇 천보다 크면 정렬 자체가 오래 걸림. 가장 빠른 정렬 알고리즘의 복잡도가 $O(m\log m)$ 정도임.</li>
+<li>훈련셋의 크기가 몇 천보다 크면 정렬 자체가 오래 걸림. 가장 빠른 정렬 알고리즘의 복잡도가 $O(m\log m)$ 정도임.</li>
 </ul>
 
 </div>
@@ -15464,6 +15604,8 @@ $$
 <ul>
 <li><code>DecisionTreeClassifier</code>의 <code>criterion="entropy"</code> 옵션 설정: <ul>
 <li>gini 불순도 대신에 샘플들의 <strong>무질서</strong> 정도를 측정하는 엔트로피 사용</li>
+<li>지니 불순도를 사용할 때와 비교해서 큰 차이가 나지 않음.</li>
+<li>엔트로피 방식이 노드를 보다 균형 잡힌 두 개의 자식 노드로 분할함.    </li>
 </ul>
 </li>
 </ul>
@@ -15479,7 +15621,7 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
-<li>$i$-노드의 엔트로피($H$)</li>
+<li>$i$-번 인덱스 노드의 엔트로피</li>
 </ul>
 $$H_i = -\sum_{\substack{k=1\\p_{i,k}\neq 0}}^{K} p_{i,k} \log_2(p_{i,k})$$<p></p>
 
@@ -15494,9 +15636,7 @@ $$H_i = -\sum_{\substack{k=1\\p_{i,k}\neq 0}}^{K} p_{i,k} \log_2(p_{i,k})$$<p></
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
-<li>지니 불순도를 사용할 때와 비교해서 큰 차이가 나지 않음.
-  다만, 엔트로피 방식이 노드를 보다 균형 잡힌 두 개의 자식 노드로 분할함.
-  하지만 큰 차이가 없고 지니 불순도 방식이 보다 빠르게 훈련되며 따라서 기본값으로 사용됨.</li>
+<li>두 방식의 큰 차이가 없고 지니 불순도 방식이 보다 빠르게 훈련되어 기본값으로 지정됨.</li>
 </ul>
 
 </div>
@@ -15532,11 +15672,21 @@ $$H_i = -\sum_{\substack{k=1\\p_{i,k}\neq 0}}^{K} p_{i,k} \log_2(p_{i,k})$$<p></
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
-<li>결정트리 모델은 데이터에 대한 어떤 가정도 하지 않음. <ul>
-<li>예를 들어, 노드를 분할할 수 있는 자유도(degree of freedom)에 대한 제한이 기본적으로 없음.</li>
-<li>반면에 선형 모델 등은 데이터가 선형 모델을 따른다는 가정 등을 함. </li>
+<li>결정트리 모델은 데이터에 대한 어떤 가정도 하지 않음. </li>
 </ul>
-</li>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ul>
+<li>예를 들어, 노드를 분할할 수 있는 자유도<font size='2'>degree of freedom</font>에 대한 제한이 기본적으로 없음.</li>
 </ul>
 
 </div>
@@ -15564,7 +15714,7 @@ $$H_i = -\sum_{\substack{k=1\\p_{i,k}\neq 0}}^{K} p_{i,k} \log_2(p_{i,k})$$<p></
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
-<li>규제를 가하지 않으면 과대적합 위험 높음</li>
+<li>규제를 가하지 않으면 과대적합 위험 매우 높음</li>
 </ul>
 
 </div>
@@ -15623,15 +15773,11 @@ $$H_i = -\sum_{\substack{k=1\\p_{i,k}\neq 0}}^{K} p_{i,k} \log_2(p_{i,k})$$<p></
 </tr>
 <tr>
 <td style="text-align:left"><code>min_samples_leaf</code></td>
-<td style="text-align:left">리프에 포함된 최소 샘플 개수</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>min_weight_fraction_leaf</code></td>
-<td style="text-align:left">샘플 가중치 합의 최솟값</td>
+<td style="text-align:left">잎 노드에 포함된 최소 샘플 개수</td>
 </tr>
 <tr>
 <td style="text-align:left"><code>max_leaf_nodes</code></td>
-<td style="text-align:left">최대 리프 개수</td>
+<td style="text-align:left">최대 잎 노드 개수</td>
 </tr>
 <tr>
 <td style="text-align:left"><code>max_features</code></td>
@@ -15664,7 +15810,7 @@ $$H_i = -\sum_{\substack{k=1\\p_{i,k}\neq 0}}^{K} p_{i,k} \log_2(p_{i,k})$$<p></
 <ul>
 <li>예제: 초승달 데이터셋에 대한 결정트리 모델 학습<ul>
 <li>왼편: 규제 전혀 없음. 보다 정교하며 과대적합됨.</li>
-<li>오른편: <code>min_samples_leaf=4</code>. 일반화 성능이 보다 좋음.</li>
+<li>오른편: <code>min_samples_leaf=5</code>. 일반화 성능이 보다 좋음.</li>
 </ul>
 </li>
 </ul>
@@ -15679,7 +15825,27 @@ $$H_i = -\sum_{\substack{k=1\\p_{i,k}\neq 0}}^{K} p_{i,k} \log_2(p_{i,k})$$<p></
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch06/homl06-03.png" width="600"/></div>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_moons</span>
+
+<span class="n">X_moons</span><span class="p">,</span> <span class="n">y_moons</span> <span class="o">=</span> <span class="n">make_moons</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">tree_clf1</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">tree_clf2</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">min_samples_leaf</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">tree_clf1</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_moons</span><span class="p">,</span> <span class="n">y_moons</span><span class="p">)</span>
+<span class="n">tree_clf2</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_moons</span><span class="p">,</span> <span class="n">y_moons</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch06/homl06-03.png" width="800"/></div>
 </div>
 </div>
 </div>
@@ -15901,7 +16067,7 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="%EB%8B%A8%EC%A0%90-1:-%ED%9B%88%EB%A0%A8-%EC%84%B8%ED%8A%B8-%ED%9A%8C%EC%A0%84-%EB%AF%BC%EA%B0%90%EB%8F%84">&#45800;&#51216; 1: &#54984;&#47144; &#49464;&#53944; &#54924;&#51204; &#48124;&#44048;&#46020;<a class="anchor-link" href="#%EB%8B%A8%EC%A0%90-1:-%ED%9B%88%EB%A0%A8-%EC%84%B8%ED%8A%B8-%ED%9A%8C%EC%A0%84-%EB%AF%BC%EA%B0%90%EB%8F%84">&#182;</a></h3>
+<h3 id="%EB%8B%A8%EC%A0%90-1:-%ED%9B%88%EB%A0%A8%EC%85%8B-%ED%9A%8C%EC%A0%84-%EB%AF%BC%EA%B0%90%EB%8F%84">&#45800;&#51216; 1: &#54984;&#47144;&#49483; &#54924;&#51204; &#48124;&#44048;&#46020;<a class="anchor-link" href="#%EB%8B%A8%EC%A0%90-1:-%ED%9B%88%EB%A0%A8%EC%85%8B-%ED%9A%8C%EC%A0%84-%EB%AF%BC%EA%B0%90%EB%8F%84">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -15913,11 +16079,11 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ul>
-<li><p>결정트리 알고리즘은 성능이 매우 우수하지만 기본적으로 주어진 훈련 세트에 민감하게 반응함.</p>
+<li><p>결정트리 알고리즘은 성능이 매우 우수하지만 기본적으로 주어진 훈련셋에 민감하게 반응함.</p>
 </li>
 <li><p>결정트리는 항상 축에 수직인 분할을 사용. 따라서 조금만 회전을 가해도 결정 경계가 많이 달라짐</p>
 </li>
-<li><p>예제: 오른편 그래프: 왼편 그래프를 45도 회전시킨 훈련 세트 학습</p>
+<li><p>예제: 오른편 그래프: 왼편 그래프를 45도 회전시킨 훈련셋 학습</p>
 </li>
 </ul>
 
@@ -15995,7 +16161,7 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="%EB%8B%A8%EC%A0%90-2:-%ED%9B%88%EB%A0%A8-%EC%84%B8%ED%8A%B8-%EB%B3%80%ED%99%94-%EB%AF%BC%EA%B0%90%EB%8F%84">&#45800;&#51216; 2: &#54984;&#47144; &#49464;&#53944; &#48320;&#54868; &#48124;&#44048;&#46020;<a class="anchor-link" href="#%EB%8B%A8%EC%A0%90-2:-%ED%9B%88%EB%A0%A8-%EC%84%B8%ED%8A%B8-%EB%B3%80%ED%99%94-%EB%AF%BC%EA%B0%90%EB%8F%84">&#182;</a></h3>
+<h3 id="%EB%8B%A8%EC%A0%90-2:-%EB%86%92%EC%9D%80-%EB%B6%84%EC%82%B0">&#45800;&#51216; 2: &#45458;&#51008; &#48516;&#49328;<a class="anchor-link" href="#%EB%8B%A8%EC%A0%90-2:-%EB%86%92%EC%9D%80-%EB%B6%84%EC%82%B0">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -16009,7 +16175,7 @@ $$
 <ul>
 <li><p>훈련 데이터의 작은 변화에도 매우 민감함.</p>
 </li>
-<li><p>동일한 모델을 훈련 시켜도 다른 결과 가능(아래 그래프 참고)</p>
+<li><p><code>random_state</code>를 지정하지 않으면서 동일한 모델을 훈련 시키면 다른 결과 나옴(아래 그래프 참고)</p>
 </li>
 <li><p>많은 트리에서 만든 예측값의 평균을 활용 추천(7장 램덤포레스트 모델 참고)</p>
 </li>
