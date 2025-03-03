@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="_static/proof.css?v=ca93fcec" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -555,7 +555,7 @@ document.write(`
 이렇듯 군집의 직경이 서로 많이 다르면 군집화가 잘 작동하지 않을 수 있다.</p>
 <p><strong>하드 군집화 대 소프트 군집화</strong></p>
 <p>지금까지 살펴 보았듯이 k-평균 모델 객체의 labels_ 속성은 각 샘플에 대해 가장 가까운 센트로이드를 중심으로 하는 군집의 (작위적으로 지정된) 인덱스를 저장하며, 이를 이용하여 predict() 메서드는 샘플이 속하는 군집의 인덱스를 반환한다. 이런 방식의 군집화가 <strong>하드 군집화</strong>(hard clustering)이다.</p>
-<p><strong>소프트 군집화</strong>(soft clustering)는 샘플과 각 군집 사이의 관계를 점수로 부여한다. 점수는 예를 들어 각 군집과 샘플사이의 거리 또는 <a class="reference internal" href="end2end_ml_project.html#ch-end2end"><span class="std std-numref">2장</span></a>과 <code class="xref std std-numref docutils literal notranslate"><span class="pre">%s장</span></code>에서 활용한 가우스 방사 기저 함수를 이용한 유사도 점수 등이 사용될 수 있다.
+<p><strong>소프트 군집화</strong>(soft clustering)는 샘플과 각 군집 사이의 관계를 점수로 부여한다. 점수는 예를 들어 각 군집과 샘플사이의 거리 또는 <a class="reference internal" href="end2end_ml_project.html#ch-end2end"><span class="std std-numref">2장</span></a>에서 활용한 가우스 방사 기저 함수를 이용한 유사도 점수 등이 사용될 수 있다.
 생성된 점수는 데이터셋의 새로운 특성으로 지정되어 모델 훈련에 활용되기도 한다.</p>
 <p>여기서 사용하는 사이킷런의 <code class="docutils literal notranslate"><span class="pre">KMeans</span></code> 모델의 <code class="docutils literal notranslate"><span class="pre">transform()</span></code> 메서드는 샘플과 각 센트로이드 사이의 (유클리드) 거리를 점수로 사용한다 (아래 코드 참고).</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">kmeans</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_new</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
