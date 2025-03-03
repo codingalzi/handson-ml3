@@ -1,70 +1,69 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" >
+<html lang="en" data-content_root="./" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>9. 비지도 학습 &#8212; 핸즈온 머신러닝(3판)</title>
+    <title>8. 비지도 학습 &#8212; 핸즈온 머신러닝(3판)</title>
   
   
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
   
-  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css" />
-    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/proof.css" />
-    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
-  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/clipboard.min.js"></script>
-    <script src="_static/copybutton.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js"></script>
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="_static/togglebutton.js"></script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="_static/design-tabs.js"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'unsupervised_learning';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="8. 차원 축소" href="dimensionality_reduction.html" />
+    <link rel="prev" title="7. 차원 축소" href="dimensionality_reduction.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -74,27 +73,23 @@
 
   
   
-  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
   
   <div id="pst-scroll-pixel-helper"></div>
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>
-    Back to top
-  </button>
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
-  <label class="overlay overlay-primary" for="__primary"></label>
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
-  <label class="overlay overlay-secondary" for="__secondary"></label>
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
@@ -116,8 +111,13 @@
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
     </header>
   
 
@@ -141,6 +141,8 @@
         <div class="sidebar-primary-item">
 
   
+    
+  
 
 <a class="navbar-brand logo" href="intro.html">
   
@@ -156,7 +158,7 @@
 
  <script>
  document.write(`
-   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass"></i>
     <span class="search-button__default-text">Search</span>
     <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
@@ -170,11 +172,10 @@
 <li class="toctree-l1"><a class="reference internal" href="end2end_ml_project.html">2. 머신러닝 프로젝트 처음부터 끝까지</a></li>
 <li class="toctree-l1"><a class="reference internal" href="classification.html">3. 분류</a></li>
 <li class="toctree-l1"><a class="reference internal" href="training_models.html">4. 모델 훈련</a></li>
-<li class="toctree-l1"><a class="reference internal" href="svm.html">5. 서포트 벡터 머신</a></li>
-<li class="toctree-l1"><a class="reference internal" href="decision_trees.html">6. 결정트리</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ensemble_learning_random_forests.html">7. 앙상블 학습과 랜덤 포레스트</a></li>
-<li class="toctree-l1"><a class="reference internal" href="dimensionality_reduction.html">8. 차원 축소</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">9. 비지도 학습</a></li>
+<li class="toctree-l1"><a class="reference internal" href="decision_trees.html">5. 결정트리</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ensemble_learning_random_forests.html">6. 앙상블 학습과 랜덤 포레스트</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dimensionality_reduction.html">7. 차원 축소</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">8. 비지도 학습</a></li>
 </ul>
 
     </div>
@@ -190,7 +191,7 @@
 
       </div>
       
-      <main id="main-content" class="bd-main">
+      <main id="main-content" class="bd-main" role="main">
         
         
 
@@ -199,14 +200,14 @@
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article">
+              <div class="bd-header-article d-print-none">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</label></div>
+</button></div>
       
     </div>
   
@@ -231,14 +232,14 @@
       
       <li><a href="https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/jupyter-book/unsupervised_learning.ipynb" target="_blank"
    class="btn btn-sm dropdown-item"
-   title="Launch onColab"
+   title="Launch on Colab"
    data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
 <span class="btn__icon-container">
   
-    <img src="_static/images/logo_colab.png">
+    <img alt="Colab logo" src="_static/images/logo_colab.png">
   </span>
 <span class="btn__text-container">Colab</span>
 </a>
@@ -362,10 +363,10 @@
 
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
   </button>
 `);
 </script>
@@ -373,14 +374,14 @@ document.write(`
 
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
-</label>
+</button>
 </div></div>
       
     </div>
@@ -401,33 +402,33 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">9.1. 분류 대 군집화</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#k">9.2. k-평균</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">9.2.1. k-평균 알고리즘</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">9.2.2. 센트로이드 초기화 문제 해결 방안</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">9.2.3. 최적의 군집수</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">9.2.4. k-평균의 한계</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">8.1. 분류 대 군집화</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#k">8.2. k-평균</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">8.2.1. k-평균 알고리즘</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">8.2.2. 센트로이드 초기화 문제 해결 방안</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">8.2.3. 최적의 군집수</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">8.2.4. k-평균의 한계</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">9.3. 군집화 활용</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">9.3.1. 이미지 분할</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">9.3.2. 준지도 학습</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">8.3. 군집화 활용</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">8.3.1. 이미지 분할</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">8.3.2. 준지도 학습</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dbscan">9.4. DBSCAN</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">9.4.1. 사이킷런의 DBSCAN 모델</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">9.4.2. 기타 군집 알고리즘</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dbscan">8.4. DBSCAN</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">8.4.1. 사이킷런의 DBSCAN 모델</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">8.4.2. 기타 군집 알고리즘</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">9.5. 가우스 혼합 모델</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gmm">9.5.1. GMM 활용</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">9.5.2. 이상치 탐지</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">9.5.3. 군집수 지정</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">9.5.4. 베이즈 가우스 혼합 모델</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">9.5.5. 이상치 탐지용 기타 알고리즘</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">8.5. 가우스 혼합 모델</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gmm">8.5.1. GMM 활용</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">8.5.2. 이상치 탐지</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">8.5.3. 군집수 지정</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">8.5.4. 베이즈 가우스 혼합 모델</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">8.5.5. 이상치 탐지용 기타 알고리즘</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">9.6. 연습문제</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">8.6. 연습문제</a></li>
 </ul>
             </nav>
         </div>
@@ -440,7 +441,7 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="ch-unsupervisedlearning">
-<span id="id1"></span><h1><span class="section-number">9. </span>비지도 학습<a class="headerlink" href="#ch-unsupervisedlearning" title="Permalink to this heading">#</a></h1>
+<span id="id1"></span><h1><span class="section-number">8. </span>비지도 학습<a class="headerlink" href="#ch-unsupervisedlearning" title="Link to this heading">#</a></h1>
 <p><strong>감사의 글</strong></p>
 <p>자료를 공개한 저자 오렐리앙 제롱과 강의자료를 지원한 한빛아카데미에게 진심어린 감사를 전합니다.</p>
 <p><strong>소스코드</strong></p>
@@ -453,7 +454,7 @@ document.write(`
 다운로드할 수 있다.</p>
 <p><strong>소개</strong></p>
 <p>비지도 학습은 라벨이 없는 데이터를 학습하는 기법이다.
-<a class="reference internal" href="dimensionality_reduction.html#ch-dimensionalityreduction"><span class="std std-numref">8장</span></a>에서 다룬 차원 축소 기법도 비지도 학습의 전형적인 예제이다.
+<a class="reference internal" href="dimensionality_reduction.html#ch-dimensionalityreduction"><span class="std std-numref">7장</span></a>에서 다룬 차원 축소 기법도 비지도 학습의 전형적인 예제이다.
 여기서는 다음 주제와 관련된 비지도 학습을 다룬다.</p>
 <ul class="simple">
 <li><p>군집화: 비슷한 샘플끼리의 군집 형성</p>
@@ -483,7 +484,7 @@ document.write(`
 </li>
 </ul>
 <section id="id2">
-<h2><span class="section-number">9.1. </span>분류 대 군집화<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">8.1. </span>분류 대 군집화<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <p><strong>군집</strong><font size='2'>cluster</font>은 유사한 대상들의 모음을 가리킨다.
 예를 들어, 산이나 공원에서 볼 수 있는 이름 모르는 동일 품종의 꽃으로 이루어진 군집을 생각할 수 있다.
 <strong>군집화</strong><font size='2'>clustering</font>는 특정 기준으로 대상을 여러 개의 군집으로
@@ -511,7 +512,7 @@ document.write(`
 세 개의 군집을 매우 정확하게 생성한다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-02.png" width="450"/></div></section>
 <section id="k">
-<h2><span class="section-number">9.2. </span>k-평균<a class="headerlink" href="#k" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">8.2. </span>k-평균<a class="headerlink" href="#k" title="Link to this heading">#</a></h2>
 <p>군집의 중심인 센트로이드<font size='2'>centroid</font> 몇 개를 찾은 다음
 각 센트로이드에 가깝게 위치한 샘플들로 구성된 군집을 형성하는 기법이다.</p>
 <p><strong>사이킷런의 <code class="docutils literal notranslate"><span class="pre">KMeans</span></code> 모델</strong></p>
@@ -554,7 +555,7 @@ document.write(`
 이렇듯 군집의 직경이 서로 많이 다르면 군집화가 잘 작동하지 않을 수 있다.</p>
 <p><strong>하드 군집화 대 소프트 군집화</strong></p>
 <p>지금까지 살펴 보았듯이 k-평균 모델 객체의 labels_ 속성은 각 샘플에 대해 가장 가까운 센트로이드를 중심으로 하는 군집의 (작위적으로 지정된) 인덱스를 저장하며, 이를 이용하여 predict() 메서드는 샘플이 속하는 군집의 인덱스를 반환한다. 이런 방식의 군집화가 <strong>하드 군집화</strong>(hard clustering)이다.</p>
-<p><strong>소프트 군집화</strong>(soft clustering)는 샘플과 각 군집 사이의 관계를 점수로 부여한다. 점수는 예를 들어 각 군집과 샘플사이의 거리 또는 <a class="reference internal" href="end2end_ml_project.html#ch-end2end"><span class="std std-numref">2장</span></a>과 <a class="reference internal" href="svm.html#ch-svm"><span class="std std-numref">5장</span></a>에서 활용한 가우스 방사 기저 함수를 이용한 유사도 점수 등이 사용될 수 있다.
+<p><strong>소프트 군집화</strong>(soft clustering)는 샘플과 각 군집 사이의 관계를 점수로 부여한다. 점수는 예를 들어 각 군집과 샘플사이의 거리 또는 <a class="reference internal" href="end2end_ml_project.html#ch-end2end"><span class="std std-numref">2장</span></a>과 <code class="xref std std-numref docutils literal notranslate"><span class="pre">%s장</span></code>에서 활용한 가우스 방사 기저 함수를 이용한 유사도 점수 등이 사용될 수 있다.
 생성된 점수는 데이터셋의 새로운 특성으로 지정되어 모델 훈련에 활용되기도 한다.</p>
 <p>여기서 사용하는 사이킷런의 <code class="docutils literal notranslate"><span class="pre">KMeans</span></code> 모델의 <code class="docutils literal notranslate"><span class="pre">transform()</span></code> 메서드는 샘플과 각 센트로이드 사이의 (유클리드) 거리를 점수로 사용한다 (아래 코드 참고).</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">kmeans</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_new</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
@@ -639,7 +640,7 @@ document.write(`
 높은 유사도를 부여한다.</p>
 </div>
 <section id="id3">
-<h3><span class="section-number">9.2.1. </span>k-평균 알고리즘<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">8.2.1. </span>k-평균 알고리즘<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
 <p>먼저 몇 개의 군집으로 분류할지를 정하기 위해 k 값을 지정한다.
 그런 다음 k 개의 센트로이드를 무작위로 선택한 다음에
 센트로이드들의 위치가 수렴할 때까지 아래 과정을 반복한다.</p>
@@ -652,7 +653,7 @@ document.write(`
 아래 오른쪽 그림은 센트로이드 초기화가 다르면 최종 결과가 많이 다를 수 있음을 잘 보여준다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-06.png" width="750"/></div></section>
 <section id="id4">
-<h3><span class="section-number">9.2.2. </span>센트로이드 초기화 문제 해결 방안<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">8.2.2. </span>센트로이드 초기화 문제 해결 방안<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
 <p><strong>관성</strong></p>
 <p><strong>관성</strong><font size='2'>intertia</font>은 각 샘플과 가장 가까운 센트로이드와의 거리의 제곱의 합이며,
 각 군집이 센트로이드에 얼마나 가까이 모여있는가를 측정한다.
@@ -699,12 +700,12 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 <p>군집수가 많아질 수록 k-평균보다 서너 배 정도 빠르게 훈련되지만, 성능은 조금 낮다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-07.png" width="700"/></div><div class="info admonition">
 <p class="admonition-title"><code class="docutils literal notranslate"><span class="pre">MiniBatchKMeans</span></code>와 <code class="docutils literal notranslate"><span class="pre">memmap</span></code> 클래스</p>
-<p><a class="reference internal" href="dimensionality_reduction.html#ch-dimensionalityreduction"><span class="std std-numref">8장</span></a>에서 점진적 PCA를 소개하면서 언급한
+<p><a class="reference internal" href="dimensionality_reduction.html#ch-dimensionalityreduction"><span class="std std-numref">7장</span></a>에서 점진적 PCA를 소개하면서 언급한
 넘파이 <code class="docutils literal notranslate"><span class="pre">memmap</span></code> 클래스를 이용하여 매우 큰 데이터셋을 조금씩 모델에 제공할 수 있다.</p>
 </div>
 </section>
 <section id="id5">
-<h3><span class="section-number">9.2.3. </span>최적의 군집수<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">8.2.3. </span>최적의 군집수<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
 <p>군집수가 적절하지 않으면 좋지 않은 모델로 수렴할 수 있다.
 5개의 군집이 적절한 데이터셋에 대해 왼쪽 그림처럼 3개의 센트로이다만 사용하거나,
 오른쪽 그램처럼 너무 많은 8개의 센트로이드를 사용하면 군집화가 적절하게
@@ -749,7 +750,7 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 이런 기준으로 볼 때 <code class="docutils literal notranslate"><span class="pre">k=5</span></code> 가 가장 좋은 모델이다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-12.png" width="700"/></div></section>
 <section id="id6">
-<h3><span class="section-number">9.2.4. </span>k-평균의 한계<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">8.2.4. </span>k-평균의 한계<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
 <p>첫째, 최적의 모델을 구하기 위해 여러 번 학습해야 한다.</p>
 <p>둘째, 군집수를 미리 지정해야 한다.</p>
 <p>셋째, 군집의 크기나, 샘플의 밀도가 다르거나, 원형이 아닐 경우 잘 작동하지 않는다.
@@ -760,9 +761,9 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-13.png" width="800"/></div></section>
 </section>
 <section id="id7">
-<h2><span class="section-number">9.3. </span>군집화 활용<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">8.3. </span>군집화 활용<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
 <section id="id8">
-<h3><span class="section-number">9.3.1. </span>이미지 분할<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">8.3.1. </span>이미지 분할<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
 <p>이미지 분할은 보통 다음 세 가지 중에 하나를 가리킨다.</p>
 <ul class="simple">
 <li><p>시맨틱 분할</p></li>
@@ -781,7 +782,7 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 색상 분할을 시도한 결과를 보여준다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-14.png" width="80%"/></div></section>
 <section id="id9">
-<h3><span class="section-number">9.3.2. </span>준지도 학습<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">8.3.2. </span>준지도 학습<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
 <p><strong>준지도 학습</strong><font size='2'>semi-supervised learning</font>은
 라벨이 있는 데이터가 적고, 라벨이 없는 데이터가 많을 때 활용한다.
 예를 들어, 8x8 크기의 손글씨 이미지 1,797 개로 구성된 미니 MNIST 데이터셋을 50개의 군집으로 나눈 후 각 군집에서
@@ -816,7 +817,7 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 </section>
 </section>
 <section id="dbscan">
-<h2><span class="section-number">9.4. </span>DBSCAN<a class="headerlink" href="#dbscan" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">8.4. </span>DBSCAN<a class="headerlink" href="#dbscan" title="Link to this heading">#</a></h2>
 <p>DBSCAN(density-based spatial clustering of applications with noise) 알고리즘은
 데이터 샘플들의 밀도가 높게 연속적으로 이어진 지역을 군집으로 지정한다.
 알고리즘이 작동하는 방식은 다음과 같다.</p>
@@ -834,7 +835,7 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 </ul>
 <p>DBSCAN 알고리즘은 군집 각각이 밀도가 낮은 지역으로 구분될 때 잘 작동한다.</p>
 <section id="id10">
-<h3><span class="section-number">9.4.1. </span>사이킷런의 DBSCAN 모델<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">8.4.1. </span>사이킷런의 DBSCAN 모델<a class="headerlink" href="#id10" title="Link to this heading">#</a></h3>
 <p>앞서 설명한 <span class="math notranslate nohighlight">\(\varepsilon\)</span>-이웃의 반경 <code class="docutils literal notranslate"><span class="pre">eps</span></code>와
 핵심 샘플의 <code class="docutils literal notranslate"><span class="pre">eps</span></code> 반경안에 포함되어야 할
 샘플의 최소 개수를 가리키는 <code class="docutils literal notranslate"><span class="pre">min_samples</span></code> 두 개의 하이퍼파라미터를 사용한다.</p>
@@ -874,7 +875,7 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 </div>
 <p><strong>군집화 결과</strong></p>
 <p>아래 그림은 <span class="math notranslate nohighlight">\(\varepsilon\)</span>-이웃의 반경을 0.05로 할 때(왼쪽)와 0.2로 할 때(오른쪽)의 차이를 보여준다.</p>
-<table class="table">
+<div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head text-center"><p>특징</p></th>
 <th class="head text-center"><p>왼쪽 그림(이웃 반경 0.05)</p></th>
@@ -892,6 +893,7 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 </tr>
 </tbody>
 </table>
+</div>
 <br><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-16.png" width="800"/></div>
 <br><p><strong>DBSCAN과 예측</strong></p>
 <p>DBSCAN 모델은 <code class="docutils literal notranslate"><span class="pre">predict()</span></code> 메서드를 지원하지 않는다. 즉, 새로운 샘플에 대한 군집 예측을 지원하지 않는다.
@@ -941,7 +943,7 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 </ul>
 </section>
 <section id="id11">
-<h3><span class="section-number">9.4.2. </span>기타 군집 알고리즘<a class="headerlink" href="#id11" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">8.4.2. </span>기타 군집 알고리즘<a class="headerlink" href="#id11" title="Link to this heading">#</a></h3>
 <p>군집의 밀도가 서로 다른 경우 계층 DBSCAN 군집화를 지원하는 <code class="docutils literal notranslate"><span class="pre">HDBSCAN</span></code> 모델이 보다 잘 작동한다.
 그런데 <code class="docutils literal notranslate"><span class="pre">HDBSCAN</span></code> 모델은 사이킷런에서 정식으로 지원되지 않기에 추가 설치해서 사용해야 한다.
 보다 자세한 사항은 <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.SpectralClustering.html">HDBSCAN 군집화 라이브러리 공식 문서</a>를
@@ -958,7 +960,7 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 </section>
 </section>
 <section id="id12">
-<h2><span class="section-number">9.5. </span>가우스 혼합 모델<a class="headerlink" href="#id12" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">8.5. </span>가우스 혼합 모델<a class="headerlink" href="#id12" title="Link to this heading">#</a></h2>
 <p>가우스 혼합 모델<font size='2'>Gaussian mixture model</font> (GMM)은
 데이터셋이 여러 개의 혼합된 가우스 분포를 따르는 샘플들로 구성되었다고 가정한다.</p>
 <p><strong>가우스 분포</strong></p>
@@ -974,7 +976,7 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 <p>여기서는 데이터셋이 여러 개의 가우스 분포로 혼합된 분포를 따른다고 가정하면서
 가우스 혼합 모델의 작동 방식을 살펴 본다.</p>
 <section id="gmm">
-<h3><span class="section-number">9.5.1. </span>GMM 활용<a class="headerlink" href="#gmm" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">8.5.1. </span>GMM 활용<a class="headerlink" href="#gmm" title="Link to this heading">#</a></h3>
 <p>아래 코드는 위 그림에서 사용된 데이터셋에 대해
 가우스 혼합 모델(GMM)을 훈련 시켜서 데이터셋에 포함된 군집 각각을 특징 짓는 가우스 분포를 찾는다.</p>
 <ul class="simple">
@@ -1080,7 +1082,7 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 </ul>
 </section>
 <section id="id13">
-<h3><span class="section-number">9.5.2. </span>이상치 탐지<a class="headerlink" href="#id13" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">8.5.2. </span>이상치 탐지<a class="headerlink" href="#id13" title="Link to this heading">#</a></h3>
 <p>데이터 확률 밀도가 지정된 임곗값보다 낮은 지역에 있는 샘플을 이상치로 간주할 수 있다.
 임곗값은 상황에 따라 다르게 지정된다.</p>
 <p>예를 들어, 제품이 결함을 가질 확률이 2%로 알려진 경우 임곗값은 2%로 정할 수 있다.
@@ -1094,7 +1096,7 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 </div>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-21.png" width="500"/></div></section>
 <section id="id14">
-<h3><span class="section-number">9.5.3. </span>군집수 지정<a class="headerlink" href="#id14" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">8.5.3. </span>군집수 지정<a class="headerlink" href="#id14" title="Link to this heading">#</a></h3>
 <p>적절한 군집수를 미리 지정해야 하는데 일반적으로 미리 알 수 없다.
 앞서 k-평균에서 사용했던 관성 또는 실루엣 점수 방식은 사용할 수 없다.
 대신에 <strong>이론적 정보 기준</strong><font size='2'>theoretical information criterion</font>을
@@ -1124,7 +1126,7 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 <p>아래 그림은 위 데이터셋에 대해 군집수 <span class="math notranslate nohighlight">\(k\)</span>와 AIC, BIC의 관계를 보여주며, <span class="math notranslate nohighlight">\(k=3\)</span>이 최적임을 확인해준다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-22.png" width="600"/></div></section>
 <section id="id15">
-<h3><span class="section-number">9.5.4. </span>베이즈 가우스 혼합 모델<a class="headerlink" href="#id15" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">8.5.4. </span>베이즈 가우스 혼합 모델<a class="headerlink" href="#id15" title="Link to this heading">#</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">BayesianGaussianMixture</span></code> 모델은 군집수를 미리 지정하지 않아도 적절한 군집수를 찾아준다.
 단, <code class="docutils literal notranslate"><span class="pre">n_components</span></code> 하이퍼파라미터를 이용하여 가능한 최대 군집수를 충분히 크게 지정해줘야 한다.
 그러면 훈련중에 자동으로 불필요한 군집에 0 또는 0에 매우 가까운 가중치를 지정하는 방식으로
@@ -1149,7 +1151,7 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 아래 오른쪽 그림에서처럼 억지로 타원형 군집으로 맞추기 위해 필요 이상의 군집을 사용한다.</p>
 <div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch09/homl09-23.png" width="800"/></div></section>
 <section id="id16">
-<h3><span class="section-number">9.5.5. </span>이상치 탐지용 기타 알고리즘<a class="headerlink" href="#id16" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">8.5.5. </span>이상치 탐지용 기타 알고리즘<a class="headerlink" href="#id16" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Fast-MCD</p></li>
 <li><p>Isolation forest</p></li>
@@ -1160,7 +1162,7 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
 </section>
 </section>
 <section id="id17">
-<h2><span class="section-number">9.6. </span>연습문제<a class="headerlink" href="#id17" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">8.6. </span>연습문제<a class="headerlink" href="#id17" title="Link to this heading">#</a></h2>
 <p>참고: <a class="reference external" href="https://colab.research.google.com/github/codingalzi/handson-ml3/blob/master/practices/practice_unsupervised_learning.ipynb">(실습) 비지도 학습</a></p>
 </section>
 </section>
@@ -1192,7 +1194,7 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
               
               
               
-                <footer class="prev-next-footer">
+                <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
     <a class="left-prev"
@@ -1201,7 +1203,7 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">8. </span>차원 축소</p>
+        <p class="prev-next-title"><span class="section-number">7. </span>차원 축소</p>
       </div>
     </a>
 </div>
@@ -1220,33 +1222,33 @@ KMeans 모델은 훈련 과정 중에 다양한 초기화 과정을 실험하고
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">9.1. 분류 대 군집화</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#k">9.2. k-평균</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">9.2.1. k-평균 알고리즘</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">9.2.2. 센트로이드 초기화 문제 해결 방안</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">9.2.3. 최적의 군집수</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">9.2.4. k-평균의 한계</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">8.1. 분류 대 군집화</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#k">8.2. k-평균</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">8.2.1. k-평균 알고리즘</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">8.2.2. 센트로이드 초기화 문제 해결 방안</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">8.2.3. 최적의 군집수</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">8.2.4. k-평균의 한계</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">9.3. 군집화 활용</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">9.3.1. 이미지 분할</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">9.3.2. 준지도 학습</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">8.3. 군집화 활용</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">8.3.1. 이미지 분할</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">8.3.2. 준지도 학습</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dbscan">9.4. DBSCAN</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">9.4.1. 사이킷런의 DBSCAN 모델</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">9.4.2. 기타 군집 알고리즘</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dbscan">8.4. DBSCAN</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">8.4.1. 사이킷런의 DBSCAN 모델</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">8.4.2. 기타 군집 알고리즘</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">9.5. 가우스 혼합 모델</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gmm">9.5.1. GMM 활용</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">9.5.2. 이상치 탐지</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">9.5.3. 군집수 지정</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">9.5.4. 베이즈 가우스 혼합 모델</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">9.5.5. 이상치 탐지용 기타 알고리즘</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">8.5. 가우스 혼합 모델</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gmm">8.5.1. GMM 활용</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">8.5.2. 이상치 탐지</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">8.5.3. 군집수 지정</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">8.5.4. 베이즈 가우스 혼합 모델</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">8.5.5. 이상치 탐지용 기타 알고리즘</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">9.6. 연습문제</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">8.6. 연습문제</a></li>
 </ul>
   </nav></div>
 
@@ -1295,8 +1297,8 @@ By 코딩알지
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>
