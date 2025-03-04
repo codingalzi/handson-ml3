@@ -472,7 +472,8 @@ document.write(`
 <p><div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-02.png?raw=true" style="width:420px;"></div></p><p>스팸 메일과 아닌 메일의 구분법을 머신러닝 모델로 학습시킬 수 있다.
 이때 사용되는 머신러닝 모델은
 훈련셋, 즉 훈련용 데이터셋에 포함된 데이터 샘플을 학습하여
-새로운 메일의 스팸 여부를 잘 판단하도록 학습된다.</p>
+새로운 메일의 스팸 여부를 잘 판단하도록 학습된다.
+“광고”, “투^^자”, “무❤료” 등의 표현이 스팸 메일에 자주 등장하는 경우 스팸 메일 분류기 기능을 자동 업데이트 시킬 수 있다.</p>
 <p><strong>머신러닝 프로그램 학습 과정의 자동화</strong></p>
 <p>머신러닝 프로그램을 학습시키는 과정을 관장하는 <strong>머신러닝 파이프라인</strong>
 또는 <strong>MLOps(Machine Learning Operations, 머신러닝 운영)</strong> 의
@@ -643,10 +644,11 @@ document.write(`
 </table>
 </div>
 <p>위 7개 국가를 포함해서 모두 36개 국가를 대상으로 선형 회귀 모델을 훈련시키면 아래 그림에서
-검은 직선에 해당하는 기울기와 절편을 7개 국가를 제외한 경우와는 많이 다르게 찾아낸다.</p>
+검은 실선에 해당하는 기울기와 절편을 7개 국가를 제외한 경우와는 많이 다르게 찾아낸다.
+반면에 파란 점선은 7개 국가가 제외된 상태에서 찾아낸 기울기와 절편으로 그려진 직선이다.</p>
 <p><div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-21-a.png?raw=true" style="width:650px;"></div></p><p>결론적으로 7개 국가를 포함하는 경우와 그렇지 않은 경우
-상당히 다른 선형회귀 모델이 훈련된다.
-즉, 모델 훈련이 훈련 데이터 셋에 민감하게 반응하는 <strong>과대 적합</strong> 현상이 발생한다.
+상당히 다른 선형회귀 모델이 학습된다.
+즉, 모델 훈련이 훈련 데이터 셋에 민감하게 반응하는 <strong>과대 적합</strong> 현상이 발생하였다.
 이런 의미에서 선형회귀 모델은 1인당 GDP와 삶의 만족도 사이의 관계를 모델링 하기에 부적절하다고 말할 수 있다.</p>
 </section>
 <section id="id9">
