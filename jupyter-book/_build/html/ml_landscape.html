@@ -544,7 +544,7 @@ document.write(`
 <span id="id8"></span><h2><span class="section-number">1.5. </span>예제: 삶의 만족도 예측 선형 모델<a class="headerlink" href="#sec-model-based-learning" title="Link to this heading">#</a></h2>
 <p><strong>데이터셋</strong></p>
 <p>OECD(경제협력개발기구) 국가의 1인당 GDP(국내 총생산)와 삶의 만족도 사이의 관계를
-확인하려 한다.
+확인한다.
 여기서는 2015년 기준으로 OECD에 속한 36개 국가의 데이터를 이용한다.
 아래 표는 그중 5개 국가의 1인당 GDP와 삶의 만족도를 보여준다.</p>
 <div class="pst-scrollable-table-container"><table class="table">
@@ -578,30 +578,34 @@ document.write(`
 </tbody>
 </table>
 </div>
-<p>아래 그래프는 36개 국가 중에서
-브라질, 멕시코, 칠레, 체코, 노르웨이, 스위스, 룩셈부르크 등 7개국을 제외한
+<p>머신러닝 모델을 훈련시킬 때 발생할 수 있는 과대적합 문제를 설명하기 위해
+고의로 7개 국가의 데이터를 데이터 셋에서 제외시키고 훈련 시킬 때와
+그렇지 않을 때를 비교한다.</p>
+<p>제외 대상 국가는 브라질, 멕시코, 칠레, 체코, 노르웨이, 스위스, 룩셈부르크 이다.
+아래 그래프는 36개 국가 중에서 언급된 7개을 제외한
 29개 국가를 대상으로 1인당 GDP와 삶의 만족도를 이용한
 산점도<font size="2">scatter plot</font>이다.
 1인당 GDP가 증가할 수록 삶의 만족도가
 선형적<font size="2">linear</font>으로 증가하는 것처럼 보인다.</p>
 <p><div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-17-a.png?raw=true" style="width:450px;"></div></p><p><strong>선형 모델 훈련</strong></p>
 <p>위 가정을 바탕으로 1인당 GDP가 알려진 국가의 삶의 만족도를 예측하는 머신러닝 모델을 구현한다.
-즉, 1인당 GDP와 삶의 만족도 사이의 관계를 설명하는 예제 모델로
-선형 모델<font size="2">linear model</font>을 선택한다.</p>
-<p>이 결정에 따라 구현될 모델은 아래 모양의 일차 방정식을 이용하여
+여기서는 1인당 GDP와 삶의 만족도 사이의 관계를 설명하는 예제 모델로
+선형 회귀 모델<font size="2">linear regression model</font>을 선택한다.</p>
+<p>선형 회귀 모델은 아래 모양의 일차 방정식을 이용하여
 1인당 GDP가 주어졌을 때 해당 국가의 삶의 만족도를 예측하게 된다.</p>
 <div class="math notranslate nohighlight">
 \[
 \text{삶의만족도} = \theta_0 + (\text{1인당GDP}) \cdot \theta_1
 \]</div>
-<p>예를 들어, 아래 이미지는 적절하지 않은 후보들을 보여준다.</p>
-<p><div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-18-a.png?raw=true" style="width:450px;"></div></p><p>반면에 선형 모델은 1인당 GDP가 주어졌을 때 해당 국가의 삶의 만족도를 아래 그림에서처럼 최대한 정확하게 계산하는
+<p>아래 이미지는 세 개의 적절하지 않은 선형 회귀 모델을 보여준다.</p>
+<p><div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-18-a.png?raw=true" style="width:450px;"></div></p><p>선형 회귀 모델은 1인당 GDP가 주어졌을 때 해당 국가의 삶의 만족도를 아래 그림에서처럼 최대한 정확하게 계산하는
 <strong>최선</strong>의 <span class="math notranslate nohighlight">\(\theta_0\)</span>와 <span class="math notranslate nohighlight">\(\theta_1\)</span>를
-주어진 훈련셋을 대상으로 반복된 훈련을 통해 찾아낸다.</p>
+주어진 훈련셋을 대상으로 반복된 훈련을 통해 찾아낸다.
+아래 그림은 제대로 훈련된 선형 회귀 모델이 찾아낸 직선을 보여준다.</p>
 <p><div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-19-a.png?raw=true" style="width:450px;"></div></p><p><strong>데이터 문제</strong></p>
 <p>머신러닝 알고리즘을 훈련시키다보면 다양한 어려움에 부딪힌다.
-여기서는 선형회귀 모델이 훈련셋에 민감하게 반응하는 것을 보인다.
-앞서 제외시킨 7개 국가의 데이터를 포함해서 선형회귀 모델을 훈련시켜 보자.
+여기서는 선형 회귀 모델이 훈련셋에 민감하게 반응하는 것을 보인다.
+앞서 제외시킨 7개 국가의 데이터를 포함해서 선형 회귀 모델을 훈련시켜 보자.
 제외된 7개 국가의 데이터는 다음과 같다.</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
@@ -645,9 +649,9 @@ document.write(`
 <p>위 7개 국가를 포함해서 모두 36개 국가를 대상으로 선형 회귀 모델을 훈련시키면 아래 그림에서
 검은 직선에 해당하는 기울기와 절편을 7개 국가를 제외한 경우와는 많이 다르게 찾아낸다.</p>
 <p><div align="center"><img src="https://github.com/codingalzi/handson-ml3/blob/master/jupyter-book/imgs/ch01/homl01-21-a.png?raw=true" style="width:650px;"></div></p><p>결론적으로 7개 국가를 포함하는 경우와 그렇지 않은 경우
-상당히 다른 선형회귀 모델이 훈련된다.
+상당히 다른 선형 회귀 모델이 훈련된다.
 즉, 모델 훈련이 훈련 데이터 셋에 민감하게 반응하는 <strong>과대 적합</strong> 현상이 발생한다.
-이런 의미에서 선형회귀 모델은 1인당 GDP와 삶의 만족도 사이의 관계를 모델링 하기에 부적절하다고 말할 수 있다.</p>
+이런 의미에서 선형 회귀 모델은 1인당 GDP와 삶의 만족도 사이의 관계를 모델링 하기에 부적절하다고 말할 수 있다.</p>
 </section>
 <section id="id9">
 <h2><span class="section-number">1.6. </span>연습문제<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
