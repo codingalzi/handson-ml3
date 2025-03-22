@@ -28,13 +28,13 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/proof.css?v=ca93fcec" />
+    <link rel="stylesheet" type="text/css" href="_static/proof.css?v=b4b7a797" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -1112,8 +1112,8 @@ J(\theta) =
 <p><strong>로그 손실 함수 이해</strong></p>
 <p>틀린 예측을 하면 로그 손실값이 매우 커진다.</p>
 <ul class="simple">
-<li><p>아래 왼쪽 그림: 샘플의 라벨이 1(양성)인데 예측 확률(<span class="math notranslate nohighlight">\(\hat p\)</span>)이 0에 가까운 경우 로그 손실이 매우 클 수 있음</p></li>
-<li><p>아래 오른쪽 그림: 샘플의 라벨이 0(음성)인데 예측 확률(<span class="math notranslate nohighlight">\(\hat p\)</span>)이 1에 가까운 경우 로그 손실이 매우 클 수 있음</p></li>
+<li><p>아래 왼쪽 그림: 샘플의 레이블이 1(양성)인데 예측 확률(<span class="math notranslate nohighlight">\(\hat p\)</span>)이 0에 가까운 경우 로그 손실이 매우 클 수 있음</p></li>
+<li><p>아래 오른쪽 그림: 샘플의 레이블이 0(음성)인데 예측 확률(<span class="math notranslate nohighlight">\(\hat p\)</span>)이 1에 가까운 경우 로그 손실이 매우 클 수 있음</p></li>
 </ul>
 <p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-12-10a.png" width="500"/></div></p>
 <p>훈련셋이 가우스 분포를 따른다는 전제하에 로그 손실 함수를 최소화하면
@@ -1130,7 +1130,7 @@ J(\theta) =
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">꽃받침</span> <span class="n">길이</span><span class="p">,</span> <span class="n">꽃받침</span> <span class="n">너비</span><span class="p">,</span> <span class="n">꽃잎</span> <span class="n">길이</span><span class="p">,</span> <span class="n">꽃잎</span> <span class="n">너비</span><span class="p">]</span>
 </pre></div>
 </div>
-<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/datapy/master/jupyter-book//images/iris_petal-sepal.png" width="500"/></div></p><p>라벨은 0, 1, 2 중에 하나이며 각 숫자는 하나의 품종을 가리킨다.</p>
+<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/datapy/master/jupyter-book//images/iris_petal-sepal.png" width="500"/></div></p><p>레이블은 0, 1, 2 중에 하나이며 각 숫자는 하나의 품종을 가리킨다.</p>
 <ul class="simple">
 <li><p>0: Iris-Setosa(세토사)</p></li>
 <li><p>1: Iris-Versicolor(버시컬러)</p></li>
@@ -1145,7 +1145,7 @@ J(\theta) =
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">load_iris()</span></code> 함수는 데이터셋을 사전 자료형과 유사한 <code class="docutils literal notranslate"><span class="pre">Bunch</span></code> 자료형으로 불러온다.
 사용되는 키(key) 중에 <code class="docutils literal notranslate"><span class="pre">data</span></code> 키와 연결된 값이 4개의 특성으로 구성된 훈련셋 데이터프레임<font size='2'>DataFrame</font>이고
-<code class="docutils literal notranslate"><span class="pre">target</span></code> 키와 연결된 값이 라벨셋 시리즈<font size='2'>Series</font>이다.</p>
+<code class="docutils literal notranslate"><span class="pre">target</span></code> 키와 연결된 값이 레이블셋 시리즈<font size='2'>Series</font>이다.</p>
 <p>훈련셋의 처음 5개의 샘플은 다음과 같다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="n">sepal</span> <span class="n">length</span> <span class="p">(</span><span class="n">cm</span><span class="p">)</span> <span class="n">sepal</span> <span class="n">width</span> <span class="p">(</span><span class="n">cm</span><span class="p">)</span> <span class="n">petal</span> <span class="n">length</span> <span class="p">(</span><span class="n">cm</span><span class="p">)</span> <span class="n">petal</span> <span class="n">width</span> <span class="p">(</span><span class="n">cm</span><span class="p">)</span>
 <span class="mi">0</span>    <span class="mf">5.1</span>               <span class="mf">3.5</span>              <span class="mf">1.4</span>               <span class="mf">0.2</span>
@@ -1297,7 +1297,7 @@ s_0(\mathbf{x}^{(m_b-1)}) &amp; s_1(\mathbf{x}^{(m_b-1)}) &amp; s_2(\mathbf{x}^{
 \[
 \sigma(\mathbf{s}(\mathbf{x})) = [\hat p_0, \hat p_1, \dots, \hat p_{K-1}]
 \]</div>
-<p>소프트맥스 회귀 모델의 각 샘플에 대한 최종 예측 라벨은 추정 확률이 가장 높은 클래스로 선택된다.</p>
+<p>소프트맥스 회귀 모델의 각 샘플에 대한 최종 예측 레이블은 추정 확률이 가장 높은 클래스로 선택된다.</p>
 <div class="math notranslate nohighlight">
 \[
 \hat y 
@@ -1312,7 +1312,7 @@ s_0(\mathbf{x}^{(m_b-1)}) &amp; s_1(\mathbf{x}^{(m_b-1)}) &amp; s_2(\mathbf{x}^{
 \sigma(\mathbf{s}(\mathbf{X}_{batch})) = \sigma(\mathbf{X}_{batch} \, \Theta)
 \]</div>
 <p>단, <span class="math notranslate nohighlight">\(\sigma()\)</span> 함수가 행별로, 즉 샘플별로 작동한다고 가정한다.
-그리고 모든 샘플에 대한 최종 예측 라벨 계산은 다음과 같다.</p>
+그리고 모든 샘플에 대한 최종 예측 레이블 계산은 다음과 같다.</p>
 <div class="math notranslate nohighlight">
 \[
 \hat{\mathbf{y}} = \mathrm{np.argmax}(\sigma(\mathbf{X}_{batch} \, \Theta), \mathrm{axis}=1)
@@ -1326,7 +1326,7 @@ s_0(\mathbf{x}^{(m_b-1)}) &amp; s_1(\mathbf{x}^{(m_b-1)}) &amp; s_2(\mathbf{x}^{
 <ul>
 <li><p>크로스 엔트로피 비용 함수</p>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(y^{(i)}_k\)</span>: <span class="math notranslate nohighlight">\(i\)</span>-번째 샘플에 대한 원-핫 인코딩된 타깃(라벨)</p></li>
+<li><p><span class="math notranslate nohighlight">\(y^{(i)}_k\)</span>: <span class="math notranslate nohighlight">\(i\)</span>-번째 샘플에 대한 원-핫 인코딩된 타깃(레이블)</p></li>
 <li><p><span class="math notranslate nohighlight">\(\hat{p}_k^{(i)}\)</span>: <span class="math notranslate nohighlight">\(i\)</span>-번째 샘플이 클래스 <span class="math notranslate nohighlight">\(k\)</span>에 속할 확률 예측값<br><br></p></li>
 </ul>
 <div class="math notranslate nohighlight">
