@@ -34,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/proof.css?v=b4b7a797" />
+    <link rel="stylesheet" type="text/css" href="_static/proof.css?v=ca93fcec" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -499,18 +499,12 @@ document.write(`
 </ul>
 <p><strong>선형 회귀 모델</strong></p>
 <p>위 두 개의 예제에서 설명한 선형 회귀 모델이
-예측값을 생성할 때 사용하는 함수를 일반화하면 다음과 같다.</p>
+예측값을 생성할 때 사용하는 함수를 임의의 개수의 특성값을 갖는 훈련셋에 대해 일반화하면 다음과 같다.
+<span class="math notranslate nohighlight">\(\theta_0\)</span>와 1을 곱해주는 이유는 다른 항과의 형식을 맞추기 위함이다.</p>
 <div class="math notranslate nohighlight">
-\[\hat y = \theta_0 + x_1 \cdot \theta_1 + \cdots + x_n \cdot \theta_{n}\]</div>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\hat y\)</span>: 예측값</p></li>
-<li><p><span class="math notranslate nohighlight">\(n\)</span>: 특성 수</p></li>
-<li><p><span class="math notranslate nohighlight">\(x_i\)</span>: 구역의 <span class="math notranslate nohighlight">\(i\)</span> 번째 특성값</p></li>
-<li><p><span class="math notranslate nohighlight">\(\theta_0\)</span>: 편향</p></li>
-<li><p><span class="math notranslate nohighlight">\(\theta_i\)</span>: <span class="math notranslate nohighlight">\(i\)</span> 번째 특성에 대한 가중치. 단, <span class="math notranslate nohighlight">\(1 \le i \le n\)</span>.</p></li>
-</ul>
-<p>아래 그림은 예측값 계산 과정을 묘사한다.</p>
-<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/perceptron.png" width="300"/></div></p><p><strong>파라미터, 편향, 가중치</strong></p>
+\[\hat y = 1\cdot \theta_0 + x_1 \cdot \theta_1 + \cdots + x_n \cdot \theta_{n}\]</div>
+<p>아래 사진은 위 식을 시각화한다.</p>
+<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/perceptron02.png" width="250"/></div></p><p><strong>파라미터, 편향, 가중치</strong></p>
 <p>예측값 계산에 사용된 <span class="math notranslate nohighlight">\(\theta_0\)</span>, <span class="math notranslate nohighlight">\(\theta_1\)</span>, …, <span class="math notranslate nohighlight">\(\theta_{n}\)</span>은
 모델이 훈련을 통해 학습하는 <strong>파라미터</strong><font size="2">parameter</font>들이다.
 또한 <span class="math notranslate nohighlight">\(\theta_0\)</span>은 <strong>편향</strong><font size="2">bias</font>,
