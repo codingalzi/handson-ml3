@@ -497,119 +497,122 @@ document.write(`
 <li><p><span class="math notranslate nohighlight">\(\theta_0\)</span>: 편향</p></li>
 <li><p><span class="math notranslate nohighlight">\(\theta_i\)</span>: <span class="math notranslate nohighlight">\(i\)</span> 번째 특성에 대한 가중치. 단, <span class="math notranslate nohighlight">\(1 \le i \le 24\)</span>.</p></li>
 </ul>
-<p><strong>선형 회귀 모델</strong></p>
+<p><strong>선형 회귀 예측값</strong></p>
 <p>위 두 개의 예제에서 설명한 선형 회귀 모델이
-예측값을 생성할 때 사용하는 함수를 임의의 개수의 특성값을 갖는 훈련셋에 대해 일반화하면 다음과 같다.
+예측값을 생성할 때 사용하는 선형 함수를 일반화하면 다음과 같다.</p>
+<p>먼저 훈련셋에 포함된 샘플이 <span class="math notranslate nohighlight">\(n\)</span> 개의 특성 <span class="math notranslate nohighlight">\(x_1\)</span>, <span class="math notranslate nohighlight">\(x_2\)</span>, …, <span class="math notranslate nohighlight">\(x_n\)</span>을 갖는다고 가정한다.
+그러면 선형 회귀 모델은 아래 식을 이용하여 예측값을 계산한다.
 <span class="math notranslate nohighlight">\(\theta_0\)</span>와 1을 곱해주는 이유는 다른 항과의 형식을 맞추기 위함이다.</p>
 <div class="math notranslate nohighlight">
 \[\hat y = 1\cdot \theta_0 + x_1 \cdot \theta_1 + \cdots + x_n \cdot \theta_{n}\]</div>
 <p>아래 사진은 위 식을 시각화한다.</p>
-<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/perceptron02.png" width="250"/></div></p><p><strong>파라미터, 편향, 가중치</strong></p>
-<p>예측값 계산에 사용된 <span class="math notranslate nohighlight">\(\theta_0\)</span>, <span class="math notranslate nohighlight">\(\theta_1\)</span>, …, <span class="math notranslate nohighlight">\(\theta_{n}\)</span>은
-모델이 훈련을 통해 학습하는 <strong>파라미터</strong><font size="2">parameter</font>들이다.
-또한 <span class="math notranslate nohighlight">\(\theta_0\)</span>은 <strong>편향</strong><font size="2">bias</font>,
-나머지 파라미터는 <strong>가중치</strong><font size="2">weight</font>라 불린다.</p>
-<p><strong>머신러닝 모델 훈련의 역할</strong></p>
-<p>입력 특성값과 타깃 사이의 숨은 관계를 알아내는 일이 바로 머신러닝 모델을 훈련시키는 주요 목표다.
-예를 들어 선형 회귀 모델은 예측값을 아래 1차 다항식 함수로 계산한다.
-단, <span class="math notranslate nohighlight">\(n\)</span>은 훈련 샘플의 특성수를 가리킨다.</p>
-<div class="math notranslate nohighlight">
-\[\hat y = \theta_0 + x_1 \cdot \theta_1 + \cdots + x_n \cdot \theta_{n}\]</div>
-<p>그리고 선형 회귀 모델은 훈련셋을 이용한 훈련을 통해
-타깃에 최대한 가까운 예측값 계산에 필요한 <span class="math notranslate nohighlight">\((1+n)\)</span> 개의 적절한 파라미터를 학습해 나간다.</p>
-<p>모든 머신러닝 모델은 각자 고유의 방식으로 예측값을 계산한다.
-하지만 예측값 계산엔 항상 파라미터가 필요하며
-각각의 모델은 훈련을 통해 적절한 파라미터를 학습한다.
-하지만 선형 회귀 모델의 훈련 방식과 예측값 계산 방식은
-모든 머신러닝 모델의 훈련과 예측값 계산 방식의 기초를 제공한다.</p>
+<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/perceptron02.png" width="250"/></div></p><p><strong>선형 회귀 모델 훈련</strong></p>
+<p>입력값과 타깃 사이의 숨은 관계를 알아내는 일이 바로 머신러닝 모델을 훈련시키는 주요 목표다.
+예를 들어 선형 회귀 모델은 입력값과 예측값 사이의 관계를 앞서 설명한 대로
+입력값의 특성과 <span class="math notranslate nohighlight">\(\theta_i\)</span>의 선형 조합으로 추정한다.
+선형 회귀 모델을 훈련시킬 때 <span class="math notranslate nohighlight">\(\theta_i\)</span>를 처음에는 무작위로 선택해서 점차 보다 좋은 값으로 업데이트하면서
+최적의 <span class="math notranslate nohighlight">\(\theta_i\)</span>를 찾아가는데, 이때 일반적으로 경사하강법을 적용한다.</p>
+<p>모든 머신러닝 모델은 각자 고유의 방식으로 예측값을 계산하며,
+일반적으로 학습된 파라미터를 이용하여 예측값을 계산한다.
+파라미터 학습은 일반적으로 경사하강법을 이용하며
+선형 회귀 모델의 훈련 방식과 예측값 계산 방식이 기초를 제공한다.</p>
+<p><strong>파라미터, 편향, 가중치</strong></p>
+<p>선형 회귀 모델이 입력값에 대한 예측값을 계산할 때 사용하는 <span class="math notranslate nohighlight">\(\theta_0\)</span>, <span class="math notranslate nohighlight">\(\theta_1\)</span>, …, <span class="math notranslate nohighlight">\(\theta_{n}\)</span>은
+모델이 훈련을 통해 학습한 <strong>파라미터</strong><font size="2">parameter</font>다.
+파라미터 중에 <span class="math notranslate nohighlight">\(\theta_0\)</span>은 <strong>편향</strong><font size="2">bias</font>,
+나머지 파라미터는 <strong>가중치</strong><font size="2">weight</font>라 부른다.</p>
 </section>
 <section id="id4">
 <h3><span class="section-number">4.1.2. </span>행렬 연산 표기법<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
-<p>선형 회귀 모델이 하나의 예측값을 계산하는 식을 보통 다음과 같이 (1, 1+n) 모양의 행렬과 (1+n, 1) 모양의 행렬의 곱으로 표기한다.</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\hat y
-= 1\cdot \theta_0 + x_1 \cdot \theta_1 + \cdots + x_n \cdot \theta_{n}
-= [1, x_1, \dots, x_n]\, 
-\begin{bmatrix}
-\theta_0\\
-\theta_1 \\
-\vdots \\
-\theta_n
-\end{bmatrix}
-\end{split}\]</div>
-<p>하지만 머신러닝 모델은 일반적으로 여러 개의 입력값에 대해 동시에 예측값을 계산한다.
-예를 들어, <code class="docutils literal notranslate"><span class="pre">LinearRegression</span></code> 모델은 훈련에 사용된 모든 훈련 샘플에 대해 동시에 예측값을 계산한다.</p>
-<p>예를 들어, 훈련셋 <span class="math notranslate nohighlight">\(\mathbf{X}\)</span>의 크기가 <span class="math notranslate nohighlight">\(m\)</span>이고,
-<span class="math notranslate nohighlight">\(n\)</span>이 각각의 샘플 입력값에 포함된 특성수라 하면
-<span class="math notranslate nohighlight">\(\mathbf{X}\)</span>는 아래와 같이 (m, 1+n) 모양의 2D 어레이로 표기된다.</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\mathbf{X}= 
-\begin{bmatrix} 
-1, x_1^{(0)}, \,\,\,\,\dots\,\,\,\,\,\, , x_n^{(0)} \\
-\vdots \\
-1, x_1^{(m-1)}, \dots, x_n^{(m-1)} \\
-\end{bmatrix}
-\end{split}\]</div>
-<p>여기서 <span class="math notranslate nohighlight">\(x_j^{(i)}\)</span> 는 <span class="math notranslate nohighlight">\(i\)</span>-번째 입력 샘플의 <span class="math notranslate nohighlight">\(j\)</span>-번째 특성값을 가리킨다.
-즉, <span class="math notranslate nohighlight">\(i\)</span>-번째 입력 샘플 <span class="math notranslate nohighlight">\(\mathbf{x}^{(i)}\)</span>는 아래 1차원 어레이에 해당한다.</p>
-<div class="math notranslate nohighlight">
-\[
-\mathbf{x}^{(i)} = [1, x_1^{(i)}, \dots, x_n^{(i)}]
-\]</div>
-<p>이제 모든 입력값에 대한 예측값을 계산하는 과정을 하나의 아래 행렬식으로 표현할 수 있다.</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\hat{\mathbf y} = 
-\begin{bmatrix}
-\hat y_0 \\
-\vdots \\
-\hat y_{m-1}
-\end{bmatrix}
-= 
-\begin{bmatrix} 
-1, x_1^{(0)}, \,\,\,\,\dots\,\,\,\,\,\, , x_n^{(0)} \\
-\vdots \\
-1, x_1^{(m-1)}, \dots, x_n^{(m-1)} \\
-\end{bmatrix}
-\,\, 
-\begin{bmatrix}
-\theta_0\\
-\theta_1 \\
-\vdots \\
-\theta_n
-\end{bmatrix}
-\end{split}\]</div>
-<p>간략하게 줄이면 다음과 같다.</p>
-<div class="math notranslate nohighlight">
-\[
-\hat{\mathbf y} = \mathbf{X}\, \mathbf{\theta}
-\]</div>
-<p>위 식에 사용된 기호들의 의미와 어레이 모양은 다음과 같다.</p>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head text-center"><p>데이터</p></th>
-<th class="head text-center"><p>어레이 기호</p></th>
-<th class="head text-center"><p>어레이 모양(shape)</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td class="text-center"><p>모든 예측값</p></td>
-<td class="text-center"><p><span class="math notranslate nohighlight">\(\hat{\mathbf y}\)</span></p></td>
-<td class="text-center"><p><span class="math notranslate nohighlight">\((m, 1)\)</span></p></td>
-</tr>
-<tr class="row-odd"><td class="text-center"><p>훈련셋</p></td>
-<td class="text-center"><p><span class="math notranslate nohighlight">\(\mathbf X\)</span></p></td>
-<td class="text-center"><p><span class="math notranslate nohighlight">\((m, 1+n)\)</span></p></td>
-</tr>
-<tr class="row-even"><td class="text-center"><p>모델 파라미터</p></td>
-<td class="text-center"><p><span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span></p></td>
-<td class="text-center"><p><span class="math notranslate nohighlight">\((1+n, 1)\)</span></p></td>
-</tr>
-</tbody>
-</table>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
 </div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[-0.89,  0.37,  0.39, -0.97],
+       [-0.95, -0.04, -0.24,  0.02],
+       [ 0.57,  2.91,  1.25, -0.39]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>지금까지 설명한 선형 회귀 모델의 예측값은 하나의 입력값에 대해서만 계산되는 방식이다.
+그런데 머신러닝 모델은 임의의 개수의 입력값에 대해 동시에 예측값을 계산할 수 있다.</p>
+<p>사이킷런의 모든 머신러닝 모델은 입력값으로 2차원 어레이를 요구한다.
+예를 들어 4개의 특성을 갖는 입력값에 대해 훈련된 모델은 입력값으로 임의의 양의 정수 <code class="docutils literal notranslate"><span class="pre">m</span></code>에 대해
+<code class="docutils literal notranslate"><span class="pre">(m,</span> <span class="pre">4)</span></code> 모양의 데이터프레임 또는 2차원 어레이를 입력값으로 받아 예측값을 계산한다.</p>
+<p>예를 들어, 4개의 특성을 사용하는 훈련셋으로 훈련된 <code class="docutils literal notranslate"><span class="pre">LinearRegression</span></code> 모델은 훈련중에 또는 실전에서
+아래 <code class="docutils literal notranslate"><span class="pre">(3,</span> <span class="pre">4)</span></code> 모양의 2차원 어레이를 입력값으로 받으면 3개의 예측값을 계산한다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">array</span><span class="p">([[</span><span class="mf">0.89</span><span class="p">,</span> <span class="mf">0.37</span><span class="p">,</span> <span class="mf">0.39</span><span class="p">,</span> <span class="mf">0.97</span><span class="p">],</span>
+           <span class="p">[</span><span class="mf">0.95</span><span class="p">,</span> <span class="mf">0.04</span><span class="p">,</span> <span class="mf">0.24</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">],</span>
+           <span class="p">[</span><span class="mf">0.57</span><span class="p">,</span> <span class="mf">2.91</span><span class="p">,</span> <span class="mf">1.25</span><span class="p">,</span> <span class="mf">0.39</span><span class="p">]])</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">(3,</span> <span class="pre">4)</span></code> 모양의 어레이를 일반적인 형태를 다음과 같이 표현할 수 있다.
+단, <span class="math notranslate nohighlight">\(x_j^{(i)}\)</span>는 <span class="math notranslate nohighlight">\(i\)</span>-번째 샘플의 <span class="math notranslate nohighlight">\(j\)</span>-번째 특성값을 가리킨다.
+즉, <span class="math notranslate nohighlight">\(i\)</span>는 1부터 3까지, <span class="math notranslate nohighlight">\(j\)</span>는 1부터 4까지 움직인다.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{matrix} 
+\text{array}([\,[x_1^{(1)}, x_2^{(1)}, x_3^{(1)}, x_4^{(1)}], \\
+{}\quad\quad\,\,\,\,\,\, [x_1^{(2)}, x_2^{(2)}, x_3^{(2)}, x_4^{(2)}], \\
+{}\quad\quad\quad\,\,\,\, [x_1^{(3)}, x_2^{(3)}, x_3^{(3)}, x_4^{(3)}]\,])
+\end{matrix}
+\end{split}\]</div>
+<p>그러면 3개의 예측값을 계산하기 위해 선형 회귀 모델은
+내부에서 아래 형식의 행렬곱셈을 수행한다.
+첫째 열에 추가된 1은 편향에 곱해지는 값을 맞추기 위함이다.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\hat{\mathbf y} 
+= \begin{bmatrix}
+\hat y_1 \\
+\hat y_2 \\
+\hat y_3 
+\end{bmatrix}
+&amp;= \begin{bmatrix} 
+1\,\, x_1^{(1)}\,\, x_2^{(1)}\,\, x_3^{(1)}\,\, x_4^{(1)} \\
+1\,\, x_1^{(2)}\,\, x_2^{(2)}\,\, x_3^{(2)}\,\, x_4^{(2)} \\
+1\,\, x_1^{(3)}\,\, x_2^{(3)}\,\, x_3^{(3)}\,\, x_4^{(3)}
+\end{bmatrix}
+\begin{bmatrix}
+\theta_0 \\
+\theta_1 \\
+\theta_2 \\
+\theta_3 
+\end{bmatrix} \\[1.2ex]
+&amp;= \begin{bmatrix} 
+1\cdot \theta_0 + x_1^{(1)}\cdot \theta_1 + x_2^{(1)}\cdot \theta_2 + x_3^{(1)}\cdot \theta_3 + x_4^{(1)}\cdot \theta_4 \\
+1\cdot \theta_0 + x_1^{(2)}\cdot \theta_1 + x_2^{(2)}\cdot \theta_2 + x_3^{(2)}\cdot \theta_3 + x_4^{(2)}\cdot \theta_4 \\
+1\cdot \theta_0 + x_1^{(3)}\cdot \theta_1 + x_2^{(3)}\cdot \theta_2 + x_3^{(3)}\cdot \theta_3 + x_4^{(3)}\cdot \theta_4
+\end{bmatrix}
+\end{align*}
+\end{split}\]</div>
+<p>따라서 앞서 언급된 <code class="docutils literal notranslate"><span class="pre">(3,</span> <span class="pre">4)</span></code> 모양의 2차원 어레이 <code class="docutils literal notranslate"><span class="pre">X</span></code>에 대한 예측값은 다음과 같이 계산된다.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\hat{\mathbf y} 
+= \begin{bmatrix}
+\hat y_1 \\
+\hat y_2 \\
+\hat y_3 
+\end{bmatrix}
+= \begin{bmatrix} 
+1\cdot \theta_0 + 0.89\cdot \theta_1 + 0.37\cdot \theta_2 + 0.39\cdot \theta_3 + 0.97\cdot \theta_4 \\
+1\cdot \theta_0 + 0.95\cdot \theta_1 + 0.04\cdot \theta_2 + 0.24\cdot \theta_3 + 0.02\cdot \theta_4 \\
+1\cdot \theta_0 + 0.57\cdot \theta_1 + 2.91\cdot \theta_2 + 1.25\cdot \theta_3 + 0.39\cdot \theta_4
+\end{bmatrix}
+\end{split}\]</div>
 </section>
 <section id="id5">
 <h3><span class="section-number">4.1.3. </span>머신러닝 모델 훈련의 목표<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
@@ -623,7 +626,7 @@ document.write(`
 <p class="admonition-title">비용 함수와 손실 함수</p>
 <p>비용 함수는 손실 함수<font size='2'>loss function</font>,
 비용 함수에 의해 계산된 값은 손실값<font size='2'>loss</font>이라 부르기도 한다.
-사람에 따라 두 함수를 구분하기도 하지만 여기서는 동일 개념으로 취급한다.</p>
+사람에 따라 두 함수의 기능을 구분하기도 하지만 여기서는 동일한 함수로 취급한다.</p>
 </div>
 <p><strong>MSE: 회귀 모델의 비용 함수</strong></p>
 <p>비용 함수는 모델 종류와 목표에 따라 다르게 정의되지만
@@ -632,9 +635,37 @@ document.write(`
 <div class="math notranslate nohighlight">
 \[
 \mathrm{MSE}(\mathbf{\theta}) = 
-\frac 1 m \sum_{i=0}^{m-1} \big(\mathbf{x}^{(i)}\, \mathbf{\theta} - y^{(i)}\big)^2
+\frac 1 m \sum_{i=1}^{m} \big(\mathbf{x}^{(i)}\, \mathbf{\theta} - y^{(i)}\big)^2
 \]</div>
-<p>위 수식에서 <span class="math notranslate nohighlight">\(y^{(i)}\)</span>는 <span class="math notranslate nohighlight">\(i\)</span> 번째 샘플에 대한 타깃, 즉 실제로 최대한 정확하게 예측해야 하는 목표값이다.</p>
+<p>위 수식에서 포함된 기호들의 의미는 다음과 같다.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>기호</p></th>
+<th class="head text-left"><p>의미</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><span class="math notranslate nohighlight">\(\mathbf{x}^{(i)}\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(i\)</span> 번째 샘플. 단 0번 인덱스에 1이 추가됨.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><span class="math notranslate nohighlight">\(y^{(i)}\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(i\)</span> 번째 샘플에 대한 타깃</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span></p></td>
+<td class="text-left"><p>파라미터(편향과 가중치)로 구성된 1차원 어레이</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><span class="math notranslate nohighlight">\(m\)</span></p></td>
+<td class="text-left"><p>훈련셋 크기 또는 배치 크기</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>또한 <span class="math notranslate nohighlight">\(\mathbf{x}^{(i)}\, \mathbf{\theta}\)</span> 는 <span class="math notranslate nohighlight">\(i\)</span>-번째 샘플에 대한 예측값 <span class="math notranslate nohighlight">\(\hat y^{(i)}\)</span>를 가리킨다.
+이때 <span class="math notranslate nohighlight">\(i\)</span>는 <span class="math notranslate nohighlight">\(1\)</span>부터 <span class="math notranslate nohighlight">\(m\)</span>까지 움직인다.</p>
+<div class="math notranslate nohighlight">
+\[
+\hat y^{(i)} = \mathbf{x}^{(i)}\, \mathbf{\theta} = 1\cdot \theta_0 + x^{(i)}_1 \cdot \theta_1 + \cdots + x^{(i)}_n \cdot \theta_{n}
+\]</div>
 <p><strong>모델 훈련의 최종 목표</strong></p>
 <p>훈련셋이 주어졌을 때 <span class="math notranslate nohighlight">\(\mathrm{MSE}(\mathbf{\theta})\)</span>가 최소가 되도록 하는
 <span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>를 찾아야 한다.
@@ -661,7 +692,7 @@ document.write(`
 모델 훈련을 통해 학습된 파라미터는 훈련된 모델 객체의 속성으로 저장된다.</p>
 <p><strong>스텝</strong><font size='2'>step</font></p>
 <p>모델이 파라미터를 한 번 업데이트 하는 과정을 가리킨다.
-즉 배치 크기 <span class="math notranslate nohighlight">\(m_b\)</span> 만큼의 샘플에 대해 예측값을 계산한 후에
+배치 크기 <span class="math notranslate nohighlight">\(m\)</span> 만큼의 샘플에 대해 예측값을 계산한 후에
 비용 함수를 이용하여 성능을 평가한 후에
 비용 함수의 값, 즉 손실값을 줄이는 방향으로 파라미터를 한 번 업데이트 하는 과정이다.</p>
 <p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/step.png" width="300"/></div></p><p><code class="docutils literal notranslate"><span class="pre">SGDRegressor</span></code> 모델은 크기가 1인 배치로 훈련하기에 하나의 스텝에 하나의 데이터 샘플만 활용한다.
@@ -673,51 +704,34 @@ document.write(`
 <li><p><span class="math notranslate nohighlight">\(\theta\)</span> 업데이트</p></li>
 </ul>
 <p><strong>배치 크기</strong></p>
-<p>보다 좋은 파라미터 값으로 업데이트하기 위해 필요한 훈련 샘플의 수를 가리킨다.
-전체 데이터셋의 크기 <span class="math notranslate nohighlight">\(m\)</span>과 구분하기 위해 <span class="math notranslate nohighlight">\(m_b\)</span>로 표기하며, <span class="math notranslate nohighlight">\(m\)</span>보다 같거나 작아야 한다.
-파라미터 업데이트는 따라서 <span class="math notranslate nohighlight">\(m_b\)</span> 개의 훈련셋을 학습할 때마다 이뤄진다.</p>
+<p>파라미터를 한 번 업데이트 하기 위해 사용된 훈련 데이터 샘플의 개수를 가리킨다.
+즉, 한 번의 스텝에서 사용되는 훈련 샘플의 개수다.</p>
 <ul class="simple">
-<li><p>사이킷런 모델: 배치 크기 선택 옵션 지원 없으며 경사하강법을 적용하는 모든 모델의 배치 크기는 1임.</p>
+<li><p>사이킷런 모델: 배치 크기 선택 옵션을 지원하지 않음. 경사하강법을 적용하는 모든 모델의 배치 크기는 1로 지정됨.</p>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">LinearRegression</span></code>: 경사하강법 사용하지 않음.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">SGDRegressor</span></code>: <span class="math notranslate nohighlight">\(m_b = 1\)</span></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">LogisticRegressor</span></code>: <span class="math notranslate nohighlight">\(m_b = 1\)</span></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SGDRegressor</span></code>: <span class="math notranslate nohighlight">\(m = 1\)</span></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">LogisticRegressor</span></code>: <span class="math notranslate nohighlight">\(m = 1\)</span></p></li>
 </ul>
 </li>
-<li><p>딥러닝 심층 신경망 모델: 배치 크기 선택 옵션 제공. 일반적으로 8, 16, 32, 64, 128, 256 중에 하나 선택.</p></li>
+<li><p>딥러닝 심층 신경망 모델: 배치 크기 선택 옵션을 제공함. 일반적으로 8, 16, 32, 64, 128, 256 중에 하나 선택.</p></li>
 </ul>
 <p><strong>비용 함수</strong></p>
 <p>평균 제곱 오차(MSE)처럼 모델의 성능이 얼마나 나쁜가를 계산하는 함수다.
-훈련 과정에서 비용 함수의 값, 즉 손실값은 배치 단위로 계산된다.
-회귀 모델의 배치 단위로 계산되는 손실값 MSE는 아래 식으로 계산된다.</p>
-<div class="math notranslate nohighlight">
-\[
-\mathrm{MSE}(\mathbf{\theta}) = 
-\frac 1 {m_b} \sum_{i=0}^{m_b-1} \big(\mathbf{x}^{(i)}\, \mathbf{\theta} - y^{(i)}\big)^2
-\]</div>
-<p>위 식에서 <span class="math notranslate nohighlight">\(m_b\)</span>는 배치 크기를 가리킨다.
+훈련 스텝에서 비용 함수의 값, 즉 손실값은 배치 단위로 계산된다.</p>
+<p>회귀 모델의 배치 단위로 계산되는 손실값은 평균 제곱 오차(MSE)로 계산된다.
+예를 들어
 <code class="docutils literal notranslate"><span class="pre">SGDRegressor</span></code> 모델은 크기가 1인 배치로 훈련하기에
-아래 MSE 계산을 매 훈련 데이터 샘플 <span class="math notranslate nohighlight">\(\mathbf{x}^{(i)}\)</span>에 대해 실행한다.</p>
+매 스텝에서 아래 MSE 계산을 임의로 선택된 샘플 <span class="math notranslate nohighlight">\(\mathbf{x}^{(i)}\)</span> 대해 실행한다.</p>
 <div class="math notranslate nohighlight">
 \[
 \mathrm{MSE}(\mathbf{\theta}) = 
 \big(\mathbf{x}^{(i)}\, \mathbf{\theta} - y^{(i)}\big)^2
 \]</div>
 <p><strong>비용 함수의 그레이디언트 벡터</strong><font size='2'>gradient vector</font></p>
-<p>함수의 그레이디언트 벡터는 방향과 크기에 대한 정보를 제공한다.
-그레이디언트가 가리키는 방향의 <strong>반대 방향</strong>으로 움직여야 가장 빠르게 전역 최솟값에 접근한다.</p>
-<p>예를 들어 <span class="math notranslate nohighlight">\(\textrm{MSE}\)</span>를 비용 함수로 사용하는 경우 <span class="math notranslate nohighlight">\(\textrm{MSE}(\mathbf{\theta})\)</span> 함수의 <span class="math notranslate nohighlight">\(\mathbf{\mathbf{\theta}}\)</span> 에
-대한 그레이디언트 벡터는 다음과 같다.</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\nabla_\mathbf{\theta} \textrm{MSE}(\mathbf{\theta}) =
-\begin{bmatrix}
-    \frac{\partial}{\partial \mathbf{\theta}_0} \textrm{MSE}(\mathbf{\theta}) \\
-    \frac{\partial}{\partial \mathbf{\theta}_1} \textrm{MSE}(\mathbf{\theta}) \\
-    \vdots \\
-    \frac{\partial}{\partial \mathbf{\theta}_n} \textrm{MSE}(\mathbf{\theta})
-\end{bmatrix}
-\end{split}\]</div>
+<p>비용 함수 <span class="math notranslate nohighlight">\(\mathrm{MSE}(\mathbf{\theta})\)</span>의 <span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>에 대한 미분값을 그레이디언트 벡터라 부르며
+<span class="math notranslate nohighlight">\(\nabla_\mathbf{\theta} \textrm{MSE}(\mathbf{\theta})\)</span>로 표기한다.
+그레이디언트 벡터는 파라미터 <span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>의 크기를 어떻게 업데이트 해야 하는가에 대한 정보를 제공한다.</p>
 <p><strong>학습률(<span class="math notranslate nohighlight">\(\eta\)</span>)</strong></p>
 <p>훈련 스텝마다 파라미터 <span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>를 얼만큼씩 조정할 것인지를 정하는 비율이다.</p>
 <p><strong>에포크</strong><font size="2">epoch</font></p>
@@ -749,12 +763,13 @@ document.write(`
 <h3><span class="section-number">4.2.1. </span>선형 회귀 모델 훈련과 경사하강법<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
 <p>MSE를 비용 함수로 사용하는 선형 회귀 모델의 파라미터를 조정하는
 과정을 이용하여 경사하강법의 기본 아이디어를 설명한다.</p>
-<p>선형 회귀 모델 훈련에 사용되는 경사하강법은 아래 과정으로 진행된다.</p>
+<p>선형 회귀 모델 훈련에 사용되는 경사하강법은 아래 과정으로 구성된다.</p>
 <ol class="arabic simple">
 <li><p><span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>를 임의의 값으로 지정한 후 훈련을 시작한다.</p></li>
-<li><p><span class="math notranslate nohighlight">\(\nabla_\mathbf{\theta}\textrm{MSE}(\theta)\)</span> 가 허용 오차보다 작아질 때까지 아래 과정을 반복한다.</p>
+<li><p>훈련 스텝을 지정된 에포크만큼 또는
+<span class="math notranslate nohighlight">\(\nabla_\mathbf{\theta} \textrm{MSE}(\mathbf{\theta})\)</span>가 허용 오차보다 작아질 때까지 반복한다.</p>
 <ul class="simple">
-<li><p>배치 크기 <span class="math notranslate nohighlight">\(m_b\)</span> 만큼의 훈련 샘플을 이용해서 예측값 생성 후 <span class="math notranslate nohighlight">\(\mathrm{MSE}(\mathbf{\theta})\)</span> 계산.</p></li>
+<li><p>배치 크기 <span class="math notranslate nohighlight">\(m\)</span> 만큼의 훈련 샘플을 이용해서 예측값 생성 후 <span class="math notranslate nohighlight">\(\mathrm{MSE}(\mathbf{\theta})\)</span> 계산.</p></li>
 <li><p><span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>를 아래 점화식을 이용하여 업데이트</p></li>
 </ul>
 </li>
@@ -765,11 +780,10 @@ document.write(`
 \]</div>
 <div class="note admonition">
 <p class="admonition-title">그레이디언트 벡터의 방향과 크기</p>
-<p>아래 그림이 보여주듯이 모든 벡터는 방향과 크기를 갖는다.</p>
-<p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/vector01.png" width="250"/></div></p>
-<p>그레이디언트 벡터 또한 방향과 크기에 대한 정보를 제공하며,
-그레이디언트가 가리키는 방향의 <strong>반대 방향</strong>으로 움직이면 빠르게 전역 최소값에 접근한다.
-아래 그림은 2차 다항식 함수로 계산되는 비용 함수의 그래프상의
+<p>그레이디언트 벡터 <span class="math notranslate nohighlight">\(\nabla_\mathbf{\theta} \textrm{MSE}(\mathbf{\theta})\)</span>가 가리키는 방향의
+<strong>반대 방향</strong>으로 움직이면 빠르게 <span class="math notranslate nohighlight">\(\textrm{MSE}(\mathbf{\theta})\)</span>가
+전역 최소값을 갖는 <span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span> 접근한다.</p>
+<p>아래 그림은 <span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>에 대한 2차 다항식 함수로 계산되는 비용 함수의 그래프상의
 한 점에서의 기울기가 양수인 경우 음수쪽으로 움직여야 전역 최소값으로 수렴하는 것을 보여준다.</p>
 <p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/gradient01b.png" width="350"/></div></p>
 <p><div style="text-align: center">&lt;그림 출처: <a href="https://www.analyticsvidhya.com/blog/2020/10/how-does-the-gradient-descent-algorithm-work-in-machine-learning/">Analytics Vidhya</a>&gt;</div></p>
@@ -834,13 +848,13 @@ document.write(`
 훈련 대상 모델을 지정할 때 사용하는 하이퍼파라미터 중의 하나인 배치 크기에 따라 세 종류로 나뉜다.</p>
 <p><strong>배치 경사하강법</strong></p>
 <p>에포크마다 한 번 그레이디언트를 계산하여 파라미터를 조정(업데이트)한다.
-즉, 배치 크기(<span class="math notranslate nohighlight">\(m_b\)</span>)가 전체 훈련셋의 크기와 같다. 즉, 스텝의 크기가 1이다.</p>
+즉, 배치 크기(<span class="math notranslate nohighlight">\(m\)</span>)가 전체 훈련셋의 크기와 같다. 즉, 스텝의 크기가 1이다.</p>
 <p>파라미터 업데이트를 에포크에 한 번만 수행 하기에 모델을 지정할 때 에포크를 크게 잡아야 한다.
 그렇지 않으면 훈련이 제대로 진행하지 않는다.
 그런데 훈련셋이 크면 그레이디언트를 계산하는 데에 많은 시간과 메모리가 필요해지는 문제가 발생할 수 있다.
 이와 같은 이유로 인해 사이킷런을 포함하여 일반적으로 배치 경사하강법을 지원하지 않는다.</p>
 <p><strong>확률적 경사하강법(SGD)</strong></p>
-<p>배치 크기(<span class="math notranslate nohighlight">\(m_b\)</span>)가 1인 경상하강법을 가리킨다.
+<p>배치 크기(<span class="math notranslate nohighlight">\(m\)</span>)가 1인 경상하강법을 가리킨다.
 즉, 하나의 훈련 셈플에 대한 예측값을 계산한 다음에 바로
 비용 함수의 그레이디언트를 계산하여 파라미터를 조정한다.</p>
 <p>스텝에서 사용되는 샘플은 무작위로 선택된다.
@@ -885,7 +899,7 @@ document.write(`
 </ul>
 </section>
 </div><p><strong>미니 배치 경사하강법</strong></p>
-<p>배치 크기(<span class="math notranslate nohighlight">\(m_b\)</span>)를 2 이상으로 잡는 경사하강법이다.
+<p>배치 크기(<span class="math notranslate nohighlight">\(m\)</span>)를 2 이상으로 잡는 경사하강법이다.
 보통 2에서 수백 사이로 정한다.
 배치 크기를 적절히 크게 잡으면 확률적 경사하강법(SGD) 보다 파라미터의 움직임이 덜 불규칙적이 되며,
 배치 경사하강법보다 훨씬 빠르게 최적 학습 모델에 수렴한다.
@@ -1018,10 +1032,10 @@ document.write(`
 <p><strong>릿지 회귀<font size='2'>Ridge Regression</font></strong></p>
 <p>아래 비용 함수를 사용한다.</p>
 <div class="math notranslate nohighlight">
-\[J(\theta) = \textrm{MSE}(\theta) + \frac{\alpha}{m_b} \sum_{i=1}^{n}\theta_i^2\]</div>
+\[J(\theta) = \textrm{MSE}(\theta) + \frac{\alpha}{m} \sum_{i=1}^{n}\theta_i^2\]</div>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(\theta_0\)</span>: 규제에서 제외.</p></li>
-<li><p><span class="math notranslate nohighlight">\(m_b\)</span>: 배치 크기</p></li>
+<li><p><span class="math notranslate nohighlight">\(m\)</span>: 배치 크기</p></li>
 <li><p><span class="math notranslate nohighlight">\(\alpha\)</span>(알파): 규제 강도.</p>
 <ul>
 <li><p><span class="math notranslate nohighlight">\(\alpha=0\)</span>일 때 규제 없음.</p></li>
@@ -1060,7 +1074,7 @@ document.write(`
 J(\theta) = 
 \textrm{MSE}(\theta) + 
 r\cdot \bigg (2 \alpha \, \sum_{i=1}^{n}\mid\theta_i\mid \bigg) + 
-(1-r)\cdot \bigg (\frac{\alpha}{m_b}\, \sum_{i=1}^{n}\theta_i^2 \bigg )
+(1-r)\cdot \bigg (\frac{\alpha}{m}\, \sum_{i=1}^{n}\theta_i^2 \bigg )
 \]</div>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(r\)</span>: 릿지 회귀에 사용되는 규제와 라쏘 회귀에 사용되는 규제의 사용 비율</p></li>
@@ -1133,7 +1147,7 @@ r\cdot \bigg (2 \alpha \, \sum_{i=1}^{n}\mid\theta_i\mid \bigg) +
 <div class="math notranslate nohighlight">
 \[
 J(\theta) = 
-- \frac{1}{m_b}\, \sum_{i=0}^{m_b-1}\, \left( y^{(i)} \cdot \log(\,\hat p^{(i)}\,) + (1-y^{(i)}) \cdot \log(\,1 - \hat p^{(i)}\,)\right)
+- \frac{1}{m}\, \sum_{i=1}^{m}\, \left( y^{(i)} \cdot \log(\,\hat p^{(i)}\,) + (1-y^{(i)}) \cdot \log(\,1 - \hat p^{(i)}\,)\right)
 \]</div>
 <p>그러면 양성 샘플에 대해서는 1에 가까운 확률값을,
 음성 샘플에 대해서는 0에 가까운 확률값을 내도록 훈련한다.
@@ -1246,178 +1260,79 @@ J(\theta) =
 <section id="sec-softmax-regression">
 <span id="id20"></span><h2><span class="section-number">4.7. </span>소프트맥스 회귀<a class="headerlink" href="#sec-softmax-regression" title="Link to this heading">#</a></h2>
 <p>로지스틱 회귀 모델을 일반화하여 다중 클래스 분류를 지원하도록 만든 모델이
-<strong>소프트맥스 회귀</strong><font size='2'>Softmax regression</font>다.</p>
+<strong>소프트맥스 회귀</strong><font size='2'>Softmax regression</font>다.
+즉, 소프트맥스 회귀는 3보다 같거나 큰 <span class="math notranslate nohighlight">\(K\)</span>개의 범주로 분류하는 모델이다.</p>
 <p><strong>소프트맥스 점수</strong></p>
-<p>입력 샘플 <span class="math notranslate nohighlight">\(\mathbf x = [x_1, \dots, x_n]\)</span>가 주어졌을 때 각각의 분류 클래스 <span class="math notranslate nohighlight">\(k\)</span> 에 대해 <strong>소프트맥스 점수</strong> <span class="math notranslate nohighlight">\(s_k(\mathbf x)\)</span>를
+<p>입력 샘플 <span class="math notranslate nohighlight">\(\mathbf x = [x_1, \dots, x_n]\)</span>가 주어졌을 때 각각의 분류 클래스 <span class="math notranslate nohighlight">\(k \in \{1, 2, \dots, K\}\)</span> 에 대해 <strong>소프트맥스 점수</strong> <span class="math notranslate nohighlight">\(s_k(\mathbf x)\)</span>를
 선형 회귀 방식으로 계산한다.</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}
+\[
 s_k(\mathbf{x}) = \theta_0^{(k)} + \theta_1^{(k)} x_1 + \cdots + \theta_n^{(k)} x_n
-= [1, x_1, \dots, x_n]\, 
-\begin{bmatrix}
-\theta_0^{(k)}\\
-\theta_1^{(k)} \\
-\vdots \\
-\theta_n^{(k)}
-\end{bmatrix}
-\end{split}\]</div>
-<p>위 식에서 <span class="math notranslate nohighlight">\(\theta_i^{(k)}\)</span> 는 <span class="math notranslate nohighlight">\(i\)</span> 번째 특성에 대한 가중치 파라미터를 가리킨다.
-따라서 <span class="math notranslate nohighlight">\(K\)</span> 개의 클래스로 분류하는 모델 훈련을 통해 총 <span class="math notranslate nohighlight">\((n+1) \cdot K\)</span> 개의 편향과 가중치 파라미터를 학습시켜야 한다.</p>
-<div class="note admonition">
-<p class="admonition-title">소프트맥스 점수 계산</p>
-<p>예를 들어, 붓꽃 데이터셋에 포함된 <span class="math notranslate nohighlight">\(n = 4\)</span> 개의 특성 모두를 이용하여 품종을 분류하는
-소프트맥스 회귀 모델을 훈련시키려면 5 <span class="math notranslate nohighlight">\(\times\)</span> 3 = 15개의 파라미터를 훈련시켜야 한다.
-15 개의 파라미터로 구성된 파라미터 행렬은 아래와 같다.</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\Theta = 
-\begin{bmatrix}
-\theta_0^{(0)} &amp; \theta_0^{(1)} &amp; \theta_0^{(2)} \\
-\theta_1^{(0)} &amp; \theta_1^{(1)} &amp; \theta_1^{(2)} \\
-\theta_2^{(0)} &amp; \theta_2^{(1)} &amp; \theta_2^{(2)} \\
-\theta_3^{(0)} &amp; \theta_3^{(1)} &amp; \theta_3^{(2)} \\
-\theta_4^{(0)} &amp; \theta_4^{(1)} &amp; \theta_4^{(2)} 
-\end{bmatrix}
-\end{split}\]</div>
-<p>반면에 꽃받침의 길이와 너비, 꽃잎 길이와 너비 네 개의 특성과 추가된 편향으로 구성된 훈련셋 <code class="docutils literal notranslate"><span class="pre">X_train</span></code>은 다음과 같은 형식이다.
-각 행이 하나의 샘플을 가리키며, 배치 크기가 <span class="math notranslate nohighlight">\(m_b\)</span>일 때 스텝마다 계산되는 예측값과 비용 함수 계산에
-사용되는 배치 데이터셋은 다음과 같이 표현된다.</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\mathbf{X}_{batch} = 
-\begin{bmatrix}
-1 &amp; x_1^{(0)} &amp; x_2^{(0)} &amp; x_3^{(0)} &amp; x_4^{(0)} \\
-1 &amp; x_1^{(1)} &amp; x_2^{(1)} &amp; x_3^{(1)} &amp; x_4^{(1)} \\
- &amp; &amp; \vdots &amp; &amp; \\
-1 &amp; x_1^{(m_b-1)} &amp; x_2^{(m_b-1)} &amp; x_3^{(m_b-1)} &amp; x_4^{(m_b-1)}
-\end{bmatrix}
-\end{split}\]</div>
-<p>이제 모든 훈련 샘플에 대한 소프트맥스 점수를 일시에 다음과 같이 행렬곱으로 계산할 수 있다.</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\begin{align*}
-\mathbf{X}_{batch} \,\, \Theta
-&amp; = 
-\begin{bmatrix}
-1 &amp; x_1^{(0)} &amp; x_2^{(0)} &amp; x_3^{(0)} &amp; x_4^{(0)} \\
-1 &amp; x_1^{(1)} &amp; x_2^{(1)} &amp; x_3^{(1)} &amp; x_4^{(1)} \\
- &amp; &amp; \vdots &amp; &amp; \\
-1 &amp; x_1^{(m_b-1)} &amp; x_2^{(m_b-1)} &amp; x_3^{(m_b-1)} &amp; x_4^{(m_b-1)}
-\end{bmatrix}
-\,\,
-\begin{bmatrix}
-\theta_0^{(0)} &amp; \theta_0^{(1)} &amp; \theta_0^{(2)} \\
-\theta_1^{(0)} &amp; \theta_1^{(1)} &amp; \theta_1^{(2)} \\
-\theta_2^{(0)} &amp; \theta_2^{(1)} &amp; \theta_2^{(2)} \\
-\theta_3^{(0)} &amp; \theta_3^{(1)} &amp; \theta_3^{(2)} \\
-\theta_4^{(0)} &amp; \theta_4^{(1)} &amp; \theta_4^{(2)} 
-\end{bmatrix} \\[3ex]
-&amp; =
-\begin{bmatrix}
-s_0(\mathbf{x}^{(0)}) &amp; s_1(\mathbf{x}^{(0)}) &amp; s_2(\mathbf{x}^{(0)}) \\
-s_0(\mathbf{x}^{(1)}) &amp; s_1(\mathbf{x}^{(1)}) &amp; s_2(\mathbf{x}^{(1)}) \\
-&amp; \vdots &amp; \\
-s_0(\mathbf{x}^{(m_b-1)}) &amp; s_1(\mathbf{x}^{(m_b-1)}) &amp; s_2(\mathbf{x}^{(m_b-1)})
-\end{bmatrix}
-\end{align*}
-\end{split}\]</div>
-</div>
+\]</div>
+<p>위 식에서 <span class="math notranslate nohighlight">\(\theta_i^{(k)}\)</span> 는 <span class="math notranslate nohighlight">\(i\)</span> 번째 특성에 대한 가중치 파라미터를 가리킨다.</p>
+<p>따라서 <span class="math notranslate nohighlight">\(K\)</span> 개의 클래스로 분류하는 소프트맥스 회귀는
+총 <span class="math notranslate nohighlight">\(K \cdot (n+1)\)</span> 개의 파라미터를 학습시킨다.</p>
 <p><strong>소프트맥스 함수</strong></p>
-<p>주어진 샘플이 각 클래스에 속할 확률 <span class="math notranslate nohighlight">\(\hat p_k\)</span>를 <strong>소프트맥스 함수</strong> <span class="math notranslate nohighlight">\(\sigma()\)</span>가 다음과 같이 계산한다.
-인자는 소프트맥스 점수로 구성된 벡터 <span class="math notranslate nohighlight">\(\mathbf{s}(\mathbf{x}) = [s_0(\mathbf{x}), \dots, s_{K-1}(\mathbf{x})]\)</span> 이다.</p>
+<p>입력 샘플 <span class="math notranslate nohighlight">\(\mathbf x = [x_1, \dots, x_n]\)</span>이 <span class="math notranslate nohighlight">\(k\)</span> 범주에 속할 확률 <span class="math notranslate nohighlight">\(\hat p_k\)</span>는 다음과 같이 계산된다.</p>
 <div class="math notranslate nohighlight">
 \[
 \hat p_k 
-= \sigma(\mathbf{s}(\mathbf{x}))[k]
-= \frac{\exp(s_k(\mathbf x))}{\sum\limits_{j=0}^{K-1}\exp(s_j(\mathbf x))}
+= \frac{\exp(s_k(\mathbf x))}{\sum\limits_{j=1}^{K}\exp(s_j(\mathbf x))}
 \]</div>
-<p>즉, 다음이 성립한다.</p>
+<p>그러면 다음이 성립한다.</p>
 <div class="math notranslate nohighlight">
 \[
-\sigma(\mathbf{s}(\mathbf{x})) = [\hat p_0, \hat p_1, \dots, \hat p_{K-1}]
+\sigma([s_1(\mathbf{x}), \cdots, \cdots, s_k(\mathbf{x})]) = [\hat p_1, \hat p_1, \dots, \hat p_{K}]
 \]</div>
-<p>소프트맥스 회귀 모델의 각 샘플에 대한 최종 예측 레이블은 추정 확률이 가장 높은 클래스로 선택된다.</p>
+<p>위 식에서 <span class="math notranslate nohighlight">\(\sigma()\)</span>는 아래와 같이 정의된 <strong>소프트맥스 함수</strong>를 가리킨다.</p>
 <div class="math notranslate nohighlight">
 \[
-\hat y 
-= \mathrm{np.argmax}(\sigma(\mathbf{s}(\mathbf{x})))
+\sigma([v_1, \cdots, v_K]) = [w_1, \cdots, w_K], \quad \text{단 }w_k = \frac{\exp(v_k))}{\sum\limits_{k=1}^{K}\exp(v_k)}
 \]</div>
-<div class="note admonition">
-<p class="admonition-title">소프트맥스 회귀 모델의 예측값 계산</p>
-<p>위 설명을 종합해서 모든 샘플에 대한 확률 예측값을 동시에 실행하는 행렬 연산을 다음과 같이
-정의할 수 있다.</p>
+<p><strong>소프트맥스 회귀 모델의 예측 레이블</strong></p>
+<p>소프트맥스 회귀 모델의 각 샘플에 대한 최종 예측 레이블 <span class="math notranslate nohighlight">\(\hat y\)</span>는
+확률값 <span class="math notranslate nohighlight">\(p_k\)</span>가 최댓값이 되는 <span class="math notranslate nohighlight">\(k\)</span>로 지정된다.
+즉, 다음이 성립해야 한다.</p>
 <div class="math notranslate nohighlight">
 \[
-\sigma(\mathbf{s}(\mathbf{X}_{batch})) = \sigma(\mathbf{X}_{batch} \, \Theta)
+\hat y = p_k  \quad\Longleftrightarrow\quad \hat p_k = \max([\hat p_1, \hat p_1, \dots, \hat p_{K}])
 \]</div>
-<p>단, <span class="math notranslate nohighlight">\(\sigma()\)</span> 함수가 행별로, 즉 샘플별로 작동한다고 가정한다.
-그리고 모든 샘플에 대한 최종 예측 레이블 계산은 다음과 같다.</p>
-<div class="math notranslate nohighlight">
-\[
-\hat{\mathbf{y}} = \mathrm{np.argmax}(\sigma(\mathbf{X}_{batch} \, \Theta), \mathrm{axis}=1)
-\]</div>
-</div>
 <p><strong>소프트맥스 회귀의 비용 함수</strong></p>
 <p>각 분류 클래스 <span class="math notranslate nohighlight">\(k\)</span>에 대한 적절한 가중치들의 벡터 <span class="math notranslate nohighlight">\(\mathbf{\theta}^{(k)} = [\theta_0^{(k)}, \theta_1^{(k)}, \dots, \theta_n^{(k)}]\)</span>를
 경사하강법을 이용하여 업데이트 한다.
-이를 위해 <strong>크로스 엔트로피</strong><font size='2'>cross entropy</font>를 비용 함수로 사용한다.
-<span class="math notranslate nohighlight">\(K=2\)</span>이면 로지스틱 회귀의 로그 손실 함수와 정확하게 일치한다.</p>
-<ul>
-<li><p>크로스 엔트로피 비용 함수</p>
+이를 위해 <strong>크로스 엔트로피</strong><font size='2'>cross entropy</font>를 비용 함수로 사용한다.</p>
+<div class="math notranslate nohighlight">
+\[
+J(\Theta) = 
+- \frac{1}{m}\, \sum_{i=1}^{m}\sum_{k=1}^{K} y^{(i)}_k\, \log\big( \hat{p}_k^{(i)}\big)
+\]</div>
+<p>위 식에 사용된 기호의 의미는 다음과 같다.</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(y^{(i)}_k\)</span>: <span class="math notranslate nohighlight">\(i\)</span>-번째 샘플에 대한 원-핫 인코딩된 타깃(레이블)</p></li>
 <li><p><span class="math notranslate nohighlight">\(\hat{p}_k^{(i)}\)</span>: <span class="math notranslate nohighlight">\(i\)</span>-번째 샘플이 클래스 <span class="math notranslate nohighlight">\(k\)</span>에 속할 확률 예측값<br><br></p></li>
 </ul>
+<p><span class="math notranslate nohighlight">\(K=2\)</span>이면 다음이 성립한다.</p>
 <div class="math notranslate nohighlight">
 \[
-    J(\Theta) = 
-    - \frac{1}{m_b}\, \sum_{i=0}^{m_b-1}\sum_{k=0}^{K-1} y^{(i)}_k\, \log\big( \hat{p}_k^{(i)}\big)
-    \]</div>
-</li>
-</ul>
+y^{(i)}_2 = 1-y^{(i)}_1, \qquad \hat{p}_2^{(i)} = 1- \hat{p}_1^{(i)}
+\]</div>
+<p>따라서 로지스틱 회귀의 로그 손실 함수와 정확하게 일치한다.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+J(\Theta) 
+&amp; = - \frac{1}{m}\, \sum_{i=1}^{m} \left(y^{(i)}_1\, \log( \hat{p}_1^{(i)}) + (y^{(i)}_2\, \log( \hat{p}_2^{(i)}) \right) \\
+&amp; = - \frac{1}{m}\, \sum_{i=1}^{m} \left(y^{(i)}_1\, \log( \hat{p}_1^{(i)}) + (1-y^{(i)}_1)\, \log(1- \hat{p}_1^{(i)}) \right)
+\end{align*}
+\end{split}\]</div>
 <div class="note admonition">
-<p class="admonition-title">소프트맥스 회귀 비용 함수의 그레이디언트 벡터</p>
-<p><span class="math notranslate nohighlight">\(\mathbf{\theta}^{(k)} = [\theta_0^{(k)}, \theta_1^{(k)}, \dots, \theta_n^{(k)}]\)</span>에 대한
-비용 함수의 그레이디언트 벡터는 다음과 같다.</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\begin{align*}
-\nabla_{\mathbf{\theta}^{(k)}} \, J(\mathbf{\Theta}) 
-&amp; = \left( \frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(k)}_0},
-\frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(k)}_1}, 
-\dots,
-\frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(k)}_4} \right) \\[1ex]
-&amp; = \dfrac{1}{m_b} \sum\limits_{i=0}^{m_b-1}{ \left ( \hat{p}^{(i)}_k - y_k^{(i)} \right ) \mathbf{x}^{(i)}}
-\end{align*}
-\end{split}\]</div>
-<p>예를 들어, 4 개의 특성과 3개의 품종 클래스를 사용하는
-붓꼿 데이터셋의 품종 분류 소프트맥스 회귀 모델에 사용되는
-비용 함수의
-<span class="math notranslate nohighlight">\(\mathbf{\Theta}\)</span>에 대한 그레이디언트 벡터는 다음과 같다.</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\begin{align*}
-\nabla_{\mathbf{\Theta}} \, J(\mathbf{\Theta}) 
-&amp; = [\nabla_{\mathbf{\theta}^{(0)}} \, J(\mathbf{\Theta})^{T}, 
-\nabla_{\mathbf{\theta}^{(1)}} \, J(\mathbf{\Theta})^{T}, 
-\nabla_{\mathbf{\theta}^{(2)}} \, J(\mathbf{\Theta})^{T}] \\[2ex]
-&amp; = 
-\begin{bmatrix}
-\frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(0)}_0} &amp; \frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(1)}_0} &amp; \frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(2)}_0} \\
-\frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(0)}_1} &amp; \frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(1)}_1} &amp; \frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(2)}_1} \\
-\frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(0)}_2} &amp; \frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(1)}_2} &amp; \frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(2)}_2} \\
-\frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(0)}_3} &amp; \frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(1)}_3} &amp; \frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(2)}_3} \\
-\frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(0)}_4} &amp; \frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(1)}_4} &amp; \frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(2)}_4}
-\end{bmatrix}
-\end{align*}
-\end{split}\]</div>
-</div>
-<p><strong>크로스 엔트로피</strong></p>
+<p class="admonition-title">크로스 엔트로피</p>
 <p>크로스 엔트로피는 주어진 샘플의 타깃 클래스를 제대로 예측하지 못하는 경우 높은 값을 갖는다.
 크로스 엔트로피 개념은 정보 이론에서 유래하며,
 자세한 설명은 오렐리앙 제롱의 동영상
 <a class="reference external" href="https://www.youtube.com/watch?v=ErfnhcEV1O8">“A Short Introduction to Entropy, Cross-Entropy and KL-Divergence”</a>를
 참고한다.</p>
+</div>
 <p><strong>붓꽃 데이터 다중 클래스 분류</strong></p>
 <p>사이킷런의 <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> 예측기를 활용한다.
 기본값 <code class="docutils literal notranslate"><span class="pre">solver=lbfgs</span></code> 사용하면 모델이 알아서 다중 클래스 분류를 훈련한다.
