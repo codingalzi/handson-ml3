@@ -1260,178 +1260,79 @@ J(\theta) =
 <section id="sec-softmax-regression">
 <span id="id20"></span><h2><span class="section-number">4.7. </span>소프트맥스 회귀<a class="headerlink" href="#sec-softmax-regression" title="Link to this heading">#</a></h2>
 <p>로지스틱 회귀 모델을 일반화하여 다중 클래스 분류를 지원하도록 만든 모델이
-<strong>소프트맥스 회귀</strong><font size='2'>Softmax regression</font>다.</p>
+<strong>소프트맥스 회귀</strong><font size='2'>Softmax regression</font>다.
+즉, 소프트맥스 회귀는 3보다 같거나 큰 <span class="math notranslate nohighlight">\(K\)</span>개의 범주로 분류하는 모델이다.</p>
 <p><strong>소프트맥스 점수</strong></p>
-<p>입력 샘플 <span class="math notranslate nohighlight">\(\mathbf x = [x_1, \dots, x_n]\)</span>가 주어졌을 때 각각의 분류 클래스 <span class="math notranslate nohighlight">\(k\)</span> 에 대해 <strong>소프트맥스 점수</strong> <span class="math notranslate nohighlight">\(s_k(\mathbf x)\)</span>를
+<p>입력 샘플 <span class="math notranslate nohighlight">\(\mathbf x = [x_1, \dots, x_n]\)</span>가 주어졌을 때 각각의 분류 클래스 <span class="math notranslate nohighlight">\(k \in \{1, 2, \dots, K\}\)</span> 에 대해 <strong>소프트맥스 점수</strong> <span class="math notranslate nohighlight">\(s_k(\mathbf x)\)</span>를
 선형 회귀 방식으로 계산한다.</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}
+\[
 s_k(\mathbf{x}) = \theta_0^{(k)} + \theta_1^{(k)} x_1 + \cdots + \theta_n^{(k)} x_n
-= [1, x_1, \dots, x_n]\, 
-\begin{bmatrix}
-\theta_0^{(k)}\\
-\theta_1^{(k)} \\
-\vdots \\
-\theta_n^{(k)}
-\end{bmatrix}
-\end{split}\]</div>
-<p>위 식에서 <span class="math notranslate nohighlight">\(\theta_i^{(k)}\)</span> 는 <span class="math notranslate nohighlight">\(i\)</span> 번째 특성에 대한 가중치 파라미터를 가리킨다.
-따라서 <span class="math notranslate nohighlight">\(K\)</span> 개의 클래스로 분류하는 모델 훈련을 통해 총 <span class="math notranslate nohighlight">\((n+1) \cdot K\)</span> 개의 편향과 가중치 파라미터를 학습시켜야 한다.</p>
-<div class="note admonition">
-<p class="admonition-title">소프트맥스 점수 계산</p>
-<p>예를 들어, 붓꽃 데이터셋에 포함된 <span class="math notranslate nohighlight">\(n = 4\)</span> 개의 특성 모두를 이용하여 품종을 분류하는
-소프트맥스 회귀 모델을 훈련시키려면 5 <span class="math notranslate nohighlight">\(\times\)</span> 3 = 15개의 파라미터를 훈련시켜야 한다.
-15 개의 파라미터로 구성된 파라미터 행렬은 아래와 같다.</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\Theta = 
-\begin{bmatrix}
-\theta_0^{(0)} &amp; \theta_0^{(1)} &amp; \theta_0^{(2)} \\
-\theta_1^{(0)} &amp; \theta_1^{(1)} &amp; \theta_1^{(2)} \\
-\theta_2^{(0)} &amp; \theta_2^{(1)} &amp; \theta_2^{(2)} \\
-\theta_3^{(0)} &amp; \theta_3^{(1)} &amp; \theta_3^{(2)} \\
-\theta_4^{(0)} &amp; \theta_4^{(1)} &amp; \theta_4^{(2)} 
-\end{bmatrix}
-\end{split}\]</div>
-<p>반면에 꽃받침의 길이와 너비, 꽃잎 길이와 너비 네 개의 특성과 추가된 편향으로 구성된 훈련셋 <code class="docutils literal notranslate"><span class="pre">X_train</span></code>은 다음과 같은 형식이다.
-각 행이 하나의 샘플을 가리키며, 배치 크기가 <span class="math notranslate nohighlight">\(m\)</span>일 때 스텝마다 계산되는 예측값과 비용 함수 계산에
-사용되는 배치 데이터셋은 다음과 같이 표현된다.</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\mathbf{X}_{batch} = 
-\begin{bmatrix}
-1 &amp; x_1^{(0)} &amp; x_2^{(0)} &amp; x_3^{(0)} &amp; x_4^{(0)} \\
-1 &amp; x_1^{(1)} &amp; x_2^{(1)} &amp; x_3^{(1)} &amp; x_4^{(1)} \\
- &amp; &amp; \vdots &amp; &amp; \\
-1 &amp; x_1^{(m)} &amp; x_2^{(m)} &amp; x_3^{(m)} &amp; x_4^{(m)}
-\end{bmatrix}
-\end{split}\]</div>
-<p>이제 모든 훈련 샘플에 대한 소프트맥스 점수를 일시에 다음과 같이 행렬곱으로 계산할 수 있다.</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\begin{align*}
-\mathbf{X}_{batch} \,\, \Theta
-&amp; = 
-\begin{bmatrix}
-1 &amp; x_1^{(0)} &amp; x_2^{(0)} &amp; x_3^{(0)} &amp; x_4^{(0)} \\
-1 &amp; x_1^{(1)} &amp; x_2^{(1)} &amp; x_3^{(1)} &amp; x_4^{(1)} \\
- &amp; &amp; \vdots &amp; &amp; \\
-1 &amp; x_1^{(m)} &amp; x_2^{(m)} &amp; x_3^{(m)} &amp; x_4^{(m)}
-\end{bmatrix}
-\,\,
-\begin{bmatrix}
-\theta_0^{(0)} &amp; \theta_0^{(1)} &amp; \theta_0^{(2)} \\
-\theta_1^{(0)} &amp; \theta_1^{(1)} &amp; \theta_1^{(2)} \\
-\theta_2^{(0)} &amp; \theta_2^{(1)} &amp; \theta_2^{(2)} \\
-\theta_3^{(0)} &amp; \theta_3^{(1)} &amp; \theta_3^{(2)} \\
-\theta_4^{(0)} &amp; \theta_4^{(1)} &amp; \theta_4^{(2)} 
-\end{bmatrix} \\[3ex]
-&amp; =
-\begin{bmatrix}
-s_0(\mathbf{x}^{(0)}) &amp; s_1(\mathbf{x}^{(0)}) &amp; s_2(\mathbf{x}^{(0)}) \\
-s_0(\mathbf{x}^{(1)}) &amp; s_1(\mathbf{x}^{(1)}) &amp; s_2(\mathbf{x}^{(1)}) \\
-&amp; \vdots &amp; \\
-s_0(\mathbf{x}^{(m)}) &amp; s_1(\mathbf{x}^{(m)}) &amp; s_2(\mathbf{x}^{(m)})
-\end{bmatrix}
-\end{align*}
-\end{split}\]</div>
-</div>
+\]</div>
+<p>위 식에서 <span class="math notranslate nohighlight">\(\theta_i^{(k)}\)</span> 는 <span class="math notranslate nohighlight">\(i\)</span> 번째 특성에 대한 가중치 파라미터를 가리킨다.</p>
+<p>따라서 <span class="math notranslate nohighlight">\(K\)</span> 개의 클래스로 분류하는 소프트맥스 회귀는
+총 <span class="math notranslate nohighlight">\(K \cdot (n+1)\)</span> 개의 파라미터를 학습시킨다.</p>
 <p><strong>소프트맥스 함수</strong></p>
-<p>주어진 샘플이 각 클래스에 속할 확률 <span class="math notranslate nohighlight">\(\hat p_k\)</span>를 <strong>소프트맥스 함수</strong> <span class="math notranslate nohighlight">\(\sigma()\)</span>가 다음과 같이 계산한다.
-인자는 소프트맥스 점수로 구성된 벡터 <span class="math notranslate nohighlight">\(\mathbf{s}(\mathbf{x}) = [s_0(\mathbf{x}), \dots, s_{K-1}(\mathbf{x})]\)</span> 이다.</p>
+<p>입력 샘플 <span class="math notranslate nohighlight">\(\mathbf x = [x_1, \dots, x_n]\)</span>이 <span class="math notranslate nohighlight">\(k\)</span> 범주에 속할 확률 <span class="math notranslate nohighlight">\(\hat p_k\)</span>는 다음과 같이 계산된다.</p>
 <div class="math notranslate nohighlight">
 \[
 \hat p_k 
-= \sigma(\mathbf{s}(\mathbf{x}))[k]
-= \frac{\exp(s_k(\mathbf x))}{\sum\limits_{j=0}^{K-1}\exp(s_j(\mathbf x))}
+= \frac{\exp(s_k(\mathbf x))}{\sum\limits_{j=1}^{K}\exp(s_j(\mathbf x))}
 \]</div>
-<p>즉, 다음이 성립한다.</p>
+<p>그러면 다음이 성립한다.</p>
 <div class="math notranslate nohighlight">
 \[
-\sigma(\mathbf{s}(\mathbf{x})) = [\hat p_0, \hat p_1, \dots, \hat p_{K-1}]
+\sigma([s_1(\mathbf{x}), \cdots, \cdots, s_k(\mathbf{x})]) = [\hat p_1, \hat p_1, \dots, \hat p_{K}]
 \]</div>
-<p>소프트맥스 회귀 모델의 각 샘플에 대한 최종 예측 레이블은 추정 확률이 가장 높은 클래스로 선택된다.</p>
+<p>위 식에서 <span class="math notranslate nohighlight">\(\sigma()\)</span>는 아래와 같이 정의된 <strong>소프트맥스 함수</strong>를 가리킨다.</p>
 <div class="math notranslate nohighlight">
 \[
-\hat y 
-= \mathrm{np.argmax}(\sigma(\mathbf{s}(\mathbf{x})))
+\sigma([v_1, \cdots, v_K]) = [w_1, \cdots, w_K], \quad \text{단 }w_k = \frac{\exp(v_k))}{\sum\limits_{k=1}^{K}\exp(v_k)}
 \]</div>
-<div class="note admonition">
-<p class="admonition-title">소프트맥스 회귀 모델의 예측값 계산</p>
-<p>위 설명을 종합해서 모든 샘플에 대한 확률 예측값을 동시에 실행하는 행렬 연산을 다음과 같이
-정의할 수 있다.</p>
+<p><strong>소프트맥스 회귀 모델의 예측 레이블</strong></p>
+<p>소프트맥스 회귀 모델의 각 샘플에 대한 최종 예측 레이블 <span class="math notranslate nohighlight">\(\hat y\)</span>는
+확률값 <span class="math notranslate nohighlight">\(p_k\)</span>가 최댓값이 되는 <span class="math notranslate nohighlight">\(k\)</span>로 지정된다.
+즉, 다음이 성립해야 한다.</p>
 <div class="math notranslate nohighlight">
 \[
-\sigma(\mathbf{s}(\mathbf{X}_{batch})) = \sigma(\mathbf{X}_{batch} \, \Theta)
+\hat y = p_k  \quad\Longleftrightarrow\quad \hat p_k = \max([\hat p_1, \hat p_1, \dots, \hat p_{K}])
 \]</div>
-<p>단, <span class="math notranslate nohighlight">\(\sigma()\)</span> 함수가 행별로, 즉 샘플별로 작동한다고 가정한다.
-그리고 모든 샘플에 대한 최종 예측 레이블 계산은 다음과 같다.</p>
-<div class="math notranslate nohighlight">
-\[
-\hat{\mathbf{y}} = \mathrm{np.argmax}(\sigma(\mathbf{X}_{batch} \, \Theta), \mathrm{axis}=1)
-\]</div>
-</div>
 <p><strong>소프트맥스 회귀의 비용 함수</strong></p>
 <p>각 분류 클래스 <span class="math notranslate nohighlight">\(k\)</span>에 대한 적절한 가중치들의 벡터 <span class="math notranslate nohighlight">\(\mathbf{\theta}^{(k)} = [\theta_0^{(k)}, \theta_1^{(k)}, \dots, \theta_n^{(k)}]\)</span>를
 경사하강법을 이용하여 업데이트 한다.
-이를 위해 <strong>크로스 엔트로피</strong><font size='2'>cross entropy</font>를 비용 함수로 사용한다.
-<span class="math notranslate nohighlight">\(K=2\)</span>이면 로지스틱 회귀의 로그 손실 함수와 정확하게 일치한다.</p>
-<ul>
-<li><p>크로스 엔트로피 비용 함수</p>
+이를 위해 <strong>크로스 엔트로피</strong><font size='2'>cross entropy</font>를 비용 함수로 사용한다.</p>
+<div class="math notranslate nohighlight">
+\[
+J(\Theta) = 
+- \frac{1}{m}\, \sum_{i=1}^{m}\sum_{k=1}^{K} y^{(i)}_k\, \log\big( \hat{p}_k^{(i)}\big)
+\]</div>
+<p>위 식에 사용된 기호의 의미는 다음과 같다.</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(y^{(i)}_k\)</span>: <span class="math notranslate nohighlight">\(i\)</span>-번째 샘플에 대한 원-핫 인코딩된 타깃(레이블)</p></li>
 <li><p><span class="math notranslate nohighlight">\(\hat{p}_k^{(i)}\)</span>: <span class="math notranslate nohighlight">\(i\)</span>-번째 샘플이 클래스 <span class="math notranslate nohighlight">\(k\)</span>에 속할 확률 예측값<br><br></p></li>
 </ul>
+<p><span class="math notranslate nohighlight">\(K=2\)</span>이면 다음이 성립한다.</p>
 <div class="math notranslate nohighlight">
 \[
-    J(\Theta) = 
-    - \frac{1}{m}\, \sum_{i=1}^{m}\sum_{k=0}^{K-1} y^{(i)}_k\, \log\big( \hat{p}_k^{(i)}\big)
-    \]</div>
-</li>
-</ul>
+y^{(i)}_2 = 1-y^{(i)}_1, \qquad \hat{p}_2^{(i)} = 1- \hat{p}_1^{(i)}
+\]</div>
+<p>따라서 로지스틱 회귀의 로그 손실 함수와 정확하게 일치한다.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+J(\Theta) 
+&amp; = - \frac{1}{m}\, \sum_{i=1}^{m} \left(y^{(i)}_1\, \log( \hat{p}_1^{(i)}) + (y^{(i)}_2\, \log( \hat{p}_2^{(i)}) \right) \\
+&amp; = - \frac{1}{m}\, \sum_{i=1}^{m} \left(y^{(i)}_1\, \log( \hat{p}_1^{(i)}) + (1-y^{(i)}_1)\, \log(1- \hat{p}_1^{(i)}) \right)
+\end{align*}
+\end{split}\]</div>
 <div class="note admonition">
-<p class="admonition-title">소프트맥스 회귀 비용 함수의 그레이디언트 벡터</p>
-<p><span class="math notranslate nohighlight">\(\mathbf{\theta}^{(k)} = [\theta_0^{(k)}, \theta_1^{(k)}, \dots, \theta_n^{(k)}]\)</span>에 대한
-비용 함수의 그레이디언트 벡터는 다음과 같다.</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\begin{align*}
-\nabla_{\mathbf{\theta}^{(k)}} \, J(\mathbf{\Theta}) 
-&amp; = \left( \frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(k)}_0},
-\frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(k)}_1}, 
-\dots,
-\frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(k)}_4} \right) \\[1ex]
-&amp; = \dfrac{1}{m} \sum\limits_{i=1}^{m}{ \left ( \hat{p}^{(i)}_k - y_k^{(i)} \right ) \mathbf{x}^{(i)}}
-\end{align*}
-\end{split}\]</div>
-<p>예를 들어, 4 개의 특성과 3개의 품종 클래스를 사용하는
-붓꼿 데이터셋의 품종 분류 소프트맥스 회귀 모델에 사용되는
-비용 함수의
-<span class="math notranslate nohighlight">\(\mathbf{\Theta}\)</span>에 대한 그레이디언트 벡터는 다음과 같다.</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\begin{align*}
-\nabla_{\mathbf{\Theta}} \, J(\mathbf{\Theta}) 
-&amp; = [\nabla_{\mathbf{\theta}^{(0)}} \, J(\mathbf{\Theta})^{T}, 
-\nabla_{\mathbf{\theta}^{(1)}} \, J(\mathbf{\Theta})^{T}, 
-\nabla_{\mathbf{\theta}^{(2)}} \, J(\mathbf{\Theta})^{T}] \\[2ex]
-&amp; = 
-\begin{bmatrix}
-\frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(0)}_0} &amp; \frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(1)}_0} &amp; \frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(2)}_0} \\
-\frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(0)}_1} &amp; \frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(1)}_1} &amp; \frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(2)}_1} \\
-\frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(0)}_2} &amp; \frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(1)}_2} &amp; \frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(2)}_2} \\
-\frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(0)}_3} &amp; \frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(1)}_3} &amp; \frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(2)}_3} \\
-\frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(0)}_4} &amp; \frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(1)}_4} &amp; \frac{\partial J(\mathbf{\Theta})}{\partial \theta^{(2)}_4}
-\end{bmatrix}
-\end{align*}
-\end{split}\]</div>
-</div>
-<p><strong>크로스 엔트로피</strong></p>
+<p class="admonition-title">크로스 엔트로피</p>
 <p>크로스 엔트로피는 주어진 샘플의 타깃 클래스를 제대로 예측하지 못하는 경우 높은 값을 갖는다.
 크로스 엔트로피 개념은 정보 이론에서 유래하며,
 자세한 설명은 오렐리앙 제롱의 동영상
 <a class="reference external" href="https://www.youtube.com/watch?v=ErfnhcEV1O8">“A Short Introduction to Entropy, Cross-Entropy and KL-Divergence”</a>를
 참고한다.</p>
+</div>
 <p><strong>붓꽃 데이터 다중 클래스 분류</strong></p>
 <p>사이킷런의 <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> 예측기를 활용한다.
 기본값 <code class="docutils literal notranslate"><span class="pre">solver=lbfgs</span></code> 사용하면 모델이 알아서 다중 클래스 분류를 훈련한다.
