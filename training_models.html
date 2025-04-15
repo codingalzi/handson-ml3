@@ -1273,7 +1273,7 @@ s_k(\mathbf{x}) = \theta_0^{(k)} + \theta_1^{(k)} x_1 + \cdots + \theta_n^{(k)} 
 <p>따라서 <span class="math notranslate nohighlight">\(K\)</span> 개의 클래스로 분류하는 소프트맥스 회귀는
 총 <span class="math notranslate nohighlight">\(K \cdot (n+1)\)</span> 개의 파라미터를 학습시킨다.</p>
 <p><strong>소프트맥스 함수</strong></p>
-<p>입력 샘플 <span class="math notranslate nohighlight">\(\mathbf x = [x_1, \dots, x_n]\)</span>이 <span class="math notranslate nohighlight">\(k\)</span> 범주에 속할 확률 <span class="math notranslate nohighlight">\(\hat p_k\)</span>는 다음과 같이 계산된다.</p>
+<p>입력 샘플 <span class="math notranslate nohighlight">\(\mathbf x = [x_1, \dots, x_n]\)</span>이 <span class="math notranslate nohighlight">\(k\)</span>-번째 범주에 속할 확률 <span class="math notranslate nohighlight">\(\hat p_k\)</span>는 다음과 같이 계산된다.</p>
 <div class="math notranslate nohighlight">
 \[
 \hat p_k 
@@ -1307,16 +1307,33 @@ J(\Theta) =
 - \frac{1}{m}\, \sum_{i=1}^{m}\sum_{k=1}^{K} y^{(i)}_k\, \log\big( \hat{p}_k^{(i)}\big)
 \]</div>
 <p>위 식에 사용된 기호의 의미는 다음과 같다.</p>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(y^{(i)}_k\)</span>: <span class="math notranslate nohighlight">\(i\)</span>-번째 입력 샘플이 <span class="math notranslate nohighlight">\(k\)</span>-번째 범주에 포함되면 1, 아니면 0.</p></li>
-<li><p><span class="math notranslate nohighlight">\(\hat{p}_k^{(i)}\)</span>: <span class="math notranslate nohighlight">\(i\)</span>-번째 입력 샘플이 <span class="math notranslate nohighlight">\(k\)</span>-번째 범주에 속할 확률 예측값</p></li>
-</ul>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>기호</p></th>
+<th class="head text-left"><p>의미</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><span class="math notranslate nohighlight">\(y^{(i)}_k\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(i\)</span>-번째 입력 샘플이 <span class="math notranslate nohighlight">\(k\)</span>-번째 범주에 포함되면 1, 아니면 0.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><span class="math notranslate nohighlight">\(\hat{p}_k^{(i)}\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(i\)</span>-번째 입력 샘플이 <span class="math notranslate nohighlight">\(k\)</span>-번째 범주에 속할 확률 예측값</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><span class="math notranslate nohighlight">\(\Theta\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(\mathbf{\theta}^{(k)}\)</span>로 구성된 파라미터 행렬. 정확한 모양은 여기서는 다루지 않음.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 <p><span class="math notranslate nohighlight">\(K=2\)</span>이면 다음이 성립한다.</p>
 <div class="math notranslate nohighlight">
 \[
 y^{(i)}_2 = 1-y^{(i)}_1, \qquad \hat{p}_2^{(i)} = 1- \hat{p}_1^{(i)}
 \]</div>
-<p>따라서 로지스틱 회귀의 로그 손실 함수와 정확하게 일치한다.</p>
+<p>이유는 1-번째 범주에 포함되지 않으면 반드시 2-번째 포함됨을 의미하고,
+따라서 2-번째 범주에 포함될 확률이 바로 1에서 1-번째 범주에 들어갈 확률을 뺀 값이기 때문이다.</p>
+<p>결국 크로스 엔트로피 비용함수는 <span class="math notranslate nohighlight">\(K=2\)</span>일 때, 이진 분류 모델인 로지스틱 회귀의 로그 손실 함수와 정확하게 일치한다.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{align*}
