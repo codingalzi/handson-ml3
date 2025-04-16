@@ -524,27 +524,6 @@ document.write(`
 </section>
 <section id="id4">
 <h3><span class="section-number">4.1.2. </span>행렬 연산 표기법<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[-0.89,  0.37,  0.39, -0.97],
-       [-0.95, -0.04, -0.24,  0.02],
-       [ 0.57,  2.91,  1.25, -0.39]])
-</pre></div>
-</div>
-</div>
-</div>
 <p>지금까지 설명한 선형 회귀 모델의 예측값은 하나의 입력값에 대해서만 계산되는 방식이다.
 그런데 머신러닝 모델은 임의의 개수의 입력값에 대해 동시에 예측값을 계산할 수 있다.</p>
 <p>사이킷런의 모든 머신러닝 모델은 입력값으로 2차원 어레이를 요구한다.
