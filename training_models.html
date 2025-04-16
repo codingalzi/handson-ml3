@@ -867,14 +867,14 @@ document.write(`
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">penalty=l2</span></code>: 규제 종류. <code class="docutils literal notranslate"><span class="pre">None</span></code>은 규제 미사용 없음 (추후 설명)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">max_iter=1000</span></code>: 최대 에포크 수</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">tol=1e-3</span></code>: 허용 오차. 손실값이 <code class="docutils literal notranslate"><span class="pre">n_iter_no_change</span></code> 만큼의 에포크 동안 허용 오차보다 작게 변할 때 훈련 중지.</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">tol=1e-3</span></code>: 허용 오차. 손실값이 <code class="docutils literal notranslate"><span class="pre">n_iter_no_change</span></code> 만큼의 에포크 동안 허용 오차보다 작게 변할 때 훈련 중단</p>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">early_stoppingbool</span></code>이 <code class="docutils literal notranslate"><span class="pre">False</span></code>이면 훈련셋에 대한 손실값을, <code class="docutils literal notranslate"><span class="pre">True</span></code>이면 자동으로 분리된 검증셋의 손실값이 사용됨.</p></li>
 </ul>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">early_stoppingbool=False</span></code>: 조기 종료 여부 지정. 기본값은 <code class="docutils literal notranslate"><span class="pre">False</span></code>. (추후 설명)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">eta0=0.01</span></code>: 초기 학습률. 학습 스케줄에 활용됨</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">n_iter_no_change=5</span></code>: 지정된 에포크 동안 <code class="docutils literal notranslate"><span class="pre">loss</span> <span class="pre">&gt;</span> <span class="pre">best_loss</span> <span class="pre">-</span> <span class="pre">tol</span></code> 상태가 유지되면 훈련 중지</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">n_iter_no_change=5</span></code>: 지정된 에포크 동안 손실값이 허용 오차보다 작게 변할 때 훈련 중단</p></li>
 </ul>
 </section>
 </div><p><strong>미니 배치 경사하강법</strong></p>
