@@ -28,13 +28,13 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/proof.css?v=ca93fcec" />
+    <link rel="stylesheet" type="text/css" href="_static/proof.css?v=b4b7a797" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -745,8 +745,9 @@ document.write(`
 <p>선형 회귀 모델 훈련에 사용되는 경사하강법은 아래 과정으로 구성된다.</p>
 <ol class="arabic simple">
 <li><p><span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>를 임의의 값으로 지정한 후 훈련을 시작한다.</p></li>
-<li><p>훈련 스텝을 지정된 에포크만큼 또는
-<span class="math notranslate nohighlight">\(\nabla_\mathbf{\theta} \textrm{MSE}(\mathbf{\theta})\)</span>가 허용 오차보다 작아질 때까지 반복한다.</p>
+<li><p>지정된 에포크만큼 또는 그레이디언트 벡터
+<span class="math notranslate nohighlight">\(\nabla_\mathbf{\theta} \textrm{MSE}(\mathbf{\theta})\)</span>가 허용 오차보다 작아질 때까지
+아래 과정으로 구성된 훈련 스텝을 반복한다.</p>
 <ul class="simple">
 <li><p>배치 크기 <span class="math notranslate nohighlight">\(m\)</span> 만큼의 훈련 샘플을 이용해서 예측값 생성 후 <span class="math notranslate nohighlight">\(\mathrm{MSE}(\mathbf{\theta})\)</span> 계산.</p></li>
 <li><p><span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>를 아래 점화식을 이용하여 업데이트</p></li>
