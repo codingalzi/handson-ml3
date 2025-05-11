@@ -28,8 +28,8 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b76e3c8a" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
@@ -416,7 +416,7 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sec-poly-reg">4.3. 비선형 데이터 학습: 다항 회귀</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">4.4. 학습 곡선</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">4.4. 과소/과대 적합 여부 판단</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">4.5. 모델 규제와 조기 종료</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">4.5.1. 모델 규제</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sec-early-stopping">4.5.2. 조기 종료</a></li>
@@ -455,7 +455,6 @@ document.write(`
 <li><p>선형 회귀</p></li>
 <li><p>경사하강법</p></li>
 <li><p>다항 회귀</p></li>
-<li><p>학습 곡선</p></li>
 <li><p>모델 규제</p></li>
 <li><p>로지스틱 회귀</p></li>
 </ul>
@@ -529,7 +528,7 @@ document.write(`
 <p>사이킷런의 모든 머신러닝 모델은 입력값으로 2차원 어레이를 요구한다.
 예를 들어 4개의 특성을 갖는 입력값에 대해 훈련된 모델은 입력값으로 임의의 양의 정수 <code class="docutils literal notranslate"><span class="pre">m</span></code>에 대해
 <code class="docutils literal notranslate"><span class="pre">(m,</span> <span class="pre">4)</span></code> 모양의 데이터프레임 또는 2차원 어레이를 입력값으로 받아 예측값을 계산한다.</p>
-<p>예를 들어, 4개의 특성을 사용하는 훈련셋으로 훈련된 <code class="docutils literal notranslate"><span class="pre">LinearRegression</span></code> 모델은 훈련중에 또는 실전에서
+<p>4개의 특성을 사용하는 훈련셋으로 훈련된 <code class="docutils literal notranslate"><span class="pre">LinearRegression</span></code> 모델은 훈련중에 또는 실전에서
 아래 <code class="docutils literal notranslate"><span class="pre">(3,</span> <span class="pre">4)</span></code> 모양의 2차원 어레이를 입력값으로 받으면 3개의 예측값을 계산한다.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">array</span><span class="p">([[</span><span class="mf">0.89</span><span class="p">,</span> <span class="mf">0.37</span><span class="p">,</span> <span class="mf">0.39</span><span class="p">,</span> <span class="mf">0.97</span><span class="p">],</span>
            <span class="p">[</span><span class="mf">0.95</span><span class="p">,</span> <span class="mf">0.04</span><span class="p">,</span> <span class="mf">0.24</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">],</span>
@@ -612,10 +611,12 @@ document.write(`
 회귀 모델의 경우 일반적으로 <strong>평균 제곱 오차</strong><font size="2">mean squared error</font>(MSE)를
 비용 함수로 사용한다.</p>
 <div class="math notranslate nohighlight">
-\[
-\mathrm{MSE}(\mathbf{\theta}) = 
-\frac 1 m \sum_{i=1}^{m} \big(\mathbf{x}^{(i)}\, \mathbf{\theta} - y^{(i)}\big)^2
-\]</div>
+\[\begin{split}
+\begin{align*}
+\mathrm{MSE}(\mathbf{\theta}) &amp;= \frac{(\mathbf{x}^{(1)}\, \mathbf{\theta} - y^{(1)})^2 + (\mathbf{x}^{(2)}\, \mathbf{\theta} - y^{(2)})^2 + \cdots + (\mathbf{x}^{(m)}\, \mathbf{\theta} - y^{(m)})^2}{m} \\[.7ex]
+&amp;= \frac 1 m \sum_{i=1}^{m} (\mathbf{x}^{(i)}\, \mathbf{\theta} - y^{(i)} )^2
+\end{align*}
+\end{split}\]</div>
 <p>위 수식에서 포함된 기호들의 의미는 다음과 같다.</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
@@ -941,12 +942,12 @@ document.write(`
 여기서는 비선형 데이터 분석을 선형 회귀 모델로 제대로 예측할 수 없음을 보여주기 위해 언급되었다.</p>
 </section>
 <section id="id11">
-<h2><span class="section-number">4.4. </span>학습 곡선<a class="headerlink" href="#id11" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">4.4. </span>과소/과대 적합 여부 판단<a class="headerlink" href="#id11" title="Link to this heading">#</a></h2>
 <p>사용되는 모델에 따라 훈련된 모델의 성능이 많이 다를 수 있다.
 아래 그림은 기본 선형 모델은 성능이 너무 좋지 않은 반면에
 300차 다항 회귀 모델은 너무 과하게 훈련 데이터에 민감하게 반응하는 것을 보여준다.
 반면에 2차 다항 회귀 모델이 적절(?)하게 예측값을 계산하는 것으로 보인다.</p>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-08.png" width="500"/></div><p><strong>모델 성능 평가: 교차 검증 vs. 학습 곡선</strong></p>
+<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-08.png" width="500"/></div><p><strong>모델 성능 평가: 교차 검증</strong></p>
 <p>일반적으로 어떤 모델이 가장 좋은지 미리 알 수 없다.
 따라서 보통 다양한 모델을 대상으로 교차 검증을 진행하여 성능을 평가한다.
 교차 검증 결과에 따른 모델 평가는 다음 두 종류로 나뉜다.</p>
@@ -954,32 +955,17 @@ document.write(`
 <li><p>과소적합: 훈련 점수와 교차 검증 점수 모두 낮은 경우</p></li>
 <li><p>과대적합: 훈련 점수는 높지만 교차 검증 점수가 상대적으로 많이 낮은 경우</p></li>
 </ul>
-<p>다른 검증 방법은 <strong>학습 곡선</strong><font size='2'>learning curve</font>을 잘 살펴보는 것이다.
-학습 곡선은 훈련셋과 검증 세트에 대한 모델 성능을 비교하는 그래프이며,
-학습 곡선의 모양에 따라 과소 적합 또는 과대 적합 여부를 판정할 수 있다.</p>
-<p>사이킷런의 <code class="docutils literal notranslate"><span class="pre">learning_curve()</span></code> 함수를 이용하여 학습 곡선을 그릴 수 있다.</p>
+<p><strong>과소 적합 모델 개선법</strong></p>
+<p>모델이 데이터셋에 과소 적합 하는 일반적인 경우와 개선법은 다음과 같다.</p>
 <ul class="simple">
-<li><p>x 축: 훈련셋 크기. 전체 훈련셋의 1%에서 출발하여 훈련셋 전체를 대상으로 할 때까지
-훈련셋의 크기를 키워가며 교차 검증 진행.</p></li>
-<li><p>y 축: 교차 검증을 통해 확인된 훈련셋 및 검증셋 대상 RMSE(평균 제곱근 오차).</p></li>
+<li><p>너무 단순한 모델 활용: 보다 복잡한 데이터를 학습할 수 있는 모델 활용</p></li>
+<li><p>너무 적은 데이터: 훈련셋 양 늘리기</p></li>
 </ul>
-<p><strong>과소 적합 모델의 학습 곡선 특징</strong></p>
-<p>아래 그래프는 2차 다항 함수의 분포를 따르는 데이터셋에 <code class="docutils literal notranslate"><span class="pre">LinearRegression</span></code> 모델을 적용한 학습 곡선을 보여준다.</p>
+<p><strong>과대 적합 모델 개선법</strong></p>
 <ul class="simple">
-<li><p>훈련셋(빨강)에 대한 성능: 훈련셋이 커지면서 RMSE 증가하지만
-훈련셋이 어느 정도 커지면 거의 불변.</p></li>
-<li><p>검증셋(파랑)에 대한 성능: 검증 세트에 대한 성능이 훈련셋에 대한 성능과 거의 비슷해짐.</p></li>
+<li><p>모델 규제 적용: 모델이 훈련중에 데이터에 너무 민감하게 반응하지 않도록 규제 가함. 이어지는 내용 참고</p></li>
+<li><p>보다 많은 데이터: 데이터가 많을 수록 일반적으로 과대 적합이 덜 발생함.</p></li>
 </ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-09.png" width="500"/></div><p><strong>과대 적합 모델의 학습 곡선 특징</strong></p>
-<p>아래 그래프는 2차 다항 함수의 분포를 따르는 데이터셋에 10차 다항회귀 모델을 적용한 학습 곡선을 보여준다.</p>
-<ul class="simple">
-<li><p>훈련셋(빨강)에 대한 성능: 훈련 데이터에 대한 평균 제곱근 오차가 매우 낮음.</p></li>
-<li><p>검증셋(파랑)에 대한 성능: 훈련 데이터에 대한 성능과 차이가 어느 정도 이상 벌어짐.</p></li>
-</ul>
-<div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-10.png" width="500"/></div><p><strong>과대 적합 모델 개선법</strong></p>
-<p>과대 적합 모델을 개선하기 위해 일반적으로 학습 곡선에 사용된 두 그래프가 맞닿을 때까지 훈련 데이터를 추가한다.
-하지만 일반적으로 더 많은 훈련 데이터를 구하는 일이 매우 어렵거나 불가능할 수 있기 때문에
-일반적으로 <strong>모델 규제</strong>를 적용한다.</p>
 <p><strong>모델의 일반화 성능</strong></p>
 <p>훈련 과정에서 다루지 않은 새로운 데이터 대한 예측 능력이 모델의 <strong>일반화 성능</strong>이다.
 새로운 데이터에 대한 모델의 예측에 나쁜 영향을 미치는 요소는 일반적으로 다음 세 가지가 있다.</p>
@@ -1092,19 +1078,22 @@ r\cdot \bigg (2 \alpha \, \sum_{i=1}^{n}\mid\theta_i\mid \bigg) +
 로지스틱 회귀는 이진 분류에 사용되며, 다중 클래스 분류에는 로지스틱 회귀을 일반화한 소프트맥스 회귀가 사용된다.</p>
 <section id="id16">
 <h3><span class="section-number">4.6.1. </span>시그모이드 함수<a class="headerlink" href="#id16" title="Link to this heading">#</a></h3>
-<p>시그모이드 함수는 다음과 같이 정의된다.</p>
+<p>로지스틱 회귀는 선형 회귀 방식으로 계산된 예측값을 시그모이드 함수에 적용하여 0과 1 사이로 변환된 값을
+모델의 최종 예측값으로 활용한다.</p>
+<p>시그모이드<font size='2'>sigmoid</font> 함수는 다음과 같이 정의된다.</p>
 <div class="math notranslate nohighlight">
 \[\sigma(t) = \frac{1}{1 + e^{-t}}\]</div>
-<p>그래프로 그리면 <span class="math notranslate nohighlight">\(t=0\)</span>일 때 0.5를 가지면 그보다 크면 1에, 작으면 -1에 수렴한다.</p>
+<p>그래프로 그리면 <span class="math notranslate nohighlight">\(t=0\)</span>일 때 0.5를 갖고, <span class="math notranslate nohighlight">\(t\)</span>가 양의 무한대로 커질 수록 1에 수렴하고
+음의 무한대로 커지면 -1에 수렴한다.</p>
 <p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-12.png" width="500"/></div></p><p><strong>확률 예측</strong></p>
-<p>로지스티 회귀 모델은 먼저 선형 회귀 모델이 예측한 값에 <strong>시그모이드</strong><font size='2'>sigmoid</font> 함수를
-적용하여 0과 1 사이의 값, 즉 양성일 <strong>확률</strong> <span class="math notranslate nohighlight">\(\hat p\)</span> 로 지정한다.</p>
+<p>로지스티 회귀 모델은 먼저 선형 회귀 모델이 예측한 값에 시그모이드 함수를
+적용하여 0과 1 사이의 값, 즉 양성일 <strong>확률</strong> <span class="math notranslate nohighlight">\(\hat p\)</span> 를 계산한다.</p>
 <div class="math notranslate nohighlight">
 \[
 \hat p = h_\theta(\mathbf{x}) 
 = \sigma(\theta_0 + \theta_1\, x_1 + \cdots + \theta_n\, x_n)
 \]</div>
-<p><strong>로지스틱 회귀 모델의 예측값</strong></p>
+<p><strong>예측값</strong></p>
 <p>로지스틱 회귀 모델의 예측값은 계산된 확률이 0.5 이상인지 여부로 결정한다.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -1135,17 +1124,39 @@ J(\theta) =
 음성 샘플에 대해 1에 가까운 값을 예측하면
 비용 함수의 값이 매우 커지게 된다.</p>
 <p><strong>로그 손실 함수 이해</strong></p>
-<p>틀린 예측을 하면 로그 손실값이 매우 커진다. 이유는 아래 식에서 바로 찾을 수 있다.</p>
+<p>틀린 예측을 하면 로그 손실값이 매우 커진다.
+예를 들어 하나의 샘플에 대한 손실값은 다음과 같으며
+해당 샘플에 대한 예측을 틀리게 하면 손실값이 매우 커진다.</p>
 <div class="math notranslate nohighlight">
 \[
--\left(y^{(i)} \cdot \log(\,\hat p^{(i)}\,) + (1-y^{(i)}) \cdot \log(\,1 - \hat p^{(i)}\right)
+-\left(y \cdot \log(\,\hat p\,) + (1-y) \cdot \log(\,1 - \hat p\right)
 \]</div>
-<ul class="simple">
-<li><p>첫째, 샘플의 레이블 <span class="math notranslate nohighlight">\(y^{(i)}\)</span>가 1(양성)이지만 예측 확률(<span class="math notranslate nohighlight">\(\hat p^{(i)}\)</span>)가 0에 가까워 음성으로 예측되는 경우엔
-손실값 <span class="math notranslate nohighlight">\(-\log(\,\hat p^{(i)}\,)\)</span>가 매우 커질 수 있음(아래 왼쪽 그림 참고).</p></li>
-<li><p>둘째, 샘플의 레이블 <span class="math notranslate nohighlight">\(y^{(i)}\)</span>가 0(음성)이지만 예측 확률(<span class="math notranslate nohighlight">\(\hat p^{(i)}\)</span>)가 1에 가까워 양성으로 예측되는 경우엔
-손실값 <span class="math notranslate nohighlight">\(-\log(\,\hat p^{(i)}\,)\)</span>가 매우 커질 수 있음(아래 오른쪽 그림 참고).</p></li>
-</ul>
+<p>아래 표는 예측을 틀리게 할 때 위 손실값이 무한히 커질 수 있음을 설명한다.</p>
+<div class="pst-scrollable-table-container"><table class="table" id="m-object">
+<caption><span class="caption-number">Table 4.1 </span><span class="caption-text">타깃과 손실</span><a class="headerlink" href="#m-object" title="Link to this table">#</a></caption>
+<colgroup>
+<col style="width: 17.6%" />
+<col style="width: 17.6%" />
+<col style="width: 64.7%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>타깃</p></th>
+<th class="head"><p>예측 확률</p></th>
+<th class="head"><p>로그 손실</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(y = 1\)</span> (양성)</p></td>
+<td><p><span class="math notranslate nohighlight">\(p \lt 0.5\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(p\)</span>가 0에 가까워질 수록,즉 더 많이 틀리게 예측할 수록 손실값 <span class="math notranslate nohighlight">\(-\log(\,\hat p\,)\)</span> 가 무한히 커짐(아래 왼쪽 그림).</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(y = 0\)</span> (음성)</p></td>
+<td><p><span class="math notranslate nohighlight">\(p \ge 0.5\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(p\)</span>가 1에 가까워질 수록,즉 더 많이 틀리게 예측할 수록 손실값 <span class="math notranslate nohighlight">\(-\log(\,1-\hat p\,)\)</span> 가 무한히 커짐(아래 오른쪽 그림).</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 <p><div align="center"><img src="https://raw.githubusercontent.com/codingalzi/handson-ml3/master/jupyter-book/imgs/ch04/homl04-12-10a.png" width="500"/></div></p><div class="note admonition">
 <p class="admonition-title">로그 손실 함수와 최적의 모델</p>
 <p>훈련셋이 가우스 분포를 따른다는 전제하에 로그 손실 함수를 최소화하면
@@ -1242,33 +1253,40 @@ J(\theta) =
 <p>로지스틱 회귀 모델을 일반화하여 다중 클래스 분류를 지원하도록 만든 모델이
 <strong>소프트맥스 회귀</strong><font size='2'>Softmax regression</font>다.
 즉, 소프트맥스 회귀는 3보다 같거나 큰 <span class="math notranslate nohighlight">\(K\)</span>개의 범주로 분류하는 모델이다.</p>
+<p>소프트맥스 회귀 모델은 <span class="math notranslate nohighlight">\(K\)</span> 개의 범주 각각에 대해 주어진 데이터 샘플이 해당 클래스에
+포함될 확률을 계산한 다음에 가장 큰 확률값을 갖는 범주를 최종 예측값으로 지정한다.</p>
+<p>주어진 데이터 샘플에 특정 범주에 속할 확률은
+<strong>소프트맥스 점수</strong>를 이용하여 계산된다.</p>
 <p><strong>소프트맥스 점수</strong></p>
-<p>입력 샘플 <span class="math notranslate nohighlight">\(\mathbf x = [x_1, \dots, x_n]\)</span>가 주어졌을 때 각각의 분류 클래스 <span class="math notranslate nohighlight">\(k \in \{1, 2, \dots, K\}\)</span> 에 대해 <strong>소프트맥스 점수</strong> <span class="math notranslate nohighlight">\(s_k(\mathbf x)\)</span>를
+<p>데이터 샘플 <span class="math notranslate nohighlight">\(\mathbf x = [x_1, \dots, x_n]\)</span>가 주어졌을 때
+<span class="math notranslate nohighlight">\(k\)</span>-범주에 대한 소프트맥스 점수 <span class="math notranslate nohighlight">\(s_k(\mathbf x)\)</span> 는
 선형 회귀 방식으로 계산한다.</p>
 <div class="math notranslate nohighlight">
 \[
 s_k(\mathbf{x}) = \theta_0^{(k)} + \theta_1^{(k)} x_1 + \cdots + \theta_n^{(k)} x_n
 \]</div>
-<p>위 식에서 <span class="math notranslate nohighlight">\(\theta_i^{(k)}\)</span> 는 <span class="math notranslate nohighlight">\(i\)</span> 번째 특성에 대한 가중치 파라미터를 가리킨다.</p>
-<p>따라서 <span class="math notranslate nohighlight">\(K\)</span> 개의 클래스로 분류하는 소프트맥스 회귀는
-총 <span class="math notranslate nohighlight">\(K \cdot (n+1)\)</span> 개의 파라미터를 학습시킨다.</p>
+<p>위 식에서 <span class="math notranslate nohighlight">\(\theta_i^{(k)}\)</span> 는 <span class="math notranslate nohighlight">\(k\)</span>-범주에 대한 소프트맥스 점수를
+선형 회귀 방식으로 계산하기 위해 필요한 <span class="math notranslate nohighlight">\(i\)</span> 번째 특성에 대한 가중치 파라미터를 가리킨다.
+따라서 <span class="math notranslate nohighlight">\(K\)</span> 개의 클래스로 분류하는 소프트맥스 회귀는
+총 <span class="math notranslate nohighlight">\(K \cdot (n+1)\)</span> 개의 파라미터를 학습시켜야 하며 그만큼 훈련시간이 오래 걸린다.</p>
 <p><strong>소프트맥스 함수</strong></p>
-<p>입력 샘플 <span class="math notranslate nohighlight">\(\mathbf x = [x_1, \dots, x_n]\)</span>이 <span class="math notranslate nohighlight">\(k\)</span>-번째 범주에 속할 확률 <span class="math notranslate nohighlight">\(\hat p_k\)</span>는 다음과 같이 계산된다.</p>
+<p>소프트맥스 함수는
+<span class="math notranslate nohighlight">\(K\)</span> 개의 범주 각각에 대해 계산된 소프트맥스 점수를 통합하여
+각각의 범주에 포함될 확률을 계산한다.
+이때 계산된 <span class="math notranslate nohighlight">\(K\)</span> 개의 확률의 합은 1이 된다.</p>
+<p>소프트맥스 함수는 결국 계산된 <span class="math notranslate nohighlight">\(K\)</span> 개의 소프트맥스 점수를
+<span class="math notranslate nohighlight">\(K\)</span> 개의 상대적 확률값으로 변환한다.
+즉, 하나의 범주에 속할 확률을 계산할 때 타 범주에 대한 소프트맥스 점수도 함께
+고려고 모든 확률값의 합은 1이되도록 한다.</p>
+<p>앞서 계산된 <span class="math notranslate nohighlight">\(K\)</span> 개의 소프트맥스 점수를 이용하여 해당 샘플이
+<span class="math notranslate nohighlight">\(k\)</span>-번째 범주에 속할 확률 <span class="math notranslate nohighlight">\(\hat p_k\)</span>는 다음과 같이 계산된다.</p>
 <div class="math notranslate nohighlight">
-\[
-\hat p_k 
-= \frac{\exp(s_k(\mathbf x))}{\sum\limits_{j=1}^{K}\exp(s_j(\mathbf x))}
-\]</div>
-<p>그러면 다음이 성립한다.</p>
-<div class="math notranslate nohighlight">
-\[
-\sigma([s_1(\mathbf{x}), \cdots, \cdots, s_k(\mathbf{x})]) = [\hat p_1, \hat p_1, \dots, \hat p_{K}]
-\]</div>
-<p>위 식에서 <span class="math notranslate nohighlight">\(\sigma()\)</span>는 아래와 같이 정의된 <strong>소프트맥스 함수</strong>를 가리킨다.</p>
-<div class="math notranslate nohighlight">
-\[
-\sigma([v_1, \cdots, v_K]) = [w_1, \cdots, w_K], \quad \text{단 }w_k = \frac{\exp(v_k))}{\sum\limits_{k=1}^{K}\exp(v_k)}
-\]</div>
+\[\begin{split}
+\begin{align*}
+\hat p_k &amp;= \frac{\exp(s_k(\mathbf x))}{\exp(s_1(\mathbf x)) + \cdots + \exp(s_K(\mathbf x))} \\[1.5ex]
+&amp;= \frac{\exp(s_k(\mathbf x))}{\sum\limits_{j=1}^{K}\exp(s_j(\mathbf x))}
+\end{align*}
+\end{split}\]</div>
 <p><strong>소프트맥스 회귀 모델의 예측 레이블</strong></p>
 <p>소프트맥스 회귀 모델의 각 샘플에 대한 최종 예측 레이블 <span class="math notranslate nohighlight">\(\hat y\)</span>는
 확률값 <span class="math notranslate nohighlight">\(p_k\)</span>가 최댓값이 되는 <span class="math notranslate nohighlight">\(k\)</span>로 지정된다.
@@ -1278,14 +1296,15 @@ s_k(\mathbf{x}) = \theta_0^{(k)} + \theta_1^{(k)} x_1 + \cdots + \theta_n^{(k)} 
 \hat y = k  \quad\Longleftrightarrow\quad \hat p_k = \max([\hat p_1, \hat p_1, \dots, \hat p_{K}])
 \]</div>
 <p><strong>소프트맥스 회귀의 비용 함수</strong></p>
-<p>각 분류 클래스 <span class="math notranslate nohighlight">\(k\)</span>에 대한 적절한 가중치들의 벡터 <span class="math notranslate nohighlight">\(\mathbf{\theta}^{(k)} = [\theta_0^{(k)}, \theta_1^{(k)}, \dots, \theta_n^{(k)}]\)</span>를
+<p><span class="math notranslate nohighlight">\(k\)</span>-범주 각각에 대한 적절한 가중치들의 벡터 <span class="math notranslate nohighlight">\(\mathbf{\theta}^{(k)} = [\theta_0^{(k)}, \theta_1^{(k)}, \dots, \theta_n^{(k)}]\)</span>를
 경사하강법을 이용하여 업데이트 한다.
 이를 위해 <strong>크로스 엔트로피</strong><font size='2'>cross entropy</font>를 비용 함수로 사용한다.</p>
 <div class="math notranslate nohighlight">
-\[
-J(\Theta) = 
-- \frac{1}{m}\, \sum_{i=1}^{m}\sum_{k=1}^{K} y^{(i)}_k\, \log\big( \hat{p}_k^{(i)}\big)
-\]</div>
+\[\begin{split}
+\begin{align*}
+J(\Theta) &amp;= - \frac{1}{m}\, \sum_{i=1}^{m} \big( y^{(i)}_1\, \log ( \hat{p}_1^{(i)}) + \cdots + y^{(i)}_K\, \log( \hat{p}_K^{(i)}) \big ) \\[.5ex]
+\end{align*}
+\end{split}\]</div>
 <p>위 식에 사용된 기호의 의미는 다음과 같다.</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
@@ -1301,11 +1320,30 @@ J(\Theta) =
 <td class="text-left"><p><span class="math notranslate nohighlight">\(i\)</span>-번째 입력 샘플이 <span class="math notranslate nohighlight">\(k\)</span>-번째 범주에 속할 확률 예측값</p></td>
 </tr>
 <tr class="row-even"><td class="text-center"><p><span class="math notranslate nohighlight">\(\Theta\)</span></p></td>
-<td class="text-left"><p><span class="math notranslate nohighlight">\(\mathbf{\theta}^{(k)}\)</span>로 구성된 파라미터 행렬. 정확한 모양은 여기서는 다루지 않음.</p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(\mathbf{\theta}^{(1)}, \dots, \mathbf{\theta}^{(K)}\)</span>로 구성된 파라미터 행렬</p></td>
 </tr>
 </tbody>
 </table>
 </div>
+<p><strong>크로스 엔트로피 손실 함수 이해</strong></p>
+<p>틀린 예측을 하면  크로스 엔트로피가 매우 커진다.
+예를 들어 하나의 샘플에 대한 손실값은 다음과 같으며
+해당 샘플에 대한 예측을 틀리게 하면 손실값이 매우 커진다.</p>
+<div class="math notranslate nohighlight">
+\[
+-\big(y_1\, \log ( \hat{p}_1) + \cdots + y_K\, \log( \hat{p}_K)\big)
+\]</div>
+<p>예를 들어 해당 샘플의 라벨이 <span class="math notranslate nohighlight">\(k\)</span>라 하자.
+그러면 <span class="math notranslate nohighlight">\(y_k=1\)</span>이고 다른 <span class="math notranslate nohighlight">\(y_i\)</span>는 모두 0이기에
+손실값은 다음과 같다.</p>
+<div class="math notranslate nohighlight">
+\[
+- \log ( \hat{p}_k)
+\]</div>
+<p>그런데 모델의 예측값이 <span class="math notranslate nohighlight">\(k\)</span>가 아니면 <span class="math notranslate nohighlight">\(\hat p_k\)</span>가 0.5보다 작고 많은 경우 0에 많이 가까워지고
+이는 손실값 <span class="math notranslate nohighlight">\(-\log ( \hat{p}_k)\)</span> 가 매우 커질 수 있음을 의미한다.</p>
+<div class="note admonition">
+<p class="admonition-title">로그 손실과 크로스 엔트로피</p>
 <p><span class="math notranslate nohighlight">\(K=2\)</span>이면 다음이 성립한다.</p>
 <div class="math notranslate nohighlight">
 \[
@@ -1313,7 +1351,7 @@ y^{(i)}_2 = 1-y^{(i)}_1, \qquad \hat{p}_2^{(i)} = 1- \hat{p}_1^{(i)}
 \]</div>
 <p>이유는 1-번째 범주에 포함되지 않으면 반드시 2-번째 포함됨을 의미하고,
 따라서 2-번째 범주에 포함될 확률이 바로 1에서 1-번째 범주에 들어갈 확률을 뺀 값이기 때문이다.</p>
-<p>결국 크로스 엔트로피 비용함수는 <span class="math notranslate nohighlight">\(K=2\)</span>일 때, 이진 분류 모델인 로지스틱 회귀의 로그 손실 함수와 정확하게 일치한다.</p>
+<p>결국 <span class="math notranslate nohighlight">\(K=2\)</span>일 때 크로스 엔트로피 비용함수는 이진 분류 모델인 로지스틱 회귀의 로그 손실 함수와 정확하게 일치한다.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{align*}
@@ -1322,6 +1360,7 @@ J(\Theta)
 &amp; = - \frac{1}{m}\, \sum_{i=1}^{m} \left(y^{(i)}_1\, \log( \hat{p}_1^{(i)}) + (1-y^{(i)}_1)\, \log(1- \hat{p}_1^{(i)}) \right)
 \end{align*}
 \end{split}\]</div>
+</div>
 <div class="note admonition">
 <p class="admonition-title">크로스 엔트로피</p>
 <p>크로스 엔트로피는 주어진 샘플의 타깃 클래스를 제대로 예측하지 못하는 경우 높은 값을 갖는다.
@@ -1430,7 +1469,7 @@ J(\Theta)
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sec-poly-reg">4.3. 비선형 데이터 학습: 다항 회귀</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">4.4. 학습 곡선</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">4.4. 과소/과대 적합 여부 판단</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">4.5. 모델 규제와 조기 종료</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">4.5.1. 모델 규제</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sec-early-stopping">4.5.2. 조기 종료</a></li>
