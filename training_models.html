@@ -1125,8 +1125,7 @@ J(\theta) =
 비용 함수의 값이 매우 커지게 된다.</p>
 <p><strong>로그 손실 함수 이해</strong></p>
 <p>틀린 예측을 하면 로그 손실값이 매우 커진다.
-예를 들어 하나의 샘플에 대한 손실값은 다음과 같으며
-해당 샘플에 대한 예측을 틀리게 하면 손실값이 매우 커진다.</p>
+예를 들어 하나의 샘플에 대한 손실값은 다음과 같다.</p>
 <div class="math notranslate nohighlight">
 \[
 -\left(y \cdot \log(\,\hat p\,) + (1-y) \cdot \log(\,1 - \hat p\right)
@@ -1327,15 +1326,14 @@ J(\Theta) &amp;= - \frac{1}{m}\, \sum_{i=1}^{m} \big( y^{(i)}_1\, \log ( \hat{p}
 </div>
 <p><strong>크로스 엔트로피 손실 함수 이해</strong></p>
 <p>틀린 예측을 하면  크로스 엔트로피가 매우 커진다.
-예를 들어 하나의 샘플에 대한 손실값은 다음과 같으며
-해당 샘플에 대한 예측을 틀리게 하면 손실값이 매우 커진다.</p>
+예를 들어 하나의 샘플에 대한 손실값은 다음과 같다.</p>
 <div class="math notranslate nohighlight">
 \[
 -\big(y_1\, \log ( \hat{p}_1) + \cdots + y_K\, \log( \hat{p}_K)\big)
 \]</div>
 <p>예를 들어 해당 샘플의 라벨이 <span class="math notranslate nohighlight">\(k\)</span>라 하자.
 그러면 <span class="math notranslate nohighlight">\(y_k=1\)</span>이고 다른 <span class="math notranslate nohighlight">\(y_i\)</span>는 모두 0이기에
-손실값은 다음과 같다.</p>
+손실값은 다음과 같이 매우 단순해진다.</p>
 <div class="math notranslate nohighlight">
 \[
 - \log ( \hat{p}_k)
