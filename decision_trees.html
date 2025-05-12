@@ -34,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/proof.css?v=b4b7a797" />
+    <link rel="stylesheet" type="text/css" href="_static/proof.css?v=ca93fcec" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -616,6 +616,13 @@ J(k, t_k) = \frac{m_\text{left}}{m}\, G_\text{left} + \frac{m_\text{right}}{m}\,
 \]</div>
 <p>특성 <span class="math notranslate nohighlight">\(k\)</span>는 지정된 횟수 만큼 무작위로 선택되지만 선택된 특성의 임곗값 <span class="math notranslate nohighlight">\(t_k\)</span>는 모든 가능성,
 즉 모든 훈련 샘플의 특성값을 대상으로 한다.</p>
+<div class="note admonition">
+<p class="admonition-title">특성값 정렬</p>
+<p>분할을 빠르게 진행하기 위해 먼저 모든 특성에 대해 오름차순으로 정렬한다.
+그러면 임곗값을 기준으로 두 개의 자식 노드를 쉽게 생성할 수 있다.
+특성값이 정렬이 되어 있지 않다면 임곗값이 달라질 때마다 자식 노드로의 분할을 위해
+모든 특성값을 임계값과 일일이 비교하기 위해 많은 시간을 소비할 수밖에 없다.</p>
+</div>
 <p>즉, 지니 불순도가 낮은 두 개의 부분집합으로 분할되도록 학습된다.
 분할은 <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> 등 규제에 의해 조절되거나 더 이상 불순도를 줄이는 분할이 불가능할 때까지 진행된다.</p>
 <div class="info admonition">
@@ -637,7 +644,9 @@ J(k, t_k) = \frac{m_\text{left}}{m}\, G_\text{left} + \frac{m_\text{right}}{m}\,
 <li><p>각 노드에서 분류하는 데 걸리는 시간: <span class="math notranslate nohighlight">\(O(n\cdot m\cdot \log_2(m))\)</span></p></li>
 <li><p>결정트리를 완성하는 데 걸리는 시간: <span class="math notranslate nohighlight">\(O(n\cdot m^2\cdot \log_2(m))\)</span></p></li>
 </ul>
-<p>참고로 <span class="math notranslate nohighlight">\(m\cdot \log_2(m)\)</span> 은 정렬 후에 각 특성값을 임곗값으로 확인하는 데에 걸리는 시간과 연관된다.</p>
+<p>참고로 <span class="math notranslate nohighlight">\(m\cdot \log_2(m)\)</span> 은 정렬 후에 각 특성값을 임곗값으로 확인하는 데에 걸리는 시간과 연관된다.
+특성값 정렬의 시간 복잡도가 <span class="math notranslate nohighlight">\(O(m^2)\)</span> 정도이지만 <span class="math notranslate nohighlight">\(O(n\cdot m\cdot \log_2(m))\)</span> 보다는
+훨씬 작기 때문에 복잡도 계산에 있어서 무시된다.</p>
 <p>반면에 학습된 결정트리가 예측에 필요한 시간은 <span class="math notranslate nohighlight">\(O(\log_2 m)\)</span>으로 매우 빠르다.
 이유는 결정트리 모델은 균형 이진탐색트리<font size='2'>balanced binary search tree</font>에
 가깝고 따라서 가장 깊은 경로가 <span class="math notranslate nohighlight">\(\log_2(m)\)</span> 정도이기 때문이다.
