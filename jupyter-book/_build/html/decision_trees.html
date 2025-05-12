@@ -616,6 +616,8 @@ J(k, t_k) = \frac{m_\text{left}}{m}\, G_\text{left} + \frac{m_\text{right}}{m}\,
 \]</div>
 <p>특성 <span class="math notranslate nohighlight">\(k\)</span>는 지정된 횟수 만큼 무작위로 선택되지만 선택된 특성의 임곗값 <span class="math notranslate nohighlight">\(t_k\)</span>는 모든 가능성,
 즉 모든 훈련 샘플의 특성값을 대상으로 한다.</p>
+<p>즉, 지니 불순도가 낮은 두 개의 부분집합으로 분할되도록 학습된다.
+분할은 <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> 등 규제에 의해 조절되거나 더 이상 불순도를 줄이는 분할이 불가능할 때까지 진행된다.</p>
 <div class="note admonition">
 <p class="admonition-title">특성값 정렬</p>
 <p>분할을 빠르게 진행하기 위해 먼저 모든 특성에 대해 오름차순으로 정렬한다.
@@ -623,9 +625,7 @@ J(k, t_k) = \frac{m_\text{left}}{m}\, G_\text{left} + \frac{m_\text{right}}{m}\,
 특성값이 정렬이 되어 있지 않다면 임곗값이 달라질 때마다 자식 노드로의 분할을 위해
 모든 특성값을 임계값과 일일이 비교하기 위해 많은 시간을 소비할 수밖에 없다.</p>
 </div>
-<p>즉, 지니 불순도가 낮은 두 개의 부분집합으로 분할되도록 학습된다.
-분할은 <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> 등 규제에 의해 조절되거나 더 이상 불순도를 줄이는 분할이 불가능할 때까지 진행된다.</p>
-<div class="info admonition">
+<div class="note admonition">
 <p class="admonition-title">탐욕 알고리즘</p>
 <p><span class="math notranslate nohighlight">\(J(k, t_k)\)</span>를 가장 작게 하는 <span class="math notranslate nohighlight">\(k\)</span>와 <span class="math notranslate nohighlight">\(t_k\)</span>를 찾는 알고리즘은 탐욕 알고리즘이다.
 이유는 대상으로 삼은 노드를 기준으로 지니 불순도가 가장 낮은,
