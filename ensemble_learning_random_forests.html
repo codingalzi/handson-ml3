@@ -28,8 +28,8 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
@@ -993,8 +993,9 @@ oob 평가를 자동으로 실행한다.
 </pre></div>
 </div>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">n_iter_no_change=None</span></code>이 기본값이지만 위 코드에서처럼 다른 값으로 지정되면
-<code class="docutils literal notranslate"><span class="pre">validation_fraction=10</span></code>이 기본값으로 사용되어 10% 정도의 검증셋을 매 결정트리 훈련마다 사용한다.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">n_iter_no_change=None</span></code>이 기본값이지만 위 코드에서처럼 조기 종료를 위해 다른 정수값으로 지정되면
+<code class="docutils literal notranslate"><span class="pre">validation_fraction=0.1</span></code>이 기본값으로 사용되어 훈련셋의 10% 정도의 검증셋이
+지정되어 에포크마다 훈련된 결정트리의 성능을 평가한다.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">tol=0.0001</span></code> 허용오차 이하로 성능이 변하지 않은 경우 좋아지지 않는다고 판단한다.</p></li>
 </ul>
 <p><strong>확률적 그레이디언트 부스팅</strong></p>
